@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  /* Gold palette */
+  --color-gold-50: #fdf8ee;
+  --color-gold-100: #f7e9c8;
+  --color-gold-200: #efd292;
+  --color-gold-300: #e4b85a;
+  --color-gold-400: #c9a96e;
+  --color-gold-500: #b8934a;
+  --color-gold-600: #9a7438;
+  --color-gold-700: #7c5a2a;
+  --color-gold-800: #5e431f;
+  --color-gold-900: #3f2d14;
+
+  /* Onyx palette */
+  --color-onyx-50: #f5f4f2;
+  --color-onyx-100: #e0ddd8;
+  --color-onyx-200: #c4bfb8;
+  --color-onyx-300: #a09890;
+  --color-onyx-400: #807870;
+  --color-onyx-500: #5f5850;
+  --color-onyx-600: #433d38;
+  --color-onyx-700: #2a2520;
+  --color-onyx-800: #1a1612;
+  --color-onyx-900: #0a0a0a;
+
+  /* Cream palette */
+  --color-cream-50: #fdfcf9;
+  --color-cream-100: #f8f4ec;
+  --color-cream-200: #f0e6d0;
+  --color-cream-300: #e4d2b0;
+  --color-cream-400: #d4b888;
+  --color-cream-500: #c09a60;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", Inter, sans-serif;
+
+  /* Gold gradient */
+  --background-gold-gradient: linear-gradient(135deg, #c9a96e 0%, #b8934a 50%, #9a7438 100%);
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f0e6d0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Jost", Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gold rule divider */
+.gold-rule {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+  opacity: 0.4;
+}
+
+/* Dot grid texture for dark sections */
+.dot-texture {
+  background-image: radial-gradient(circle, #c9a96e 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Smooth gold text gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #c9a96e 0%, #b8934a 50%, #9a7438 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Pulsing status indicator */
+@keyframes pulse-gold {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}

@@ -1,0 +1,425 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Users ───────────────────────────────────────────────────────────────────
+
+model User {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  name          String?
+  phone         String?
+  avatarUrl     String?
+  role          UserRole    @default(CONSUMER)
+  password      String?     // bcrypt hash, dispatcher admin login only
+  loyaltyPoints Int         @default(0)
+  loyaltyTier   LoyaltyTier @default(SILVER)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  accounts         Account[]
+  sessions         Session[]
+  bookings         Booking[]
+  reviews          Review[]
+  preferences      UserPreferences?
+  corporateMembers CorporateMember[]
+  savedLocations   SavedLocation[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  CONSUMER
+  CORPORATE_ADMIN
+  CORPORATE_RIDER
+  DISPATCHER
+  SUPER_ADMIN
+}
+
+enum LoyaltyTier {
+  SILVER
+  GOLD
+  PLATINUM
+  BLACK
+}
+
+model UserPreferences {
+  id                   String     @id @default(cuid())
+  userId               String     @unique
+  preferredVehicleId   String?
+  preferredChauffeurId String?
+  cabinTemp            Int?       @default(68)
+  musicPreference      String?
+  lightingMood         String?
+  welcomeNote          String?
+  user                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle              Vehicle?   @relation(fields: [preferredVehicleId], references: [id])
+  chauffeur            Chauffeur? @relation(fields: [preferredChauffeurId], references: [id])
+
+  @@map("user_preferences")
+}
+
+model SavedLocation {
+  id      String @id @default(cuid())
+  userId  String
+  label   String
+  address String
+  lat     Float
+  lng     Float
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("saved_locations")
+}
+
+// ─── Auth (NextAuth) ──────────────────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── Fleet ────────────────────────────────────────────────────────────────────
+
+model Vehicle {
+  id           String        @id @default(cuid())
+  name         String
+  slug         String        @unique
+  tagline      String?
+  description  String?       @db.Text
+  capacity     Int
+  basePrice    Decimal       @db.Decimal(10, 2)
+  pricePerHour Decimal?      @db.Decimal(10, 2)
+  pricePerDay  Decimal?      @db.Decimal(10, 2)
+  year         Int
+  make         String        @default("Mercedes-Benz")
+  model        String        @default("Sprinter")
+  color        String?
+  licensePlate String?
+  status       VehicleStatus @default(AVAILABLE)
+  features     String[]
+  amenities    String[]
+  imageUrls    String[]
+  tourUrl      String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  bookings     Booking[]
+  availability VehicleAvailability[]
+  preferences  UserPreferences[]
+
+  @@map("vehicles")
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_SERVICE
+  MAINTENANCE
+  RETIRED
+}
+
+model VehicleAvailability {
+  id        String   @id @default(cuid())
+  vehicleId String
+  date      DateTime @db.Date
+  isBlocked Boolean  @default(false)
+  reason    String?
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+
+  @@unique([vehicleId, date])
+  @@map("vehicle_availability")
+}
+
+// ─── Chauffeurs ───────────────────────────────────────────────────────────────
+
+model Chauffeur {
+  id         String   @id @default(cuid())
+  name       String
+  phone      String
+  email      String   @unique
+  avatarUrl  String?
+  bio        String?  @db.Text
+  rating     Decimal  @default(5.0) @db.Decimal(3, 2)
+  totalTrips Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  bookings    Booking[]
+  reviews     Review[]
+  preferences UserPreferences[]
+
+  @@map("chauffeurs")
+}
+
+// ─── Bookings ─────────────────────────────────────────────────────────────────
+
+model Booking {
+  id                 String        @id @default(cuid())
+  bookingRef         String        @unique @default(cuid())
+  userId             String
+  vehicleId          String
+  chauffeurId        String?
+  corporateAccountId String?
+
+  serviceType ServiceType
+  status      BookingStatus @default(PENDING)
+
+  pickupAddress      String
+  pickupLat          Float?
+  pickupLng          Float?
+  destinationAddress String
+  destinationLat     Float?
+  destinationLng     Float?
+
+  pickupAt          DateTime
+  estimatedDuration Int?
+  actualDuration    Int?
+
+  passengers    Int     @default(1)
+  notes         String? @db.Text
+  internalNotes String? @db.Text
+
+  baseAmount       Decimal @db.Decimal(10, 2)
+  extrasAmount     Decimal @default(0) @db.Decimal(10, 2)
+  gratuityAmount   Decimal @default(0) @db.Decimal(10, 2)
+  serviceFeeAmount Decimal @default(0) @db.Decimal(10, 2)
+  totalAmount      Decimal @db.Decimal(10, 2)
+  depositAmount    Decimal @db.Decimal(10, 2)
+  depositPaidAt    DateTime?
+
+  stripePaymentIntentId String?
+  stripeDepositId       String?
+
+  poNumber String?
+
+  cabinTemp       Int?
+  musicPreference String?
+  lightingMood    String?
+  welcomeNote     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user             User              @relation(fields: [userId], references: [id])
+  vehicle          Vehicle           @relation(fields: [vehicleId], references: [id])
+  chauffeur        Chauffeur?        @relation(fields: [chauffeurId], references: [id])
+  corporateAccount CorporateAccount? @relation(fields: [corporateAccountId], references: [id])
+  addons           BookingAddon[]
+  tracking         TripTracking[]
+  review           Review?
+  notifications    BookingNotification[]
+
+  @@map("bookings")
+}
+
+enum ServiceType {
+  AIRPORT_TRANSFER
+  HOURLY_CHARTER
+  EVENT
+  WEDDING
+  CORPORATE
+  MULTI_DAY_TOUR
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CHAUFFEUR_ASSIGNED
+  EN_ROUTE
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+model BookingAddon {
+  id        String  @id @default(cuid())
+  bookingId String
+  addonId   String
+  name      String
+  price     Decimal @db.Decimal(10, 2)
+  booking   Booking @relation(fields: [bookingId], references: [id])
+  addon     Addon   @relation(fields: [addonId], references: [id])
+
+  @@map("booking_addons")
+}
+
+model Addon {
+  id          String         @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal        @db.Decimal(10, 2)
+  category    String?
+  isActive    Boolean        @default(true)
+  bookings    BookingAddon[]
+
+  @@map("addons")
+}
+
+// ─── Tracking ─────────────────────────────────────────────────────────────────
+
+model TripTracking {
+  id         String   @id @default(cuid())
+  bookingId  String
+  lat        Float
+  lng        Float
+  heading    Float?
+  speed      Float?
+  recordedAt DateTime @default(now())
+  booking    Booking  @relation(fields: [bookingId], references: [id])
+
+  @@map("trip_tracking")
+}
+
+// ─── Reviews ──────────────────────────────────────────────────────────────────
+
+model Review {
+  id          String     @id @default(cuid())
+  bookingId   String     @unique
+  userId      String
+  chauffeurId String?
+  rating      Int
+  comment     String?    @db.Text
+  createdAt   DateTime   @default(now())
+
+  booking   Booking    @relation(fields: [bookingId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+  chauffeur Chauffeur? @relation(fields: [chauffeurId], references: [id])
+
+  @@map("reviews")
+}
+
+// ─── Corporate ────────────────────────────────────────────────────────────────
+
+model CorporateAccount {
+  id               String   @id @default(cuid())
+  accountRef       String   @unique
+  companyName      String
+  billingEmail     String
+  billingAddress   String?
+  paymentTerms     Int      @default(30)
+  seatLimit        Int      @default(5)
+  coordinatorName  String?
+  coordinatorPhone String?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+
+  members  CorporateMember[]
+  bookings Booking[]
+  invoices Invoice[]
+
+  @@map("corporate_accounts")
+}
+
+model CorporateMember {
+  id                 String              @id @default(cuid())
+  corporateAccountId String
+  userId             String
+  memberRole         CorporateMemberRole @default(RIDER)
+  isActive           Boolean             @default(true)
+  joinedAt           DateTime            @default(now())
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id])
+  user             User             @relation(fields: [userId], references: [id])
+
+  @@unique([corporateAccountId, userId])
+  @@map("corporate_members")
+}
+
+enum CorporateMemberRole {
+  ADMIN
+  RIDER
+}
+
+model Invoice {
+  id                 String        @id @default(cuid())
+  invoiceRef         String        @unique
+  corporateAccountId String
+  periodStart        DateTime
+  periodEnd          DateTime
+  subtotal           Decimal       @db.Decimal(10, 2)
+  tax                Decimal       @default(0) @db.Decimal(10, 2)
+  total              Decimal       @db.Decimal(10, 2)
+  status             InvoiceStatus @default(PENDING)
+  dueAt              DateTime
+  paidAt             DateTime?
+  pdfUrl             String?
+  stripeInvoiceId    String?
+  createdAt          DateTime      @default(now())
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id])
+
+  @@map("invoices")
+}
+
+enum InvoiceStatus {
+  PENDING
+  SENT
+  PAID
+  OVERDUE
+  VOID
+}
+
+// ─── Notifications ────────────────────────────────────────────────────────────
+
+model BookingNotification {
+  id        String   @id @default(cuid())
+  bookingId String
+  type      String
+  channel   String
+  sentAt    DateTime @default(now())
+  status    String   @default("SENT")
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+
+  @@map("booking_notifications")
+}
+
+// ─── Loyalty ──────────────────────────────────────────────────────────────────
+
+model LoyaltyTransaction {
+  id        String   @id @default(cuid())
+  userId    String
+  points    Int
+  reason    String
+  bookingId String?
+  createdAt DateTime @default(now())
+
+  @@map("loyalty_transactions")
+}
