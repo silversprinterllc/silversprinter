@@ -6,10 +6,15 @@ import { Users, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export default async function FleetPage() {
-  const vehicles = await prisma.vehicle.findMany({
-    where: { status: { not: 'RETIRED' } },
-    orderBy: { basePrice: 'asc' },
-  })
+  let vehicles: Awaited<ReturnType<typeof prisma.vehicle.findMany>> = []
+  try {
+    vehicles = await prisma.vehicle.findMany({
+      where: { status: { not: 'RETIRED' } },
+      orderBy: { basePrice: 'asc' },
+    })
+  } catch {
+    // DB not yet connected
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-24 px-6">
