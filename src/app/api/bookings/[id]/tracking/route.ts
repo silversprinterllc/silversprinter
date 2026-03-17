@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { recordTrackingPoint } from '@/services/tracking.service'
 import { z } from 'zod'

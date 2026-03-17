@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { calculateQuote } from '@/services/pricing.service'
 import { redis } from '@/lib/redis'
