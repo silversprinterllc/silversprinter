@@ -5,8 +5,31 @@ import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const photos = [
-  { src: '/gallery/DSC04726.JPG', alt: 'SilverSprinter — side profile, palm trees' },
-  { src: '/gallery/DSC04731.JPG', alt: 'SilverSprinter — front three-quarter view' },
+  { src: '/gallery/DSC04726.JPG', alt: 'Side profile — palm trees' },
+  { src: '/gallery/DSC04731.JPG', alt: 'Front three-quarter view' },
+  { src: '/gallery/DSC04741.JPG', alt: 'Front view' },
+  { src: '/gallery/DSC04746.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04751.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04756.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04761.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04766.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04771.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04776.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04786.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04796.JPG', alt: 'Interior — front cabin' },
+  { src: '/gallery/DSC04801.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04806.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04816.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04826.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04836.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04841.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04846.JPG', alt: 'Interior detail' },
+  { src: '/gallery/DSC04851.JPG', alt: 'Rear exterior' },
+  { src: '/gallery/DSC04861.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04866.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04886.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04896.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04901.JPG', alt: 'Exterior detail' },
 ]
 
 export default function GalleryPage() {
@@ -30,7 +53,7 @@ export default function GalleryPage() {
         </h1>
         <div className="w-16 h-px bg-gold-500 mx-auto mb-5" />
         <p className="font-sans text-onyx-300 text-sm max-w-md mx-auto">
-          2 photos · Professional shoot, June 2021
+          25 photos · Professional shoot, June 2021
         </p>
       </section>
 
