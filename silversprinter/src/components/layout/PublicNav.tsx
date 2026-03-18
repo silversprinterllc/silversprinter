@@ -11,6 +11,7 @@ export function PublicNav() {
 
   const links = [
     { href: '/fleet', label: 'Fleet' },
+    { href: '/gallery', label: 'Gallery' },
     { href: '/corporate', label: 'Corporate' },
     { href: '/about', label: 'About' },
   ]
