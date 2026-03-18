@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
-import { getResend, FROM_EMAIL } from '@/lib/resend'
-import { getTwilioClient, TWILIO_FROM } from '@/lib/twilio'
+import { resend, FROM_EMAIL } from '@/lib/resend'
+import { twilioClient, TWILIO_FROM } from '@/lib/twilio'
 import { formatDateTime } from '@/lib/utils'
 
 type NotificationEvent =
@@ -25,7 +25,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
   try {
     switch (event) {
       case 'BOOKING_CONFIRMED':
-        await getResend().emails.send({
+        await resend.emails.send({
           from: FROM_EMAIL,
           to: user.email,
           subject: `Your SilverSprinter booking is confirmed — ${booking.bookingRef}`,
@@ -41,7 +41,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
           `,
         })
         if (user.phone) {
-          await getTwilioClient().messages.create({
+          await twilioClient.messages.create({
             body: `Your SilverSprinter booking is confirmed for ${formatDateTime(booking.pickupAt)}. Booking ref: ${booking.bookingRef}`,
             from: TWILIO_FROM,
             to: user.phone,
@@ -51,7 +51,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
 
       case 'CHAUFFEUR_ASSIGNED':
         if (chauffeur) {
-          await getResend().emails.send({
+          await resend.emails.send({
             from: FROM_EMAIL,
             to: user.email,
             subject: `Your chauffeur has been assigned — ${booking.bookingRef}`,
@@ -63,7 +63,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
             `,
           })
           if (user.phone) {
-            await getTwilioClient().messages.create({
+            await twilioClient.messages.create({
               body: `${chauffeur.name} has been assigned to your trip. They can be reached at ${chauffeur.phone}.`,
               from: TWILIO_FROM,
               to: user.phone,
@@ -74,7 +74,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
 
       case 'CHAUFFEUR_EN_ROUTE':
         if (user.phone) {
-          await getTwilioClient().messages.create({
+          await twilioClient.messages.create({
             body: `Your chauffeur is on the way. Estimated arrival: 8 minutes. Track live: ${process.env.NEXT_PUBLIC_APP_URL}/portal/tracking/${booking.id}`,
             from: TWILIO_FROM,
             to: user.phone,
@@ -84,7 +84,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
 
       case 'CHAUFFEUR_ARRIVED':
         if (user.phone) {
-          await getTwilioClient().messages.create({
+          await twilioClient.messages.create({
             body: `${chauffeur?.name ?? 'Your chauffeur'} has arrived. ${vehicle.name} is parked at ${booking.pickupAddress}.`,
             from: TWILIO_FROM,
             to: user.phone,
@@ -94,7 +94,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
 
       case 'TRIP_COMPLETED': {
         const points = Math.floor(Number(booking.totalAmount) * 10)
-        await getResend().emails.send({
+        await resend.emails.send({
           from: FROM_EMAIL,
           to: user.email,
           subject: `Trip complete — You earned ${points} loyalty points`,
@@ -106,7 +106,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
           `,
         })
         if (user.phone) {
-          await getTwilioClient().messages.create({
+          await twilioClient.messages.create({
             body: `Trip complete. You earned ${points} loyalty points. Rate your ride: ${process.env.NEXT_PUBLIC_APP_URL}/portal`,
             from: TWILIO_FROM,
             to: user.phone,
@@ -116,7 +116,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
       }
 
       case 'REVIEW_REQUEST':
-        await getResend().emails.send({
+        await resend.emails.send({
           from: FROM_EMAIL,
           to: user.email,
           subject: 'How was your ride? Leave a review',
@@ -130,7 +130,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
 
       case 'BALANCE_DUE': {
         const balance = Number(booking.totalAmount) - Number(booking.depositAmount)
-        await getResend().emails.send({
+        await resend.emails.send({
           from: FROM_EMAIL,
           to: user.email,
           subject: `Balance of $${balance.toFixed(2)} due — ${booking.bookingRef}`,
@@ -141,7 +141,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
           `,
         })
         if (user.phone) {
-          await getTwilioClient().messages.create({
+          await twilioClient.messages.create({
             body: `Your balance of $${balance.toFixed(2)} will be charged in 24 hours for your SilverSprinter trip on ${formatDateTime(booking.pickupAt)}.`,
             from: TWILIO_FROM,
             to: user.phone,

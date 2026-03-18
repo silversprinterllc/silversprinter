@@ -4,7 +4,7 @@ import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from './prisma'
-import { getResend, FROM_EMAIL } from './resend'
+import { resend, FROM_EMAIL } from './resend'
 import bcrypt from 'bcryptjs'
 import type { UserRole, LoyaltyTier } from '@prisma/client'
 
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       from: FROM_EMAIL,
       sendVerificationRequest: async ({ identifier, url }) => {
-        await getResend().emails.send({
+        await resend.emails.send({
           from: FROM_EMAIL,
           to: identifier,
           subject: 'Sign in to SilverSprinter',

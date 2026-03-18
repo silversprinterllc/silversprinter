@@ -9,17 +9,14 @@ export default async function PortalPage() {
   const session = await getServerSession(authOptions)
   if (!session) return null
 
-  let bookings: Awaited<ReturnType<typeof prisma.booking.findMany<{ include: { vehicle: true; chauffeur: true } }>>> = []
-  try {
-    bookings = await prisma.booking.findMany({
-      where: {
-        userId: session.user.id,
-        status: { in: ['PENDING', 'CONFIRMED', 'CHAUFFEUR_ASSIGNED', 'EN_ROUTE', 'ARRIVED', 'IN_PROGRESS'] },
-      },
-      include: { vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'asc' },
-    })
-  } catch { /* DB not connected */ }
+  const bookings = await prisma.booking.findMany({
+    where: {
+      userId: session.user.id,
+      status: { in: ['PENDING', 'CONFIRMED', 'CHAUFFEUR_ASSIGNED', 'EN_ROUTE', 'ARRIVED', 'IN_PROGRESS'] },
+    },
+    include: { vehicle: true, chauffeur: true },
+    orderBy: { pickupAt: 'asc' },
+  })
 
   return (
     <div>

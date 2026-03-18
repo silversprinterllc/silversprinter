@@ -1,5 +1,6 @@
+export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
-import { getStripe } from '@/lib/stripe'
+import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { sendBookingNotification } from '@/services/notification.service'
 import { awardPoints } from '@/services/loyalty.service'
@@ -10,7 +11,7 @@ export async function POST(req: NextRequest) {
   let event
 
   try {
-    event = getStripe().webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
   } catch {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }

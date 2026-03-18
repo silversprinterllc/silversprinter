@@ -17,14 +17,11 @@ export default async function DispatcherPage() {
   const tomorrow = new Date(today)
   tomorrow.setDate(tomorrow.getDate() + 1)
 
-  let bookings: Awaited<ReturnType<typeof prisma.booking.findMany<{ include: { user: true; vehicle: true; chauffeur: true } }>>> = []
-  try {
-    bookings = await prisma.booking.findMany({
-      where: { pickupAt: { gte: today, lt: tomorrow } },
-      include: { user: true, vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'asc' },
-    })
-  } catch { /* DB not connected */ }
+  const bookings = await prisma.booking.findMany({
+    where: { pickupAt: { gte: today, lt: tomorrow } },
+    include: { user: true, vehicle: true, chauffeur: true },
+    orderBy: { pickupAt: 'asc' },
+  })
 
   const active = bookings.filter((b) =>
     ['EN_ROUTE', 'ARRIVED', 'IN_PROGRESS'].includes(b.status)

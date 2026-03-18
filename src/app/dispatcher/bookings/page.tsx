@@ -12,14 +12,11 @@ const statusVariants: Record<BookingStatus, 'gold' | 'green' | 'blue' | 'gray' |
 }
 
 export default async function DispatcherBookingsPage() {
-  let bookings: Awaited<ReturnType<typeof prisma.booking.findMany<{ include: { user: true; vehicle: true; chauffeur: true } }>>> = []
-  try {
-    bookings = await prisma.booking.findMany({
-      include: { user: true, vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'desc' },
-      take: 100,
-    })
-  } catch { /* DB not connected */ }
+  const bookings = await prisma.booking.findMany({
+    include: { user: true, vehicle: true, chauffeur: true },
+    orderBy: { pickupAt: 'desc' },
+    take: 100,
+  })
 
   return (
     <div>

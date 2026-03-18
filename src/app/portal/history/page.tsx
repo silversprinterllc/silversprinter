@@ -9,15 +9,12 @@ export default async function HistoryPage() {
   const session = await getServerSession(authOptions)
   if (!session) return null
 
-  let bookings: Awaited<ReturnType<typeof prisma.booking.findMany<{ include: { vehicle: true; chauffeur: true } }>>> = []
-  try {
-    bookings = await prisma.booking.findMany({
-      where: { userId: session.user.id, status: { in: ['COMPLETED', 'CANCELLED', 'NO_SHOW'] } },
-      include: { vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'desc' },
-      take: 50,
-    })
-  } catch { /* DB not connected */ }
+  const bookings = await prisma.booking.findMany({
+    where: { userId: session.user.id, status: { in: ['COMPLETED', 'CANCELLED', 'NO_SHOW'] } },
+    include: { vehicle: true, chauffeur: true },
+    orderBy: { pickupAt: 'desc' },
+    take: 50,
+  })
 
   return (
     <div>

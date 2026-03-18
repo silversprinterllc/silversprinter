@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { getStripe } from '@/lib/stripe'
+import { stripe } from '@/lib/stripe'
 import { calculateQuote } from './pricing.service'
 import { checkAvailability } from './availability.service'
 import { generateBookingRef } from '@/lib/utils'
@@ -27,7 +27,7 @@ export async function createBooking(userId: string, input: CreateBookingInput) {
   })
 
   // Create Stripe PaymentIntent for deposit
-  const paymentIntent = await getStripe().paymentIntents.create({
+  const paymentIntent = await stripe.paymentIntents.create({
     amount: Math.round(quote.depositAmount * 100),
     currency: 'usd',
     metadata: { userId, vehicleId: input.vehicleId },

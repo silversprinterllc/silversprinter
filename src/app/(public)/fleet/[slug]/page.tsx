@@ -1,9 +1,8 @@
 export const dynamic = 'force-dynamic'
-
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
-import { Users, Calendar, Star } from 'lucide-react'
+import { Users, Star } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { formatCurrency } from '@/lib/utils'
 
@@ -13,37 +12,41 @@ interface Props {
 
 export default async function VehicleDetailPage({ params }: Props) {
   const { slug } = await params
-  const vehicle = await prisma.vehicle.findUnique({
-    where: { slug },
-    include: {
-      bookings: {
-        where: { status: 'COMPLETED' },
-        include: { review: true, user: { select: { name: true } } },
-        take: 5,
-        orderBy: { pickupAt: 'desc' },
-      },
-    },
-  })
 
+  const vehicle = await prisma.vehicle.findUnique({ where: { slug } })
   if (!vehicle) notFound()
 
-  const reviews = vehicle.bookings.filter((b) => b.review)
+  // Fetch completed bookings with reviews separately to avoid Prisma inference issues
+  const bookings = await prisma.booking.findMany({
+    where: { vehicleId: vehicle.id, status: 'COMPLETED' },
+    include: {
+      review: true,
+      user: { select: { name: true } },
+    },
+    take: 5,
+    orderBy: { pickupAt: 'desc' },
+  })
+
+  const reviews = bookings.filter((b) => b.review !== null)
   const avgRating = reviews.length
     ? reviews.reduce((sum, b) => sum + (b.review?.rating ?? 0), 0) / reviews.length
     : null
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] pt-16">
-      {/* Hero image */}
+      {/* Hero */}
       <div className="aspect-[21/9] bg-[#2a2520] flex items-center justify-center">
         <span className="font-serif text-4xl text-[#433d38]">{vehicle.name}</span>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
           {/* Main content */}
           <div className="lg:col-span-2">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-2">{vehicle.make} {vehicle.model} · {vehicle.year}</p>
+            <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-2">
+              {vehicle.make} {vehicle.model} · {vehicle.year}
+            </p>
             <h1 className="font-serif text-5xl text-[#f0e6d0] mb-2">{vehicle.name}</h1>
             {vehicle.tagline && <p className="text-xl text-[#a09890] italic mb-6">{vehicle.tagline}</p>}
             {vehicle.description && <p className="text-[#5f5850] leading-relaxed mb-10">{vehicle.description}</p>}
@@ -51,7 +54,7 @@ export default async function VehicleDetailPage({ params }: Props) {
             {/* Features */}
             <h2 className="font-serif text-2xl text-[#f0e6d0] mb-4">Features</h2>
             <div className="grid grid-cols-2 gap-3 mb-10">
-              {vehicle.features.map((f) => (
+              {(vehicle.features as string[]).map((f: string) => (
                 <div key={f} className="flex items-center gap-2 text-sm text-[#a09890]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c9a96e]" />{f}
                 </div>
@@ -70,21 +73,21 @@ export default async function VehicleDetailPage({ params }: Props) {
                   </div>
                 )}
                 <div className="space-y-4">
-                  {reviews.map(({ review, user }) =>
-                    review ? (
-                      <div key={review.id} className="border border-[#433d38]/50 bg-[#1a1612] p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-[#f0e6d0]">{user.name ?? 'Guest'}</span>
-                          <div className="flex gap-0.5">
-                            {Array.from({ length: review.rating }).map((_, i) => (
-                              <Star key={i} size={12} className="text-[#c9a96e] fill-[#c9a96e]" />
-                            ))}
-                          </div>
+                  {reviews.map((b) => (
+                    <div key={b.id} className="border border-[#433d38]/50 bg-[#1a1612] p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-[#f0e6d0]">{b.user.name ?? 'Guest'}</span>
+                        <div className="flex gap-0.5">
+                          {Array.from({ length: b.review?.rating ?? 0 }).map((_, i) => (
+                            <Star key={i} size={12} className="text-[#c9a96e] fill-[#c9a96e]" />
+                          ))}
                         </div>
-                        {review.comment && <p className="text-sm text-[#5f5850] italic">"{review.comment}"</p>}
                       </div>
-                    ) : null
-                  )}
+                      {b.review?.comment && (
+                        <p className="text-sm text-[#5f5850] italic">"{b.review.comment}"</p>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </>
             )}
@@ -121,6 +124,7 @@ export default async function VehicleDetailPage({ params }: Props) {
               </Button>
             </div>
           </div>
+
         </div>
       </div>
     </div>
