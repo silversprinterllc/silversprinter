@@ -7,29 +7,6 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 const photos = [
   { src: '/gallery/DSC04726.JPG', alt: 'SilverSprinter — side profile, palm trees' },
   { src: '/gallery/DSC04731.JPG', alt: 'SilverSprinter — front three-quarter view' },
-  { src: '/gallery/IMG_5615.jpg', alt: 'SilverSprinter — exterior shoot' },
-  { src: '/gallery/IMG_5622.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5646.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5650.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5651.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5654.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5655.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5657.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5663.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5668.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5678.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5679.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5680.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5689.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5690.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5704.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5706.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5714.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5740.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5742.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5758.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5774.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5780.jpg', alt: 'SilverSprinter — exterior detail' },
 ]
 
 export default function GalleryPage() {
@@ -53,7 +30,7 @@ export default function GalleryPage() {
         </h1>
         <div className="w-16 h-px bg-gold-500 mx-auto mb-5" />
         <p className="font-sans text-onyx-300 text-sm max-w-md mx-auto">
-          25 photos · Professional shoot, June 2021
+          2 photos · Professional shoot, June 2021
         </p>
       </section>
 
