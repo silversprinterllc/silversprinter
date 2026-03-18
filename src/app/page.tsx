@@ -10,19 +10,24 @@ import { TestimonialsSection } from '@/components/marketing/TestimonialsSection'
 import { CorporateCTA } from '@/components/marketing/CorporateCTA'
 
 export default async function HomePage() {
-  const vehicles = await prisma.vehicle.findMany({
-    where: { status: 'AVAILABLE' },
-    orderBy: { basePrice: 'asc' },
-  })
+  let vehicleData: { name: string; slug: string; tagline: string; capacity: number; basePrice: number; features: string[] }[] = []
 
-  const vehicleData = vehicles.map((v) => ({
-    name: v.name,
-    slug: v.slug,
-    tagline: v.tagline ?? '',
-    capacity: v.capacity,
-    basePrice: Number(v.basePrice),
-    features: v.features,
-  }))
+  try {
+    const vehicles = await prisma.vehicle.findMany({
+      where: { status: 'AVAILABLE' },
+      orderBy: { basePrice: 'asc' },
+    })
+    vehicleData = vehicles.map((v) => ({
+      name: v.name,
+      slug: v.slug,
+      tagline: v.tagline ?? '',
+      capacity: v.capacity,
+      basePrice: Number(v.basePrice),
+      features: v.features as string[],
+    }))
+  } catch {
+    // DB not yet connected — page renders with empty fleet section
+  }
 
   return (
     <div className="bg-[#0a0a0a]">

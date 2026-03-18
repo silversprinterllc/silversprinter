@@ -12,11 +12,15 @@ const statusVariants: Record<BookingStatus, 'gold' | 'green' | 'blue' | 'gray' |
 }
 
 export default async function DispatcherBookingsPage() {
-  const bookings = await prisma.booking.findMany({
-    include: { user: true, vehicle: true, chauffeur: true },
-    orderBy: { pickupAt: 'desc' },
-    take: 100,
-  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let bookings: any[] = []
+  try {
+    bookings = await prisma.booking.findMany({
+      include: { user: true, vehicle: true, chauffeur: true },
+      orderBy: { pickupAt: 'desc' },
+      take: 100,
+    })
+  } catch { /* DB not yet connected */ }
 
   return (
     <div>
@@ -39,7 +43,7 @@ export default async function DispatcherBookingsPage() {
               <div className="text-sm text-[#a09890]">{b.vehicle.name}</div>
               <div className="text-sm text-[#5f5850]">{b.chauffeur?.name ?? '—'}</div>
               <div className="text-sm text-[#c9a96e]">{formatCurrency(Number(b.totalAmount))}</div>
-              <Badge variant={statusVariants[b.status]}>{b.status.replace('_', ' ')}</Badge>
+              <Badge variant={statusVariants[b.status as BookingStatus]}>{b.status.replace('_', ' ')}</Badge>
             </div>
           ))}
         </div>

@@ -6,10 +6,16 @@ import { Users, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export default async function FleetPage() {
-  const vehicles = await prisma.vehicle.findMany({
-    where: { status: { not: 'RETIRED' } },
-    orderBy: { basePrice: 'asc' },
-  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let vehicles: any[] = []
+  try {
+    vehicles = await prisma.vehicle.findMany({
+      where: { status: { not: 'RETIRED' } },
+      orderBy: { basePrice: 'asc' },
+    })
+  } catch {
+    // DB not yet connected
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-24 px-6">
@@ -35,7 +41,7 @@ export default async function FleetPage() {
                 {v.description && <p className="text-sm text-[#5f5850] mb-6 leading-relaxed">{v.description}</p>}
 
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-8">
-                  {v.features.map((f) => (
+                  {(v.features as string[]).map((f: string) => (
                     <div key={f} className="flex items-center gap-2 text-sm text-[#a09890]">
                       <span className="w-1 h-1 rounded-full bg-[#c9a96e] flex-shrink-0" />
                       {f}
