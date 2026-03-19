@@ -4,7 +4,7 @@ import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata = {
   title: 'Golf Trips — SilverSprinter',
-  description: 'The only way four guys with bags, coolers, and nowhere to be until tee time should travel. South Florida\'s premier golf trip van.',
+  description: 'Two foursomes. One van. A weekend at Streamsong, Cabot, or Hammock Beach that your group will talk about for years. South Florida\'s premier golf trip van.',
 }
 
 export default function GolfPage() {
@@ -27,14 +27,15 @@ export default function GolfPage() {
           <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-6">For Golf Groups</p>
 
           <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] mb-8 text-[#f0e6d0]">
-            The Golf Trip<br />
-            You've Been Talking<br />
-            <span className="text-[#c9a96e]">About Since Last Year.</span>
+            Two Foursomes.<br />
+            One Van.<br />
+            <span className="text-[#c9a96e]">A Weekend Worth Remembering.</span>
           </h1>
 
           <p className="text-[#a09890] text-xl md:text-2xl max-w-2xl leading-relaxed mb-12 font-serif italic">
-            Four guys. Four bags. One van. Zero designated drivers.
-            Zero arguments. Zero Ubers that smell like the last guy.
+            Eight guys. Eight sets of clubs. One cargo carrier.
+            Friday afternoon you leave South Florida.
+            Sunday evening you come home different.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
@@ -54,74 +55,126 @@ export default function GolfPage() {
         </div>
       </section>
 
-      {/* ── The Problem ── */}
+      {/* ── The Weekend ── */}
       <section className="py-24 px-6 border-t border-[#433d38]/40">
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-8">Sound Familiar?</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-8">The Trip</p>
 
           <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-10 leading-tight">
-            Here's how most golf trips actually go.
+            Here's how the weekend goes.
           </h2>
 
-          <div className="space-y-6 text-[#a09890] text-lg leading-relaxed">
-            <p>
-              Somebody draws the short straw and drives the whole way sober while everyone
-              else is three Coronas deep before you hit the Alligator Alley toll.
-            </p>
-            <p>
-              Three separate cars. Three separate Spotify playlists. Three separate people
-              arguing about which exit to take. You get to the resort 40 minutes apart
-              and spend the first hour just finding each other.
-            </p>
-            <p>
-              Your Titleist bag — the one you've spent $2,000 on — is crammed sideways
-              into a trunk designed for groceries. You spend the first nine holes
-              wondering if the shaft is bent.
-            </p>
-            <p>
-              And on the way home? Someone's too tired to drive. Someone else drank too much
-              at the 19th hole. The ride back becomes a negotiation.
-            </p>
+          <div className="space-y-8 text-[#a09890] text-lg leading-relaxed">
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Friday Afternoon</p>
+              <p>
+                The cargo carrier is loaded with all eight bags. Everyone meets at one spot —
+                no caravan, no three separate departure texts. One person drives down.
+                The other seven settle in. The mini fridge is stocked.
+                The Ryder Cup highlights are already on the 32" screen.
+                Someone is giving a scouting report on Black versus Blue.
+                You&apos;re still in Palm Beach County and the weekend is already good.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Friday Evening</p>
+              <p>
+                You arrive at Streamsong with enough light for a twilight round —
+                or you make a reservation at the clubhouse and do it right.
+                Either way, you&apos;re not scattered across three different check-in lines.
+                Everyone is there. The weekend has officially started.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Saturday</p>
+              <p>
+                First tee, 7am. Two foursomes. Eighteen holes for everyone.
+                Lunch at the turn or back at the lodge. For the ambitious ones —
+                and there&apos;s always a couple — another eighteen in the afternoon.
+                Thirty-six holes on one of the best courses in Florida.
+                By dinner, the handicap arguments are already in full swing.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Saturday Evening</p>
+              <p>
+                A proper dinner. The kind where you don&apos;t look at your watch.
+                Everyone tells their version of the day. Someone brings up the shot
+                on 14 that nobody expected. The stories start taking shape —
+                the ones that will still come up years from now.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Sunday Morning</p>
+              <p>
+                One more round. Fresh legs, renewed confidence, familiar trash talk.
+                After the back nine, bags go back in the carrier. Someone else drives home.
+                The van is quieter now — not because it&apos;s less good, but because
+                everyone is full and content and thinking about the same things.
+              </p>
+            </div>
+
             <p className="text-[#f0e6d0] font-serif text-2xl italic border-l-2 border-[#c9a96e] pl-6">
-              You're 47. You've earned a better way to do this.
+              That&apos;s not just a golf trip.
+              That&apos;s the one they talk about every time someone mentions Streamsong.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ── The Solution ── */}
+      {/* ── The Problem With the Old Way ── */}
       <section className="py-24 px-6 bg-[#0d0b09] border-t border-[#433d38]/40">
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-8">The Fix</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-8">The Alternative</p>
 
-          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-10 leading-tight">
-            Imagine this instead.
+          <h2 className="font-serif text-4xl text-[#f0e6d0] mb-10">
+            How it goes without the van.
           </h2>
 
           <div className="space-y-6 text-[#a09890] text-lg leading-relaxed">
             <p>
-              Friday morning. Everyone loads up at the same address. Bags go in the back —
-              there's room, we built it that way. You pull out of the driveway and the
-              mini fridge is already stocked with exactly what you put in it the night before.
+              Three separate cars. Somebody&apos;s bag gets crammed sideways in a trunk
+              designed for groceries. You spend the first nine holes wondering
+              if the shaft is bent.
             </p>
             <p>
-              The 32" TV is on. Someone's already queued up the Ryder Cup highlights.
-              The WiFi is running. The seats recline. Nobody is stressed about traffic
-              because nobody is driving — you're <em>all</em> just riding.
+              Everyone arrives at different times. The first hour is just logistics —
+              who&apos;s in what room, who drove with who, who&apos;s waiting at the bag drop.
+              The trip doesn&apos;t really start until Saturday morning.
+              You&apos;ve already burned Friday night.
             </p>
             <p>
-              Three hours to Streamsong. It flies. You show up rested, loose, and ready.
-              You roll up to the bag drop together — not in three separate Hyundai Elantras —
-              and the valet looks at the van the way you want him to look at the van.
-            </p>
-            <p>
-              On the way home after Saturday's round, someone needs a bathroom. Not a problem.
-              There's a private commode onboard. You don't stop. You don't exit the highway.
-              You don't lose 25 minutes at a Wawa.
+              By Sunday afternoon, someone&apos;s tired, someone&apos;s sore,
+              and someone drew the short straw on the drive home.
+              Three hours back to South Florida alone with your thoughts
+              instead of with your group.
             </p>
             <p className="text-[#f0e6d0] font-serif text-2xl italic border-l-2 border-[#c9a96e] pl-6">
-              The trip starts the moment you leave the driveway.
-              And it doesn't stop being good until you get home.
+              You can do better. The van is how.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Self-Drive Note ── */}
+      <section className="py-16 px-6 border-t border-[#433d38]/40 bg-[#1a1612]">
+        <div className="max-w-3xl mx-auto flex flex-col md:flex-row gap-8 items-start">
+          <div className="flex-shrink-0">
+            <p className="font-serif text-5xl text-[#433d38]">→</p>
+          </div>
+          <div>
+            <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">How It Works</p>
+            <p className="text-[#a09890] text-lg leading-relaxed">
+              SilverSprinter is a <strong className="text-[#f0e6d0]">self-drive rental.</strong> One
+              person in your group drives — you work that out beforehand. Maybe it rotates:
+              one guy takes Friday&apos;s run down, a fresh set of hands takes Sunday home.
+              Split eight ways, the van still costs less than three rental cars,
+              and seven people are riding in serious comfort the entire way.
+              Everybody wins. Especially whoever calls shotgun.
             </p>
           </div>
         </div>
@@ -138,14 +191,14 @@ export default function GolfPage() {
               </h2>
               <div className="space-y-4">
                 {[
-                  '10 captain and bench seats — everyone rides together',
-                  'Full-size bag storage in the rear — no cramming, no bending',
-                  'Mini fridge — stock it yourself the night before',
-                  'Private commode & sink — no unplanned stops',
+                  '10 seats — 2 foursomes ride together, no one left behind',
+                  'Cargo carrier compatible — all 8 bags fit, none crammed',
+                  'Mini fridge — stock it your way the night before',
+                  'Private commode & sink — no gas station detours',
                   '32" TV with Bluetooth & WiFi streaming',
-                  'Microwave — reheat the sandwiches you packed',
-                  'Bench seats fold flat to a sleeping area — for the ride home after Day 2',
-                  'Self-drive rental — you\'re in control, not on someone\'s schedule',
+                  'Microwave — real food on a long drive',
+                  'Bench seats fold flat — sleep on the overnight haul to Pinehurst',
+                  'Self-drive — you set the schedule, the pace, the playlist',
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3">
                     <Check size={16} className="text-[#c9a96e] mt-0.5 flex-shrink-0" />
@@ -176,39 +229,39 @@ export default function GolfPage() {
           <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-4 text-center">
             South Florida to anywhere worth playing.
           </h2>
-          <p className="text-[#5f5850] text-center mb-16 text-sm">We're based in South Florida. These are the drives worth making.</p>
+          <p className="text-[#5f5850] text-center mb-16 text-sm">These are the drives worth making. We&apos;ve thought through every one of them.</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 name: 'Streamsong Resort',
                 location: 'Bowling Green, FL · 2.5 hrs',
-                note: 'Black, Red, and Blue. Three of the best courses in the state. Bring snacks — you\'ll be there all weekend.',
+                note: 'Black, Red, and Blue. Three of the best courses in the state, on the same property. The obvious choice for a first big trip. You\'ll be back.',
               },
               {
-                name: 'TPC Sawgrass',
-                location: 'Ponte Vedra Beach, FL · 5 hrs',
-                note: 'The Stadium Course. You know the 17th. You\'ve watched it on TV your whole life. Time to stand on the tee box.',
+                name: 'Cabot Citrus Farms',
+                location: 'Ocala, FL · 3 hrs',
+                note: 'The new standard for Florida golf. Cabot\'s first US property. Four courses in the works, already worth the drive. Get there before everyone else does.',
               },
               {
                 name: 'Hammock Beach Golf Resort',
                 location: 'Palm Coast, FL · 3.5 hrs',
-                note: 'The Ocean Course with Atlantic views on every other hole. Worth every mile.',
+                note: 'The Ocean Course. Atlantic views on most holes, Tom Watson design, and a resort that makes you want to stay an extra day. You probably will.',
               },
               {
-                name: 'World Golf Village',
-                location: 'St. Augustine, FL · 5 hrs',
-                note: 'King & Bear. Slammer & Squire. Two courses, one trip. Combine it with TPC for the ultimate Florida swing.',
+                name: 'TPC Sawgrass',
+                location: 'Ponte Vedra Beach, FL · 5 hrs',
+                note: 'The Stadium Course. You\'ve watched the 17th your whole life. Time to stand on that tee box and find out what you\'re made of.',
               },
               {
                 name: 'Innisbrook Resort',
                 location: 'Palm Harbor, FL · 3 hrs',
-                note: 'Copperhead Course — home of the Valspar Championship. Tampa Bay on a perfect day.',
+                note: 'Copperhead Course — home of the Valspar Championship. Four courses on property. If the group is serious about golf, this is your weekend.',
               },
               {
                 name: 'Pinehurst No. 2',
                 location: 'Pinehurst, NC · 10 hrs',
-                note: 'A pilgrimage. You sleep in shifts. The bench folds flat. You arrive ready to play a bucket-list course.',
+                note: 'A pilgrimage, not a trip. Ten hours up, ten hours back, 18 holes on the greatest course in America. You take shifts. The bench folds flat. You arrive ready.',
               },
             ].map((dest) => (
               <div key={dest.name} className="border border-[#433d38]/50 bg-[#1a1612] p-8">
@@ -231,21 +284,25 @@ export default function GolfPage() {
 
           <div className="space-y-6 text-[#a09890] text-lg leading-relaxed">
             <p>
-              Four guys. Streamsong for the weekend.
+              Eight guys. Streamsong for the weekend.
             </p>
             <p>
-              Three rental cars runs you $180–$240 each — call it $700 total.
-              Gas for three cars: another $150. Parking at the resort: $60.
-              The guy who ends up driving home sober? He's not paying, he's owed.
+              Three rental cars: $180–$240 each, call it $700.
+              Gas for three vehicles: $180. Resort parking: $90.
+              Total before anyone tees off: nearly $1,000 just to get there and back —
+              in cars that don&apos;t fit the bags comfortably and split the group
+              for five hours each way.
             </p>
             <p>
-              Or: one SilverSprinter. Everyone chips in equally. Nobody drives.
-              Everybody drinks what they want on the way home. The bags fit.
-              The cooler fits. The golf trip actually feels like a golf trip.
+              Or one SilverSprinter. Everyone chips in equally.
+              The bags fit. The group is together.
+              One person drives each direction — you decide who before you leave.
+              Split eight ways, the van lands in the same neighborhood as the rental cars,
+              and the experience isn&apos;t in the same zip code.
             </p>
             <p className="text-[#f0e6d0] font-serif text-2xl italic border-l-2 border-[#c9a96e] pl-6">
-              Split four ways, the van often costs less than the rental cars —
-              and it's not even close in terms of experience.
+              Same cost. Completely different trip.
+              That&apos;s the whole story.
             </p>
           </div>
         </div>
@@ -255,24 +312,24 @@ export default function GolfPage() {
       <section className="py-24 px-6 bg-[#0d0b09] border-t border-[#433d38]/40">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-6 text-center">Simple Process</p>
-          <h2 className="font-serif text-4xl text-[#f0e6d0] mb-16 text-center">Three steps and you're done.</h2>
+          <h2 className="font-serif text-4xl text-[#f0e6d0] mb-16 text-center">Three steps and you&apos;re done.</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 step: '01',
-                title: 'Check the dates',
-                body: 'Pick your tee time weekend. Check availability on the booking page. Hold the dates with a deposit.',
+                title: 'Pick your weekend',
+                body: 'Choose the course. Check availability. Hold the dates with a deposit. Lock it in before someone else&apos;s group takes your weekend.',
               },
               {
                 step: '02',
                 title: 'Sign through Outdoorsy',
-                body: 'Rental agreement and insurance are handled through Outdoorsy. Clean, simple, protected. Takes five minutes.',
+                body: 'Rental agreement and insurance handled through Outdoorsy. Clean, straightforward, protected. Five minutes.',
               },
               {
                 step: '03',
-                title: 'Load up and roll',
-                body: 'Pick up the van. Stock the fridge. Load the bags. Drive to the best golf trip your group has ever taken.',
+                title: 'Load up and go',
+                body: 'Carrier on. Bags in. Fridge stocked. One person drives. Seven people settle in. Best golf trip your group has ever taken.',
               },
             ].map(({ step, title, body }) => (
               <div key={step} className="border border-[#433d38]/50 bg-[#1a1612] p-8">
@@ -295,9 +352,9 @@ export default function GolfPage() {
           </h2>
           <div className="w-16 h-px bg-[#c9a96e] mx-auto mb-8" />
           <p className="text-[#a09890] mb-12 text-lg leading-relaxed">
-            There's one van. Weekends fill up — especially fall and spring.
-            If you've been saying "we should do Streamsong" for three years,
-            now is a good time to stop saying it.
+            There&apos;s one van. Spring and fall weekends fill up fast.
+            If your group has been saying &ldquo;we should do Streamsong&rdquo; for three years,
+            this is the part where you actually do it.
           </p>
           <Link
             href="/book"

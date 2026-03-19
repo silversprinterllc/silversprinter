@@ -215,34 +215,22 @@ export default function GameDayPage() {
         </div>
       </section>
 
-      {/* ── The Reality Check ── */}
-      <section className="py-24 px-6 border-t border-[#433d38]/40">
-        <div className="max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-8">Real Talk</p>
-
-          <h2 className="font-serif text-4xl text-[#f0e6d0] mb-10">
-            The one conversation nobody wants to have.
-          </h2>
-
-          <div className="space-y-6 text-[#a09890] text-lg leading-relaxed">
-            <p>
-              Florida college football away games — especially night games —
-              are the trips where somebody always has to make the responsible call.
-              Who's driving? Did he actually stop? Are we sure?
-            </p>
-            <p>
-              The van removes that entirely. Nobody's the designated driver.
-              Nobody's calculating how long ago they had their last drink.
-              Nobody's waking up Monday with a story they'd rather not tell.
-            </p>
-            <p>
-              You rent a self-drive van. You designate the most sober person in your crew
-              as the driver for that trip. Or you stay overnight and drive back in the morning
-              when you're ready. The flexibility is yours.
-            </p>
-            <p className="text-[#f0e6d0] font-serif text-2xl italic border-l-2 border-[#c9a96e] pl-6">
-              Ten people who can all fully enjoy the game
-              is worth every dollar of the rental. Full stop.
+      {/* ── Self-Drive Note ── */}
+      <section className="py-16 px-6 border-t border-[#433d38]/40 bg-[#1a1612]">
+        <div className="max-w-3xl mx-auto flex flex-col md:flex-row gap-8 items-start">
+          <div className="flex-shrink-0">
+            <p className="font-serif text-5xl text-[#433d38]">→</p>
+          </div>
+          <div>
+            <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">How It Works</p>
+            <p className="text-[#a09890] text-lg leading-relaxed">
+              SilverSprinter is a <strong className="text-[#f0e6d0]">self-drive rental.</strong> One
+              person in your crew drives — you decide that before you leave, not after the game.
+              Maybe it rotates: one person drives up, someone else handles the return.
+              Or you stay over and drive home Sunday morning when everyone&apos;s fresh.
+              The point is you planned it, everyone knows the deal,
+              and nine other people are completely free to enjoy the day they came for.
+              That&apos;s a good arrangement for everybody.
             </p>
           </div>
         </div>
