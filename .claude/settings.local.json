@@ -48,7 +48,28 @@
       "Bash(npx prisma:*)",
       "Bash(vercel logs:*)",
       "Bash(vercel ls:*)",
-      "Bash(vercel inspect:*)"
+      "Bash(vercel inspect:*)",
+      "Bash(dir \"C:\\\\Users\\\\User\\\\Desktop\\\\MyIpad\" /s /b)",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\\\Users\\\\User\\\\Desktop\\\\MyIpad\\\\202106_a'' | Where-Object { $_LastWriteTime.Date -eq ''2021-06-21'' } | Select-Object Name, LastWriteTime | Format-Table -AutoSize\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem ''C:\\\\Users\\\\User\\\\Desktop\\\\MyIpad\\\\202106_a'' | Where-Object { $_LastWriteTime.Day -eq 21 -and $_LastWriteTime.Month -eq 6 -and $_LastWriteTime.Year -eq 2021 } | Select-Object Name, LastWriteTime | Format-Table -AutoSize\")",
+      "Bash(powershell.exe -Command \"& { Get-ChildItem ''C:\\\\Users\\\\User\\\\Desktop\\\\MyIpad\\\\202106_a'' | Where-Object { \\([datetime]$_LastWriteTime\\).ToString\\(''yyyy-MM-dd''\\) -eq ''2021-06-21'' } | Select-Object Name, LastWriteTime }\")",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\User\\\\find_van_photos.ps1\")",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\User\\\\check_dates.ps1\")",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\User\\\\copy_van_photos.ps1\")",
+      "Bash(node scripts/convert-heic.mjs)",
+      "Bash(npx tsc:*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\User\\\\fix_routes.ps1\")",
+      "Bash(\"C:\\\\Users\\\\User\\\\SilverSprinter\\\\silversprinter\\\\.env.local\")",
+      "Bash(\"C:\\\\Users\\\\User\\\\SilverSprinter\\\\silversprinter\\\\.env.local\":*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\User\\\\add_dynamic.ps1\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(f[''''name'''']\\) for f in d.get\\(''''output'''',[]\\)]\")",
+      "Bash(vercel link:*)",
+      "Bash(vercel build:*)",
+      "Bash(ls \"C:\\\\Users\\\\User\\\\SilverSprinter\\\\src\\\\app\\\\\\(public\\)\")",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\User\\\\SilverSprinter\\\\sync_to_root.ps1\")",
+      "Bash(vercel pull:*)",
+      "Bash(vercel --prod --build-env DATABASE_URL=\"postgresql://placeholder:placeholder@localhost/db\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://silversprinter.vercel.app/gallery)"
     ]
   }
 }

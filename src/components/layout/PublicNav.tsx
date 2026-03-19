@@ -10,11 +10,15 @@ export function PublicNav() {
   const [open, setOpen] = useState(false)
 
   const links = [
-    { href: '/fleet', label: 'Fleet' },
-    { href: '/gallery', label: 'Gallery' },
-    { href: '/corporate', label: 'Corporate' },
-    { href: '/about', label: 'About' },
+    { href: '/', label: 'Home', exact: true },
+    { href: '/fleet', label: 'The Van', exact: false },
+    { href: '/gallery', label: 'Gallery', exact: false },
   ]
+
+  function isActive(href: string, exact: boolean) {
+    if (exact) return pathname === href
+    return pathname.startsWith(href)
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#433d38]/50 bg-[#0a0a0a]/90 backdrop-blur-md">
@@ -28,23 +32,20 @@ export function PublicNav() {
             <Link
               key={l.href}
               href={l.href}
-              className={`text-sm tracking-wide transition-colors ${pathname.startsWith(l.href) ? 'text-[#c9a96e]' : 'text-[#a09890] hover:text-[#f0e6d0]'}`}
+              className={`text-sm tracking-wide transition-colors ${isActive(l.href, l.exact) ? 'text-[#c9a96e]' : 'text-[#a09890] hover:text-[#f0e6d0]'}`}
             >
               {l.label}
             </Link>
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
-          <Link href="/login" className="text-sm text-[#a09890] hover:text-[#f0e6d0] transition-colors">
-            Sign in
-          </Link>
+        <div className="hidden md:flex items-center">
           <Button size="sm" asChild>
             <Link href="/book">Book Now</Link>
           </Button>
         </div>
 
-        <button className="md:hidden text-[#a09890]" onClick={() => setOpen(!open)}>
+        <button className="md:hidden text-[#a09890]" onClick={() => setOpen(!open)} aria-label="Toggle menu">
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
@@ -52,13 +53,15 @@ export function PublicNav() {
       {open && (
         <div className="md:hidden border-t border-[#433d38] bg-[#0a0a0a] px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm text-[#a09890] hover:text-[#f0e6d0]" onClick={() => setOpen(false)}>
+            <Link
+              key={l.href}
+              href={l.href}
+              className={`text-sm transition-colors ${isActive(l.href, l.exact) ? 'text-[#c9a96e]' : 'text-[#a09890] hover:text-[#f0e6d0]'}`}
+              onClick={() => setOpen(false)}
+            >
               {l.label}
             </Link>
           ))}
-          <Link href="/login" className="text-sm text-[#a09890] hover:text-[#f0e6d0]" onClick={() => setOpen(false)}>
-            Sign in
-          </Link>
           <Button size="sm" asChild>
             <Link href="/book" onClick={() => setOpen(false)}>Book Now</Link>
           </Button>
