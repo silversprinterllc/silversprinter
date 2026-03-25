@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { Badge } from '@/components/ui/Badge'
 import { formatDateTime, formatCurrency } from '@/lib/utils'
 import type { BookingStatus } from '@prisma/client'
+import { ReviewModerationRow } from '@/components/dispatcher/ReviewModerationRow'
 
 const statusVariants: Record<BookingStatus, 'gold' | 'green' | 'blue' | 'gray' | 'red' | 'amber'> = {
   PENDING: 'amber', CONFIRMED: 'gold', CHAUFFEUR_ASSIGNED: 'blue',
@@ -27,21 +28,36 @@ export default async function DispatcherPage() {
     })
   } catch { /* DB not yet connected */ }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let pendingReviews: any[] = []
+  try {
+    pendingReviews = await prisma.rentalReview.findMany({
+      where: { status: 'PENDING' },
+      include: {
+        booking: {
+          select: { startDate: true, endDate: true, firstName: true, lastName: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+  } catch { /* DB not yet connected */ }
+
   const active = bookings.filter((b) =>
     ['EN_ROUTE', 'ARRIVED', 'IN_PROGRESS'].includes(b.status)
   )
 
   return (
-    <div>
+    <div className="space-y-10">
       <div className="mb-8">
         <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-1">Dispatcher</p>
-        <h1 className="font-serif text-3xl text-[#f0e6d0]">Today's Operations</h1>
+        <h1 className="font-serif text-3xl text-[#f0e6d0]">Today&apos;s Operations</h1>
         <p className="text-sm text-[#5f5850] mt-1">{bookings.length} bookings · {active.length} active</p>
       </div>
 
+      {/* Bookings Table */}
       <div className="border border-[#433d38]/50 bg-[#1a1612]">
         <div className="px-6 py-4 border-b border-[#433d38]/50 flex items-center justify-between">
-          <h2 className="font-serif text-lg text-[#f0e6d0]">Today's Bookings</h2>
+          <h2 className="font-serif text-lg text-[#f0e6d0]">Today&apos;s Bookings</h2>
         </div>
         {bookings.length === 0 ? (
           <div className="p-12 text-center text-[#5f5850]">No bookings today.</div>
@@ -65,6 +81,23 @@ export default async function DispatcherPage() {
                 </div>
                 <Badge variant={statusVariants[b.status as BookingStatus]}>{b.status.replace('_', ' ')}</Badge>
               </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Pending Reviews */}
+      <div className="border border-[#433d38]/50 bg-[#1a1612]">
+        <div className="px-6 py-4 border-b border-[#433d38]/50">
+          <h2 className="font-serif text-lg text-[#f0e6d0]">Pending Reviews</h2>
+          <p className="text-xs text-[#5f5850] mt-0.5">{pendingReviews.length} awaiting moderation</p>
+        </div>
+        {pendingReviews.length === 0 ? (
+          <div className="p-12 text-center text-[#5f5850]">No pending reviews.</div>
+        ) : (
+          <div className="divide-y divide-[#433d38]/30">
+            {pendingReviews.map((r) => (
+              <ReviewModerationRow key={r.id} review={r} />
             ))}
           </div>
         )}

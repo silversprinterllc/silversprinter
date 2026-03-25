@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Users, Bath, UtensilsCrossed, Tv2, BedDouble, Flag, Trophy, Briefcase, PartyPopper } from 'lucide-react'
+import { Users, Bath, UtensilsCrossed, Tv2, BedDouble, Flag, Trophy, Briefcase, PartyPopper, Star } from 'lucide-react'
 import { PublicNav } from '@/components/layout/PublicNav'
 import { Footer } from '@/components/layout/Footer'
 import { HeroSection } from '@/components/marketing/HeroSection'
+import { prisma } from '@/lib/prisma'
 
 const amenities = [
   {
@@ -65,7 +66,32 @@ const heroPhotos = [
   { src: '/gallery/DSC04756.JPG', alt: 'Exterior detail' },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  let approvedReviews: {
+    id: string
+    renterName: string
+    rating: number
+    body: string
+    tripType: string | null
+  }[] = []
+
+  try {
+    approvedReviews = await prisma.rentalReview.findMany({
+      where: { status: 'APPROVED' },
+      orderBy: { createdAt: 'desc' },
+      take: 6,
+      select: {
+        id: true,
+        renterName: true,
+        rating: true,
+        body: true,
+        tripType: true,
+      },
+    })
+  } catch {
+    // DB unavailable — graceful fallback
+  }
+
   return (
     <div className="bg-[#0a0a0a]">
       <PublicNav />
@@ -161,6 +187,61 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Reviews ── */}
+      {approvedReviews.length > 0 && (
+        <section className="py-24 px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Reviews</p>
+              <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">
+                From our guests
+              </h2>
+              <div className="w-16 h-px bg-[#c9a96e] mx-auto mt-5" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {approvedReviews.map((review) => {
+                const nameParts = review.renterName.trim().split(' ')
+                const displayName =
+                  nameParts.length >= 2
+                    ? `${nameParts[0]} ${nameParts[nameParts.length - 1][0]}.`
+                    : review.renterName
+                return (
+                  <div
+                    key={review.id}
+                    className="border border-[#433d38]/50 bg-[#1a1612] p-6 flex flex-col gap-4"
+                  >
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          size={14}
+                          className={
+                            s <= review.rating
+                              ? 'text-[#c9a96e] fill-[#c9a96e]'
+                              : 'text-[#433d38]'
+                          }
+                          strokeWidth={1.5}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm text-[#a09890] leading-relaxed flex-1">
+                      &ldquo;{review.body}&rdquo;
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium text-[#f0e6d0]">{displayName}</p>
+                      {review.tripType && (
+                        <p className="text-xs text-[#5f5850]">{review.tripType}</p>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Booking CTA ── */}
       <section className="py-24 px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">

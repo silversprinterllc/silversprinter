@@ -133,7 +133,9 @@
       "WebFetch(domain:roamly.com)",
       "WebFetch(domain:enterprise.roamly.com)",
       "WebFetch(domain:www.foremost.com)",
-      "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/sterling-reserve/)"
+      "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/sterling-reserve/)",
+      "Bash(node -e \"const Stripe = require\\(''stripe''\\); console.log\\(Stripe.LATEST_API_VERSION || ''unknown''\\)\")",
+      "Bash(node -e \"const s = new \\(require\\(''''stripe''''\\)\\)\\(''''sk_test_fake''''\\); console.log\\(s.LAST_REQUEST\\)\")"
     ]
   }
 }
