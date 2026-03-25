@@ -119,7 +119,17 @@
       "WebFetch(domain:highluxrides.com)",
       "WebFetch(domain:lucca.limo)",
       "WebFetch(domain:instantdomainsearch.com)",
-      "WebFetch(domain:domainr.com)"
+      "WebFetch(domain:domainr.com)",
+      "WebFetch(domain:sterlingroute.com)",
+      "WebFetch(domain:sterlingroute.vercel.app)",
+      "WebFetch(domain:silversprinter.vercel.app)",
+      "WebFetch(domain:dns.google)",
+      "Bash(ls -la /c/Users/User/SilverSprinter/src/app/api/bookings/[id]/)",
+      "Bash(ls -la /c/Users/User/SilverSprinter/src/app/api/bookings/[id]/tracking/)",
+      "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/)",
+      "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/book/)",
+      "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/book/success/)",
+      "Bash(ls /c/Users/User/SilverSprinter/src/lib/stripe*)"
     ]
   }
 }
