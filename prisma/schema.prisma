@@ -414,30 +414,31 @@ model BookingNotification {
 // ─── Self-Drive Rental Bookings ───────────────────────────────────────────────
 
 model RentalBooking {
-  id               String              @id @default(cuid())
-  firstName        String
-  lastName         String
-  email            String
-  phone            String
-  startDate        String              // YYYY-MM-DD
-  endDate          String              // YYYY-MM-DD
-  days             Int
-  passengerCount   Int                 @default(1)
-  tripType         String?
-  tripTypeOther    String?
-  specialRequests  String?             @db.Text
-  hearAboutUs      String?
-  dailyRate        Float               @default(995)
-  baseTotal        Float
-  addonsTotal      Float               @default(0)
-  subtotal         Float
-  depositAmount    Float
-  balanceAmount    Float
-  status           RentalStatus        @default(PENDING)
-  stripeSessionId  String?             @unique
-  reviewToken      String?             @unique
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
+  id                 String             @id @default(cuid())
+  firstName          String
+  lastName           String
+  email              String
+  phone              String
+  startDate          String             // YYYY-MM-DD
+  endDate            String             // YYYY-MM-DD
+  days               Int
+  passengerCount     Int                @default(1)
+  tripType           String?
+  tripTypeOther      String?
+  specialRequests    String?            @db.Text
+  hearAboutUs        String?
+  dailyRate          Float              @default(995)
+  baseTotal          Float
+  addonsTotal        Float              @default(0)
+  subtotal           Float
+  depositAmount      Float
+  balanceAmount      Float
+  status             RentalStatus       @default(PENDING)
+  verificationStatus VerificationStatus @default(PENDING)
+  stripeSessionId    String?            @unique
+  reviewToken        String?            @unique
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 
   addOns  RentalBookingAddOn[]
   review  RentalReview?
@@ -480,6 +481,12 @@ enum ReviewStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+enum VerificationStatus {
+  PENDING
+  CLEARED
+  FLAGGED
 }
 
 // ─── Loyalty ──────────────────────────────────────────────────────────────────
