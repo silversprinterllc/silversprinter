@@ -129,7 +129,10 @@
       "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/)",
       "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/book/)",
       "Bash(ls /c/Users/User/SilverSprinter/src/app/\\\\\\(public\\\\\\)/book/success/)",
-      "Bash(ls /c/Users/User/SilverSprinter/src/lib/stripe*)"
+      "Bash(ls /c/Users/User/SilverSprinter/src/lib/stripe*)",
+      "WebFetch(domain:roamly.com)",
+      "WebFetch(domain:enterprise.roamly.com)",
+      "WebFetch(domain:www.foremost.com)"
     ]
   }
 }

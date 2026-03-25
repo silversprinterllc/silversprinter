@@ -9,7 +9,7 @@ interface WizardContextValue {
   update: (patch: Partial<BookingWizardState>) => void
   next: () => void
   back: () => void
-  goTo: (step: 1 | 2 | 3 | 4) => void
+  goTo: (step: 1 | 2 | 3 | 4 | 5) => void
 }
 
 const WizardContext = createContext<WizardContextValue | null>(null)
@@ -37,11 +37,17 @@ type Props = {
 }
 
 type FormData = {
+  // Step 1 — Insurance
+  insuranceConfirmed: boolean
+  insurancePolicyNumber: string
+  // Step 2 — Dates & Trip
   startDate: string
   endDate: string
   tripType: string
   passengers: number
+  // Step 3 — Add-Ons
   selectedAddons: string[]
+  // Step 4 — Your Details
   firstName: string
   lastName: string
   email: string
@@ -97,12 +103,22 @@ function fmt(n: number) {
 const inputClass = 'w-full bg-[#1a1612] border border-[#433d38]/70 text-[#f0e6d0] placeholder-[#5f5850] px-4 py-3 text-sm focus:outline-none focus:border-[#c9a96e] transition-colors'
 const labelClass = 'block text-xs tracking-[0.15em] uppercase text-[#5f5850] mb-2'
 
+const STEP_LABELS: Record<number, string> = {
+  1: 'Insurance',
+  2: 'Dates & Trip',
+  3: 'Add-Ons',
+  4: 'Your Details',
+  5: 'Review & Pay',
+}
+
 export function BookingWizard({ addons, vehicleId }: Props) {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const [form, setForm] = useState<FormData>({
+    insuranceConfirmed: false,
+    insurancePolicyNumber: '',
     startDate: '', endDate: '', tripType: '', passengers: 4,
     selectedAddons: [],
     firstName: '', lastName: '', email: '', phone: '',
@@ -126,12 +142,15 @@ export function BookingWizard({ addons, vehicleId }: Props) {
 
   function canNext() {
     if (step === 1) {
+      return form.insuranceConfirmed
+    }
+    if (step === 2) {
       if (!form.startDate || !form.endDate || !form.tripType) return false
       if (new Date(form.endDate) <= new Date(form.startDate)) return false
       return true
     }
-    if (step === 2) return true
-    if (step === 3) return !!(form.firstName && form.lastName && form.email && form.phone)
+    if (step === 3) return true
+    if (step === 4) return !!(form.firstName && form.lastName && form.email && form.phone)
     return true
   }
 
@@ -172,9 +191,9 @@ export function BookingWizard({ addons, vehicleId }: Props) {
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-2">Self-Drive Rental</p>
           <h1 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-6">Reserve the Van</h1>
-          {/* Progress */}
+          {/* Progress — 5 steps */}
           <div className="flex items-center gap-3">
-            {[1,2,3,4].map(s => (
+            {[1, 2, 3, 4, 5].map(s => (
               <div key={s} className="flex items-center gap-3">
                 <div className={`w-7 h-7 flex items-center justify-center text-xs font-medium border transition-colors ${
                   s < step ? 'bg-[#c9a96e] border-[#c9a96e] text-[#0a0a0a]'
@@ -183,11 +202,11 @@ export function BookingWizard({ addons, vehicleId }: Props) {
                 }`}>
                   {s < step ? '✓' : s}
                 </div>
-                {s < 4 && <div className={`h-px w-8 md:w-16 transition-colors ${s < step ? 'bg-[#c9a96e]' : 'bg-[#433d38]'}`} />}
+                {s < 5 && <div className={`h-px w-6 md:w-10 transition-colors ${s < step ? 'bg-[#c9a96e]' : 'bg-[#433d38]'}`} />}
               </div>
             ))}
             <p className="ml-3 text-xs text-[#5f5850]">
-              {step === 1 ? 'Dates & Trip' : step === 2 ? 'Add-Ons' : step === 3 ? 'Your Details' : 'Review & Pay'}
+              {STEP_LABELS[step]}
             </p>
           </div>
         </div>
@@ -197,8 +216,93 @@ export function BookingWizard({ addons, vehicleId }: Props) {
         {/* Main form */}
         <div className="lg:col-span-3">
 
-          {/* STEP 1 */}
+          {/* STEP 1 — Insurance Gate */}
           {step === 1 && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-serif text-2xl text-[#f0e6d0] mb-2">First Things First — Insurance</h2>
+                <p className="text-sm text-[#5f5850] leading-relaxed">
+                  Every Sterling Route rental requires trip insurance before your reservation is confirmed. This protects you, your passengers, and the vehicle. We use Roamly for all rentals — it takes about 5 minutes and costs less than you&apos;d expect.
+                </p>
+              </div>
+
+              {/* Coverage requirements box */}
+              <div className="border border-[#c9a96e]/40 bg-[#c9a96e]/5 p-6 space-y-3">
+                <p className="text-xs tracking-[0.2em] uppercase text-[#c9a96e] mb-4">Coverage Requirements</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#c9a96e]/60 mt-0.5 shrink-0">—</span>
+                  <span className="text-sm text-[#a09890]">Minimum coverage: <span className="text-[#f0e6d0]">$1,000,000 liability</span></span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#c9a96e]/60 mt-0.5 shrink-0">—</span>
+                  <span className="text-sm text-[#a09890]">Physical damage coverage required</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#c9a96e]/60 mt-0.5 shrink-0">—</span>
+                  <span className="text-sm text-[#a09890]">Coverage must match your exact rental dates</span>
+                </div>
+              </div>
+
+              {/* Roamly CTA */}
+              <div>
+                <a
+                  href="https://www.roamly.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium px-8 py-3 hover:bg-[#d4b87a] transition-colors duration-200"
+                >
+                  Get Coverage via Roamly →
+                </a>
+              </div>
+
+              {/* Policy number input */}
+              <div>
+                <label className={labelClass}>
+                  Roamly Confirmation / Policy Number <span className="normal-case text-[#433d38]">(recommended)</span>
+                </label>
+                <input
+                  type="text"
+                  value={form.insurancePolicyNumber}
+                  placeholder="e.g. RML-2024-XXXXXX"
+                  onChange={e => set('insurancePolicyNumber', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Confirmation checkbox */}
+              <div>
+                <label className="flex items-start gap-4 cursor-pointer group">
+                  <div
+                    onClick={() => set('insuranceConfirmed', !form.insuranceConfirmed)}
+                    className={`mt-0.5 w-5 h-5 border flex items-center justify-center shrink-0 cursor-pointer transition-colors ${
+                      form.insuranceConfirmed
+                        ? 'bg-[#c9a96e] border-[#c9a96e] text-[#0a0a0a]'
+                        : 'border-[#433d38] group-hover:border-[#c9a96e]/50'
+                    }`}
+                  >
+                    {form.insuranceConfirmed && (
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </div>
+                  <span
+                    onClick={() => set('insuranceConfirmed', !form.insuranceConfirmed)}
+                    className="text-sm text-[#a09890] leading-relaxed cursor-pointer"
+                  >
+                    I have obtained rental insurance coverage for my trip dates and understand that my reservation will not be confirmed without it.
+                  </span>
+                </label>
+              </div>
+
+              <p className="text-xs text-[#433d38] leading-relaxed">
+                Already insured through another provider? <a href="/contact" className="text-[#c9a96e]/70 hover:text-[#c9a96e] transition-colors">Contact us before booking.</a>
+              </p>
+            </div>
+          )}
+
+          {/* STEP 2 — Dates & Trip */}
+          {step === 2 && (
             <div className="space-y-6">
               <h2 className="font-serif text-2xl text-[#f0e6d0]">When &amp; What</h2>
 
@@ -253,8 +357,8 @@ export function BookingWizard({ addons, vehicleId }: Props) {
             </div>
           )}
 
-          {/* STEP 2 */}
-          {step === 2 && (
+          {/* STEP 3 — Add-Ons */}
+          {step === 3 && (
             <div className="space-y-6">
               <div>
                 <h2 className="font-serif text-2xl text-[#f0e6d0] mb-1">Add-Ons</h2>
@@ -303,8 +407,8 @@ export function BookingWizard({ addons, vehicleId }: Props) {
             </div>
           )}
 
-          {/* STEP 3 */}
-          {step === 3 && (
+          {/* STEP 4 — Your Details */}
+          {step === 4 && (
             <div className="space-y-6">
               <h2 className="font-serif text-2xl text-[#f0e6d0]">Your Details</h2>
 
@@ -356,8 +460,8 @@ export function BookingWizard({ addons, vehicleId }: Props) {
             </div>
           )}
 
-          {/* STEP 4 */}
-          {step === 4 && pricing && (
+          {/* STEP 5 — Review & Pay */}
+          {step === 5 && pricing && (
             <div className="space-y-6">
               <h2 className="font-serif text-2xl text-[#f0e6d0]">Review &amp; Pay Deposit</h2>
 
@@ -388,6 +492,21 @@ export function BookingWizard({ addons, vehicleId }: Props) {
                       </div>
                     )}
                   </div>
+                </div>
+
+                <div className="px-5 py-4">
+                  <p className="text-xs tracking-widest uppercase text-[#c9a96e] mb-3">Insurance</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-[#c9a96e] flex items-center justify-center">
+                      <svg className="w-2.5 h-2.5 text-[#0a0a0a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-[#a09890]">Coverage confirmed</span>
+                  </div>
+                  {form.insurancePolicyNumber && (
+                    <p className="text-xs text-[#5f5850] mt-1">Policy: {form.insurancePolicyNumber}</p>
+                  )}
                 </div>
 
                 <div className="px-5 py-4">
@@ -437,7 +556,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
               </div>
 
               <div className="text-xs text-[#5f5850] border-l-2 border-[#c9a96e]/30 pl-4 leading-relaxed">
-                Your deposit is fully refundable up to 7 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Rental agreement and insurance verification through Outdoorsy will be sent after booking.
+                Your deposit is fully refundable up to 30 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Rental agreement and insurance verification through Outdoorsy will be sent after booking.
               </div>
 
               {error && (
@@ -457,17 +576,17 @@ export function BookingWizard({ addons, vehicleId }: Props) {
           )}
 
           {/* Navigation */}
-          {step < 4 && (
+          {step < 5 && (
             <div className="flex justify-between items-center mt-8 pt-8 border-t border-[#433d38]/30">
               <button
-                onClick={() => setStep(s => (s - 1) as 1|2|3|4)}
+                onClick={() => setStep(s => Math.max(1, s - 1))}
                 disabled={step === 1}
-                className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors disabled:opacity-0"
+                className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors disabled:opacity-0 disabled:pointer-events-none"
               >
                 ← Back
               </button>
               <button
-                onClick={() => setStep(s => (s + 1) as 1|2|3|4)}
+                onClick={() => setStep(s => Math.min(5, s + 1))}
                 disabled={!canNext()}
                 className="bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium px-8 py-3 hover:bg-[#d4b87a] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
@@ -475,9 +594,9 @@ export function BookingWizard({ addons, vehicleId }: Props) {
               </button>
             </div>
           )}
-          {step === 4 && (
+          {step === 5 && (
             <button
-              onClick={() => setStep(3)}
+              onClick={() => setStep(4)}
               className="mt-4 text-sm text-[#5f5850] hover:text-[#a09890] transition-colors"
             >
               ← Back to edit
@@ -539,3 +658,6 @@ export function BookingWizard({ addons, vehicleId }: Props) {
     </div>
   )
 }
+
+// Provide the context value for backward compatibility with sub-components
+export { WizardContext }
