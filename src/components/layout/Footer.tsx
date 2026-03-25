@@ -15,9 +15,15 @@ export function Footer() {
         <div>
           <p className="text-xs font-medium tracking-widest uppercase text-[#c9a96e] mb-4">Services</p>
           <ul className="space-y-2">
-            {['Golf Trips', 'Game Day', 'Corporate', 'Family & Occasions'].map((s) => (
-              <li key={s}>
-                <Link href="/book" className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors">{s}</Link>
+            {[
+              ['Golf Trips', '/golf'],
+              ['Game Day', '/gameday'],
+              ['Corporate', '/corporate'],
+              ['Family & Occasions', '/family'],
+              ['Rates', '/rates'],
+            ].map(([label, href]) => (
+              <li key={label}>
+                <Link href={href} className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors">{label}</Link>
               </li>
             ))}
           </ul>
@@ -25,7 +31,13 @@ export function Footer() {
         <div>
           <p className="text-xs font-medium tracking-widest uppercase text-[#c9a96e] mb-4">Company</p>
           <ul className="space-y-2">
-            {[['About', '/about'], ['Fleet', '/fleet'], ['Corporate', '/corporate'], ['Contact', '/contact']].map(([label, href]) => (
+            {[
+              ['About', '/about'],
+              ['Fleet', '/fleet'],
+              ['Contact', '/contact'],
+              ['FAQ', '/faq'],
+              ['Rental Terms', '/rental-terms'],
+            ].map(([label, href]) => (
               <li key={label}>
                 <Link href={href} className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors">{label}</Link>
               </li>

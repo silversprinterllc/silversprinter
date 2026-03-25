@@ -1,0 +1,242 @@
+import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Rates — Sterling Route',
+  description: 'Transparent daily rates, member pricing, add-on fees, and the complete fee schedule for Sterling Route van rentals. One van. Flat daily rates. No surprises.',
+}
+
+export default function RatesPage() {
+  return (
+    <div className="bg-[#0a0a0a] text-[#f0e6d0]">
+
+      {/* HEADER */}
+      <section className="py-32 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-8">Transparent Pricing</p>
+          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-[#f0e6d0] leading-tight mb-8">
+            What It Costs
+          </h1>
+          <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl">
+            One van. Flat daily rates. No fuel surcharges, no blackout fees, no surprises. What you see is what you pay.
+          </p>
+        </div>
+      </section>
+
+      {/* SECTION 1: PUBLIC DAILY RATES */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Section 1</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Public Daily Rates</h2>
+          </div>
+
+          <div className="border border-[#433d38]/50 overflow-hidden mb-6">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Day Type</th>
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Daily Rate</th>
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal hidden md:table-cell">Typical Days</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#433d38]/30">
+                {[
+                  { type: 'Off-Peak Weekday', rate: '$795', days: 'Monday – Thursday' },
+                  { type: 'Standard Rate', rate: '$995', days: 'Year-round benchmark' },
+                  { type: 'Peak Weekend', rate: '$1,095', days: 'Friday, Saturday, Sunday' },
+                  { type: 'Peak Holiday', rate: '$1,095', days: 'Federal holidays + holiday weekends' },
+                ].map((row) => (
+                  <tr key={row.type} className="hover:bg-[#c9a96e]/3 transition-colors">
+                    <td className="px-6 py-4 text-[#f0e6d0]">{row.type}</td>
+                    <td className="px-6 py-4 text-[#c9a96e] font-medium">{row.rate}</td>
+                    <td className="px-6 py-4 text-[#5f5850] hidden md:table-cell">{row.days}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="space-y-3 text-sm text-[#5f5850]">
+            <p>Minimum 1-day rental. Rates are per 24-hour rental period. Multi-day discounts available for 5+ day bookings — contact us.</p>
+            <p>Public included mileage: <span className="text-[#a09890]">100 miles/day.</span> Overage: <span className="text-[#a09890]">$0.50/mile.</span></p>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2: MEMBER RATES */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Section 2</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Sterling Reserve Member Rates</h2>
+          </div>
+
+          <div className="border border-[#433d38]/50 overflow-hidden mb-6">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Day Type</th>
+                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Public</th>
+                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Reserve</th>
+                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Gold</th>
+                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Black</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#433d38]/30">
+                {[
+                  { type: 'Off-Peak Weekday', public: '$795', reserve: '$636', gold: '$596', black: '$557' },
+                  { type: 'Standard', public: '$995', reserve: '$796', gold: '$746', black: '$697' },
+                  { type: 'Peak Weekend', public: '$1,095', reserve: '$876', gold: '$821', black: '$767' },
+                ].map((row) => (
+                  <tr key={row.type} className="hover:bg-[#c9a96e]/3 transition-colors">
+                    <td className="px-6 py-4 text-[#f0e6d0]">{row.type}</td>
+                    <td className="px-6 py-4 text-center text-[#5f5850]">{row.public}</td>
+                    <td className="px-6 py-4 text-center text-[#a09890]">{row.reserve}</td>
+                    <td className="px-6 py-4 text-center text-[#a09890]">{row.gold}</td>
+                    <td className="px-6 py-4 text-center text-[#c9a96e]">{row.black}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="text-sm text-[#5f5850]">
+            Member rates reflect 20%, 25%, and 30% discounts respectively. Founding member rates are locked.{' '}
+            <Link href="/sterling-reserve" className="text-[#c9a96e]/70 hover:text-[#c9a96e] transition-colors">
+              Learn about Sterling Reserve →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* SECTION 3: ADD-ON PRICING */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Section 3</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Add-On Pricing</h2>
+          </div>
+
+          <div className="border border-[#433d38]/50 overflow-hidden mb-6">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Add-On</th>
+                  <th className="px-6 py-4 text-right text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Public Price</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#433d38]/30">
+                {[
+                  { addon: 'Stocked Cooler', price: '$65' },
+                  { addon: 'Golf Trip Setup', price: '$45' },
+                  { addon: 'Tailgate Package', price: '$55' },
+                  { addon: 'Champagne Service', price: '$75' },
+                  { addon: 'Premium Snack Board', price: '$50' },
+                  { addon: 'Floral Arrangement', price: '$60' },
+                ].map((row) => (
+                  <tr key={row.addon} className="hover:bg-[#c9a96e]/3 transition-colors">
+                    <td className="px-6 py-4 text-[#f0e6d0]">{row.addon}</td>
+                    <td className="px-6 py-4 text-right text-[#c9a96e]">{row.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="p-5 border border-[#433d38]/50 bg-[#0f0e0c] text-sm text-[#5f5850] space-y-2">
+            <p>Gold members receive add-ons at cost + $25 setup fee.</p>
+            <p>Black members receive add-ons at cost, no setup fee.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: FEE SCHEDULE */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Section 4</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Fee Schedule</h2>
+            <p className="text-[#5f5850] text-sm mt-3">Applies to all members and public renters. No member waivers on operational charges.</p>
+          </div>
+
+          <div className="border border-[#433d38]/50 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Item</th>
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Fee</th>
+                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal hidden md:table-cell">Notes</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#433d38]/30">
+                {[
+                  { item: 'Black/grey tank dump', fee: "Renter's responsibility", notes: 'Non-compliance: $125. No exceptions. No member waivers.' },
+                  { item: 'Cleaning fee', fee: '$175', notes: 'Heavy soiling, food mess, stains. Light cleaning expected.' },
+                  { item: 'Smoking inside', fee: '$350', notes: 'Strict. No exceptions.' },
+                  { item: 'Fuel — failure to refill', fee: 'Fuel cost + $35', notes: 'Diesel. Return full.' },
+                  { item: 'Mileage overage', fee: 'Per tier (see above)', notes: 'Billed post-return' },
+                  { item: 'Late return', fee: '$95/hour', notes: 'After 3 hours: additional day at rack rate' },
+                  { item: 'Security deposit', fee: '$500 held at booking', notes: 'Released within 72 hrs of clean return' },
+                  { item: 'Unauthorized pet', fee: '$250', notes: 'Pets require prior written approval' },
+                  { item: 'Additional driver', fee: '$0 (approved in advance)', notes: 'Must be listed before departure' },
+                ].map((row, i) => (
+                  <tr key={i} className="hover:bg-[#c9a96e]/3 transition-colors">
+                    <td className="px-6 py-4 text-[#f0e6d0]">{row.item}</td>
+                    <td className="px-6 py-4 text-[#c9a96e]">{row.fee}</td>
+                    <td className="px-6 py-4 text-[#5f5850] hidden md:table-cell">{row.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: DEPOSIT & PAYMENT */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Section 5</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Deposit &amp; Payment</h2>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              '35% deposit due at booking to hold your dates.',
+              'Balance due 24 hours before departure.',
+              'Balance charged automatically to the card on file.',
+              'Security deposit: $500 held at booking, released within 72 hours of clean return.',
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <span className="text-[#c9a96e]/50 mt-1 shrink-0">—</span>
+                <p className="text-[#a09890] leading-relaxed">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/book"
+              className="inline-block bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[#d4b87a] transition-colors duration-200 text-center"
+            >
+              Check Availability
+            </Link>
+            <Link
+              href="/sterling-reserve"
+              className="inline-block border border-[#c9a96e]/50 text-[#c9a96e] font-sans text-sm tracking-[0.2em] uppercase px-10 py-4 hover:bg-[#c9a96e]/10 transition-colors duration-200 text-center"
+            >
+              Apply for Reserve
+            </Link>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  )
+}
