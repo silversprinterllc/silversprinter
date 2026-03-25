@@ -430,7 +430,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
                     <span className="text-[#c9a96e] font-medium">{fmt(pricing.deposit)}</span>
                   </div>
                   <div className="flex justify-between text-xs text-[#433d38] pt-1">
-                    <span>Balance due at pickup</span>
+                    <span>Balance due 24 hrs before departure</span>
                     <span>{fmt(pricing.balance)}</span>
                   </div>
                 </div>
@@ -520,7 +520,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
                   <span className="text-[#c9a96e] font-medium">{fmt(pricing.deposit)}</span>
                 </div>
                 <div className="flex justify-between text-xs text-[#433d38]">
-                  <span>Balance at pickup</span>
+                  <span>Balance due 24 hrs prior</span>
                   <span>{fmt(pricing.balance)}</span>
                 </div>
               </div>
