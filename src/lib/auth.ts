@@ -26,8 +26,8 @@ export const authOptions: NextAuthOptions = {
         await resend.emails.send({
           from: FROM_EMAIL,
           to: identifier,
-          subject: 'Sign in to Haute Route',
-          html: `<p>Click <a href="${url}">here</a> to sign in to Haute Route.</p>`,
+          subject: 'Sign in to Sterling Route',
+          html: `<p>Click <a href="${url}">here</a> to sign in to Sterling Route.</p>`,
         })
       },
     }),

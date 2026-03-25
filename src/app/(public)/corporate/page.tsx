@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'Corporate & Real Estate — Haute Route',
+  title: 'Corporate & Real Estate — Sterling Route',
   description: 'How South Florida\'s top brokers and builders use the van to show elite properties, transport investors, and close deals. The experience starts before the front door.',
 }
 
@@ -15,7 +15,7 @@ export default function CorporatePage() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <Image
           src="/gallery/DSC04761.JPG"
-          alt="Haute Route — real estate and corporate"
+          alt="Sterling Route — real estate and corporate"
           fill
           priority
           className="object-cover opacity-30"
@@ -184,7 +184,7 @@ export default function CorporatePage() {
             <div className="relative aspect-[4/5] overflow-hidden order-2 lg:order-1">
               <Image
                 src="/gallery/DSC04766.JPG"
-                alt="Haute Route exterior"
+                alt="Sterling Route exterior"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -266,7 +266,7 @@ export default function CorporatePage() {
 
           <div className="space-y-6 text-[#a09890] text-lg leading-relaxed">
             <p>
-              Haute Route is owned and operated by a Florida-licensed
+              Sterling Route is owned and operated by a Florida-licensed
               general contractor (CGC) and real estate broker. This is the same van
               we use for property tours, site visits, investor days, and client transport.
               It&apos;s not a rental fleet vehicle. It&apos;s ours — and we take care of it

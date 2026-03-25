@@ -28,7 +28,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
         await resend.emails.send({
           from: FROM_EMAIL,
           to: user.email,
-          subject: `Your Haute Route booking is confirmed — ${booking.bookingRef}`,
+          subject: `Your Sterling Route booking is confirmed — ${booking.bookingRef}`,
           html: `
             <h2>Booking Confirmed</h2>
             <p>Your booking <strong>${booking.bookingRef}</strong> is confirmed.</p>
@@ -42,7 +42,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
         })
         if (user.phone) {
           await twilioClient.messages.create({
-            body: `Your Haute Route booking is confirmed for ${formatDateTime(booking.pickupAt)}. Booking ref: ${booking.bookingRef}`,
+            body: `Your Sterling Route booking is confirmed for ${formatDateTime(booking.pickupAt)}. Booking ref: ${booking.bookingRef}`,
             from: TWILIO_FROM,
             to: user.phone,
           })
@@ -100,7 +100,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
           subject: `Trip complete — You earned ${points} loyalty points`,
           html: `
             <h2>Trip Complete</h2>
-            <p>Thank you for riding with Haute Route.</p>
+            <p>Thank you for riding with Sterling Route.</p>
             <p>You earned <strong>${points} loyalty points</strong> on this trip.</p>
             <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/portal">Rate your ride</a></p>
           `,
@@ -142,7 +142,7 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
         })
         if (user.phone) {
           await twilioClient.messages.create({
-            body: `Your balance of $${balance.toFixed(2)} will be charged in 24 hours for your Haute Route trip on ${formatDateTime(booking.pickupAt)}.`,
+            body: `Your balance of $${balance.toFixed(2)} will be charged in 24 hours for your Sterling Route trip on ${formatDateTime(booking.pickupAt)}.`,
             from: TWILIO_FROM,
             to: user.phone,
           })

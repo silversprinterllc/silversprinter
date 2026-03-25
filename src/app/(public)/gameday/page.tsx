@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'Game Day — Haute Route',
+  title: 'Game Day — Sterling Route',
   description: 'Away games for Hurricanes, Gators, and Seminoles fans who are done squeezing into someone\'s Uber. 10 seats. WiFi. Cold drinks. The tailgate starts at your driveway.',
 }
 
@@ -15,7 +15,7 @@ export default function GameDayPage() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <Image
           src="/gallery/DSC04751.JPG"
-          alt="Haute Route — game day ready"
+          alt="Sterling Route — game day ready"
           fill
           priority
           className="object-cover opacity-30"
@@ -139,7 +139,7 @@ export default function GameDayPage() {
             <div className="relative aspect-[4/5] overflow-hidden order-2 lg:order-1">
               <Image
                 src="/gallery/DSC04756.JPG"
-                alt="Haute Route — exterior"
+                alt="Sterling Route — exterior"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -224,7 +224,7 @@ export default function GameDayPage() {
           <div>
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">How It Works</p>
             <p className="text-[#a09890] text-lg leading-relaxed">
-              Haute Route is a <strong className="text-[#f0e6d0]">self-drive rental.</strong> One
+              Sterling Route is a <strong className="text-[#f0e6d0]">self-drive rental.</strong> One
               person in your crew drives — you decide that before you leave, not after the game.
               Maybe it rotates: one person drives up, someone else handles the return.
               Or you stay over and drive home Sunday morning when everyone&apos;s fresh.

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'Family & Occasions — Haute Route',
+  title: 'Family & Occasions — Sterling Route',
   description: 'The family road trip reimagined. Weddings, reunions, birthdays, and adventures — for families who\'ve outgrown the minivan and airport chaos.',
 }
 
@@ -15,7 +15,7 @@ export default function FamilyPage() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <Image
           src="/gallery/DSC04771.JPG"
-          alt="Haute Route — family trips and occasions"
+          alt="Sterling Route — family trips and occasions"
           fill
           priority
           className="object-cover opacity-30"
@@ -130,7 +130,7 @@ export default function FamilyPage() {
             <div className="relative aspect-[4/5] overflow-hidden order-2 lg:order-1">
               <Image
                 src="/gallery/DSC04776.JPG"
-                alt="Haute Route exterior"
+                alt="Sterling Route exterior"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -227,7 +227,7 @@ export default function FamilyPage() {
               you didn&apos;t plan to be in.
             </p>
             <p>
-              The Haute Route has a private commode and sink onboard.
+              The Sterling Route has a private commode and sink onboard.
               Clean. Private. Available whenever you need it.
             </p>
             <p>
