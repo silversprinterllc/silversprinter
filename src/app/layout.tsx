@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'SilverSprinter — Luxury Sprinter Van Charters',
-  description: 'Custom-configured luxury sprinter vans with professional chauffeurs. Airport transfers, hourly charters, events, and corporate travel.',
+  title: 'Haute Route — South Florida\'s Premier Luxury Van',
+  description: 'One custom Mercedes Sprinter. 10 passengers. Golf trips, game days, corporate tours, and family adventures from Palm Beach County. Self-drive. The high road, always.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

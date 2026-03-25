@@ -15,7 +15,7 @@ export function DispatcherSidebar() {
   const pathname = usePathname()
   return (
     <aside className="w-56 shrink-0 border-r border-[#433d38]/50 min-h-screen pt-8 px-4 flex flex-col">
-      <div className="font-serif text-lg text-[#f0e6d0] px-2 mb-2">SilverSprinter</div>
+      <div className="font-serif text-lg text-[#f0e6d0] px-2 mb-2">Haute Route</div>
       <div className="text-xs text-[#c9a96e] tracking-widest uppercase px-2 mb-8">Dispatch</div>
       <nav className="flex-1 space-y-1">
         {navItems.map(({ href, label, icon: Icon, exact }) => {

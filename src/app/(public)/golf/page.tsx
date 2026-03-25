@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'Golf Trips — SilverSprinter',
+  title: 'Golf Trips — Haute Route',
   description: 'Two foursomes. One van. A weekend at Streamsong, Cabot, or Hammock Beach that your group will talk about for years. South Florida\'s premier golf trip van.',
 }
 
@@ -15,7 +15,7 @@ export default function GolfPage() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <Image
           src="/gallery/DSC04726.JPG"
-          alt="SilverSprinter — built for golf trips"
+          alt="Haute Route — built for golf trips"
           fill
           priority
           className="object-cover opacity-30"
@@ -169,7 +169,7 @@ export default function GolfPage() {
           <div>
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">How It Works</p>
             <p className="text-[#a09890] text-lg leading-relaxed">
-              SilverSprinter is a <strong className="text-[#f0e6d0]">self-drive rental.</strong> One
+              Haute Route is a <strong className="text-[#f0e6d0]">self-drive rental.</strong> One
               person in your group drives — you work that out beforehand. Maybe it rotates:
               one guy takes Friday&apos;s run down, a fresh set of hands takes Sunday home.
               Split eight ways, the van still costs less than three rental cars,
@@ -211,7 +211,7 @@ export default function GolfPage() {
             <div className="relative aspect-[4/5] overflow-hidden">
               <Image
                 src="/gallery/DSC04741.JPG"
-                alt="SilverSprinter exterior"
+                alt="Haute Route exterior"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -294,7 +294,7 @@ export default function GolfPage() {
               for five hours each way.
             </p>
             <p>
-              Or one SilverSprinter. Everyone chips in equally.
+              Or one Haute Route. Everyone chips in equally.
               The bags fit. The group is together.
               One person drives each direction — you decide who before you leave.
               Split eight ways, the van lands in the same neighborhood as the rental cars,

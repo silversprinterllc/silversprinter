@@ -106,7 +106,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Perfect For</p>
             <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">
-              Who rides Silver Sprinter
+              Who rides Haute Route
             </h2>
           </div>
 

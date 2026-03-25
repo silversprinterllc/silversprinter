@@ -17,7 +17,7 @@ const testimonials = [
     name: 'Carlos M.',
     trip: 'Corporate Travel',
     rating: 5,
-    quote: 'Our entire executive team uses SilverSprinter for airport runs. The Net-30 invoicing and dedicated coordinator make it effortless.',
+    quote: 'Our entire executive team uses Haute Route for airport runs. The Net-30 invoicing and dedicated coordinator make it effortless.',
   },
 ]
 

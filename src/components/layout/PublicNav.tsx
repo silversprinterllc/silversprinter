@@ -48,7 +48,7 @@ export function PublicNav() {
 
         {/* Logo */}
         <Link href="/" className="font-serif text-xl text-[#f0e6d0] tracking-wide">
-          Silver<span className="text-[#c9a96e]">Sprinter</span>
+          Haute<span className="text-[#c9a96e]"> Route</span>
         </Link>
 
         {/* Desktop nav */}

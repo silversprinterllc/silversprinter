@@ -81,7 +81,7 @@ export default function TheVanPage() {
       <section className="relative h-[70vh] min-h-[480px] flex items-end overflow-hidden">
         <Image
           src="/gallery/DSC04726.JPG"
-          alt="Silver Sprinter Mercedes van — exterior"
+          alt="Haute Route Mercedes van — exterior"
           fill
           priority
           className="object-cover"
