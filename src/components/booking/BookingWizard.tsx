@@ -115,6 +115,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [insuranceAck, setInsuranceAck] = useState(false)
 
   const [form, setForm] = useState<FormData>({
     insuranceConfirmed: false,
@@ -186,6 +187,28 @@ export function BookingWizard({ addons, vehicleId }: Props) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#f0e6d0] pb-24">
+      {/* Insurance reminder banner */}
+      <div className="border-b border-[#c9a96e]/30 bg-[#0a0a0a] px-6 py-3">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs text-[#a09890] leading-snug">
+            <span className="text-[#c9a96e] font-medium">Insurance Required</span>
+            {' '}— Before your rental is confirmed, email proof of $1M+ liability coverage to{' '}
+            <a href="mailto:hello@sterlingroute.com" className="text-[#c9a96e]/80 hover:text-[#c9a96e] transition-colors">
+              hello@sterlingroute.com
+            </a>.{' '}
+            Need coverage?{' '}
+            <a
+              href="https://roamly.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"
+            >
+              Get a Roamly quote →
+            </a>
+          </p>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="border-b border-[#433d38]/40 bg-[#0a0a0a] py-10 px-6">
         <div className="max-w-3xl mx-auto">
@@ -559,6 +582,38 @@ export function BookingWizard({ addons, vehicleId }: Props) {
                 Your deposit is fully refundable up to 30 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Your rental agreement will be sent after booking. Insurance must be confirmed through Roamly before your reservation is finalized.
               </div>
 
+              {/* Insurance acknowledgment — must be checked before paying */}
+              <label className="flex items-start gap-4 cursor-pointer group">
+                <div
+                  onClick={() => setInsuranceAck(v => !v)}
+                  className={`mt-0.5 w-5 h-5 border flex items-center justify-center shrink-0 cursor-pointer transition-colors ${
+                    insuranceAck
+                      ? 'bg-[#c9a96e] border-[#c9a96e] text-[#0a0a0a]'
+                      : 'border-[#433d38] group-hover:border-[#c9a96e]/50'
+                  }`}
+                >
+                  {insuranceAck && (
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span
+                  onClick={() => setInsuranceAck(v => !v)}
+                  className="text-sm text-[#a09890] leading-relaxed cursor-pointer"
+                >
+                  I confirm I have obtained or will obtain minimum $1,000,000 liability coverage and will provide proof to{' '}
+                  <a
+                    href="mailto:hello@sterlingroute.com"
+                    className="text-[#c9a96e]/80 hover:text-[#c9a96e] transition-colors"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    hello@sterlingroute.com
+                  </a>{' '}
+                  before departure.
+                </span>
+              </label>
+
               {error && (
                 <div className="border border-red-800/50 bg-red-900/20 px-4 py-3 text-sm text-red-400">
                   {error}
@@ -567,7 +622,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
 
               <button
                 onClick={handleReserve}
-                disabled={loading}
+                disabled={loading || !insuranceAck}
                 className="w-full bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium py-4 hover:bg-[#d4b87a] transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loading ? 'Processing…' : `Pay ${pricing ? fmt(pricing.deposit) : ''} Deposit`}

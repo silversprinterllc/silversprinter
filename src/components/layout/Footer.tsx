@@ -37,6 +37,7 @@ export function Footer() {
               ['Contact', '/contact'],
               ['FAQ', '/faq'],
               ['Rental Terms', '/rental-terms'],
+              ['Insurance Requirements', '/insurance'],
             ].map(([label, href]) => (
               <li key={label}>
                 <Link href={href} className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors">{label}</Link>

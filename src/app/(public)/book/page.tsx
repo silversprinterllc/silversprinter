@@ -178,8 +178,29 @@ export default function BookPage() {
     <div className="min-h-screen bg-[#0a0a0a] text-[#f0e6d0]">
       <PublicNav />
 
+      {/* Insurance reminder banner */}
+      <div className="border-b border-[#c9a96e]/30 bg-[#0a0a0a] px-6 py-3 mt-16">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs text-[#a09890] leading-snug">
+            Before your dates are confirmed: email insurance proof to{' '}
+            <a href="mailto:hello@sterlingroute.com" className="text-[#c9a96e]/80 hover:text-[#c9a96e] transition-colors">
+              hello@sterlingroute.com
+            </a>{' '}
+            —{' '}
+            <a
+              href="https://roamly.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"
+            >
+              Get Roamly coverage →
+            </a>
+          </p>
+        </div>
+      </div>
+
       {/* Header */}
-      <div className="border-b border-[#433d38]/40 py-12 px-6 mt-16">
+      <div className="border-b border-[#433d38]/40 py-12 px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-2">Self-Drive Rental</p>
           <h1 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-6">Reserve the Van</h1>

@@ -105,7 +105,7 @@ export function PublicNav() {
         {/* Book Now */}
         <div className="hidden md:flex items-center">
           <Button size="sm" asChild>
-            <Link href="/book">Book Now</Link>
+            <Link href="/insurance">Book Now</Link>
           </Button>
         </div>
 
@@ -153,7 +153,7 @@ export function PublicNav() {
 
           <div className="pt-2">
             <Button size="sm" asChild>
-              <Link href="/book" onClick={() => setOpen(false)}>Book Now</Link>
+              <Link href="/insurance" onClick={() => setOpen(false)}>Book Now</Link>
             </Button>
           </div>
         </div>
