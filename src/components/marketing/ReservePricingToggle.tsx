@@ -19,6 +19,7 @@ const tiers = {
     ctaLabel: 'Apply — Reserve',
     ctaClass: 'border border-[#c9a96e]/50 text-[#c9a96e] hover:bg-[#c9a96e]/10',
     featured: false,
+    bookingNotice: '48-hour minimum advance booking notice',
   },
   gold: {
     label: 'Gold',
@@ -33,6 +34,7 @@ const tiers = {
     ctaLabel: 'Apply — Gold',
     ctaClass: 'bg-[#c9a96e] text-[#0a0a0a] hover:bg-[#d4b87a]',
     featured: true,
+    bookingNotice: '24-hour minimum advance booking notice',
   },
   black: {
     label: 'Black',
@@ -47,6 +49,7 @@ const tiers = {
     ctaLabel: 'Apply — Black',
     ctaClass: 'border border-[#c9a96e]/50 text-[#c9a96e] hover:bg-[#c9a96e]/10',
     featured: false,
+    bookingNotice: 'Same-day booking available (subject to availability)',
   },
 }
 
@@ -102,6 +105,7 @@ export function ReservePricingToggle() {
                 <p className="text-xs text-[#5f5850] mb-6">billed monthly</p>
               )}
               <div className={`w-12 h-px ${tier.dividerClass} mb-6`} />
+              <p className="text-xs text-[#5f5850] mb-6">{tier.bookingNotice}</p>
               <div className="mt-auto pt-4">
                 <Link
                   href={tier.ctaHref}

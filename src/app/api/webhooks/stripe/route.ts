@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
             addOns: addOnNames,
             depositAmount: booking.depositAmount,
             balanceAmount: booking.balanceAmount,
-            balanceDueDate: '24 hours before departure',
+            balanceDueDate: '48 hours before departure',
           })
         } catch (emailError) {
           console.error('Booking confirmation email failed:', emailError)

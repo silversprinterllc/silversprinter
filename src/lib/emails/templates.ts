@@ -224,7 +224,7 @@ export function bookingConfirmationEmail(data: {
                     <table cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td width="28" valign="top" style="font-family:Arial,sans-serif;font-size:13px;color:#c9a96e;font-weight:700;">3.</td>
-                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#c0b0a0;line-height:1.5;">Your balance of <strong style="color:#f0e6d0;">$${data.balanceAmount.toLocaleString()}</strong> will be auto-charged 24 hours before departure</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#c0b0a0;line-height:1.5;">Your balance of <strong style="color:#f0e6d0;">$${data.balanceAmount.toLocaleString()}</strong> will be auto-charged 48 hours before departure</td>
                       </tr>
                     </table>
                   </td>

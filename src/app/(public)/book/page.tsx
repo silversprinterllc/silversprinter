@@ -12,7 +12,7 @@ const ADD_ONS = [
   { id: 'golf-trip-setup', name: 'Golf Trip Setup', price: 45, description: 'Cargo area configured for clubs: non-slip mat, tie-down straps, organized storage. Includes a printed course guide for your destination (Streamsong, Cabot Citrus Farms, TPC Sawgrass, Innisbrook — or your choice). Pickup is smooth. Unload is smooth. Nothing shifts in transit.' },
   { id: 'tailgate-package', name: 'Tailgate Package', price: 55, description: 'Folding table, 6 camp chairs, reusable stadium cups, bottle opener, disposable serving trays. Everything you need for a proper pre-game setup — none of it left behind. You pack in, you pack out.' },
   { id: 'champagne-service', name: 'Champagne Service', price: 75, description: 'Two bottles of Moët & Chandon (or equivalent) chilled and waiting in the fridge. Flutes for 10. Gold napkins. No corkage, no fuss. Ideal for milestones, celebrations, or any trip that deserves a proper send-off. Note: Alcohol service is for passengers only — not the driver, ever.' },
-  { id: 'premium-snack-board', name: 'Premium Snack Board', price: 50, description: 'Artisan board: charcuterie, aged cheeses, crackers, nuts, dried fruit, chocolate. Serves 6–8. Pre-arranged at pickup. Pairs with the champagne service or stands on its own. No wilted gas station snacks on a Sterling Route trip.' },
+  { id: 'premium-snack-board', name: 'Premium Snack Board', price: 85, description: 'Artisan board: charcuterie, aged cheeses, crackers, nuts, dried fruit, chocolate. Serves 6–8. Pre-arranged at pickup. Pairs with the champagne service or stands on its own. No wilted gas station snacks on a Sterling Route trip.' },
   { id: 'floral-arrangement', name: 'Floral Arrangement', price: 60, description: 'Fresh arrangement from a local Palm Beach County florist. Suitable for anniversaries, proposals, birthdays, or any occasion that calls for flowers. Specify occasion and color preference at booking. Add-on must be requested 72 hours in advance.' },
 ]
 
@@ -99,7 +99,11 @@ export default function BookPage() {
     }))
   }
 
-  const today = new Date().toISOString().split('T')[0]
+  const minDate = (() => {
+    const d = new Date()
+    d.setDate(d.getDate() + 3)
+    return d.toISOString().split('T')[0]
+  })()
 
   const pricing = useMemo(() => {
     if (!form.startDate || !form.endDate) return null
@@ -248,7 +252,7 @@ export default function BookPage() {
                   <label className={labelClass}>Start Date</label>
                   <input
                     type="date"
-                    min={today}
+                    min={minDate}
                     value={form.startDate}
                     onChange={(e) => set('startDate', e.target.value)}
                     className={inputClass + ' [color-scheme:dark]'}
@@ -258,7 +262,7 @@ export default function BookPage() {
                   <label className={labelClass}>End Date</label>
                   <input
                     type="date"
-                    min={form.startDate || today}
+                    min={form.startDate || minDate}
                     value={form.endDate}
                     onChange={(e) => set('endDate', e.target.value)}
                     className={inputClass + ' [color-scheme:dark]'}
@@ -608,7 +612,7 @@ export default function BookPage() {
                     <span className="text-[#c9a96e] font-semibold">{fmt(pricing.deposit)}</span>
                   </div>
                   <div className="flex justify-between text-xs text-[#433d38] pt-1">
-                    <span>Balance due 24 hours before departure (65%)</span>
+                    <span>Balance due 48 hours before departure (65%)</span>
                     <span>{fmt(pricing.balance)}</span>
                   </div>
                 </div>
@@ -680,7 +684,7 @@ export default function BookPage() {
                 <div className="h-px bg-[#433d38]/30 my-4" />
                 <p className="text-xs">{fmt(DAILY_RATE)}/day flat rate</p>
                 <p className="text-xs">35% deposit to reserve</p>
-                <p className="text-xs">Balance due 24 hrs before departure</p>
+                <p className="text-xs">Balance due 48 hrs before departure</p>
               </div>
             ) : (
               <div className="space-y-3 text-sm">
@@ -706,7 +710,7 @@ export default function BookPage() {
                   <span className="text-[#c9a96e] font-medium">{fmt(pricing.deposit)}</span>
                 </div>
                 <div className="flex justify-between text-xs text-[#433d38]">
-                  <span>Balance 24 hrs prior</span>
+                  <span>Balance 48 hrs prior</span>
                   <span>{fmt(pricing.balance)}</span>
                 </div>
               </div>

@@ -136,13 +136,13 @@ export async function sendBookingNotification(bookingId: string, event: Notifica
           subject: `Balance of $${balance.toFixed(2)} due — ${booking.bookingRef}`,
           html: `
             <h2>Balance Due Soon</h2>
-            <p>Your balance of <strong>$${balance.toFixed(2)}</strong> will be charged in 24 hours.</p>
+            <p>Your balance of <strong>$${balance.toFixed(2)}</strong> will be charged in 48 hours.</p>
             <p>Trip: ${formatDateTime(booking.pickupAt)}</p>
           `,
         })
         if (user.phone) {
           await twilioClient.messages.create({
-            body: `Your balance of $${balance.toFixed(2)} will be charged in 24 hours for your Sterling Route trip on ${formatDateTime(booking.pickupAt)}.`,
+            body: `Your balance of $${balance.toFixed(2)} will be charged in 48 hours for your Sterling Route trip on ${formatDateTime(booking.pickupAt)}.`,
             from: TWILIO_FROM,
             to: user.phone,
           })

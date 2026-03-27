@@ -9,19 +9,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Build tomorrow's date string in YYYY-MM-DD format
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  const tomorrowStr = tomorrow.toISOString().slice(0, 10) // "YYYY-MM-DD"
+  // Build day-after-tomorrow's date string in YYYY-MM-DD format (48 hours before departure)
+  const dayAfterTomorrow = new Date()
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2)
+  const departureDateStr = dayAfterTomorrow.toISOString().slice(0, 10) // "YYYY-MM-DD"
 
-  // Query confirmed rental bookings departing tomorrow
+  // Query confirmed rental bookings departing in 2 days (balance due 48 hours before departure)
   // startDate is stored as a string (YYYY-MM-DD) in the schema
   let bookings: Awaited<ReturnType<typeof prisma.rentalBooking.findMany>> = []
   try {
     bookings = await prisma.rentalBooking.findMany({
       where: {
         status: 'CONFIRMED',
-        startDate: tomorrowStr,
+        startDate: departureDateStr,
       },
     })
   } catch (err) {
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
   for (const booking of bookings) {
     try {
-      console.log(`Processing balance emails for booking ${booking.id} — departure ${tomorrowStr}`)
+      console.log(`Processing balance emails for booking ${booking.id} — departure ${departureDateStr}`)
 
       // TODO: Full Stripe balance charge requires payment method ID stored from initial checkout.
       // For now, we send pre-trip emails. Stripe charge logic can be added once
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    date: tomorrowStr,
+    date: departureDateStr,
     processed: results.length,
     results,
   })

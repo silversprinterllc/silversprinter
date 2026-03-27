@@ -58,8 +58,9 @@ export default function RatesPage() {
           </div>
 
           <div className="space-y-3 text-sm text-[#5f5850]">
-            <p>Minimum 1-day rental. Rates are per 24-hour rental period. Multi-day discounts available for 5+ day bookings — contact us.</p>
+            <p>Minimum 1-day rental. Minimum charge $795. Rates are per 24-hour rental period. Multi-day discounts available for 5+ day bookings — contact us.</p>
             <p>Public included mileage: <span className="text-[#a09890]">100 miles/day.</span> Overage: <span className="text-[#a09890]">$0.50/mile.</span></p>
+            <p>Minimum 72-hour advance booking notice required for public bookings.</p>
           </div>
         </div>
       </section>
@@ -132,7 +133,7 @@ export default function RatesPage() {
                   { addon: 'Golf Trip Setup', price: '$45' },
                   { addon: 'Tailgate Package', price: '$55' },
                   { addon: 'Champagne Service', price: '$75' },
-                  { addon: 'Premium Snack Board', price: '$50' },
+                  { addon: 'Premium Snack Board', price: '$85' },
                   { addon: 'Floral Arrangement', price: '$60' },
                 ].map((row) => (
                   <tr key={row.addon} className="hover:bg-[#c9a96e]/3 transition-colors">
@@ -205,7 +206,7 @@ export default function RatesPage() {
           <div className="space-y-4">
             {[
               '35% deposit due at booking to hold your dates.',
-              'Balance due 24 hours before departure.',
+              'Balance due 48 hours before departure.',
               'Balance charged automatically to the card on file.',
               'Security deposit: $1,500 held at booking, released within 72 hours of clean return.',
             ].map((item, i) => (

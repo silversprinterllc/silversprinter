@@ -180,7 +180,7 @@ export default async function ConfirmationPage({
             <div className="flex justify-between">
               <span className="text-[#5f5850]">Balance due</span>
               <span className="text-[#f0e6d0]">
-                {fmt(booking.balanceAmount)} — 24 hours before departure (charged automatically)
+                {fmt(booking.balanceAmount)} — 48 hours before departure (charged automatically)
               </span>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default async function ConfirmationPage({
             {[
               'Check your email — confirmation and receipt on the way.',
               "We'll reach out 48 hours before to confirm your pickup time.",
-              'Balance charged automatically 24 hours before departure.',
+              'Balance charged automatically 48 hours before departure.',
               'Pickup day: van is ready, stocked per your requests, fueled and clean.',
             ].map((step, i) => (
               <div key={i} className="flex items-start gap-4">

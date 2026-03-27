@@ -122,7 +122,7 @@ async function main() {
         id: 'addon-refreshments',
         name: 'Premium Snack Board',
         description: 'Artisan board: charcuterie, aged cheeses, crackers, nuts, dried fruit, chocolate. Serves 6–8. Pre-arranged at pickup. Pairs with the champagne service or stands on its own. No wilted gas station snacks on a Sterling Route trip.',
-        price: 50,
+        price: 85,
         category: 'Food',
         isActive: true,
       },

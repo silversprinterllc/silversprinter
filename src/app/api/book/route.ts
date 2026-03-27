@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
                 currency: 'usd',
                 product_data: {
                   name: `Sterling Route Deposit — ${input.tripType}`,
-                  description: `35% deposit for ${days}-day rental · ${input.startDate} → ${input.endDate}. Balance of $${balance.toFixed(0)} due 24 hours before departure.`,
+                  description: `35% deposit for ${days}-day rental · ${input.startDate} → ${input.endDate}. Balance of $${balance.toFixed(0)} due 48 hours before departure.`,
                 },
                 unit_amount: Math.round(deposit * 100),
               },

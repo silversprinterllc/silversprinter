@@ -151,8 +151,9 @@ export default function RentalTermsPage() {
 
         <Section number={12} title="Payment Terms">
           <Para>
-            A deposit of 35% of the total rental cost is due at the time of booking. The remaining balance (65%) is due 24 hours before the scheduled departure date and will be charged automatically to the card on file. If the balance charge fails, Company reserves the right to cancel the reservation. The deposit is subject to the cancellation policy in Section 13.
+            A deposit of 35% of the total rental cost is due at the time of booking. The remaining balance (65%) is due 48 hours before the scheduled departure date and will be charged automatically to the card on file. If the balance charge fails, Company reserves the right to cancel the reservation. The deposit is subject to the cancellation policy in Section 13.
           </Para>
+          <Rule>Minimum advance booking notice: 72 hours for public bookings. Sterling Reserve Gold members: 24-hour minimum. Sterling Reserve Black members: same-day booking available subject to availability.</Rule>
         </Section>
 
         <Section number={13} title="Cancellation Policy">

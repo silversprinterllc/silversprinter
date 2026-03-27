@@ -121,8 +121,12 @@ export default function FAQPage() {
               answer: <p>Public customers book based on live availability — first come, first served. Reserve members get a 60-day window before public. Gold gets 90 days. Black has full calendar access with no restriction.</p>,
             },
             {
+              question: 'Is there a minimum advance booking notice?',
+              answer: <p>Yes. Public bookings require a minimum of 72 hours advance notice — same-day and next-day bookings are not available for public customers. Sterling Reserve Gold members: 24-hour minimum. Sterling Reserve Black members: same-day booking available subject to availability.</p>,
+            },
+            {
               question: 'What\'s the minimum rental period?',
-              answer: <p>One day (24 hours). There is no hourly rate.</p>,
+              answer: <p>One day (24 hours). Minimum charge $795. No half-days, no hourly rates.</p>,
             },
             {
               question: 'Can I extend my rental while on the road?',
@@ -137,7 +141,7 @@ export default function FAQPage() {
                     'Book online with dates, trip type, add-ons, and contact details.',
                     'Pay 35% deposit.',
                     'Receive rental agreement and insurance verification confirmation.',
-                    'Balance auto-charged 24 hours before departure.',
+                    'Balance auto-charged 48 hours before departure.',
                     'Pick up at confirmed Palm Beach County location.',
                     'Return clean, tanks dumped, fuel full.',
                   ].map((step, i) => (
