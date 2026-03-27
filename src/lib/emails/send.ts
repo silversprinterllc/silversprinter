@@ -9,7 +9,7 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_build_only')
 const FROM = process.env.FROM_EMAIL || 'hello@sterlingroute.com'
-const OWNER_EMAIL = 'hello@sterlingroute.com'
+const OWNER_EMAIL = process.env.OWNER_EMAIL || 'ben@thehoadleygroup.com'
 
 export async function sendBookingConfirmation(
   to: string,
