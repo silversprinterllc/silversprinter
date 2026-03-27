@@ -32,6 +32,7 @@ export function PublicNav() {
   const mainLinks = [
     { href: '/',        label: 'Home',    exact: true },
     { href: '/fleet',   label: 'The Van', exact: false },
+    { href: '/about',   label: 'About',   exact: false },
     { href: '/gallery', label: 'Gallery', exact: false },
   ]
 
