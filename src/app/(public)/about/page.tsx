@@ -11,10 +11,10 @@ export default function AboutPage() {
     <div className="bg-[#0a0a0a] text-[#f0e6d0]">
 
       {/* HERO */}
-      <section className="py-32 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-32 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-8">Palm Beach County, Florida</p>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-[#f0e6d0] leading-tight mb-8 whitespace-pre-line">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl xl:text-7xl text-[#f0e6d0] leading-tight mb-8 whitespace-pre-line">
             {"One Van.\nOne Family.\nOne Standard."}
           </h1>
           <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl">
@@ -24,7 +24,7 @@ export default function AboutPage() {
       </section>
 
       {/* THE ORIGIN */}
-      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl text-[#f0e6d0] mb-10">It Didn&apos;t Start as a Business</h2>
           <div className="space-y-7 text-[#a09890] text-base leading-relaxed">
@@ -42,7 +42,7 @@ export default function AboutPage() {
       </section>
 
       {/* THE MAN BEHIND IT */}
-      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl text-[#f0e6d0] mb-10">Why the Standards Are What They Are</h2>
           <div className="space-y-7 text-[#a09890] text-base leading-relaxed">
@@ -57,9 +57,9 @@ export default function AboutPage() {
       </section>
 
       {/* THE VAN */}
-      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-serif text-3xl text-[#f0e6d0] mb-3">The Machine</h2>
+          <h2 className="font-serif text-2xl md:text-3xl text-[#f0e6d0] mb-3">The Machine</h2>
           <p className="text-[#5f5850] text-sm mb-12">Custom-built. Not purchased off a lot.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#433d38]/40">
@@ -102,7 +102,7 @@ export default function AboutPage() {
       </section>
 
       {/* STERLING RESERVE */}
-      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-3xl text-[#f0e6d0] mb-3">Sterling Reserve</h2>
           <p className="text-[#5f5850] text-sm mb-8">For the clients who want first access, preferred rates, and a concierge who handles the details.</p>
@@ -119,7 +119,7 @@ export default function AboutPage() {
       </section>
 
       {/* HOADLEY GROUP */}
-      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-2xl text-[#f0e6d0] mb-6">Part of the Hoadley Group</h2>
           <p className="text-[#a09890] text-base leading-relaxed">
@@ -129,9 +129,9 @@ export default function AboutPage() {
       </section>
 
       {/* CLOSING CTA */}
-      <section className="py-32 px-6">
+      <section className="py-16 md:py-32 px-4 md:px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-4">The Van Is Ready.</h2>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#f0e6d0] mb-4">The Van Is Ready.</h2>
           <p className="text-[#5f5850] text-base mb-12">Check availability for your dates.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

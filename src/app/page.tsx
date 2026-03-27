@@ -98,11 +98,11 @@ export default async function HomePage() {
       <HeroSection />
 
       {/* ── The Van ── */}
-      <section className="py-24 px-6 border-t border-[#433d38]/40">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-[#433d38]/40">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">The Van</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-4">
+            <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-[#f0e6d0] mb-4">
               A suite on wheels
             </h2>
             <div className="w-16 h-px bg-[#c9a96e] mx-auto mb-5" />
@@ -127,11 +127,11 @@ export default async function HomePage() {
       </section>
 
       {/* ── Personas ── */}
-      <section className="py-24 px-6 bg-[#0d0b09] border-t border-[#433d38]/40">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#0d0b09] border-t border-[#433d38]/40">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Perfect For</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">
+            <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-[#f0e6d0]">
               Who rides Sterling Route
             </h2>
           </div>
@@ -152,7 +152,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Gallery Strip ── */}
-      <section className="py-24 px-6 border-t border-[#433d38]/40">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-[#433d38]/40">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
@@ -244,29 +244,29 @@ export default async function HomePage() {
       )}
 
       {/* ── Booking CTA ── */}
-      <section className="py-24 px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-4">Ready to Roll</p>
-          <h2 className="font-serif text-5xl md:text-6xl text-[#f0e6d0] mb-6">
+          <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#f0e6d0] mb-6">
             Ready to Book?
           </h2>
           <div className="w-16 h-px bg-[#c9a96e] mx-auto mb-8" />
           <p className="text-[#a09890] mb-10 leading-relaxed">
-            Reserve South Florida's finest mobile suite for your next trip. Rental agreement and insurance handled simply through Outdoorsy.
+            Reserve South Florida's finest mobile suite for your next trip. Book directly through Sterling Route — insurance through Roamly, payment through Stripe.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/book"
-              className="inline-flex items-center justify-center px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#d4b87a] transition-colors duration-200"
+              className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#d4b87a] transition-colors duration-200"
             >
               Check Availability
             </Link>
-            <a
-              href="#outdoorsy"
-              className="inline-flex items-center justify-center px-8 py-3 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#c9a96e]/10 transition-colors duration-200"
+            <Link
+              href="/rates"
+              className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] px-8 py-3 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#c9a96e]/10 transition-colors duration-200"
             >
-              View on Outdoorsy
-            </a>
+              View Rates
+            </Link>
           </div>
         </div>
       </section>

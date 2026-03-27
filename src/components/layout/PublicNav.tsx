@@ -111,7 +111,7 @@ export function PublicNav() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-[#a09890]"
+          className="md:hidden text-[#a09890] min-w-[44px] min-h-[44px] flex items-center justify-center"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -126,7 +126,7 @@ export function PublicNav() {
             <Link
               key={l.href}
               href={l.href}
-              className={`py-2 text-sm transition-colors ${
+              className={`min-h-[44px] flex items-center text-sm transition-colors ${
                 isActive(l.href, l.exact) ? 'text-[#c9a96e]' : 'text-[#a09890]'
               }`}
               onClick={() => setOpen(false)}
@@ -141,7 +141,7 @@ export function PublicNav() {
               <Link
                 key={t.href}
                 href={t.href}
-                className={`block py-2 pl-3 text-sm transition-colors border-l border-[#433d38]/50 ${
+                className={`min-h-[44px] flex items-center pl-3 text-sm transition-colors border-l border-[#433d38]/50 ${
                   pathname.startsWith(t.href) ? 'text-[#c9a96e] border-[#c9a96e]' : 'text-[#a09890]'
                 }`}
                 onClick={() => setOpen(false)}

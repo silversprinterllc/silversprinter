@@ -11,10 +11,10 @@ export default function RatesPage() {
     <div className="bg-[#0a0a0a] text-[#f0e6d0]">
 
       {/* HEADER */}
-      <section className="py-32 px-6 border-b border-[#c9a96e]/20">
+      <section className="py-16 md:py-32 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-8">Transparent Pricing</p>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-[#f0e6d0] leading-tight mb-8">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl xl:text-7xl text-[#f0e6d0] leading-tight mb-8">
             What It Costs
           </h1>
           <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl">
@@ -31,8 +31,8 @@ export default function RatesPage() {
             <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Public Daily Rates</h2>
           </div>
 
-          <div className="border border-[#433d38]/50 overflow-hidden mb-6">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto border border-[#433d38]/50 mb-6">
+            <table className="w-full text-sm min-w-[400px]">
               <thead>
                 <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
                   <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Day Type</th>
@@ -72,8 +72,8 @@ export default function RatesPage() {
             <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Sterling Reserve Member Rates</h2>
           </div>
 
-          <div className="border border-[#433d38]/50 overflow-hidden mb-6">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto border border-[#433d38]/50 mb-6">
+            <table className="w-full text-sm min-w-[400px]">
               <thead>
                 <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
                   <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Day Type</th>
@@ -118,8 +118,8 @@ export default function RatesPage() {
             <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Add-On Pricing</h2>
           </div>
 
-          <div className="border border-[#433d38]/50 overflow-hidden mb-6">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto border border-[#433d38]/50 mb-6">
+            <table className="w-full text-sm min-w-[400px]">
               <thead>
                 <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
                   <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Add-On</th>
@@ -173,13 +173,14 @@ export default function RatesPage() {
                 {[
                   { item: 'Black/grey tank dump', fee: "Renter's responsibility", notes: 'Non-compliance: $125. No exceptions. No member waivers.' },
                   { item: 'Cleaning fee', fee: '$175', notes: 'Heavy soiling, food mess, stains. Light cleaning expected.' },
-                  { item: 'Smoking inside', fee: '$350', notes: 'Strict. No exceptions.' },
+                  { item: 'Smoking inside', fee: '$500', notes: 'Zero tolerance. No exceptions, ever.' },
                   { item: 'Fuel — failure to refill', fee: 'Fuel cost + $35', notes: 'Diesel. Return full.' },
                   { item: 'Mileage overage', fee: 'Per tier (see above)', notes: 'Billed post-return' },
                   { item: 'Late return', fee: '$95/hour', notes: 'After 3 hours: additional day at rack rate' },
-                  { item: 'Security deposit', fee: '$500 held at booking', notes: 'Released within 72 hrs of clean return' },
-                  { item: 'Unauthorized pet', fee: '$250', notes: 'Pets require prior written approval' },
-                  { item: 'Additional driver', fee: '$0 (approved in advance)', notes: 'Must be listed before departure' },
+                  { item: 'Security deposit', fee: '$1,500 held at booking', notes: 'Released within 72 hrs of clean return' },
+                  { item: 'Pet found in vehicle', fee: '$500', notes: 'NO PETS. Zero exceptions. $500 fee if evidence of pet found.' },
+                  { item: 'Additional driver — spouse/domestic partner', fee: 'FREE', notes: 'Must be listed before departure' },
+                  { item: 'Additional driver — all others', fee: '$50/driver', notes: 'Must be listed before departure. No additions after departure.' },
                 ].map((row, i) => (
                   <tr key={i} className="hover:bg-[#c9a96e]/3 transition-colors">
                     <td className="px-6 py-4 text-[#f0e6d0]">{row.item}</td>
@@ -206,7 +207,7 @@ export default function RatesPage() {
               '35% deposit due at booking to hold your dates.',
               'Balance due 24 hours before departure.',
               'Balance charged automatically to the card on file.',
-              'Security deposit: $500 held at booking, released within 72 hours of clean return.',
+              'Security deposit: $1,500 held at booking, released within 72 hours of clean return.',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4">
                 <span className="text-[#c9a96e]/50 mt-1 shrink-0">—</span>

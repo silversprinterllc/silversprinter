@@ -82,8 +82,8 @@ export function ContactForm() {
   }
 
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-16">
+    <section className="py-16 md:py-20 px-4 md:px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
 
         {/* LEFT COLUMN */}
         <div className="lg:col-span-2 space-y-10">
@@ -111,18 +111,20 @@ export function ContactForm() {
           </div>
 
           {/* Quick links */}
-          <div className="space-y-3">
+          <div>
             <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Quick Links</p>
-            {quickLinks.map((ql) => (
-              <Link
-                key={ql.href}
-                href={ql.href}
-                className="block border border-[#433d38] p-4 hover:border-[#c9a96e]/50 transition-colors group"
-              >
-                <p className="text-sm text-[#f0e6d0] group-hover:text-[#c9a96e] transition-colors mb-1">{ql.label}</p>
-                <p className="text-xs text-[#5f5850]">{ql.sub}</p>
-              </Link>
-            ))}
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+              {quickLinks.map((ql) => (
+                <Link
+                  key={ql.href}
+                  href={ql.href}
+                  className="block border border-[#433d38] p-4 hover:border-[#c9a96e]/50 transition-colors group min-h-[44px]"
+                >
+                  <p className="text-sm text-[#f0e6d0] group-hover:text-[#c9a96e] transition-colors mb-1">{ql.label}</p>
+                  <p className="text-xs text-[#5f5850]">{ql.sub}</p>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -265,7 +267,7 @@ export function ContactForm() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full sm:w-auto bg-[#c9a96e] text-[#0a0a0a] font-sans text-xs tracking-[0.2em] uppercase font-medium px-12 py-4 hover:bg-[#d4b87a] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto min-h-[48px] bg-[#c9a96e] text-[#0a0a0a] font-sans text-xs tracking-[0.2em] uppercase font-medium px-12 py-4 hover:bg-[#d4b87a] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? 'Sending…' : 'Send Message'}
               </button>

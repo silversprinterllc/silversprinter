@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button'
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] px-6">
+    <section className="relative min-h-screen md:min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] px-4 md:px-6">
       {/* Dot texture */}
       <div className="absolute inset-0 dot-texture" />
       {/* Gold gradient glow */}
@@ -13,14 +13,14 @@ export function HeroSection() {
         <p className="text-xs font-medium tracking-[0.3em] uppercase text-[#c9a96e] mb-6">
           South Florida · Self-Drive Rental
         </p>
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-[#f0e6d0] leading-[1.05] mb-6">
+        <h1 className="font-serif text-3xl md:text-5xl lg:text-7xl xl:text-8xl text-[#f0e6d0] leading-[1.05] mb-6">
           South Florida's Finest<br />
           <span className="text-gold-gradient">Mobile Suite</span>
         </h1>
         <p className="text-base md:text-lg text-[#a09890] max-w-xl mx-auto mb-10 leading-relaxed">
           One premium Mercedes Sprinter van · 10 passengers · Private commode · WiFi streaming
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
           <Button size="lg" asChild>
             <Link href="/book">Check Availability</Link>
           </Button>

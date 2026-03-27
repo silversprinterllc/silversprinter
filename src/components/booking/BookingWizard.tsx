@@ -556,7 +556,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
               </div>
 
               <div className="text-xs text-[#5f5850] border-l-2 border-[#c9a96e]/30 pl-4 leading-relaxed">
-                Your deposit is fully refundable up to 30 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Rental agreement and insurance verification through Outdoorsy will be sent after booking.
+                Your deposit is fully refundable up to 30 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Your rental agreement will be sent after booking. Insurance must be confirmed through Roamly before your reservation is finalized.
               </div>
 
               {error && (

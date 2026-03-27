@@ -176,8 +176,8 @@ export default function FAQPage() {
               answer: <p>Contact us before booking. We&apos;ll verify your coverage meets minimum requirements. If it does, you may use it in place of a Roamly policy.</p>,
             },
             {
-              question: 'What does the $500 security deposit cover?',
-              answer: <p>Minor damage, cleaning fees, dump fees, mileage overage, or any other charges incurred during the rental. It is released within 72 hours of a clean return. Damage beyond $500 is billed to the card on file.</p>,
+              question: 'What does the $1,500 security deposit cover?',
+              answer: <p>Minor damage, cleaning fees, dump fees, mileage overage, or any other charges incurred during the rental. It is released within 72 hours of a clean return. Damage beyond $1,500 is billed to the card on file.</p>,
             },
           ]}
         />
@@ -233,11 +233,11 @@ export default function FAQPage() {
             },
             {
               question: 'Can I bring a pet?',
-              answer: <p>Only with prior written approval. Unauthorized pets: $250 fee. Approved pets: you&apos;re responsible for any cleaning beyond normal.</p>,
+              answer: <p>No. There are no pets allowed under any circumstances. Zero exceptions. If evidence of a pet is found in or on the vehicle upon return, a mandatory $500 fee will be charged to the card on file, in addition to any cleaning costs.</p>,
             },
             {
               question: 'Can someone else drive?',
-              answer: <p>Yes, if approved in advance and listed before departure. Additional listed drivers must meet all eligibility requirements (25+, valid license, clean record). No adding drivers after departure.</p>,
+              answer: <p>Yes, if listed before departure. Additional listed drivers must meet all eligibility requirements (25+, valid license, clean record). No adding drivers after departure. Spouse or domestic partner: free. All other additional drivers: $50 per driver, collected before departure.</p>,
             },
             {
               question: 'What\'s the cancellation policy?',

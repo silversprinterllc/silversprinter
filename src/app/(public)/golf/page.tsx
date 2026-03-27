@@ -323,8 +323,8 @@ export default function GolfPage() {
               },
               {
                 step: '02',
-                title: 'Sign through Outdoorsy',
-                body: 'Rental agreement and insurance handled through Outdoorsy. Clean, straightforward, protected. Five minutes.',
+                title: 'Sign your rental agreement',
+                body: 'Rental agreement sent directly from Sterling Route. Insurance handled through Roamly. Clean, straightforward, protected. Five minutes.',
               },
               {
                 step: '03',

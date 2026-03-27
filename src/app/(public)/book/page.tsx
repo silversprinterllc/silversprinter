@@ -8,12 +8,12 @@ import { Footer } from '@/components/layout/Footer'
 const DAILY_RATE = 995
 
 const ADD_ONS = [
-  { id: 'stocked-cooler', name: 'Stocked Cooler', price: 65, description: 'Pre-stocked with your choice of beverages and ice.' },
-  { id: 'golf-trip-setup', name: 'Golf Trip Setup', price: 45, description: 'Bag straps, towels, tee kits, and scorecard holders.' },
-  { id: 'tailgate-package', name: 'Tailgate Package', price: 55, description: 'Foldable table, cups, plates, utensils, and serving supplies.' },
-  { id: 'champagne-service', name: 'Champagne Service', price: 75, description: 'Chilled bottle on arrival with flutes for your group.' },
-  { id: 'premium-snack-board', name: 'Premium Snack Board', price: 50, description: 'Curated charcuterie and snack board for the road.' },
-  { id: 'floral-arrangement', name: 'Floral Arrangement', price: 60, description: 'Fresh floral centerpiece for occasions and celebrations.' },
+  { id: 'stocked-cooler', name: 'Stocked Cooler', price: 65, description: 'Arrives loaded: 2 bags of ice, 24 bottles of water, 12 assorted sodas, 6 sports drinks. Ready to go at pickup. You handle the beer — we handle the basics.' },
+  { id: 'golf-trip-setup', name: 'Golf Trip Setup', price: 45, description: 'Cargo area configured for clubs: non-slip mat, tie-down straps, organized storage. Includes a printed course guide for your destination (Streamsong, Cabot Citrus Farms, TPC Sawgrass, Innisbrook — or your choice). Pickup is smooth. Unload is smooth. Nothing shifts in transit.' },
+  { id: 'tailgate-package', name: 'Tailgate Package', price: 55, description: 'Folding table, 6 camp chairs, reusable stadium cups, bottle opener, disposable serving trays. Everything you need for a proper pre-game setup — none of it left behind. You pack in, you pack out.' },
+  { id: 'champagne-service', name: 'Champagne Service', price: 75, description: 'Two bottles of Moët & Chandon (or equivalent) chilled and waiting in the fridge. Flutes for 10. Gold napkins. No corkage, no fuss. Ideal for milestones, celebrations, or any trip that deserves a proper send-off. Note: Alcohol service is for passengers only — not the driver, ever.' },
+  { id: 'premium-snack-board', name: 'Premium Snack Board', price: 50, description: 'Artisan board: charcuterie, aged cheeses, crackers, nuts, dried fruit, chocolate. Serves 6–8. Pre-arranged at pickup. Pairs with the champagne service or stands on its own. No wilted gas station snacks on a Sterling Route trip.' },
+  { id: 'floral-arrangement', name: 'Floral Arrangement', price: 60, description: 'Fresh arrangement from a local Palm Beach County florist. Suitable for anniversaries, proposals, birthdays, or any occasion that calls for flowers. Specify occasion and color preference at booking. Add-on must be requested 72 hours in advance.' },
 ]
 
 const TRIP_TYPES = [

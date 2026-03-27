@@ -20,7 +20,7 @@ const specs = [
   { label: 'Restroom', value: 'Private commode + sink' },
   { label: 'Kitchen', value: 'Microwave + mini fridge' },
   { label: 'Entertainment', value: '32" TV · Bluetooth · WiFi streaming' },
-  { label: 'Rental Platform', value: 'Outdoorsy (rental agreement & insurance included)' },
+  { label: 'Insurance', value: 'Roamly (rental insurance required — see booking for details)' },
   { label: 'Location', value: 'South Florida' },
   { label: 'Drive Type', value: 'Self-drive rental' },
 ]
@@ -78,7 +78,7 @@ export default function TheVanPage() {
     <div className="min-h-screen bg-[#0a0a0a] text-[#f0e6d0]">
 
       {/* ── Hero ── */}
-      <section className="relative h-[70vh] min-h-[480px] flex items-end overflow-hidden">
+      <section className="relative h-[80vh] md:h-[70vh] min-h-[480px] flex items-end overflow-hidden">
         <Image
           src="/gallery/DSC04726.JPG"
           alt="Sterling Route Mercedes van — exterior"
@@ -88,9 +88,9 @@ export default function TheVanPage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
-        <div className="relative z-10 px-6 pb-16 max-w-4xl mx-auto w-full">
+        <div className="relative z-10 px-4 md:px-6 pb-16 max-w-4xl mx-auto w-full">
           <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">The Van</p>
-          <h1 className="font-serif text-5xl md:text-7xl text-[#f0e6d0] leading-tight mb-4">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-7xl text-[#f0e6d0] leading-tight mb-4">
             South Florida's<br />
             <span className="text-[#c9a96e]">Mobile Suite</span>
           </h1>
@@ -118,11 +118,11 @@ export default function TheVanPage() {
       </div>
 
       {/* ── Features Grid ── */}
-      <section className="py-24 px-6">
+      <section className="py-16 md:py-24 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Amenities</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">
+            <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-[#f0e6d0]">
               Everything inside
             </h2>
             <div className="w-16 h-px bg-[#c9a96e] mx-auto mt-5" />
@@ -144,7 +144,7 @@ export default function TheVanPage() {
       </section>
 
       {/* ── Specs Table ── */}
-      <section className="py-16 px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">
+      <section className="py-16 px-4 md:px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Specifications</p>
@@ -165,27 +165,27 @@ export default function TheVanPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-24 px-6 border-t border-[#433d38]/40 text-center">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-[#433d38]/40 text-center">
         <div className="max-w-2xl mx-auto">
           <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-4">Ready to Go</p>
-          <h2 className="font-serif text-5xl text-[#f0e6d0] mb-6">Book the van</h2>
+          <h2 className="font-serif text-3xl md:text-5xl text-[#f0e6d0] mb-6">Book the van</h2>
           <div className="w-16 h-px bg-[#c9a96e] mx-auto mb-8" />
           <p className="text-[#a09890] mb-10 leading-relaxed">
-            Rental agreement and insurance are handled through Outdoorsy — simple, fast, and protected.
+            Rental insurance is required through Roamly — simple, fast, and protected. Book directly through Sterling Route.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/book"
-              className="inline-flex items-center justify-center px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#d4b87a] transition-colors duration-200"
+              className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#d4b87a] transition-colors duration-200"
             >
               Check Availability
             </Link>
-            <a
-              href="#outdoorsy"
-              className="inline-flex items-center justify-center px-8 py-3 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#c9a96e]/10 transition-colors duration-200"
+            <Link
+              href="/rates"
+              className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] px-8 py-3 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#c9a96e]/10 transition-colors duration-200"
             >
-              View on Outdoorsy
-            </a>
+              View Rates
+            </Link>
           </div>
         </div>
       </section>

@@ -73,7 +73,7 @@ async function main() {
       create: {
         id: 'addon-cooler',
         name: 'Stocked Cooler',
-        description: 'Large cooler pre-loaded with ice, water, sodas, and your choice of beer',
+        description: 'Arrives loaded: 2 bags of ice, 24 bottles of water, 12 assorted sodas, 6 sports drinks. Ready to go at pickup. You handle the beer — we handle the basics.',
         price: 65,
         category: 'Beverages',
         isActive: true,
@@ -85,7 +85,7 @@ async function main() {
       create: {
         id: 'addon-golf',
         name: 'Golf Trip Setup',
-        description: 'Organized bag loading, club protection padding, and cold towels on arrival',
+        description: 'Cargo area configured for clubs: non-slip mat, tie-down straps, organized storage. Includes a printed course guide for your destination (Streamsong, Cabot Citrus Farms, TPC Sawgrass, Innisbrook — or your choice). Pickup is smooth. Unload is smooth. Nothing shifts in transit.',
         price: 45,
         category: 'Golf',
         isActive: true,
@@ -97,7 +97,7 @@ async function main() {
       create: {
         id: 'addon-tailgate',
         name: 'Tailgate Package',
-        description: 'Team cups, plates, napkins, and decorations in your team colors',
+        description: 'Folding table, 6 camp chairs, reusable stadium cups, bottle opener, disposable serving trays. Everything you need for a proper pre-game setup — none of it left behind. You pack in, you pack out.',
         price: 55,
         category: 'Game Day',
         isActive: true,
@@ -109,7 +109,7 @@ async function main() {
       create: {
         id: 'addon-champagne',
         name: 'Champagne Service',
-        description: 'Premium champagne and crystal flutes for special occasions',
+        description: 'Two bottles of Moët & Chandon (or equivalent) chilled and waiting in the fridge. Flutes for 10. Gold napkins. No corkage, no fuss. Ideal for milestones, celebrations, or any trip that deserves a proper send-off. Note: Alcohol service is for passengers only — not the driver, ever.',
         price: 75,
         category: 'Occasions',
         isActive: true,
@@ -121,7 +121,7 @@ async function main() {
       create: {
         id: 'addon-refreshments',
         name: 'Premium Snack Board',
-        description: 'Charcuterie-style snack board with cheeses, meats, crackers, and fruit',
+        description: 'Artisan board: charcuterie, aged cheeses, crackers, nuts, dried fruit, chocolate. Serves 6–8. Pre-arranged at pickup. Pairs with the champagne service or stands on its own. No wilted gas station snacks on a Sterling Route trip.',
         price: 50,
         category: 'Food',
         isActive: true,
@@ -133,7 +133,7 @@ async function main() {
       create: {
         id: 'addon-floral',
         name: 'Floral Arrangement',
-        description: 'Fresh floral arrangement — perfect for weddings, birthdays, anniversaries',
+        description: 'Fresh arrangement from a local Palm Beach County florist. Suitable for anniversaries, proposals, birthdays, or any occasion that calls for flowers. Specify occasion and color preference at booking. Add-on must be requested 72 hours in advance.',
         price: 60,
         category: 'Occasions',
         isActive: true,

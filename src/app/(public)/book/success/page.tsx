@@ -28,7 +28,7 @@ export default async function BookSuccessPage({
           </p>
         )}
         <p className="text-sm text-[#5f5850] leading-relaxed mb-10">
-          We&apos;ll follow up within a few hours with your rental agreement and insurance verification through Outdoorsy. The remaining balance is due 24 hours before your departure date.
+          We&apos;ll follow up within a few hours with your rental agreement and insurance verification. The remaining balance is due 24 hours before your departure date.
         </p>
         <div className="w-16 h-px bg-[#433d38] mx-auto mb-8" />
         <Link href="/" className="text-sm text-[#c9a96e] hover:text-[#d4b87a] transition-colors tracking-widest uppercase">

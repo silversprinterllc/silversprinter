@@ -40,10 +40,10 @@ export default function RentalTermsPage() {
     <div className="bg-[#0a0a0a] text-[#f0e6d0]">
 
       {/* PAGE HEADER */}
-      <div className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <div className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-6">Last Updated March 2026</p>
-          <h1 className="font-serif text-5xl md:text-6xl text-[#f0e6d0] mb-6">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#f0e6d0] mb-6">
             Rental Agreement &amp;<br />Terms of Use
           </h1>
           <p className="text-[#5f5850] text-base leading-relaxed max-w-xl">
@@ -55,7 +55,7 @@ export default function RentalTermsPage() {
       {/* Thin gold divider */}
       <div className="h-px bg-[#c9a96e]/20 max-w-3xl mx-auto" />
 
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 md:px-6">
 
         <Section number={1} title="Parties">
           <Para>
@@ -78,7 +78,7 @@ export default function RentalTermsPage() {
           <Rule>Provide valid insurance through Roamly (or approved equivalent) prior to departure</Rule>
           <Rule>Pass identity verification at Company&apos;s discretion</Rule>
           <Para>
-            Any additional listed drivers must meet the same eligibility requirements. All drivers must be listed prior to departure. Adding unlisted drivers during the rental period constitutes a material breach of this agreement.
+            Any additional listed drivers must meet the same eligibility requirements. All drivers must be listed prior to departure. Adding unlisted drivers during the rental period constitutes a material breach of this agreement. Spouse or domestic partner may be added at no additional charge. All other additional drivers: $50 per driver, collected before departure. No driver additions after departure.
           </Para>
         </Section>
 
@@ -123,7 +123,7 @@ export default function RentalTermsPage() {
           <Rule>Off-road driving or unpaved surfaces beyond normal rural roads</Rule>
           <Rule>Racing, stunt driving, or any competitive event</Rule>
           <Rule>Transport of illegal substances or contraband</Rule>
-          <Rule>Transport of animals without prior written approval from Company</Rule>
+          <Rule>Transport of animals of any kind — NO PETS. Zero exceptions. Evidence of a pet found in or on the Vehicle upon return results in a mandatory $500 fee, charged to the card on file, in addition to any cleaning costs.</Rule>
           <Rule>Any use that violates applicable local, state, or federal law</Rule>
           <Rule>Travel outside the continental United States</Rule>
           <Para>
@@ -133,7 +133,7 @@ export default function RentalTermsPage() {
 
         <Section number={9} title="Smoking & Substances">
           <Para>
-            Smoking of any kind — including cigarettes, cigars, pipes, vaping devices, and cannabis — is strictly prohibited inside the Vehicle at all times. Violation results in a mandatory $350 deodorization and cleaning fee charged to the card on file, in addition to any cleaning costs. No exceptions.
+            Smoking of any kind — including cigarettes, cigars, pipes, vaping devices, and cannabis — is strictly prohibited inside the Vehicle at all times. Zero tolerance. Violation results in a mandatory $500 deodorization and cleaning fee charged to the card on file, in addition to any additional cleaning costs. No exceptions under any circumstances.
           </Para>
         </Section>
 
@@ -145,7 +145,7 @@ export default function RentalTermsPage() {
 
         <Section number={11} title="Security Deposit">
           <Para>
-            A security deposit of $500 is collected at the time of booking. The deposit is held and applied against any unpaid fees, damage charges, or policy violations incurred during the rental. The deposit (or remaining balance after charges) is released within 72 hours of a verified clean return. The security deposit is not a limitation on Renter&apos;s liability — Renter remains liable for all costs exceeding $500.
+            A security deposit of $1,500 is collected at the time of booking. The deposit is held and applied against any unpaid fees, damage charges, or policy violations incurred during the rental. The deposit (or remaining balance after charges) is released within 72 hours of a verified clean return. The security deposit is not a limitation on Renter&apos;s liability — Renter remains liable for all costs exceeding $1,500.
           </Para>
         </Section>
 
