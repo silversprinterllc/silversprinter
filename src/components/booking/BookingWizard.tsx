@@ -198,7 +198,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
             </a>.{' '}
             Need coverage?{' '}
             <a
-              href="https://roamly.com"
+              href="https://www.roamly.com/get-your-quote"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"

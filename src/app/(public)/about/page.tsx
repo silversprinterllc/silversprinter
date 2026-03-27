@@ -18,7 +18,7 @@ export default function AboutPage() {
             {"One Van.\nOne Family.\nOne Standard."}
           </h1>
           <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl">
-            Sterling Route exists because a doctor gave some advice, a pandemic grounded the planes, and a father of five decided to do something about it.
+            Sterling Route exists because flying stopped making sense, a father of five needed a better way to move his family, and a Midwestern Automotive Design Daycruiser D6 turned out to be exactly the answer.
           </p>
         </div>
       </section>
@@ -29,10 +29,10 @@ export default function AboutPage() {
           <h2 className="font-serif text-3xl text-[#f0e6d0] mb-10">It Didn&apos;t Start as a Business</h2>
           <div className="space-y-7 text-[#a09890] text-base leading-relaxed">
             <p>
-              The doctor said to travel. Get out, put some miles on, decompress. Good advice — until you factor in five kids and a world that had grounded every plane worth boarding. Flying wasn&apos;t the answer. So we built one.
+              We like to travel. Always have. But flying with five kids stopped making sense — and when the world made it even less appealing, we decided to move differently. We found a Midwestern Automotive Design Daycruiser D6 conversion and knew immediately it was the right call.
             </p>
             <p>
-              A custom Mercedes Sprinter. Two captain chairs up front, four in the back, two benches that fold flat for overnight runs. A private commode, a microwave, a refrigerator, a 32-inch TV, WiFi from the road. We designed it for our family — the five kids, the summer runs to our lake house in New York, the white Christmas we drove up for last year. It&apos;s the kind of vehicle where nobody asks &ldquo;are we there yet&rdquo; because nobody wants the trip to end.
+              MAD builds luxury van conversions on the Mercedes-Benz Sprinter platform — the Daycruiser D6 is their flagship floorplan. Two captain chairs up front, four in the back, two benches that fold flat for overnight runs. Private commode, microwave, refrigerator, 32-inch TV, WiFi from the road. We bought it for our family — the five kids, the summer runs to our lake house in New York, the white Christmas we drove up for last year. It&apos;s the kind of vehicle where nobody asks &ldquo;are we there yet&rdquo; because nobody wants the trip to end.
             </p>
             <p>
               Between our family trips, it sits. And it&apos;s too good a machine to sit. So we made it available — to golf groups who want to do the trip right, to corporate clients who understand that arrival is part of the pitch, to families who refuse to compromise on how they travel. The standards are the same as when my own kids are in the seats: the van is clean, the tank is full, and everything works.
@@ -60,7 +60,7 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-2xl md:text-3xl text-[#f0e6d0] mb-3">The Machine</h2>
-          <p className="text-[#5f5850] text-sm mb-12">Custom-built. Not purchased off a lot.</p>
+          <p className="text-[#5f5850] text-sm mb-12">Midwestern Automotive Design Daycruiser D6 — luxury conversion on the Mercedes-Benz Sprinter platform.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#433d38]/40">
             {[

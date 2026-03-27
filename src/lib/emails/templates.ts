@@ -186,7 +186,7 @@ export function bookingConfirmationEmail(data: {
                       Email proof of <strong style="color:#f0e6d0;">$1M+ liability coverage</strong> to
                       <a href="mailto:hello@sterlingroute.com" style="color:#c9a96e;text-decoration:none;">hello@sterlingroute.com</a>
                       before your trip begins.<br/>
-                      Need coverage? Get it at <a href="https://roamly.com" style="color:#c9a96e;text-decoration:none;">roamly.com</a> — fast, easy, designed for van rentals.
+                      Need coverage? Get it at <a href="https://www.roamly.com/get-your-quote" style="color:#c9a96e;text-decoration:none;">roamly.com</a> — fast, easy, designed for van rentals.
                     </p>
                   </td>
                 </tr>
