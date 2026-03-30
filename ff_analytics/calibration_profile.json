@@ -1,0 +1,22 @@
+{
+  "snap_stillness_threshold": 0.5,
+  "snap_explosion_threshold": 17.099999999999998,
+  "snap_min_players": 7,
+  "snap_merge_window_sec": 12.0,
+  "drive_gap_threshold_sec": 50.0,
+  "score_field_position_threshold": 72.0,
+  "score_gap_threshold_sec": 85.0,
+  "score_empty_field_max_players": 6,
+  "score_reset_yard_min": 22.0,
+  "score_reset_yard_max": 42.0,
+  "score_long_gap_threshold_sec": 120.0,
+  "gain_clamp_min": -20.0,
+  "gain_clamp_max": 40.0,
+  "ref_stripe_threshold": 14.0,
+  "ref_saturation_max": 85.0,
+  "coach_height_percentile": 0.7,
+  "coach_velocity_max": 15.0,
+  "games_calibrated": 30,
+  "total_plays_seen": 0,
+  "accuracy_scores": []
+}

@@ -1,0 +1,37 @@
+{
+  "video_file": "C:/Users/User/Desktop/WCFLFlagFootball/field-12-all-day-2026-03-28.mp4",
+  "field_name": "Field 12",
+  "recorded_date": "2026-03-28",
+  "games": [
+    {
+      "game_number": 1,
+      "home_team": "Gators",
+      "away_team": "Tennessee",
+      "home_color": "blue",
+      "away_color": "white",
+      "start_time_seconds": 0,
+      "end_time_seconds": 3180,
+      "notes": "Game ends around the 53 minute mark"
+    },
+    {
+      "game_number": 2,
+      "home_team": "Miami",
+      "away_team": "Alabama",
+      "home_color": "green",
+      "away_color": "white",
+      "start_time_seconds": 3180,
+      "end_time_seconds": 7440,
+      "notes": "Miami is in green jersey. Game ends around 124 minute mark."
+    },
+    {
+      "game_number": 3,
+      "home_team": "FSU",
+      "away_team": "Notre Dame",
+      "home_color": "",
+      "away_color": "",
+      "start_time_seconds": 7440,
+      "end_time_seconds": null,
+      "notes": "FSU vs Notre Dame. Jersey colors TBD."
+    }
+  ]
+}

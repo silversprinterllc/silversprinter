@@ -1,0 +1,62 @@
+{
+  "divisions": {
+    "Girls Jr": {
+      "coaches_on_field": true,
+      "ball_size": "Peewee/K2",
+      "play_clock": 45,
+      "punt_distance": 15,
+      "notes": "Coaches allowed in huddle on both offense and defense for the entire game"
+    },
+    "Ultimate": {
+      "coaches_on_field": true,
+      "ball_size": "Peewee/K2",
+      "play_clock": 45,
+      "punt_distance": 15,
+      "notes": "One coach per team allowed in the huddle"
+    },
+    "Prep": {
+      "coaches_on_field": false,
+      "ball_size": "Peewee/K2",
+      "play_clock": 45,
+      "punt_distance": 30,
+      "notes": "No coaches on field"
+    },
+    "Varsity": {
+      "coaches_on_field": false,
+      "ball_size": "Junior/TDJ",
+      "play_clock": 40,
+      "punt_distance": 30,
+      "notes": "No coaches on field"
+    },
+    "Pro": {
+      "coaches_on_field": false,
+      "ball_size": "Youth/TDY",
+      "play_clock": 40,
+      "punt_distance": 30,
+      "notes": "No coaches on field"
+    },
+    "Girls Sr": {
+      "coaches_on_field": false,
+      "ball_size": "Youth/TDY",
+      "play_clock": 40,
+      "punt_distance": 30,
+      "notes": "No coaches on field"
+    },
+    "HS Prep": {
+      "coaches_on_field": false,
+      "ball_size": "Official",
+      "play_clock": 40,
+      "punt_distance": 30,
+      "notes": "No coaches on field"
+    }
+  },
+  "field_12_schedule_march_28": {
+    "slot_1": {"division": "Girls Jr", "game": "Gators vs Tennessee", "approx_start_min": 0},
+    "slot_2": {"division": "Girls Jr", "game": "Miami vs Alabama", "approx_start_min": 53},
+    "slot_3": {"division": "Girls Jr", "game": "FSU vs Notre Dame", "approx_start_min": 128},
+    "slot_4": {"division": "Unknown", "game": "TBD", "approx_start_min": 236},
+    "slot_5": {"division": "Unknown", "game": "TBD", "approx_start_min": 325},
+    "slot_6": {"division": "Unknown", "game": "TBD", "approx_start_min": 351},
+    "slot_7": {"division": "Unknown", "game": "TBD", "approx_start_min": 380}
+  }
+}

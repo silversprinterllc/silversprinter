@@ -1,0 +1,49 @@
+{
+  "game": {
+    "our_team": "Gators",
+    "opponent": "Tennessee",
+    "our_color": "Blue",
+    "opponent_color": "White",
+    "our_score": 14,
+    "opponent_score": 7,
+    "result": "WIN",
+    "format": "7v7",
+    "league": "WCFL",
+    "field": "Field 12",
+    "date": "March 28, 2026"
+  },
+  "scoring": {
+    "Gators": [
+      {"type": "Pick Six (Defensive INT returned for TD)", "points": 7},
+      {"type": "Offensive Touchdown", "points": 7}
+    ],
+    "Tennessee": [
+      {"type": "Offensive Touchdown", "points": 7}
+    ]
+  },
+  "turnovers": {
+    "Gators": {
+      "interceptions_thrown": 1,
+      "turnovers_on_downs": 2,
+      "fumbles": 0,
+      "total": 3
+    },
+    "Tennessee": {
+      "interceptions_thrown": 1,
+      "turnovers_on_downs": 0,
+      "fumbles": 0,
+      "total": 1,
+      "notes": "INT returned for pick six by Gators"
+    }
+  },
+  "special_teams": {
+    "Gators_punts": 1,
+    "Tennessee_punts": 0
+  },
+  "coach_notes": {
+    "overall": "Gators moved the ball well. 4 plays away from a blowout.",
+    "offense": "Moved the ball consistently but couldn't finish 2 drives (turnover on downs). Threw 1 INT.",
+    "defense": "Strong. Had a pick six. Held Tennessee to 1 score.",
+    "improvement": "Convert on 4th down. Eliminate the INT. Finish drives."
+  }
+}

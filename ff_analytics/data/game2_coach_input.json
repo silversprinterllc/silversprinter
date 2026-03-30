@@ -1,0 +1,32 @@
+{
+  "game": {
+    "our_team": "Miami",
+    "opponent": "Alabama",
+    "our_color": "Green",
+    "opponent_color": "White",
+    "our_score": 13,
+    "opponent_score": 14,
+    "result": "LOSS",
+    "format": "7v7",
+    "league": "WCFL",
+    "field": "Field 12",
+    "date": "March 28, 2026",
+    "overtime": true,
+    "notes": "Went to OT. Alabama won 14-13."
+  },
+  "scoring": {
+    "Miami": [
+      {"type": "TBD - awaiting coach detail", "points": 13}
+    ],
+    "Alabama": [
+      {"type": "TBD - awaiting coach detail", "points": 14}
+    ]
+  },
+  "turnovers": {
+    "Miami": {"total": 0, "notes": "TBD"},
+    "Alabama": {"total": 0, "notes": "TBD"}
+  },
+  "coach_notes": {
+    "overall": "Went to overtime. Lost by 1 point. 14-13 Alabama."
+  }
+}

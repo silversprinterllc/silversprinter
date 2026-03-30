@@ -1,0 +1,90 @@
+{
+  "game": "Gators vs Tennessee - Game 1",
+  "rules_version": "2026 WCFL Flag Football Rules",
+
+  "report_corrections": {
+    "field_dimensions": {
+      "rule": "Fields are 80 yards by 40 yards",
+      "previous_assumption": "Used 53.3 yard width (NFL standard) and 100 yard length",
+      "correction": "Must recalibrate all field projections to 80x40. Formation spread calculations were based on wrong field width.",
+      "impact": "Medium - affects formation classification thresholds and field zone labels"
+    },
+    "first_downs": {
+      "rule": "First downs are by crossing 20-yard ZONE LINES, NOT by gaining 10 yards",
+      "previous_assumption": "Standard 10-yard first down chains",
+      "correction": "First down zones are every 20 yards. The field has 4 zones. This changes down-and-distance analysis significantly.",
+      "impact": "High - 20-yard zones means drives need bigger chunks. 4th down decisions are different."
+    },
+    "scoring": {
+      "rule": "TD=6, then choose: 1pt from 5yd, 2pt from 10yd, 3pt from 20yd",
+      "game1_note": "Final score 14-7. Gators: 2 TDs (1 pick six + 1 offensive). If both went for 1pt XP from 5yd = 14. Tennessee: 1 TD + 1pt XP = 7. Score checks out.",
+      "flag": "Need to confirm: did both Gators TDs include successful extra points? 6+1+6+1=14. Tennessee 6+1=7."
+    },
+    "defensive_line": {
+      "rule": "Defense must line up 5 yards off the ball",
+      "impact": "This explains why we see Cover 2 so often - with 5 yards of cushion, the defense naturally sets up with depth. This is NOT the same as NFL/college where the DL is on the ball.",
+      "analysis_note": "Blitz detection needs recalibration - a 'blitz' in WCFL means a player crosses the 5-yard cushion at the snap, not rushing from the LOS."
+    },
+    "punt_rule": {
+      "rule": "Declared punt = ball moved 30 yards from LOS. No actual kick.",
+      "game1_note": "Gators punted once. Ball would have moved 30 yards from wherever they were.",
+      "analysis_note": "Punt is a strategic field position decision. Inside opponent's 40 = only half the distance."
+    },
+    "fumbles": {
+      "rule": "Ball is DEAD when it touches the ground. No fumble recoveries.",
+      "impact": "This means turnovers are ONLY: interceptions, turnovers on downs, or illegal plays. No fumble chaos."
+    },
+    "must_play_rule": {
+      "rule": "All players must play half the game. Each half: on offense OR defense for the entire half. Sideline clears on every change of possession.",
+      "impact": "HIGH - this is a major compliance rule. Our playing time tracker should flag any player not getting half the game. Also means players swap offense/defense at halftime, not during.",
+      "compliance_check": "Need to verify from tracking data: are all 7+ players getting roughly equal time? Is anyone being left out?"
+    },
+    "screening": {
+      "rule": "Offensive player cannot impede rusher in ANY way. Rusher has right to clear path to QB.",
+      "note": "This is different from traditional blocking. There is NO blocking in this league. The only exception is a stationary player.",
+      "analysis_note": "Any pre-snap motion that puts a player in the rusher's path could be a screening penalty if they don't stop before the snap."
+    }
+  },
+
+  "game_plan_adjustments": {
+    "4th_down_context": {
+      "note": "With 20-yard first down zones, 4th down comes up more often and requires bigger gains to convert. The 2 turnovers on downs make more sense in this context - they may have needed 8-12 yards, not 2-3.",
+      "recommendation": "When facing 4th and long (10+ yards to the zone), the punt (30 free yards) may be the better play. Save 4th down attempts for 4th and short."
+    },
+    "extra_point_strategy": {
+      "note": "Going for 2 (from 10yd) or 3 (from 20yd) is a significant strategic decision. A 3-point conversion from 20 yards is very hard but game-changing.",
+      "recommendation": "In a close game, the 1-point from 5 yards is safe. But if trailing, the 2-point from 10 gives better expected value than 3-point from 20."
+    },
+    "onside_conversion": {
+      "note": "If trailing by 9 or fewer with under 2 min, you can attempt an onside conversion from your own 20 (must cross the 40). This is a 20-yard play.",
+      "recommendation": "Have a specific onside conversion play ready. If you're down 7 and score with 1:30 left, you NEED this play."
+    }
+  },
+
+  "compliance_flags": [
+    {
+      "rule": "Must Play Rule",
+      "severity": "HIGH",
+      "question": "Did all players play at least half the game? Were sidelines cleared on every change of possession?",
+      "data_available": "Partial - tracking data shows player presence but not definitive without player ID"
+    },
+    {
+      "rule": "Shirts Tucked / Flags Visible",
+      "severity": "LOW",
+      "question": "Were all jerseys tucked and flags visible at all times?",
+      "data_available": "Could be checked from frame analysis but not currently implemented"
+    },
+    {
+      "rule": "No Diving",
+      "severity": "MEDIUM",
+      "question": "Were there any instances of players diving to gain yardage?",
+      "data_available": "Not detectable from current tracking - would need pose estimation"
+    },
+    {
+      "rule": "5-Yard Defensive Cushion",
+      "severity": "MEDIUM",
+      "question": "Did the defense maintain the 5-yard cushion before the snap on every play?",
+      "data_available": "Detectable from tracking data if field calibration is done - measure distance between closest defender and LOS"
+    }
+  ]
+}

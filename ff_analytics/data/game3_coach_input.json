@@ -1,0 +1,37 @@
+{
+  "game": {
+    "our_team": "FSU",
+    "opponent": "Notre Dame",
+    "our_color": "",
+    "opponent_color": "",
+    "our_score": 6,
+    "opponent_score": 12,
+    "result": "LOSS",
+    "format": "7v7",
+    "league": "WCFL",
+    "field": "Field 12",
+    "date": "March 28, 2026"
+  },
+  "scoring": {
+    "FSU": [
+      {"type": "Offensive Touchdown (no extra point?)", "points": 6}
+    ],
+    "Notre Dame": [
+      {"type": "TBD", "points": 6},
+      {"type": "TBD", "points": 6}
+    ]
+  },
+  "turnovers": {
+    "FSU": {
+      "total": 0,
+      "notes": "TBD — coach to fill"
+    },
+    "Notre Dame": {
+      "total": 0,
+      "notes": "TBD — coach to fill"
+    }
+  },
+  "coach_notes": {
+    "overall": "TBD — awaiting coach input"
+  }
+}

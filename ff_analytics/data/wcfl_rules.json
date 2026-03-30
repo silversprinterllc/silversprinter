@@ -1,0 +1,90 @@
+{
+  "league": "WCFL",
+  "year": 2026,
+  "format": "7v7",
+  "field": {
+    "length_yards": 80,
+    "width_yards": 40,
+    "first_down_zones": "20 yards apart",
+    "notes": "First downs by crossing zone lines, NOT by gaining 10 yards"
+  },
+  "players": {
+    "per_side": 7,
+    "minimum_to_play": 5,
+    "must_play_rule": "All players must play half the game. Each half: player is on offense OR defense for the entire half. Sideline must clear on every change of possession."
+  },
+  "game_length": {
+    "total_minutes": 40,
+    "halves": 2,
+    "half_length_minutes": 20,
+    "halftime_minutes": 5,
+    "clock": "Running clock for all of 1st half and first 18 min of 2nd half. Last 2 min of 2nd half = NIRSA timing (NCAA-style stoppages).",
+    "play_clock_seconds": 40,
+    "timeouts_per_half": 2
+  },
+  "scoring": {
+    "touchdown": 6,
+    "extra_point_5yd": 1,
+    "extra_point_10yd": 2,
+    "extra_point_20yd": 3,
+    "safety": 2,
+    "notes": "After TD, offense chooses 1pt (5yd), 2pt (10yd), or 3pt (20yd). Once ball is set, can only change with timeout."
+  },
+  "downs": {
+    "downs_per_series": 4,
+    "first_down_zones": "20-yard zones marked by white lines",
+    "short_rush": "If offense is within 5 yards of first down or goal line, defense lines up just behind the line"
+  },
+  "kicking": {
+    "kickoffs": "NONE - start at 30-yard line after scores and half starts",
+    "punts": "Declared punt = ball moved 30 yards from LOS. Inside opponent 40 = half the distance. Ultimate division punt = 15 yards.",
+    "field_goals": "NOT MENTIONED - likely not allowed"
+  },
+  "rushing": {
+    "defensive_line": "5 yards off the ball",
+    "no_minimum_offensive_linemen": true,
+    "screening_illegal": "Offensive player cannot impede rusher. Rusher has right to clear path to QB.",
+    "exception": "If offensive player does NOT move after snap, rusher must go around them"
+  },
+  "ball_rules": {
+    "fumbles": "Dead when ball touches ground",
+    "backward_passes": "Can be caught or intercepted and advanced. Dead if touches ground.",
+    "forward_passes": "Only ONE forward pass per play",
+    "interceptions": "Can be returned"
+  },
+  "flag_rules": {
+    "must_use_wcfl_flags": true,
+    "shirts_tucked": "Must be tucked, cannot cover flags",
+    "illegal_securing": "If belt illegally secured: score disallowed, player ejected, 10-yard unsportsmanlike penalty",
+    "flag_guard": "Illegal - swinging arm over flags, placing ball over flags, lowering head/shoulders",
+    "deflag_before_touch": "Illegal to pull flag before player has touched ball"
+  },
+  "personal_fouls": {
+    "no_diving": "Cannot intentionally dive to gain yardage",
+    "no_stiff_arm": true,
+    "no_hurdling": true,
+    "no_stripping": "Cannot strip, steal, or attempt to steal ball",
+    "no_tackling": "Warrants ejection",
+    "no_contact_after_dead_ball": true,
+    "no_driving_into_defender": true,
+    "roughing_the_passer": "Any contact to QB above waist outside of flag pull = automatic first down + penalty yards"
+  },
+  "special_rules": {
+    "ball_extension": "When flag pulled, ball spotted at forward-most point of football",
+    "no_huddle": "Teams can snap without huddling",
+    "onside_conversion": "If trailing and score with <2 min left, still trailing by 9 or fewer: 1 play from own 20 to cross 40-yard line to retain possession",
+    "mercy_rule": "If ahead by 19+ at 2-minute warning of 2nd half, game is over",
+    "overtime_regular_season": "Each team gets 1 play from 5 or 10-yard line. Score from 5=1pt, from 10=2pts. If 1st team scores, 2nd must go for 2. Can end in tie.",
+    "clock_the_ball": "Allowed in final 2 minutes only"
+  },
+  "equipment": {
+    "mouthpiece": "REQUIRED",
+    "no_jewelry": true,
+    "no_pockets": "Shorts/pants cannot have pockets, belt loops, or exposed strings. Tape over pockets does NOT make legal.",
+    "no_towels": "If towel pulled during play, counted as flag pull",
+    "no_hats": true,
+    "play_bands": "Allowed on wrist only",
+    "cleats": "No metal/ceramic/screw-in except if screw is part of cleat",
+    "eyeglasses": "Must be clear sports glasses with prescription. No metal, no sunglasses."
+  }
+}
