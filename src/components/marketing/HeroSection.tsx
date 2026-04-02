@@ -14,11 +14,11 @@ export function HeroSection() {
           South Florida · Self-Drive Rental
         </p>
         <h1 className="font-serif text-3xl md:text-5xl lg:text-7xl xl:text-8xl text-[#f0e6d0] leading-[1.05] mb-6">
-          South Florida's Finest<br />
-          <span className="text-gold-gradient">Mobile Suite</span>
+          The high road<br />
+          <span className="text-gold-gradient">actually exists.</span>
         </h1>
         <p className="text-base md:text-lg text-[#a09890] max-w-xl mx-auto mb-10 leading-relaxed">
-          One premium Mercedes Sprinter van · 10 passengers · Private commode · WiFi streaming
+          One premium Mercedes Sprinter. Ten passengers. Private commode. No driver required — unless you want one.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
           <Button size="lg" asChild>
