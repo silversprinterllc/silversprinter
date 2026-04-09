@@ -63,9 +63,9 @@ export default function InsurancePage() {
               personal policy may deny the claim.
             </p>
             <p>
-              A Roamly rental policy costs between $15–$45 per day depending on coverage level.
-              It covers you specifically for the dates of your Sterling Route rental. It takes
-              about five minutes to get a quote.
+              Rental-specific policies from providers like Bonzah or RentalCover are built for
+              exactly this situation. They cover you specifically for the dates of your Sterling
+              Route rental and take about five minutes to obtain.
             </p>
             <p>
               We verify insurance before releasing keys. No coverage confirmation = no keys.
@@ -82,26 +82,66 @@ export default function InsurancePage() {
             How to Get Covered in 5 Minutes
           </h2>
 
+          {/* Two provider options side by side */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+            {/* Option 1 — Bonzah */}
+            <div className="border border-[#433d38]/60 bg-[#1a1612]/60 p-6 space-y-4">
+              <p className="text-xs tracking-[0.25em] uppercase text-[#c9a96e]">Option 1</p>
+              <p className="font-serif text-xl text-[#f0e6d0]">Bonzah</p>
+              <p className="text-sm text-[#a09890] leading-relaxed">
+                bonzah.com — Instant quote by rental dates. Covers damage and third-party
+                liability. Sold in 24-hour increments. Works with all licensed rental companies.
+              </p>
+              <a
+                href="https://bonzah.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#c9a96e] text-[#0a0a0a] font-sans text-xs tracking-widest uppercase font-medium px-6 py-2.5 hover:bg-[#d4b87a] transition-colors duration-200"
+              >
+                Get Bonzah Quote →
+              </a>
+            </div>
+
+            {/* Option 2 — RentalCover */}
+            <div className="border border-[#433d38]/60 bg-[#1a1612]/60 p-6 space-y-4">
+              <p className="text-xs tracking-[0.25em] uppercase text-[#c9a96e]">Option 2</p>
+              <p className="font-serif text-xl text-[#f0e6d0]">RentalCover</p>
+              <p className="text-sm text-[#a09890] leading-relaxed">
+                rentalcover.com — Global rental insurance including excess cover, damage and
+                theft protection. 4.7/5 stars from 19,000+ reviews. Select your dates and
+                vehicle type for instant quote.
+              </p>
+              <a
+                href="https://rentalcover.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#c9a96e] text-[#0a0a0a] font-sans text-xs tracking-widest uppercase font-medium px-6 py-2.5 hover:bg-[#d4b87a] transition-colors duration-200"
+              >
+                Get RentalCover Quote →
+              </a>
+            </div>
+          </div>
+
           <div className="space-y-8">
             {[
               {
                 n: '01',
-                title: 'Go to Roamly',
-                body: 'Visit roamly.com and click \u2018Get a Quote\u2019 or \u2018Rent an RV/Van.\u2019 Roamly specializes in peer-to-peer and private vehicle rentals.',
+                title: 'Choose Your Provider',
+                body: 'Select Bonzah (bonzah.com) or RentalCover (rentalcover.com) — both work and both provide instant quotes.',
               },
               {
                 n: '02',
-                title: 'Enter Your Trip Details',
-                body: 'Enter your rental dates, vehicle type (passenger van / Sprinter), and your driver information. The quote takes your specific dates into account.',
+                title: 'Enter Your Rental Dates',
+                body: 'Enter your rental dates matching your Sterling Route booking dates exactly. The quote is specific to those dates.',
               },
               {
                 n: '03',
-                title: 'Select $1M Liability Coverage',
+                title: 'Select Vehicle Type: Passenger Van / Sprinter Van',
                 body: 'Choose the coverage tier that includes minimum $1,000,000 in liability. We recommend also selecting collision damage waiver (CDW) to cover your deductible in case of an incident.',
               },
               {
                 n: '04',
-                title: 'Send Proof to Sterling Route',
+                title: 'Purchase and Email Proof',
                 body: 'Once purchased, email your insurance confirmation to hello@sterlingroute.com with your name and intended rental dates in the subject line. We\u2019ll confirm receipt within a few hours.',
               },
             ].map(step => (
@@ -115,17 +155,6 @@ export default function InsurancePage() {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="mt-10">
-            <a
-              href="https://www.roamly.com/get-your-quote"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium px-8 py-3 hover:bg-[#d4b87a] transition-colors duration-200"
-            >
-              Get a Roamly Quote →
-            </a>
           </div>
         </div>
       </section>
@@ -170,11 +199,10 @@ export default function InsurancePage() {
       <section className="py-12 px-6 border-b border-[#433d38]/30">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm text-[#5f5850] leading-relaxed max-w-2xl">
-            Roamly is our recommended provider because it&apos;s fast, purpose-built for this type
-            of rental, and we&apos;ve found it to be the most seamless experience for renters. You
-            are not required to use Roamly specifically — any policy meeting the minimum
-            requirements above from a licensed U.S. insurer will be accepted, subject to
-            verification.
+            Bonzah and RentalCover are our recommended providers because they&apos;re
+            purpose-built for exactly this type of rental. You are not required to use either
+            — any policy meeting the minimum requirements from a licensed U.S. insurer will
+            be accepted.
           </p>
         </div>
       </section>
@@ -221,8 +249,8 @@ export default function InsurancePage() {
                   onClick={() => toggle('c2')}
                   className="text-sm text-[#a09890] leading-relaxed cursor-pointer"
                 >
-                  I confirm I will obtain minimum $1,000,000 liability coverage through Roamly or
-                  an equivalent licensed insurer before taking possession of the vehicle.
+                  I confirm I will obtain minimum $1,000,000 liability coverage through Bonzah,
+                  RentalCover, or an equivalent licensed insurer before taking possession of the vehicle.
                 </span>
               </label>
 

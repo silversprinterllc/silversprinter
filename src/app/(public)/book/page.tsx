@@ -190,14 +190,23 @@ export default function BookPage() {
             <a href="mailto:hello@sterlingroute.com" className="text-[#c9a96e]/80 hover:text-[#c9a96e] transition-colors">
               hello@sterlingroute.com
             </a>{' '}
-            —{' '}
+            — Get coverage:{' '}
             <a
-              href="https://www.roamly.com/get-your-quote"
+              href="https://bonzah.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"
             >
-              Get Roamly coverage →
+              bonzah.com
+            </a>
+            {' '}or{' '}
+            <a
+              href="https://rentalcover.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"
+            >
+              rentalcover.com
             </a>
           </p>
         </div>
@@ -515,14 +524,25 @@ export default function BookPage() {
                   >
                     I understand I must obtain insurance through{' '}
                     <a
-                      href="https://www.roamly.com"
+                      href="https://bonzah.com"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      Roamly
-                    </a>{' '}
+                      Bonzah
+                    </a>
+                    {', '}
+                    <a
+                      href="https://rentalcover.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      RentalCover
+                    </a>
+                    {', or an equivalent provider '}
                     before my trip.
                   </span>
                 </label>

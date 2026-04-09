@@ -196,14 +196,23 @@ export function BookingWizard({ addons, vehicleId }: Props) {
             <a href="mailto:hello@sterlingroute.com" className="text-[#c9a96e]/80 hover:text-[#c9a96e] transition-colors">
               hello@sterlingroute.com
             </a>.{' '}
-            Need coverage?{' '}
+            Get coverage:{' '}
             <a
-              href="https://www.roamly.com/get-your-quote"
+              href="https://bonzah.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"
             >
-              Get a Roamly quote →
+              bonzah.com
+            </a>
+            {' '}or{' '}
+            <a
+              href="https://rentalcover.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors underline underline-offset-2"
+            >
+              rentalcover.com
             </a>
           </p>
         </div>
@@ -245,7 +254,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
               <div>
                 <h2 className="font-serif text-2xl text-[#f0e6d0] mb-2">First Things First — Insurance</h2>
                 <p className="text-sm text-[#5f5850] leading-relaxed">
-                  Every Sterling Route rental requires trip insurance before your reservation is confirmed. This protects you, your passengers, and the vehicle. We use Roamly for all rentals — it takes about 5 minutes and costs less than you&apos;d expect.
+                  Every Sterling Route rental requires trip insurance before your reservation is confirmed. This protects you, your passengers, and the vehicle. We recommend Bonzah or RentalCover — both provide instant quotes by date range and take about 5 minutes.
                 </p>
               </div>
 
@@ -266,27 +275,35 @@ export function BookingWizard({ addons, vehicleId }: Props) {
                 </div>
               </div>
 
-              {/* Roamly CTA */}
-              <div>
+              {/* Provider CTAs */}
+              <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://www.roamly.com"
+                  href="https://bonzah.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium px-8 py-3 hover:bg-[#d4b87a] transition-colors duration-200"
                 >
-                  Get Coverage via Roamly →
+                  Get Bonzah Quote →
+                </a>
+                <a
+                  href="https://rentalcover.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-[#c9a96e]/60 text-[#c9a96e] font-sans text-sm tracking-widest uppercase font-medium px-8 py-3 hover:bg-[#c9a96e]/10 transition-colors duration-200"
+                >
+                  Get RentalCover Quote →
                 </a>
               </div>
 
               {/* Policy number input */}
               <div>
                 <label className={labelClass}>
-                  Roamly Confirmation / Policy Number <span className="normal-case text-[#433d38]">(recommended)</span>
+                  Insurance Confirmation / Policy Number <span className="normal-case text-[#433d38]">(recommended)</span>
                 </label>
                 <input
                   type="text"
                   value={form.insurancePolicyNumber}
-                  placeholder="e.g. RML-2024-XXXXXX"
+                  placeholder="e.g. BNZ-2024-XXXXXX or your policy number"
                   onChange={e => set('insurancePolicyNumber', e.target.value)}
                   className={inputClass}
                 />
@@ -579,7 +596,7 @@ export function BookingWizard({ addons, vehicleId }: Props) {
               </div>
 
               <div className="text-xs text-[#5f5850] border-l-2 border-[#c9a96e]/30 pl-4 leading-relaxed">
-                Your deposit is fully refundable up to 30 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Your rental agreement will be sent after booking. Insurance must be confirmed through Roamly before your reservation is finalized.
+                Your deposit is fully refundable up to 30 days before your trip. By proceeding, you agree to the Sterling Route rental terms. Your rental agreement will be sent after booking. Insurance proof must be emailed to hello@sterlingroute.com before your reservation is finalized.
               </div>
 
               {/* Insurance acknowledgment — must be checked before paying */}

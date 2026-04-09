@@ -137,7 +137,7 @@ export default function FAQPage() {
               answer: (
                 <ol className="space-y-2 list-none">
                   {[
-                    'Insurance — get coverage through Roamly before proceeding.',
+                    'Insurance — get coverage through Bonzah or RentalCover before proceeding.',
                     'Book online with dates, trip type, add-ons, and contact details.',
                     'Pay 35% deposit.',
                     'Receive rental agreement and insurance verification confirmation.',
@@ -169,15 +169,15 @@ export default function FAQPage() {
           items={[
             {
               question: 'Is insurance included in the rental?',
-              answer: <p>No. Insurance is the renter&apos;s responsibility and is required before any reservation is confirmed. We use Roamly for all Sterling Route rentals. Minimum $1,000,000 liability coverage required.</p>,
+              answer: <p>No. Insurance is the renter&apos;s responsibility and is required before any reservation is confirmed. We recommend Bonzah (bonzah.com) or RentalCover (rentalcover.com) for renter coverage. Both provide instant quotes by date range. Minimum $1,000,000 liability coverage required.</p>,
             },
             {
               question: 'Why do I have to get my own insurance?',
-              answer: <p>Because it protects you. A personal auto policy won&apos;t cover a rented vehicle of this class during a commercial rental period. Roamly issues policies specific to your trip dates and vehicle — it takes about 5 minutes and ensures you&apos;re covered for what&apos;s actually happening.</p>,
+              answer: <p>Because it protects you. A personal auto policy won&apos;t cover a rented vehicle of this class during a commercial rental period. Bonzah and RentalCover issue policies specific to your trip dates and vehicle — it takes about 5 minutes and ensures you&apos;re covered for what&apos;s actually happening.</p>,
             },
             {
               question: 'What if I already have RV or vehicle rental coverage?',
-              answer: <p>Contact us before booking. We&apos;ll verify your coverage meets minimum requirements. If it does, you may use it in place of a Roamly policy.</p>,
+              answer: <p>Contact us before booking. We&apos;ll verify your coverage meets minimum requirements. If it does, you may use it in place of Bonzah or RentalCover.</p>,
             },
             {
               question: 'What does the $1,500 security deposit cover?',
@@ -233,7 +233,7 @@ export default function FAQPage() {
             },
             {
               question: 'What if I damage the van?',
-              answer: <p>Your Roamly insurance is primary. You are responsible for the deductible. Damage beyond your security deposit is billed to the card on file. Sterling Route reserves the right to terminate future bookings pending damage review.</p>,
+              answer: <p>Your rental insurance is primary. You are responsible for the deductible. Damage beyond your security deposit is billed to the card on file. Sterling Route reserves the right to terminate future bookings pending damage review.</p>,
             },
             {
               question: 'Can I bring a pet?',

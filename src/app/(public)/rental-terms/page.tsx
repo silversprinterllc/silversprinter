@@ -75,7 +75,7 @@ export default function RentalTermsPage() {
           <Rule>Hold a valid U.S. driver&apos;s license</Rule>
           <Rule>Have no DUI, DWI, or reckless driving conviction within the past 7 years</Rule>
           <Rule>Have no more than 2 moving violations in the past 3 years</Rule>
-          <Rule>Provide valid insurance through Roamly (or approved equivalent) prior to departure</Rule>
+          <Rule>Provide valid insurance through Bonzah, RentalCover, or an approved equivalent prior to departure</Rule>
           <Rule>Pass identity verification at Company&apos;s discretion</Rule>
           <Para>
             Any additional listed drivers must meet the same eligibility requirements. All drivers must be listed prior to departure. Adding unlisted drivers during the rental period constitutes a material breach of this agreement. Spouse or domestic partner may be added at no additional charge. All other additional drivers: $50 per driver, collected before departure. No driver additions after departure.
@@ -84,7 +84,7 @@ export default function RentalTermsPage() {
 
         <Section number={4} title="Insurance Requirement">
           <Para>
-            Insurance is the Renter&apos;s sole responsibility. The Company does not provide insurance coverage of any kind. Renter must obtain a valid rental vehicle insurance policy through Roamly (roamly.com) or a pre-approved equivalent providing a minimum of $1,000,000 in liability coverage before the rental commences.
+            Insurance is the Renter&apos;s sole responsibility. The Company does not provide insurance coverage of any kind. Renter must obtain a valid rental vehicle insurance policy through Bonzah (bonzah.com), RentalCover (rentalcover.com), or a pre-approved equivalent providing a minimum of $1,000,000 in liability coverage before the rental commences.
           </Para>
           <Para>
             Failure to present proof of insurance at pickup will result in cancellation of the rental. The deposit is non-refundable in this circumstance.
@@ -175,7 +175,7 @@ export default function RentalTermsPage() {
             Renter is responsible for all damage to the Vehicle occurring during the rental period, regardless of fault. This includes but is not limited to: collision damage, interior damage, roof damage from clearance violations, mechanical damage from improper fuel, tire damage, and water damage.
           </Para>
           <Para>
-            Renter&apos;s insurance through Roamly is primary. Renter is responsible for the deductible. Damage exceeding the security deposit will be charged to the card on file. For damage exceeding card limits, Company reserves the right to pursue collection through all available legal means.
+            Renter&apos;s rental insurance is primary. Renter is responsible for the deductible. Damage exceeding the security deposit will be charged to the card on file. For damage exceeding card limits, Company reserves the right to pursue collection through all available legal means.
           </Para>
           <Para>
             Company is not liable for personal property lost, stolen, or damaged inside the Vehicle during the rental period.
