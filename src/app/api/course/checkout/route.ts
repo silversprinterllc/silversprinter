@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 
 const PRODUCTS: Record<string, { name: string; price: number; description: string }> = {
+  founding: {
+    name: 'SpokeBnB — Founding Member',
+    price: 99700, // $997 in cents
+    description: 'Founding Member pre-sale: full course access, founding badge, direct Slack access to Ben, priority for future intensives.',
+  },
   system: {
     name: 'SpokeBnB — The System',
     price: 199700, // $1,997 in cents
