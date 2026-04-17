@@ -28,6 +28,21 @@ export async function POST(req: NextRequest) {
           where: { id: booking.id },
           data: { status: 'CONFIRMED', depositPaidAt: new Date() },
         })
+
+        // Block dates on the vehicle calendar
+        const pickupDate = new Date(booking.pickupAt)
+        const days = Math.max(1, Math.ceil((booking.estimatedDuration || 120) / (24 * 60)))
+        for (let i = 0; i < days; i++) {
+          const d = new Date(pickupDate)
+          d.setDate(d.getDate() + i)
+          d.setHours(0, 0, 0, 0)
+          await prisma.vehicleAvailability.upsert({
+            where: { vehicleId_date: { vehicleId: booking.vehicleId, date: d } },
+            update: { isBlocked: true, reason: `Booking ${booking.bookingRef}` },
+            create: { vehicleId: booking.vehicleId, date: d, isBlocked: true, reason: `Booking ${booking.bookingRef}` },
+          }).catch(() => {}) // non-fatal
+        }
+
         await sendBookingNotification(booking.id, 'BOOKING_CONFIRMED')
         // SMS to owner
         if (process.env.TWILIO_TO_NUMBER) {
