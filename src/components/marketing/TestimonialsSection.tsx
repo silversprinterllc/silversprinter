@@ -2,6 +2,12 @@ import { Star } from 'lucide-react'
 
 const testimonials = [
   {
+    name: 'Benjamin H.',
+    trip: 'Family Travel — Owner',
+    rating: 5,
+    quote: "We built this van for our family — five kids, a lake house in New York, a white Christmas on the road. It's the finest vehicle we've ever traveled in. Now we're making it available to people who want the same experience.",
+  },
+  {
     name: 'Amanda R.',
     trip: 'Airport Transfer',
     rating: 5,

@@ -46,10 +46,14 @@ export default function RatesPage() {
                   { type: 'Standard Rate', rate: '$995', days: 'Year-round benchmark' },
                   { type: 'Peak Weekend', rate: '$1,095', days: 'Friday, Saturday, Sunday' },
                   { type: 'Peak Holiday', rate: '$1,095', days: 'Federal holidays + holiday weekends' },
+                  { type: 'Signature Events', rate: '$1,295', days: 'Masters Week, Super Bowl, Memorial Day, July 4th, Labor Day, New Year\'s' },
                 ].map((row) => (
-                  <tr key={row.type} className="hover:bg-[#c9a96e]/3 transition-colors">
-                    <td className="px-6 py-4 text-[#f0e6d0]">{row.type}</td>
-                    <td className="px-6 py-4 text-[#c9a96e] font-medium">{row.rate}</td>
+                  <tr
+                    key={row.type}
+                    className={`hover:bg-[#c9a96e]/3 transition-colors${row.type === 'Signature Events' ? ' bg-[#c9a96e]/5 border-l-2 border-[#c9a96e]' : ''}`}
+                  >
+                    <td className={`px-6 py-4${row.type === 'Signature Events' ? ' text-[#c9a96e] font-medium' : ' text-[#f0e6d0]'}`}>{row.type}</td>
+                    <td className={`px-6 py-4 font-medium${row.type === 'Signature Events' ? ' text-[#c9a96e]' : ' text-[#c9a96e]'}`}>{row.rate}</td>
                     <td className="px-6 py-4 text-[#5f5850] hidden md:table-cell">{row.days}</td>
                   </tr>
                 ))}
@@ -58,9 +62,15 @@ export default function RatesPage() {
           </div>
 
           <div className="space-y-3 text-sm text-[#5f5850]">
-            <p>Minimum 1-day rental. Minimum charge $795. Rates are per 24-hour rental period. Multi-day discounts available for 5+ day bookings — contact us.</p>
+            <p>Minimum 1-day rental. Minimum charge $795. Rates are per 24-hour rental period.</p>
             <p>Public included mileage: <span className="text-[#a09890]">100 miles/day.</span> Overage: <span className="text-[#a09890]">$0.50/mile.</span></p>
             <p>Minimum 72-hour advance booking notice required for public bookings.</p>
+            <p className="text-[#a09890]">
+              Signature event dates are released seasonally. Sterling Reserve Black members have first access.
+            </p>
+            <p className="text-[#a09890]">
+              Multi-day rentals of 5+ consecutive days: 10% off total rental cost. Contact us to apply.
+            </p>
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About Sterling Route — The Van, The Family, The Standard',
-  description: "Sterling Route isn't a fleet. It's one custom Mercedes Sprinter, built by a father of five who needed a better way to travel. Now available to you.",
+  description: "Sterling Route isn't a fleet. It's one custom Midwestern Automotive Design Daycruiser D6, owned by a father of five who needed a better way to travel. Now available to you.",
 }
 
 export default function AboutPage() {
@@ -29,13 +29,13 @@ export default function AboutPage() {
           <h2 className="font-serif text-3xl text-[#f0e6d0] mb-10">It Didn&apos;t Start as a Business</h2>
           <div className="space-y-7 text-[#a09890] text-base leading-relaxed">
             <p>
-              We like to travel. Always have. But flying with five kids stopped making sense — and when the world made it even less appealing, we decided to move differently. We found a Midwestern Automotive Design Daycruiser D6 conversion and knew immediately it was the right call.
+              We like to travel. Always have. Five kids, a lot of road, and at some point flying stopped making sense — too much logistics, too many connections, too much of everything except the actual trip.
             </p>
             <p>
-              MAD builds luxury van conversions on the Mercedes-Benz Sprinter platform — the Daycruiser D6 is their flagship floorplan. Two captain chairs up front, four in the back, two benches that fold flat for overnight runs. Private commode, microwave, refrigerator, 32-inch TV, WiFi from the road. We bought it for our family — the five kids, the summer runs to our lake house in New York, the white Christmas we drove up for last year. It&apos;s the kind of vehicle where nobody asks &ldquo;are we there yet&rdquo; because nobody wants the trip to end.
+              So we found the van. Not any van — a Midwestern Automotive Design Daycruiser D6. MAD builds luxury Sprinter conversions for people who take what they drive seriously. Two captain chairs up front, four in the main cabin, two benches that fold flat for overnight runs. Private commode, microwave, refrigerator, 32-inch TV, WiFi. We bought it, and we&apos;ve been putting miles on it ever since — summer runs to our lake house in New York, a white Christmas we drove up for last year, every trip the family has taken since.
             </p>
             <p>
-              Between our family trips, it sits. And it&apos;s too good a machine to sit. So we made it available — to golf groups who want to do the trip right, to corporate clients who understand that arrival is part of the pitch, to families who refuse to compromise on how they travel. The standards are the same as when my own kids are in the seats: the van is clean, the tank is full, and everything works.
+              Between our trips, it sits. And it&apos;s too good a machine to sit. So we made it available — to golf groups who want to do the trip right, to corporate clients who understand that arrival is part of the pitch, to families who refuse to compromise on how they travel. The standards are the same as when my own kids are in the seats: the van is clean, the tank is full, and everything works.
             </p>
           </div>
         </div>

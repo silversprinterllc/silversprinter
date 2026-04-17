@@ -20,6 +20,14 @@ export function HeroSection() {
         <p className="text-base md:text-lg text-[#a09890] max-w-xl mx-auto mb-10 leading-relaxed">
           Custom-configured sprinter vans · Professional chauffeurs · 24/7 concierge
         </p>
+        <div className="flex justify-center mb-8">
+          <div className="border-l-2 border-[#c9a96e] pl-4 max-w-sm text-left">
+            <p className="text-xs text-[#5f5850] leading-relaxed">
+              <span className="text-[#c9a96e]">One van.</span> When it&apos;s booked, it&apos;s booked.
+              Tournament and holiday weekends reserve weeks in advance.
+            </p>
+          </div>
+        </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" asChild>
             <Link href="/book">Book Now</Link>
