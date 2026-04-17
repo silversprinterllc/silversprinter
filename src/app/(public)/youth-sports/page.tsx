@@ -82,7 +82,7 @@ export default function YouthSportsPage() {
           </p>
           <p>
             Your team spent six months practicing together. They should spend the two hours to Orlando
-            together too. The pre-game energy in that van — music up, cleats on, everyone locked in —
+            together too. The pre-game energy in that van — music up, jerseys on, everyone locked in —
             that&apos;s part of the experience. You can&apos;t replicate it across three separate vehicles.
           </p>
           <p className="text-[#f0e6d0] font-serif text-2xl italic border-l-2 border-[#c9a96e] pl-6">
@@ -251,26 +251,29 @@ export default function YouthSportsPage() {
           </h2>
 
           <div className="border border-[#c9a96e]/40 bg-[#1a1612] p-10 mb-10">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-10">
-              <div>
-                <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-2">Standard Daily Rate</p>
-                <p className="font-serif text-4xl text-[#f0e6d0]">$995<span className="text-lg text-[#5f5850]">/day</span></p>
-              </div>
-              <div className="w-px h-12 bg-[#433d38] hidden md:block" />
-              <div>
-                <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-2">Youth Travel Team Rate</p>
-                <p className="font-serif text-4xl text-[#c9a96e]">$845<span className="text-lg text-[#5f5850]">/day</span></p>
-                <p className="text-xs text-[#5f5850] mt-1">Save $150 per day</p>
-              </div>
+            <div className="mb-8">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-2">Standard Daily Rate</p>
+              <p className="font-serif text-4xl text-[#f0e6d0]">$995<span className="text-lg text-[#5f5850]">/day</span></p>
+            </div>
+
+            <div className="border-t border-[#433d38]/40 pt-8 mb-8">
+              <p className="text-[#a09890] text-sm leading-relaxed mb-6">
+                We offer special team pricing for verified youth travel teams. Tell us about your program —
+                league, sport, how often you travel — and we&apos;ll take care of you. Reach out before you book.
+              </p>
+              <a
+                href="mailto:hello@sterlingroute.com?subject=Youth Team Rate Inquiry"
+                className="inline-flex items-center gap-2 text-sm text-[#c9a96e] hover:text-[#d4b87a] transition-colors tracking-wide"
+              >
+                Ask about team rates → hello@sterlingroute.com
+              </a>
             </div>
 
             <div className="border-t border-[#433d38]/40 pt-8 space-y-3">
               {[
-                'Valid for verified youth travel teams (league or club documentation required)',
-                'Applies to tournament travel, not general use',
-                'Subject to availability — book early, tournament weekends fill fast',
+                'Subject to availability — tournament weekends book fast',
                 'All standard rental terms apply (rental agreement, insurance, deposit)',
-                'Team rate applied at booking — mention your team and league in the Special Requests field',
+                'Mention your team, league, and travel frequency when you reach out',
               ].map((item) => (
                 <p key={item} className="text-xs text-[#5f5850] leading-relaxed flex items-start gap-2">
                   <span className="text-[#433d38] flex-shrink-0 mt-0.5">—</span>
@@ -284,7 +287,7 @@ export default function YouthSportsPage() {
             href="/book"
             className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b87a] transition-colors duration-200"
           >
-            Book at Team Rate <ArrowRight size={16} />
+            Check Availability <ArrowRight size={16} />
           </Link>
         </div>
       </section>
@@ -328,10 +331,10 @@ export default function YouthSportsPage() {
                   </tr>
                 ))}
                 <tr className="border-b border-[#433d38]/40 opacity-50">
-                  <td className="py-5 px-6 text-[#5f5850]">Public / Team Rate</td>
+                  <td className="py-5 px-6 text-[#5f5850]">Pay Per Trip (Rack Rate)</td>
                   <td className="py-5 px-6 text-center text-[#5f5850]">—</td>
                   <td className="py-5 px-6 text-center text-[#5f5850]">Pay per trip</td>
-                  <td className="py-5 px-6 text-center text-[#5f5850]">$845</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">$995</td>
                   <td className="py-5 px-6 text-center text-[#5f5850]">Baseline</td>
                 </tr>
               </tbody>
@@ -341,13 +344,13 @@ export default function YouthSportsPage() {
           <div className="border border-[#433d38]/50 bg-[#1a1612] p-8 mb-8 max-w-2xl">
             <p className="text-xs tracking-[0.2em] uppercase text-[#c9a96e] mb-3">Example: 12-Tournament Season</p>
             <p className="text-[#a09890] text-sm leading-relaxed mb-3">
-              At team rate: 12 days × $845 = <span className="text-[#f0e6d0]">$10,140/year</span>
+              Rack rate: 12 days × $995 = <span className="text-[#f0e6d0]">$11,940/year</span>
             </p>
             <p className="text-[#a09890] text-sm leading-relaxed mb-3">
               Reserve membership: 12 included days for <span className="text-[#c9a96e]">$4,788/year</span>
             </p>
             <p className="text-[#5f5850] text-xs leading-relaxed border-t border-[#433d38] pt-4 mt-4">
-              That&apos;s $5,352 back in the program budget. Priority booking, preferred rates on additional days, and a concierge who already knows your schedule.
+              That&apos;s $7,152 back in the program budget. Priority booking, preferred rates on additional days, and a concierge who already knows your schedule.
             </p>
           </div>
 
