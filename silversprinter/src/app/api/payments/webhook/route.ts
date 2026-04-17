@@ -4,6 +4,7 @@ import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { sendBookingNotification } from '@/services/notification.service'
 import { awardPoints } from '@/services/loyalty.service'
+import { twilioClient, TWILIO_FROM } from '@/lib/twilio'
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -28,6 +29,14 @@ export async function POST(req: NextRequest) {
           data: { status: 'CONFIRMED', depositPaidAt: new Date() },
         })
         await sendBookingNotification(booking.id, 'BOOKING_CONFIRMED')
+        // SMS to owner
+        if (process.env.TWILIO_TO_NUMBER) {
+          twilioClient.messages.create({
+            to: process.env.TWILIO_TO_NUMBER,
+            from: TWILIO_FROM,
+            body: `Sterling Route PAYMENT: $${(pi.amount / 100).toFixed(0)} deposit confirmed — Booking ${booking.bookingRef}`,
+          }).catch(() => {})
+        }
       }
       break
     }
