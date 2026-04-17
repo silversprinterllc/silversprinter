@@ -4,7 +4,33 @@ import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { sendBookingNotification } from '@/services/notification.service'
 import { awardPoints } from '@/services/loyalty.service'
-import { twilioClient, TWILIO_FROM } from '@/lib/twilio'
+
+async function sendOwnerSms(message: string) {
+  const sid = process.env.TWILIO_ACCOUNT_SID
+  const token = process.env.TWILIO_AUTH_TOKEN
+  const to = process.env.TWILIO_TO_NUMBER
+  const from = process.env.TWILIO_FROM_NUMBER
+  if (!sid || !token || !to || !from) {
+    console.warn('[sms] Twilio env vars missing — skipping SMS')
+    return
+  }
+  try {
+    const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({ To: to, From: from, Body: message }),
+    })
+    if (!res.ok) {
+      const err = await res.text()
+      console.error('[sms] Twilio error:', res.status, err)
+    }
+  } catch (err) {
+    console.error('[sms] fetch failed:', err)
+  }
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -45,13 +71,9 @@ export async function POST(req: NextRequest) {
 
         await sendBookingNotification(booking.id, 'BOOKING_CONFIRMED')
         // SMS to owner
-        if (process.env.TWILIO_TO_NUMBER) {
-          twilioClient.messages.create({
-            to: process.env.TWILIO_TO_NUMBER,
-            from: TWILIO_FROM,
-            body: `Sterling Route PAYMENT: $${(pi.amount / 100).toFixed(0)} deposit confirmed — Booking ${booking.bookingRef}`,
-          }).catch(() => {})
-        }
+        await sendOwnerSms(
+          `Sterling Route PAYMENT: $${(pi.amount / 100).toFixed(0)} deposit confirmed — Booking ${booking.bookingRef}`
+        )
       }
       break
     }
