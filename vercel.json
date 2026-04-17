@@ -1,5 +1,4 @@
 {
-  "rootDirectory": "silversprinter",
   "framework": "nextjs",
   "crons": [
     {

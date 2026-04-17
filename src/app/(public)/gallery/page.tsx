@@ -5,31 +5,31 @@ import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const photos = [
-  { src: '/gallery/DSC04726.JPG', alt: 'Mercedes Sprinter — side profile' },
-  { src: '/gallery/DSC04731.JPG', alt: 'Front three-quarter view' },
-  { src: '/gallery/DSC04741.JPG', alt: 'Front view' },
-  { src: '/gallery/DSC04746.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04751.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04756.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04761.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04766.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04771.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04776.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04786.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04796.JPG', alt: 'Interior — front cabin' },
-  { src: '/gallery/DSC04801.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04806.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04816.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04826.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04836.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04841.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04846.JPG', alt: 'Interior detail' },
-  { src: '/gallery/DSC04851.JPG', alt: 'Rear exterior' },
-  { src: '/gallery/DSC04861.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04866.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04886.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04896.JPG', alt: 'Exterior detail' },
-  { src: '/gallery/DSC04901.JPG', alt: 'Exterior detail' },
+  { src: '/gallery/DSC04726.JPG', alt: 'SilverSprinter — side profile, palm trees' },
+  { src: '/gallery/DSC04731.JPG', alt: 'SilverSprinter — front three-quarter view' },
+  { src: '/gallery/IMG_5615.jpg', alt: 'SilverSprinter — exterior shoot' },
+  { src: '/gallery/IMG_5622.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5646.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5650.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5651.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5654.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5655.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5657.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5663.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5668.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5678.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5679.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5680.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5689.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5690.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5704.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5706.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5714.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5740.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5742.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5758.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5774.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/IMG_5780.jpg', alt: 'SilverSprinter — exterior detail' },
 ]
 
 export default function GalleryPage() {
@@ -37,43 +37,44 @@ export default function GalleryPage() {
 
   const openLightbox = (i: number) => setLightboxIndex(i)
   const closeLightbox = () => setLightboxIndex(null)
-  const prev = () => setLightboxIndex((i) => ((i ?? 0) - 1 + photos.length) % photos.length)
-  const next = () => setLightboxIndex((i) => ((i ?? 0) + 1) % photos.length)
+  const prev = () => setLightboxIndex(i => (i! - 1 + photos.length) % photos.length)
+  const next = () => setLightboxIndex(i => (i! + 1) % photos.length)
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-[#f0e6d0]">
+    <main className="min-h-screen bg-onyx-900 text-cream-200">
 
       {/* ── Header ── */}
-      <section className="pt-28 pb-12 px-6 text-center border-b border-[#433d38]/40">
-        <p className="text-[#c9a96e] font-sans text-xs tracking-[0.25em] uppercase mb-3">
-          The Van
+      <section className="pt-28 pb-12 px-6 text-center border-b border-gold-800/40">
+        <p className="text-gold-400 font-sans text-xs tracking-[0.25em] uppercase mb-3">
+          The Fleet
         </p>
-        <h1 className="font-serif text-5xl md:text-6xl text-[#f0e6d0] mb-4">
+        <h1 className="font-serif text-5xl md:text-6xl text-cream-100 mb-4">
           Gallery
         </h1>
-        <div className="w-16 h-px bg-[#c9a96e] mx-auto mb-5" />
-        <p className="font-sans text-[#5f5850] text-sm max-w-md mx-auto">
-          25 photos · Professional shoot
+        <div className="w-16 h-px bg-gold-500 mx-auto mb-5" />
+        <p className="font-sans text-onyx-300 text-sm max-w-md mx-auto">
+          25 photos · Professional shoot, June 2021
         </p>
       </section>
 
-      {/* ── Masonry Grid ── */}
+      {/* ── Grid ── */}
       <section className="max-w-7xl mx-auto px-4 py-14">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {photos.map((photo, i) => (
             <button
               key={photo.src}
               onClick={() => openLightbox(i)}
-              className="group relative w-full overflow-hidden bg-[#1a1612] break-inside-avoid block border border-transparent hover:border-[#c9a96e]/50 transition-colors duration-300 focus:outline-none"
+              className="group relative aspect-[4/3] overflow-hidden bg-onyx-800 focus:outline-none"
             >
               <Image
                 src={photo.src}
                 alt={photo.alt}
-                width={800}
-                height={600}
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 block"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                fill
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              {/* Gold overlay on hover */}
+              <div className="absolute inset-0 bg-gold-500/0 group-hover:bg-gold-500/10 transition-colors duration-300" />
             </button>
           ))}
         </div>
@@ -88,7 +89,7 @@ export default function GalleryPage() {
           {/* Close */}
           <button
             onClick={closeLightbox}
-            className="absolute top-5 right-5 text-[#f0e6d0] hover:text-[#c9a96e] transition-colors z-10"
+            className="absolute top-5 right-5 text-cream-300 hover:text-gold-400 transition-colors z-10"
             aria-label="Close"
           >
             <X size={28} />
@@ -96,8 +97,8 @@ export default function GalleryPage() {
 
           {/* Prev */}
           <button
-            onClick={(e) => { e.stopPropagation(); prev() }}
-            className="absolute left-4 text-[#f0e6d0] hover:text-[#c9a96e] transition-colors z-10 p-2"
+            onClick={e => { e.stopPropagation(); prev() }}
+            className="absolute left-4 text-cream-300 hover:text-gold-400 transition-colors z-10 p-2"
             aria-label="Previous"
           >
             <ChevronLeft size={36} />
@@ -106,7 +107,7 @@ export default function GalleryPage() {
           {/* Image */}
           <div
             className="relative w-full max-w-5xl max-h-[85vh] mx-16"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             <Image
               src={photos[lightboxIndex].src}
@@ -116,15 +117,16 @@ export default function GalleryPage() {
               className="object-contain w-full max-h-[85vh]"
               priority
             />
-            <p className="mt-3 text-center font-sans text-[#5f5850] text-xs tracking-widest uppercase">
+            {/* Caption */}
+            <p className="mt-3 text-center font-sans text-onyx-300 text-xs tracking-widest uppercase">
               {lightboxIndex + 1} / {photos.length}
             </p>
           </div>
 
           {/* Next */}
           <button
-            onClick={(e) => { e.stopPropagation(); next() }}
-            className="absolute right-4 text-[#f0e6d0] hover:text-[#c9a96e] transition-colors z-10 p-2"
+            onClick={e => { e.stopPropagation(); next() }}
+            className="absolute right-4 text-cream-300 hover:text-gold-400 transition-colors z-10 p-2"
             aria-label="Next"
           >
             <ChevronRight size={36} />

@@ -1,117 +1,155 @@
-import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
-const prisma = new PrismaClient({ adapter })
+const prisma = new PrismaClient()
 
 async function main() {
-  console.log('Seeding SilverSprinter database...')
+  console.log('Seeding database...')
 
-  // ─── Vehicle ──────────────────────────────────────────────────────────────
+  // ─── Vehicles ─────────────────────────────────────────────────────────────
 
-  const van = await prisma.vehicle.upsert({
-    where: { slug: 'silversprinter' },
+  const meridian = await prisma.vehicle.upsert({
+    where: { slug: 'the-meridian' },
     update: {},
     create: {
-      name: 'The SilverSprinter',
-      slug: 'silversprinter',
-      tagline: "South Florida's Finest Mobile Suite",
+      name: 'The Meridian',
+      slug: 'the-meridian',
+      tagline: 'Refined comfort for every journey',
       description:
-        'A custom-built Mercedes Sprinter unlike anything you can rent anywhere else in South Florida. ' +
-        '10 passengers across 6 captain chairs and 2 fold-flat benches. Private commode, sink, microwave, ' +
-        'mini fridge, 32" TV, Bluetooth, and WiFi. This is your living room on wheels — for golf trips, ' +
-        'game days, corporate events, or any occasion that deserves the finest ride.',
-      capacity: 10,
-      basePrice: 350,
-      pricePerHour: null,
-      pricePerDay: 595,
-      year: 2021,
+        'The Meridian sets the standard for luxury ground transportation. With 12 captain seats wrapped in full-grain leather, a starlight ceiling, and 4K screens throughout, every mile feels first-class.',
+      capacity: 12,
+      basePrice: 150,
+      pricePerHour: 120,
+      pricePerDay: 850,
+      year: 2024,
       make: 'Mercedes-Benz',
       model: 'Sprinter',
-      color: 'Silver',
+      color: 'Obsidian Black',
       status: 'AVAILABLE',
       features: [
-        '6 captain chairs + 2 fold-flat benches',
-        'Private commode & sink',
-        'Microwave & mini fridge',
-        '32" TV · Bluetooth · WiFi streaming',
-        'Sleeps 2 (benches fold flat)',
-        'USB-C charging at every seat',
-      ],
-      amenities: [
+        'Leather captain seats',
+        'Starlight ceiling',
+        '4K screens',
         'WiFi',
-        'TV',
-        'Bluetooth',
-        'Mini Fridge',
-        'Microwave',
-        'Private Restroom',
-        'USB-C',
-        'AC',
-        'Sleeping Capable',
+        'USB-C hubs',
+        'Dual-zone climate control',
       ],
-      imageUrls: [
-        '/gallery/DSC04726.JPG',
-        '/gallery/DSC04731.JPG',
-        '/gallery/DSC04741.JPG',
-        '/gallery/DSC04746.JPG',
-        '/gallery/DSC04751.JPG',
-        '/gallery/DSC04756.JPG',
-      ],
+      amenities: ['WiFi', 'USB-C', 'AC', 'Entertainment', 'Leather Seats'],
+      imageUrls: ['/images/vehicles/meridian-1.jpg', '/images/vehicles/meridian-2.jpg'],
     },
   })
 
-  console.log(`Seeded vehicle: ${van.name}`)
+  const noir = await prisma.vehicle.upsert({
+    where: { slug: 'the-noir' },
+    update: {},
+    create: {
+      name: 'The Noir',
+      slug: 'the-noir',
+      tagline: 'Executive privacy, redefined',
+      description:
+        'The Noir is our most exclusive offering — a 10-passenger executive conversion with suede interior, a curated mini bar, and a privacy partition that makes every ride feel like a private suite.',
+      capacity: 10,
+      basePrice: 200,
+      pricePerHour: 160,
+      pricePerDay: 1100,
+      year: 2024,
+      make: 'Mercedes-Benz',
+      model: 'Sprinter',
+      color: 'Midnight Blue',
+      status: 'AVAILABLE',
+      features: [
+        'Suede interior',
+        'Mini bar',
+        'Mood lighting',
+        'Privacy partition',
+        'Tinted privacy glass',
+        'Ambient lighting system',
+      ],
+      amenities: ['Mini Bar', 'WiFi', 'USB-C', 'AC', 'Privacy Partition'],
+      imageUrls: ['/images/vehicles/noir-1.jpg', '/images/vehicles/noir-2.jpg'],
+    },
+  })
 
-  // ─── Add-ons ──────────────────────────────────────────────────────────────
-  // Relevant for self-drive rental — golf, game day, corporate, occasions
+  const summit = await prisma.vehicle.upsert({
+    where: { slug: 'the-summit' },
+    update: {},
+    create: {
+      name: 'The Summit',
+      slug: 'the-summit',
+      tagline: 'Adventure without compromise',
+      description:
+        'The Summit blends rugged capability with premium comfort. Built for those who refuse to sacrifice luxury for adventure — all-terrain ready with panoramic windows and smart storage.',
+      capacity: 8,
+      basePrice: 175,
+      pricePerHour: 140,
+      pricePerDay: 950,
+      year: 2024,
+      make: 'Mercedes-Benz',
+      model: 'Sprinter',
+      color: 'Alpine White',
+      status: 'AVAILABLE',
+      features: [
+        'All-terrain capability',
+        'Roof rack',
+        'Cooler + storage',
+        'USB-C hubs',
+        'Panoramic windows',
+        'Adventure gear storage',
+      ],
+      amenities: ['WiFi', 'USB-C', 'AC', 'Panoramic Windows', 'Storage'],
+      imageUrls: ['/images/vehicles/summit-1.jpg', '/images/vehicles/summit-2.jpg'],
+    },
+  })
+
+  console.log(`Seeded vehicles: ${meridian.name}, ${noir.name}, ${summit.name}`)
+
+  // ─── Addons ───────────────────────────────────────────────────────────────
 
   const addons = await Promise.all([
-    prisma.addon.upsert({
-      where: { id: 'addon-cooler' },
-      update: {},
-      create: {
-        id: 'addon-cooler',
-        name: 'Stocked Cooler',
-        description: 'Arrives loaded: 2 bags of ice, 24 bottles of water, 12 assorted sodas, 6 sports drinks. Ready to go at pickup. You handle the beer — we handle the basics.',
-        price: 65,
-        category: 'Beverages',
-        isActive: true,
-      },
-    }),
-    prisma.addon.upsert({
-      where: { id: 'addon-golf' },
-      update: {},
-      create: {
-        id: 'addon-golf',
-        name: 'Golf Trip Setup',
-        description: 'Cargo area configured for clubs: non-slip mat, tie-down straps, organized storage. Includes a printed course guide for your destination (Streamsong, Cabot Citrus Farms, TPC Sawgrass, Innisbrook — or your choice). Pickup is smooth. Unload is smooth. Nothing shifts in transit.',
-        price: 45,
-        category: 'Golf',
-        isActive: true,
-      },
-    }),
-    prisma.addon.upsert({
-      where: { id: 'addon-tailgate' },
-      update: {},
-      create: {
-        id: 'addon-tailgate',
-        name: 'Tailgate Package',
-        description: 'Folding table, 6 camp chairs, reusable stadium cups, bottle opener, disposable serving trays. Everything you need for a proper pre-game setup — none of it left behind. You pack in, you pack out.',
-        price: 55,
-        category: 'Game Day',
-        isActive: true,
-      },
-    }),
     prisma.addon.upsert({
       where: { id: 'addon-champagne' },
       update: {},
       create: {
         id: 'addon-champagne',
         name: 'Champagne Service',
-        description: 'Two bottles of Moët & Chandon (or equivalent) chilled and waiting in the fridge. Flutes for 10. Gold napkins. No corkage, no fuss. Ideal for milestones, celebrations, or any trip that deserves a proper send-off. Note: Alcohol service is for passengers only — not the driver, ever.',
-        price: 75,
-        category: 'Occasions',
+        description: 'Premium champagne and flutes for your journey',
+        price: 30,
+        category: 'Beverages',
+        isActive: true,
+      },
+    }),
+    prisma.addon.upsert({
+      where: { id: 'addon-audio' },
+      update: {},
+      create: {
+        id: 'addon-audio',
+        name: 'Premium Audio',
+        description: 'Custom playlist curated to your preferences',
+        price: 20,
+        category: 'Entertainment',
+        isActive: true,
+      },
+    }),
+    prisma.addon.upsert({
+      where: { id: 'addon-partition' },
+      update: {},
+      create: {
+        id: 'addon-partition',
+        name: 'Privacy Partition',
+        description: 'Full privacy divider between cabin and driver',
+        price: 50,
+        category: 'Privacy',
+        isActive: true,
+      },
+    }),
+    prisma.addon.upsert({
+      where: { id: 'addon-redcarpet' },
+      update: {},
+      create: {
+        id: 'addon-redcarpet',
+        name: 'Red Carpet Arrival',
+        description: 'Red carpet, door service, and white-glove greeting',
+        price: 40,
+        category: 'Experience',
         isActive: true,
       },
     }),
@@ -120,10 +158,10 @@ async function main() {
       update: {},
       create: {
         id: 'addon-refreshments',
-        name: 'Premium Snack Board',
-        description: 'Artisan board: charcuterie, aged cheeses, crackers, nuts, dried fruit, chocolate. Serves 6–8. Pre-arranged at pickup. Pairs with the champagne service or stands on its own. No wilted gas station snacks on a Sterling Route trip.',
-        price: 85,
-        category: 'Food',
+        name: 'Chilled Refreshments',
+        description: 'Assorted chilled beverages and light snacks',
+        price: 25,
+        category: 'Beverages',
         isActive: true,
       },
     }),
@@ -133,35 +171,82 @@ async function main() {
       create: {
         id: 'addon-floral',
         name: 'Floral Arrangement',
-        description: 'Fresh arrangement from a local Palm Beach County florist. Suitable for anniversaries, proposals, birthdays, or any occasion that calls for flowers. Specify occasion and color preference at booking. Add-on must be requested 72 hours in advance.',
-        price: 60,
-        category: 'Occasions',
+        description: 'Fresh floral arrangement for special occasions',
+        price: 35,
+        category: 'Decor',
         isActive: true,
       },
     }),
   ])
 
-  console.log(`Seeded ${addons.length} add-ons`)
+  console.log(`Seeded ${addons.length} addons`)
 
-  // ─── Hoadley Group Corporate Account ─────────────────────────────────────
+  // ─── Chauffeurs ───────────────────────────────────────────────────────────
 
-  const hoadley = await prisma.corporateAccount.upsert({
-    where: { accountRef: 'HGP-0001' },
+  const chauffeurs = await Promise.all([
+    prisma.chauffeur.upsert({
+      where: { email: 'marcus.j@silversprinter.com' },
+      update: {},
+      create: {
+        name: 'Marcus J.',
+        phone: '+13055550101',
+        email: 'marcus.j@silversprinter.com',
+        bio: 'Marcus has been with SilverSprinter since the beginning. Known for his impeccable discretion and encyclopedic knowledge of Miami, he is our most requested chauffeur.',
+        rating: 4.99,
+        totalTrips: 312,
+        isActive: true,
+      },
+    }),
+    prisma.chauffeur.upsert({
+      where: { email: 'rachel.l@silversprinter.com' },
+      update: {},
+      create: {
+        name: 'Rachel L.',
+        phone: '+13055550102',
+        email: 'rachel.l@silversprinter.com',
+        bio: 'Rachel brings executive-level professionalism to every ride. A former hospitality director, she anticipates every need before you ask.',
+        rating: 4.97,
+        totalTrips: 208,
+        isActive: true,
+      },
+    }),
+    prisma.chauffeur.upsert({
+      where: { email: 'devon.k@silversprinter.com' },
+      update: {},
+      create: {
+        name: 'Devon K.',
+        phone: '+13055550103',
+        email: 'devon.k@silversprinter.com',
+        bio: "Devon's calm demeanor and meticulous attention to detail make him the go-to chauffeur for corporate clients and VIP transfers.",
+        rating: 4.95,
+        totalTrips: 156,
+        isActive: true,
+      },
+    }),
+  ])
+
+  console.log(`Seeded ${chauffeurs.length} chauffeurs`)
+
+  // ─── Corporate Account ────────────────────────────────────────────────────
+
+  const acme = await prisma.corporateAccount.upsert({
+    where: { accountRef: 'ACM-0042' },
     update: {},
     create: {
-      accountRef: 'HGP-0001',
-      companyName: 'The Hoadley Group',
-      billingEmail: 'info@thehoadleygroup.com',
-      billingAddress: 'South Florida, FL',
-      paymentTerms: 0,
+      accountRef: 'ACM-0042',
+      companyName: 'Acme Capital Partners',
+      billingEmail: 'billing@acmecapital.com',
+      billingAddress: '100 Brickell Ave, Suite 2400, Miami, FL 33131',
+      paymentTerms: 30,
       seatLimit: 10,
-      coordinatorName: 'Owner',
+      coordinatorName: 'Jennifer Walsh',
+      coordinatorPhone: '+13055550200',
       isActive: true,
     },
   })
 
-  console.log(`Seeded corporate account: ${hoadley.companyName}`)
-  console.log('✅ Seeding complete.')
+  console.log(`Seeded corporate account: ${acme.companyName}`)
+  console.log('Seeding complete.')
 }
 
 main()
