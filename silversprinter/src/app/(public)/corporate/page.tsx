@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Corporate Van Rental — Sterling Route',
+  description:
+    'Luxury van rental for real estate site tours, investor transportation, and corporate events in South Florida. Preferred rates for Hoadley Group clients.',
+}
 import { CheckCircle, Building2, Users, FileText, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
