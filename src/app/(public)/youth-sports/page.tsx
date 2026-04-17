@@ -200,6 +200,48 @@ export default function YouthSportsPage() {
         </div>
       </section>
 
+      {/* ── Team Culture ── */}
+      <section className="py-24 px-6 border-t border-[#433d38]/40 bg-[#0a0a0a]">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-6">More Than a Ride</p>
+          <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0] mb-16">
+            The Bus Ride Is Part of the Game
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#433d38]/30">
+            {[
+              {
+                title: 'Team Cohesion',
+                body: 'There\'s a reason championship teams talk about the bus rides. The two hours together before a game — that\'s where inside jokes form, where the quiet kid finally opens up, where the team becomes a team. You can\'t manufacture that. But you can create the conditions for it.',
+              },
+              {
+                title: 'Coachable Moments',
+                body: 'Film on the screen. Game plan conversation. Pre-game talk without the parking lot chaos around you. The ride in is 90 minutes of focused preparation. Use it. The van is a rolling film room, chalk talk session, and team meeting — all before you hit the field.',
+              },
+              {
+                title: 'Shared Experience',
+                body: 'Win or lose, they\'ll remember the ride home. That\'s where the real debrief happens — not the formal one, the one between teammates. Those conversations build culture. A caravan of minivans doesn\'t give you that. One van does.',
+              },
+              {
+                title: 'Convenience for Families',
+                body: 'Parents don\'t have to drive. One vehicle, one departure time, one arrival. Families who can\'t make the trip know their kid is with the team, not riding with someone they barely know. That peace of mind matters more than people say.',
+              },
+            ].map(({ title, body }) => (
+              <div key={title} className="bg-[#0d0b09] p-10">
+                <h3 className="font-serif text-xl text-[#c9a96e] mb-4">{title}</h3>
+                <p className="text-sm text-[#a09890] leading-relaxed">{body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 border-l-2 border-[#c9a96e] pl-8 max-w-2xl">
+            <p className="font-serif text-2xl text-[#f0e6d0] italic leading-relaxed">
+              &ldquo;The caravan gets you there. The van gets you there together.&rdquo;
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Team Rates ── */}
       <section id="team-rates" className="py-24 px-6 border-t border-[#433d38]/40">
         <div className="max-w-3xl mx-auto">
@@ -243,6 +285,77 @@ export default function YouthSportsPage() {
             className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b87a] transition-colors duration-200"
           >
             Book at Team Rate <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Sterling Reserve for Teams ── */}
+      <section className="py-24 px-6 bg-[#0d0b09] border-t border-[#433d38]/40">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-6">For Teams That Travel Regularly</p>
+          <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0] mb-4">
+            Sterling Reserve Pays for Itself.
+          </h2>
+          <p className="text-[#a09890] text-lg mb-16 max-w-2xl leading-relaxed">
+            If your team has 10+ tournaments a season, the math on membership is hard to argue with.
+            Included days are priced well below rack rate — and the more you use it, the more it makes sense.
+          </p>
+
+          {/* Comparison table */}
+          <div className="overflow-x-auto mb-10">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-[#433d38]">
+                  <th className="text-left py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Membership</th>
+                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Included Days/Year</th>
+                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Annual Cost</th>
+                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Effective $/Day</th>
+                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">vs. Team Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { tier: 'Reserve', days: 12, annual: '$4,788', perDay: '$399', savings: 'Save $446/day' },
+                  { tier: 'Gold', days: 24, annual: '$9,588', perDay: '$399', savings: 'Save $446/day' },
+                  { tier: 'Black', days: 36, annual: '$14,340', perDay: '$398', savings: 'Save $447/day' },
+                ].map(({ tier, days, annual, perDay, savings }, i) => (
+                  <tr key={tier} className={`border-b border-[#433d38]/40 ${i === 1 ? 'bg-[#1a1612]' : ''}`}>
+                    <td className="py-5 px-6 font-serif text-[#f0e6d0]">Sterling Reserve {tier}</td>
+                    <td className="py-5 px-6 text-center text-[#a09890]">{days} days</td>
+                    <td className="py-5 px-6 text-center text-[#a09890]">{annual}/yr</td>
+                    <td className="py-5 px-6 text-center font-serif text-xl text-[#c9a96e]">{perDay}</td>
+                    <td className="py-5 px-6 text-center text-xs text-[#5f5850]">{savings}</td>
+                  </tr>
+                ))}
+                <tr className="border-b border-[#433d38]/40 opacity-50">
+                  <td className="py-5 px-6 text-[#5f5850]">Public / Team Rate</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">—</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">Pay per trip</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">$845</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">Baseline</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="border border-[#433d38]/50 bg-[#1a1612] p-8 mb-8 max-w-2xl">
+            <p className="text-xs tracking-[0.2em] uppercase text-[#c9a96e] mb-3">Example: 12-Tournament Season</p>
+            <p className="text-[#a09890] text-sm leading-relaxed mb-3">
+              At team rate: 12 days × $845 = <span className="text-[#f0e6d0]">$10,140/year</span>
+            </p>
+            <p className="text-[#a09890] text-sm leading-relaxed mb-3">
+              Reserve membership: 12 included days for <span className="text-[#c9a96e]">$4,788/year</span>
+            </p>
+            <p className="text-[#5f5850] text-xs leading-relaxed border-t border-[#433d38] pt-4 mt-4">
+              That&apos;s $5,352 back in the program budget. Priority booking, preferred rates on additional days, and a concierge who already knows your schedule.
+            </p>
+          </div>
+
+          <Link
+            href="/sterling-reserve"
+            className="inline-flex items-center justify-center gap-2 px-10 py-4 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase hover:bg-[#c9a96e] hover:text-[#0a0a0a] transition-colors duration-200"
+          >
+            Explore Sterling Reserve <ArrowRight size={16} />
           </Link>
         </div>
       </section>
