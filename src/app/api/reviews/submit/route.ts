@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,38 +19,11 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Find booking by review token
-    const booking = await prisma.rentalBooking.findUnique({
-      where: { reviewToken: token },
-      include: { review: { select: { id: true } } },
-    })
-
-    if (!booking) {
-      return NextResponse.json(
-        { error: 'Invalid or expired review link.' },
-        { status: 404 }
-      )
-    }
-
-    if (booking.review) {
-      return NextResponse.json(
-        { error: 'A review has already been submitted for this booking.' },
-        { status: 409 }
-      )
-    }
-
-    await prisma.rentalReview.create({
-      data: {
-        bookingId: booking.id,
-        renterName: renterName.trim(),
-        rating,
-        body: body.trim(),
-        tripType: booking.tripType,
-        status: 'PENDING',
-      },
-    })
-
-    return NextResponse.json({ success: true })
+    // Review submission pending schema migration
+    return NextResponse.json(
+      { error: 'Review submission temporarily unavailable.' },
+      { status: 503 }
+    )
   } catch (error: unknown) {
     console.error('Review submit error:', error)
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })

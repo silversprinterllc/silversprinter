@@ -15,9 +15,18 @@ export function Footer() {
         <div>
           <p className="text-xs font-medium tracking-widest uppercase text-[#c9a96e] mb-4">Services</p>
           <ul className="space-y-2">
-            {['Airport Transfers', 'Hourly Charter', 'Events & Weddings', 'Corporate Travel'].map((s) => (
-              <li key={s}>
-                <Link href="/book" className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors">{s}</Link>
+            {[
+              { label: 'Airport Transfers', href: '/book' },
+              { label: 'Hourly Charter', href: '/book' },
+              { label: 'Events & Weddings', href: '/book' },
+              { label: 'Corporate Travel', href: '/corporate' },
+              { label: 'Golf Trips', href: '/golf' },
+              { label: 'Game Day', href: '/gameday' },
+              { label: 'Family & Occasions', href: '/family' },
+              { label: 'Youth Sports', href: '/youth-sports' },
+            ].map(({ label, href }) => (
+              <li key={label}>
+                <Link href={href} className="text-sm text-[#5f5850] hover:text-[#a09890] transition-colors">{label}</Link>
               </li>
             ))}
           </ul>

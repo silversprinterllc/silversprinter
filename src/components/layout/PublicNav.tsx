@@ -13,6 +13,7 @@ export function PublicNav() {
     { href: '/fleet', label: 'Fleet' },
     { href: '/gallery', label: 'Gallery' },
     { href: '/corporate', label: 'Corporate' },
+    { href: '/youth-sports', label: 'Youth Sports' },
     { href: '/about', label: 'About' },
   ]
 

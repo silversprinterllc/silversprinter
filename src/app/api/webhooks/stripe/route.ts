@@ -1,6 +1,5 @@
 import { NextRequest } from 'next/server'
 import type Stripe from 'stripe'
-import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { sendBookingConfirmation, sendOwnerBookingNotification } from '@/lib/emails/send'
 
@@ -21,72 +20,45 @@ export async function POST(req: NextRequest) {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
-    const bookingId = session.metadata?.bookingId
+    const bookingRef = session.metadata?.bookingRef ?? session.id
+    const customerEmail = session.customer_email ?? ''
 
-    if (bookingId) {
-      let booking: Awaited<ReturnType<typeof prisma.rentalBooking.update>> | null = null
+    if (bookingRef && customerEmail) {
+      // Send basic confirmation with available session data
       try {
-        booking = await prisma.rentalBooking.update({
-          where: { id: bookingId },
-          data: {
-            status: 'CONFIRMED',
-          },
+        await sendBookingConfirmation(customerEmail, {
+          firstName: session.customer_details?.name?.split(' ')[0] ?? 'Guest',
+          bookingRef,
+          startDate: '',
+          endDate: '',
+          totalDays: 1,
+          tripType: 'Self-Drive Rental',
+          passengers: 1,
+          addOns: [],
+          depositAmount: (session.amount_total ?? 0) / 100,
+          balanceAmount: 0,
+          balanceDueDate: '48 hours before departure',
         })
-      } catch (err) {
-        console.error('Failed to update rental booking status:', err)
+      } catch (emailError) {
+        console.error('Booking confirmation email failed:', emailError)
       }
 
-      if (booking) {
-        // Fetch add-ons for the booking
-        let addOnNames: string[] = []
-        try {
-          const addOns = await prisma.rentalBookingAddOn.findMany({
-            where: { bookingId: booking.id },
-            select: { name: true },
-          })
-          addOnNames = addOns.map((a) => a.name)
-        } catch (err) {
-          console.error('Failed to fetch add-ons:', err)
-        }
-
-        // Send confirmation email to renter
-        try {
-          await sendBookingConfirmation(booking.email, {
-            firstName: booking.firstName,
-            bookingRef: booking.id,
-            startDate: booking.startDate,
-            endDate: booking.endDate,
-            totalDays: booking.days,
-            tripType: booking.tripType || 'Self-Drive Rental',
-            passengers: booking.passengerCount,
-            addOns: addOnNames,
-            depositAmount: booking.depositAmount,
-            balanceAmount: booking.balanceAmount,
-            balanceDueDate: '48 hours before departure',
-          })
-        } catch (emailError) {
-          console.error('Booking confirmation email failed:', emailError)
-          // Don't throw — booking is confirmed even if email fails
-        }
-
-        // Send owner notification
-        try {
-          await sendOwnerBookingNotification({
-            firstName: booking.firstName,
-            lastName: booking.lastName,
-            email: booking.email,
-            phone: booking.phone,
-            bookingRef: booking.id,
-            startDate: booking.startDate,
-            endDate: booking.endDate,
-            tripType: booking.tripType || 'Self-Drive Rental',
-            passengers: booking.passengerCount,
-            depositAmount: booking.depositAmount,
-            totalAmount: booking.subtotal,
-          })
-        } catch (emailError) {
-          console.error('Owner notification email failed:', emailError)
-        }
+      try {
+        await sendOwnerBookingNotification({
+          firstName: session.customer_details?.name?.split(' ')[0] ?? 'Guest',
+          lastName: session.customer_details?.name?.split(' ').slice(1).join(' ') ?? '',
+          email: customerEmail,
+          phone: '',
+          bookingRef,
+          startDate: '',
+          endDate: '',
+          tripType: 'Self-Drive Rental',
+          passengers: 1,
+          depositAmount: (session.amount_total ?? 0) / 100,
+          totalAmount: (session.amount_total ?? 0) / 100,
+        })
+      } catch (emailError) {
+        console.error('Owner notification email failed:', emailError)
       }
     }
   }

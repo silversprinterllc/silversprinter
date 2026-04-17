@@ -8,6 +8,7 @@ import { FleetShowcase } from '@/components/marketing/FleetShowcase'
 import { ExperienceFeatures } from '@/components/marketing/ExperienceFeatures'
 import { TestimonialsSection } from '@/components/marketing/TestimonialsSection'
 import { CorporateCTA } from '@/components/marketing/CorporateCTA'
+import { TripTypes } from '@/components/marketing/TripTypes'
 
 export default async function HomePage() {
   const vehicles = await prisma.vehicle.findMany({
@@ -30,6 +31,7 @@ export default async function HomePage() {
       <HeroSection />
       <FleetShowcase vehicles={vehicleData} />
       <ExperienceFeatures />
+      <TripTypes />
       <TestimonialsSection />
       <CorporateCTA />
       <Footer />
