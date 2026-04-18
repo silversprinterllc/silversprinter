@@ -12,12 +12,6 @@ export default withAuth(
       }
     }
 
-    if (pathname.startsWith('/corporate')) {
-      if (!token || !['CORPORATE_ADMIN', 'CORPORATE_RIDER', 'SUPER_ADMIN'].includes(token.role as string)) {
-        return NextResponse.redirect(new URL('/portal', req.url))
-      }
-    }
-
     return NextResponse.next()
   },
   {
@@ -26,8 +20,7 @@ export default withAuth(
         const { pathname } = req.nextUrl
         if (
           pathname.startsWith('/portal') ||
-          pathname.startsWith('/dispatcher') ||
-          pathname.startsWith('/corporate')
+          pathname.startsWith('/dispatcher')
         ) {
           return !!token
         }
@@ -38,5 +31,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ['/portal/:path*', '/dispatcher/:path*', '/corporate/:path*'],
+  matcher: ['/portal/:path*', '/dispatcher/:path*'],
 }
