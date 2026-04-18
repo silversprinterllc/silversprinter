@@ -14,7 +14,7 @@ export function Footer() {
               method="POST"
               className="flex gap-3"
             >
-              <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+              <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? ''} />
               <input type="hidden" name="subject" value="Sterling Route Newsletter Signup" />
               <input
                 type="email"
@@ -46,9 +46,9 @@ export function Footer() {
           <p className="text-xs font-medium tracking-widest uppercase text-[#c9a96e] mb-4">Services</p>
           <ul className="space-y-2">
             {[
-              { label: 'Day Rentals', href: '/book' },
-              { label: 'Multi-Day Trips', href: '/book' },
-              { label: 'Events & Weddings', href: '/book' },
+              { label: 'Day Rentals', href: '/insurance' },
+              { label: 'Multi-Day Trips', href: '/insurance' },
+              { label: 'Events & Weddings', href: '/insurance' },
               { label: 'Corporate Travel', href: '/corporate' },
               { label: 'Golf Trips', href: '/golf' },
               { label: 'Game Day', href: '/gameday' },

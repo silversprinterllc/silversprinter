@@ -5,8 +5,8 @@ import { useState, FormEvent } from 'react'
 
 const quickLinks = [
   {
-    label: 'Ready to Book',
-    href: '/book',
+    label: 'Check Availability',
+    href: '/insurance',
     sub: 'Check dates and reserve with a deposit',
   },
   {
@@ -50,7 +50,7 @@ export function ContactForm() {
 
     try {
       const payload = {
-        access_key: 'YOUR_WEB3FORMS_ACCESS_KEY',
+        access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? '',
         subject: 'New Sterling Route Inquiry',
         from_name: 'Sterling Route Website',
         name: formData.name,
