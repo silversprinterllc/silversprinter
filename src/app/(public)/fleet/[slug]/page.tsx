@@ -94,8 +94,8 @@ export default async function VehicleDetailPage({ params }: Props) {
               <h3 className="font-serif text-xl text-[#f0e6d0] mb-6">Pricing</h3>
               <div className="space-y-3 mb-8 text-sm">
                 <div className="flex justify-between text-[#a09890]">
-                  <span>Airport Transfer</span>
-                  <span className="text-[#c9a96e]">{formatCurrency(Number(vehicle.basePrice))}</span>
+                  <span>Starting at</span>
+                  <span className="text-[#c9a96e]">{formatCurrency(Number(vehicle.basePrice))}/day</span>
                 </div>
                 {vehicle.pricePerHour && (
                   <div className="flex justify-between text-[#a09890]">

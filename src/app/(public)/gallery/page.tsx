@@ -5,31 +5,31 @@ import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const photos = [
-  { src: '/gallery/DSC04726.JPG', alt: 'SilverSprinter — side profile, palm trees' },
-  { src: '/gallery/DSC04731.JPG', alt: 'SilverSprinter — front three-quarter view' },
-  { src: '/gallery/IMG_5615.jpg', alt: 'SilverSprinter — exterior shoot' },
-  { src: '/gallery/IMG_5622.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5646.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5650.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5651.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5654.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5655.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5657.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5663.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5668.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5678.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5679.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5680.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5689.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5690.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5704.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5706.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5714.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5740.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5742.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5758.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5774.jpg', alt: 'SilverSprinter — exterior detail' },
-  { src: '/gallery/IMG_5780.jpg', alt: 'SilverSprinter — exterior detail' },
+  { src: '/gallery/DSC04726.JPG', alt: 'Sterling Route luxury Sprinter van — side profile exterior' },
+  { src: '/gallery/DSC04731.JPG', alt: 'Sterling Route luxury Sprinter van — front three-quarter view' },
+  { src: '/gallery/DSC04741.JPG', alt: 'Sterling Route MAD Daycruiser D6 — rear exterior' },
+  { src: '/gallery/DSC04746.JPG', alt: 'Sterling Route luxury van — exterior detail' },
+  { src: '/gallery/DSC04751.JPG', alt: 'Sterling Route luxury Sprinter — exterior profile' },
+  { src: '/gallery/DSC04756.JPG', alt: 'Sterling Route van — exterior shoot West Palm Beach' },
+  { src: '/gallery/DSC04761.JPG', alt: 'Sterling Route luxury van — exterior angle' },
+  { src: '/gallery/DSC04766.JPG', alt: 'Sterling Route Sprinter — exterior detail' },
+  { src: '/gallery/DSC04771.JPG', alt: 'Sterling Route van — exterior close-up' },
+  { src: '/gallery/DSC04776.JPG', alt: 'Sterling Route MAD Daycruiser — exterior rear quarter' },
+  { src: '/gallery/DSC04786.JPG', alt: 'Sterling Route luxury van — exterior full length' },
+  { src: '/gallery/DSC04796.JPG', alt: 'Sterling Route Sprinter van — exterior detail' },
+  { src: '/gallery/DSC04801.JPG', alt: 'Sterling Route van — exterior side' },
+  { src: '/gallery/DSC04806.JPG', alt: 'Sterling Route luxury Sprinter — exterior detail' },
+  { src: '/gallery/DSC04816.JPG', alt: 'Sterling Route MAD Daycruiser D6 — cabin entrance' },
+  { src: '/gallery/DSC04826.JPG', alt: 'Sterling Route van interior — captain chairs leather' },
+  { src: '/gallery/DSC04836.JPG', alt: 'Sterling Route interior — rear seating and amenities' },
+  { src: '/gallery/DSC04841.JPG', alt: 'Sterling Route interior — entertainment system' },
+  { src: '/gallery/DSC04846.JPG', alt: 'Sterling Route interior — ambient lighting mood' },
+  { src: '/gallery/DSC04851.JPG', alt: 'Sterling Route interior — USB-C charging and seating' },
+  { src: '/gallery/DSC04861.JPG', alt: 'Sterling Route interior — private commode and sink' },
+  { src: '/gallery/DSC04866.JPG', alt: 'Sterling Route interior — mini fridge and microwave' },
+  { src: '/gallery/DSC04886.JPG', alt: 'Sterling Route luxury van — interior panorama' },
+  { src: '/gallery/DSC04896.JPG', alt: 'Sterling Route Sprinter — interior detail' },
+  { src: '/gallery/DSC04901.JPG', alt: 'Sterling Route MAD Daycruiser D6 — full interior' },
 ]
 
 export default function GalleryPage() {
@@ -53,7 +53,7 @@ export default function GalleryPage() {
         </h1>
         <div className="w-16 h-px bg-gold-500 mx-auto mb-5" />
         <p className="font-sans text-onyx-300 text-sm max-w-md mx-auto">
-          25 photos · Professional shoot, June 2021
+          25 photos · MAD Daycruiser D6 professional shoot
         </p>
       </section>
 

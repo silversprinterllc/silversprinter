@@ -249,7 +249,7 @@ model Booking {
 }
 
 enum ServiceType {
-  AIRPORT_TRANSFER
+  DAY_RENTAL
   HOURLY_CHARTER
   EVENT
   WEDDING

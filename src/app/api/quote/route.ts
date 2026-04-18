@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 const quoteSchema = z.object({
   vehicleId: z.string(),
-  serviceType: z.enum(['AIRPORT_TRANSFER', 'HOURLY_CHARTER', 'EVENT', 'WEDDING', 'CORPORATE', 'MULTI_DAY_TOUR']),
+  serviceType: z.enum(['DAY_RENTAL', 'HOURLY_CHARTER', 'EVENT', 'WEDDING', 'CORPORATE', 'MULTI_DAY_TOUR']),
   pickupAt: z.string(),
   estimatedHours: z.number().optional(),
   estimatedDays: z.number().optional(),

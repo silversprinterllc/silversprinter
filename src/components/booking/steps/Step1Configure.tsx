@@ -9,9 +9,10 @@ import { Input } from '@/components/ui/Input'
 import type { ServiceType } from '@prisma/client'
 
 const SERVICE_TYPES: { value: ServiceType; label: string }[] = [
-  { value: 'AIRPORT_TRANSFER', label: 'Airport Transfer' },
-  { value: 'HOURLY_CHARTER', label: 'Hourly Charter' },
+  { value: 'DAY_RENTAL', label: 'Day Rental' },
+  { value: 'MULTI_DAY_TOUR', label: 'Multi-Day Trip' },
   { value: 'EVENT', label: 'Event' },
+  { value: 'WEDDING', label: 'Wedding' },
   { value: 'CORPORATE', label: 'Corporate' },
 ]
 
@@ -82,7 +83,7 @@ export function Step1Configure() {
           label="Destination"
           value={state.destinationAddress}
           onChange={(e) => update({ destinationAddress: e.target.value })}
-          placeholder="MIA Airport Terminal J"
+          placeholder="Hotel, venue, or address"
         />
       </div>
 

@@ -40,7 +40,7 @@ function calcPricing(startDate: string, endDate: string) {
   return { days, baseTotal }
 }
 
-const SERVICE_TYPES = ['AIRPORT_TRANSFER','HOURLY_CHARTER','EVENT','WEDDING','CORPORATE','MULTI_DAY_TOUR'] as const
+const SERVICE_TYPES = ['DAY_RENTAL','HOURLY_CHARTER','EVENT','WEDDING','CORPORATE','MULTI_DAY_TOUR'] as const
 type ServiceType = typeof SERVICE_TYPES[number]
 
 export async function POST(req: NextRequest) {

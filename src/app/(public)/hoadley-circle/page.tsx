@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Hoadley Circle — Private Vehicle Access',
-  description: 'Private vehicle access for Hoadley Group Circle clients. South Florida property tours, airport runs, and private transport — with Benjamin.',
+  description: 'Private vehicle access for Hoadley Group Circle clients. South Florida property tours, group transport, and extended search trips — with Benjamin.',
   robots: { index: false, follow: false },
 }
 
@@ -23,7 +23,7 @@ export default function HoadleyCirclePage() {
           </h1>
           <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl">
             As a Circle client, you have access to a private Mercedes Sprinter for property tours,
-            airport transfers, and group transport. Benjamin drives. Ten passengers. Commode on board.
+            group transport, and extended search trips. Benjamin drives. Ten passengers. Commode on board.
           </p>
         </div>
       </section>

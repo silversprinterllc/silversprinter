@@ -9,21 +9,21 @@ const testimonials = [
   },
   {
     name: 'Amanda R.',
-    trip: 'Airport Transfer',
+    trip: 'Bachelorette Weekend',
     rating: 5,
-    quote: 'Absolutely seamless. Marcus was waiting at baggage claim, the van was immaculate, and we arrived at the hotel feeling like royalty.',
+    quote: "We rented it for a long weekend and drove up the coast. Ten women, one van, zero logistics headaches. Worth every dollar.",
   },
   {
     name: 'James & Sofia K.',
-    trip: 'Wedding Charter',
+    trip: 'Wedding Weekend',
     rating: 5,
-    quote: 'The Noir made our wedding day unforgettable. Red carpet arrival, champagne on board — every single detail was perfect.',
+    quote: 'The van moved our whole wedding party between venues. Red carpet arrival, champagne on board — every single detail was perfect.',
   },
   {
     name: 'Carlos M.',
-    trip: 'Corporate Travel',
+    trip: 'Corporate Offsite',
     rating: 5,
-    quote: 'Our entire executive team uses SilverSprinter for airport runs. The Net-30 invoicing and dedicated coordinator make it effortless.',
+    quote: "Rented it for our leadership retreat in the Keys. Twelve executives, one vehicle, no one stuck in a rental car. Changed how we plan offsites.",
   },
 ]
 

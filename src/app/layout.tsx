@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'SilverSprinter — Luxury Sprinter Van Charters',
-  description: 'Custom-configured luxury sprinter vans with professional chauffeurs. Airport transfers, hourly charters, events, and corporate travel.',
+  description: 'Self-drive luxury Sprinter van rental in West Palm Beach. The MAD Daycruiser D6 — available by the day for events, road trips, corporate travel, and more.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

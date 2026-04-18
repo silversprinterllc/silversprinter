@@ -39,15 +39,15 @@ export function Footer() {
             Silver<span className="text-[#c9a96e]">Sprinter</span>
           </p>
           <p className="text-sm text-[#5f5850] leading-relaxed max-w-xs">
-            Luxury sprinter van charters for those who demand more. Professional chauffeurs, curated cabins, 24/7 concierge.
+            Self-drive luxury Sprinter rental for those who demand more. The MAD Daycruiser D6 — available by the day.
           </p>
         </div>
         <div>
           <p className="text-xs font-medium tracking-widest uppercase text-[#c9a96e] mb-4">Services</p>
           <ul className="space-y-2">
             {[
-              { label: 'Airport Transfers', href: '/book' },
-              { label: 'Hourly Charter', href: '/book' },
+              { label: 'Day Rentals', href: '/book' },
+              { label: 'Multi-Day Trips', href: '/book' },
               { label: 'Events & Weddings', href: '/book' },
               { label: 'Corporate Travel', href: '/corporate' },
               { label: 'Golf Trips', href: '/golf' },
