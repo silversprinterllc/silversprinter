@@ -235,7 +235,7 @@ export default function RatesPage() {
         <div className="max-w-3xl mx-auto">
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/book"
+              href="/insurance"
               className="inline-block bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[#d4b87a] transition-colors duration-200 text-center"
             >
               Check Availability

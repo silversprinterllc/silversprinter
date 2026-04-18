@@ -135,7 +135,7 @@ export default function AboutPage() {
           <p className="text-[#5f5850] text-base mb-12">Check availability for your dates.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/book"
+              href="/insurance"
               className="inline-block bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[#d4b87a] transition-colors duration-200"
             >
               Check Availability

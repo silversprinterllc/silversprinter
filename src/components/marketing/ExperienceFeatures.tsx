@@ -1,25 +1,25 @@
-import { MapPin, RotateCcw, Sliders, Star } from 'lucide-react'
+import { Toilet, Thermometer, Users, ShieldCheck } from 'lucide-react'
 
 const features = [
   {
-    icon: MapPin,
-    title: 'Live GPS Tracking',
-    description: 'Watch your chauffeur approach in real time. Share the tracking link with anyone.',
+    icon: Toilet,
+    title: 'Private Commode On Board',
+    description: 'Full private bathroom — commode and sink. No gas station stops. No detours. You leave when you want and arrive when you planned.',
   },
   {
-    icon: RotateCcw,
-    title: 'Instant Rebooking',
-    description: 'One tap to rebook your last journey. All preferences saved automatically.',
+    icon: Thermometer,
+    title: 'Set Before You Arrive',
+    description: 'Tell us how you want the van. Temperature dialed in, cooler stocked, preferences on file. Open the door and it\'s already right.',
   },
   {
-    icon: Sliders,
-    title: 'Curate Your Cabin',
-    description: 'Set temperature, lighting, music, and more before you step inside.',
+    icon: Users,
+    title: 'The Whole Group, Every Mile',
+    description: 'Ten seats. One vehicle. The conversation that starts in the driveway doesn\'t get split across three cars. That\'s the whole point.',
   },
   {
-    icon: Star,
-    title: 'Loyalty Rewards',
-    description: 'Earn points on every ride. Unlock tier perks up to Black status.',
+    icon: ShieldCheck,
+    title: 'Verified Renters Only',
+    description: 'Every renter is identity-verified and must carry active rental insurance before keys are released. We protect the van and we protect you.',
   },
 ]
 
@@ -30,8 +30,8 @@ export function ExperienceFeatures() {
       <hr className="gold-rule mb-16 max-w-7xl mx-auto" />
       <div className="relative max-w-7xl mx-auto">
         <div className="text-center mb-14">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">The Experience</p>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">Every detail considered</h2>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">What You Get</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">Built different. On purpose.</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map(({ icon: Icon, title, description }) => (

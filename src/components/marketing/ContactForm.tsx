@@ -136,7 +136,7 @@ export function ContactForm() {
               <h2 className="font-serif text-3xl text-[#f0e6d0] mb-4">Message Received.</h2>
               <p className="text-[#a09890] text-base leading-relaxed mb-6">
                 We&apos;ll be in touch within a few hours. In the meantime, check availability at{' '}
-                <Link href="/book" className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors">/book</Link>.
+                <Link href="/insurance" className="text-[#c9a96e] hover:text-[#d4b87a] transition-colors">sterlingroute.com/book</Link>.
               </p>
               <button
                 onClick={() => {

@@ -229,7 +229,7 @@ export default function RentalTermsPage() {
         <section className="py-16">
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/book"
+              href="/insurance"
               className="inline-block px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] text-sm tracking-[0.15em] uppercase font-medium hover:bg-[#d4b87a] transition-colors"
             >
               Book the Van
