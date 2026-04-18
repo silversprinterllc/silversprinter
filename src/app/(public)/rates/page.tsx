@@ -63,7 +63,8 @@ export default function RatesPage() {
 
           <div className="space-y-3 text-sm text-[#5f5850]">
             <p>Minimum 1-day rental. Minimum charge $795. Rates are per 24-hour rental period.</p>
-            <p>Public included mileage: <span className="text-[#a09890]">100 miles/day.</span> Overage: <span className="text-[#a09890]">$0.50/mile.</span></p>
+            <p>Public included mileage: <span className="text-[#a09890]">150 miles/day.</span> Overage: <span className="text-[#a09890]">$0.50/mile.</span></p>
+            <p className="text-[#5f5850]/70 text-xs">Reference: WPB → Miami RT ≈ 140 mi · WPB → Streamsong RT ≈ 240 mi · WPB → Tampa RT ≈ 280 mi</p>
             <p>Minimum 72-hour advance booking notice required for public bookings.</p>
             <p className="text-[#a09890]">
               Signature event dates are released seasonally. Sterling Reserve Black members have first access.

@@ -19,7 +19,14 @@ const tiers = {
     ctaLabel: 'Apply — Reserve',
     ctaClass: 'border border-[#c9a96e]/50 text-[#c9a96e] hover:bg-[#c9a96e]/10',
     featured: false,
-    bookingNotice: '48-hour minimum advance booking notice',
+    bookingNotice: '48-hr advance booking window',
+    includes: [
+      '1 included rental day / month',
+      '20% off all additional days',
+      '150 miles/day included',
+      'Priority calendar access',
+    ],
+    valueNote: '12 days/yr · $399/day effective',
   },
   gold: {
     label: 'Gold',
@@ -34,7 +41,14 @@ const tiers = {
     ctaLabel: 'Apply — Gold',
     ctaClass: 'bg-[#c9a96e] text-[#0a0a0a] hover:bg-[#d4b87a]',
     featured: true,
-    bookingNotice: '24-hour minimum advance booking notice',
+    bookingNotice: '24-hr advance booking window',
+    includes: [
+      '2 included rental days / month',
+      '25% off all additional days',
+      '200 miles/day included',
+      'Priority calendar — before public opens',
+    ],
+    valueNote: '24 days/yr · $399/day effective',
   },
   black: {
     label: 'Black',
@@ -49,7 +63,14 @@ const tiers = {
     ctaLabel: 'Apply — Black',
     ctaClass: 'border border-[#c9a96e]/50 text-[#c9a96e] hover:bg-[#c9a96e]/10',
     featured: false,
-    bookingNotice: 'Same-day booking available (subject to availability)',
+    bookingNotice: 'Same-day booking · First right of refusal',
+    includes: [
+      '3 included rental days / month',
+      '30% off all additional days',
+      '250 miles/day included',
+      'Dump fee waived · Snack board included',
+    ],
+    valueNote: '36 days/yr · $398/day effective',
   },
 }
 
@@ -105,8 +126,17 @@ export function ReservePricingToggle() {
                 <p className="text-xs text-[#5f5850] mb-6">billed monthly</p>
               )}
               <div className={`w-12 h-px ${tier.dividerClass} mb-6`} />
-              <p className="text-xs text-[#5f5850] mb-6">{tier.bookingNotice}</p>
-              <div className="mt-auto pt-4">
+              <ul className="space-y-2.5 mb-5">
+                {tier.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-xs text-[#a09890]">
+                    <span className="text-[#c9a96e] mt-0.5 shrink-0">—</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-[#5f5850] border-t border-[#433d38]/40 pt-4 mb-2">{tier.bookingNotice}</p>
+              <p className="text-xs text-[#c9a96e]/60 mb-4">{tier.valueNote}</p>
+              <div className="mt-auto pt-2">
                 <Link
                   href={tier.ctaHref}
                   className={`block w-full text-center text-xs tracking-[0.2em] uppercase py-3 transition-colors ${tier.ctaClass}`}
