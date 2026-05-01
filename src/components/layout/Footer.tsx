@@ -41,6 +41,10 @@ export function Footer() {
           <p className="text-sm text-[#5f5850] leading-relaxed max-w-xs">
             Self-drive luxury Sprinter rental for those who demand more. The MAD Daycruiser D6 — available by the day.
           </p>
+          <a href="tel:+15616766659" className="text-sm text-[#c9a96e]/70 hover:text-[#c9a96e] transition-colors mt-3 inline-block">
+            (561) 676-6659
+          </a>
+          <p className="text-xs text-[#433d38] mt-1">Text or call · Mon–Sat 8am–8pm</p>
         </div>
         <div>
           <p className="text-xs font-medium tracking-widest uppercase text-[#c9a96e] mb-4">Services</p>

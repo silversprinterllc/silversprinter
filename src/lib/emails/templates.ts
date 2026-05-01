@@ -397,7 +397,7 @@ export function preTripSOPEmail(data: {
     },
     {
       title: '10 PASSENGER MAXIMUM',
-      body: 'Do not exceed 10 passengers. Seatbelts required for all occupants at all times.',
+      body: 'Do not exceed 10 total occupants, including the driver. Seatbelts required for all occupants at all times.',
     },
   ]
 

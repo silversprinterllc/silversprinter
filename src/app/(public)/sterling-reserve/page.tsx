@@ -58,28 +58,28 @@ export default function SterlingReservePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#c9a96e]/15">
             {[
               {
-                title: 'Priority Calendar',
-                body: 'See open dates before public booking opens. Book first. Your preferred weekends are secured before the market touches them.',
+                title: 'Pre-Purchased Day-Credits',
+                body: 'You buy a block of days upfront. Those credits sit in your account and you draw them down as you book — one day at a time, a long weekend, a full week. Use them however you want throughout the year.',
               },
               {
-                title: 'Preferred Daily Rate',
-                body: '20–30% below rack rate, depending on tier. Rate locked at founding-member level for those who join in Year 1.',
+                title: 'One Payment. Done.',
+                body: 'No monthly billing. No auto-renewals hitting at inconvenient times. One wire or card charge at signup, and the credits are yours. We front-load the relationship. So do you.',
               },
               {
-                title: 'Included Rental Days',
-                body: 'Every month comes with included days already in your account. Unused days roll forward within the calendar year.',
+                title: 'Priority Calendar Access',
+                body: 'Members see open dates before public booking opens. You lock your weekends before anyone else touches the calendar. Peak dates, holiday weekends, bowl game travel — yours first.',
               },
               {
-                title: 'Trip Concierge',
-                body: 'One contact. Tee times, hotel blocks, game-day logistics, investor tours. You tell them where you want to end up — they build the path.',
+                title: 'Deeply Discounted Rate',
+                body: 'Reserve members pay 50–58% less than rack rate on included days. No negotiating, no promo codes — your member rate is locked at purchase price for the full year.',
               },
               {
-                title: 'Van Pre-Set',
-                body: 'Cabin temp, cooler stocked, your preferences on file. The van is ready before you arrive. First impressions matter.',
+                title: 'Van Pre-Set on Arrival',
+                body: 'Your preferences are on file. Temperature set, cooler stocked, cabin configured before you arrive. Gold and Black members get this on every booking automatically.',
               },
               {
-                title: 'Sterling Reserve Card',
-                body: 'Physical card. Access to member pricing, priority line, and Hoadley Group preferred network.',
+                title: 'Limited to 8 Members',
+                body: 'We cap total membership at 8 across all tiers. This is not a loyalty program with thousands of cardholders. It is a small group with real access to a real vehicle.',
               },
             ].map((benefit) => (
               <div key={benefit.title} className="bg-[#0a0a0a] p-8 md:p-10">
@@ -104,22 +104,25 @@ export default function SterlingReservePage() {
         </div>
       </section>
 
-      {/* ROLLOVER POLICY */}
+      {/* CREDIT POLICY */}
       <section className="py-24 px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">Rollover Policy</p>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-8">What Happens to Days You Don&apos;t Use</h2>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">How Credits Work</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-8">Your Days. Your Schedule.</h2>
           <div className="space-y-6 text-[#a09890] leading-relaxed">
             <p>
-              Unused included rental days roll forward each month and accumulate throughout the calendar year. They do not expire mid-year. On December 31st of each year, unused included days from that calendar year expire without cash value or credit.
+              When you join, your day-credits are loaded immediately. You can book them in any configuration — a single Tuesday, a three-day long weekend, a full week. There is no required schedule. No "use it by the 15th." Your credits are yours until December 31st.
             </p>
             <p>
-              Plan accordingly. Use them for a long weekend in March, a golf trip in September, a family run to the Keys in November. They&apos;re yours — until they&apos;re not.
+              Black members are the exception — your credits roll to the following calendar year. If you buy in November, you are not burning credits during the holidays. You carry them forward.
+            </p>
+            <p>
+              Reserve and Gold credits do not roll. They expire December 31. This is intentional — it keeps the calendar moving, keeps the van available, and keeps the program sustainable for everyone in it. Plan accordingly. A long weekend in March, a golf trip in September, a family run to the Keys before Thanksgiving. The year is longer than it looks.
             </p>
           </div>
           <div className="mt-8 p-6 border border-[#433d38]/50 bg-[#0f0e0c]">
             <p className="text-sm text-[#5f5850] leading-relaxed">
-              <span className="text-[#c9a96e]">Note:</span> Included days have no cash value. They cannot be sold, transferred, gifted, or redeemed for credit.
+              <span className="text-[#c9a96e]">Important:</span> Day-credits have no cash value. They cannot be sold, transferred, gifted, or redeemed for a refund. Membership fees are non-refundable after purchase.
             </p>
           </div>
         </div>
@@ -174,11 +177,12 @@ export default function SterlingReservePage() {
           <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">The Terms, Straight</p>
           <div className="space-y-5">
             {[
-              'Membership is month-to-month. Cancel with 30 days written notice. No cancellation fee.',
-              'Founding member rates are locked for life if you join in Year 1 and maintain membership without lapse. A lapse of 60+ days resets to current pricing.',
-              'Rates adjust annually for new members. Existing members are protected.',
-              'Membership is non-transferable. One van, one member, one account.',
-              'Sterling Route reserves the right to terminate membership for violation of rental terms or membership policy, with 30 days notice and prorated refund — except for violations involving damage, fraud, or policy abuse.',
+              'Membership is annual and paid in full at signup. No monthly billing. No auto-renewal without your explicit confirmation.',
+              'Day-credits are loaded immediately upon payment. They are yours to use any time before December 31 (Black members carry credits to the following year).',
+              'Membership fees are non-refundable. Day-credits have no cash value and cannot be transferred, sold, or redeemed.',
+              'Membership is non-transferable. One account, one primary member. Additional drivers may be added per standard rental policy.',
+              'Founding member pricing is locked for life provided membership is renewed before expiration. A lapse of more than 60 days resets to current rates.',
+              'Sterling Route may terminate a membership for material violation of rental terms, with any unused credits forfeited in cases of damage, fraud, or policy abuse.',
             ].map((term, i) => (
               <div key={i} className="flex items-start gap-4">
                 <span className="text-[#c9a96e]/50 mt-1 shrink-0">—</span>

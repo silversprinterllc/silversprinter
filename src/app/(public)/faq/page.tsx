@@ -99,8 +99,8 @@ export default function FAQPage() {
               answer: <p>Yes. The two rear benches fold flat and sleep 2 comfortably. Ideal for a golf trip where someone wants to stay over at the course rather than drive back.</p>,
             },
             {
-              question: 'What\'s the maximum passenger capacity?',
-              answer: <p>10 passengers. 2 captain chairs in the front cab, 4 captain chairs in the main cabin, and 2 fold-flat benches in the rear. Do not exceed 10.</p>,
+              question: 'What\'s the maximum occupant capacity?',
+              answer: <p>10 occupants total — that includes the driver. 1 driver seat, 1 front passenger seat, 4 captain chairs in the main cabin, and 2 fold-flat benches in the rear (2 seats each). Maximum 9 passengers plus the driver. Do not exceed 10 total.</p>,
             },
             {
               question: 'What amenities are inside?',

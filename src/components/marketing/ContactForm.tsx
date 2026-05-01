@@ -91,6 +91,12 @@ export function ContactForm() {
           {/* Contact details */}
           <div className="space-y-5">
             <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-1">Phone / Text</p>
+              <a href="tel:+15616766659" className="text-[#c9a96e] text-sm hover:text-[#d4b87a] transition-colors">
+                (561) 676-6659
+              </a>
+            </div>
+            <div>
               <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-1">Email</p>
               <a href="mailto:hello@sterlingroute.com" className="text-[#c9a96e] text-sm hover:text-[#d4b87a] transition-colors">
                 hello@sterlingroute.com
@@ -106,7 +112,7 @@ export function ContactForm() {
             </div>
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-1">Hours</p>
-              <p className="text-[#a09890] text-sm">Available by phone/text Mon–Sat 8am–8pm</p>
+              <p className="text-[#a09890] text-sm">Mon–Sat · 8am–8pm ET · Text preferred</p>
             </div>
           </div>
 

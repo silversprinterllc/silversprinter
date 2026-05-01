@@ -69,8 +69,8 @@ export default function AboutPage() {
                 body: 'The platform. Diesel. Built to run.',
               },
               {
-                title: '10 Passengers',
-                body: '2 captain chairs front, 4 captain chairs rear, 2 fold-flat benches.',
+                title: '10 Occupants Max',
+                body: 'Driver + 9 passengers. 1 front passenger seat, 4 captain chairs, 2 fold-flat benches. 10 belts. 10 people. Not one more.',
               },
               {
                 title: 'Sleeps 2',

@@ -65,7 +65,7 @@ export default function RentalTermsPage() {
 
         <Section number={2} title="Vehicle">
           <Para>
-            The rented vehicle is a custom Mercedes-Benz Sprinter van (&ldquo;the Vehicle&rdquo;), configured for up to 10 passengers. The Vehicle is provided as-is for self-drive use only. No driver, chauffeur, or transportation service is provided or implied. Renter assumes full operational responsibility for the Vehicle during the rental period.
+            The rented vehicle is a custom Mercedes-Benz Sprinter van (&ldquo;the Vehicle&rdquo;), configured for up to 10 occupants (driver included). The Vehicle is provided as-is for self-drive use only. No driver, chauffeur, or transportation service is provided or implied. Renter assumes full operational responsibility for the Vehicle during the rental period.
           </Para>
         </Section>
 

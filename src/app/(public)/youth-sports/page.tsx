@@ -75,7 +75,7 @@ export default function YouthSportsPage() {
       <section className="py-24 px-6 border-t border-[#433d38]/40">
         <div className="max-w-3xl mx-auto space-y-8 text-[#a09890] text-lg leading-relaxed">
           <p>
-            Tournament weekend starts Friday night. You&apos;ve got 10 kids, a cooler, six equipment bags,
+            Tournament weekend starts Friday night. You&apos;ve got 9 players, a cooler, six equipment bags,
             and a group chat with 23 unread messages about who&apos;s driving who. Someone&apos;s parents
             can&apos;t make it. Someone else needs to leave early. The caravan has already fallen apart
             and you haven&apos;t left the parking lot.
