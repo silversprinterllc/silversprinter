@@ -1,6 +1,3 @@
-export const dynamic = 'force-dynamic'
-
-import { prisma } from '@/lib/prisma'
 import { PublicNav } from '@/components/layout/PublicNav'
 import { Footer } from '@/components/layout/Footer'
 import { HeroSection } from '@/components/marketing/HeroSection'
@@ -12,26 +9,12 @@ import { TripTypes } from '@/components/marketing/TripTypes'
 import { ReferralSection } from '@/components/marketing/ReferralSection'
 import { HowItWorks } from '@/components/marketing/HowItWorks'
 
-export default async function HomePage() {
-  const vehicles = await prisma.vehicle.findMany({
-    where: { status: 'AVAILABLE' },
-    orderBy: { basePrice: 'asc' },
-  })
-
-  const vehicleData = vehicles.map((v) => ({
-    name: v.name,
-    slug: v.slug,
-    tagline: v.tagline ?? '',
-    capacity: v.capacity,
-    basePrice: Number(v.basePrice),
-    features: v.features,
-  }))
-
+export default function HomePage() {
   return (
     <div className="bg-[#0a0a0a]">
       <PublicNav />
       <HeroSection />
-      <FleetShowcase vehicles={vehicleData} />
+      <FleetShowcase />
       <ExperienceFeatures />
       <HowItWorks />
       <TripTypes />

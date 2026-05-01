@@ -118,11 +118,11 @@ export default function FAQPage() {
           items={[
             {
               question: 'How far in advance can I book?',
-              answer: <p>Public customers book based on live availability — first come, first served. Reserve members get a 60-day window before public. Gold gets 90 days. Black has full calendar access with no restriction.</p>,
+              answer: <p>Public customers book based on live availability — first come, first served. Reserve members see the calendar 7 days before public. Gold members get 21 days. Black members have first right of refusal 30 days out with full calendar visibility at all times.</p>,
             },
             {
               question: 'Is there a minimum advance booking notice?',
-              answer: <p>Yes. Public bookings require a minimum of 72 hours advance notice — same-day and next-day bookings are not available for public customers. Sterling Reserve Gold members: 24-hour minimum. Sterling Reserve Black members: same-day booking available subject to availability.</p>,
+              answer: <p>Yes. Public bookings require a minimum of 72 hours advance notice — same-day and next-day bookings are not available for public customers. Sterling Reserve members get reduced minimum notice windows: Gold members 24-hour minimum, Black members same-day booking available subject to availability.</p>,
             },
             {
               question: 'What\'s the minimum rental period?',
@@ -190,36 +190,28 @@ export default function FAQPage() {
           title="Sterling Reserve Membership"
           items={[
             {
-              question: 'Do unused included days roll over?',
-              answer: <p>Yes. Unused included rental days accumulate month to month throughout the calendar year. They expire on December 31st of each calendar year. No extensions, no cash value, no credit.</p>,
+              question: 'How does the annual block model work?',
+              answer: <p>Sterling Reserve is paid in full at enrollment — one payment, no monthly billing. That payment loads a block of day-credits to your account immediately. You draw them down as you book throughout the year. Reserve gets 10 credits, Gold gets 20, Black gets 36. Use them in any configuration — a single day, a long weekend, a full week.</p>,
+            },
+            {
+              question: 'Do unused day-credits roll over?',
+              answer: <p>For Reserve and Gold members: credits expire December 31st of the enrollment year. For Black members: credits carry over to the following calendar year. There are no extensions, no cash value, and no credit for unused days.</p>,
             },
             {
               question: 'Can I share my membership with a friend or colleague?',
-              answer: <p>No. Membership is non-transferable. The named member must be the primary renter on every booking made under the membership. A guest may drive — but the member must be present and listed.</p>,
-            },
-            {
-              question: 'Can I pause my membership?',
-              answer: <p>Not currently. Membership is month-to-month. You may cancel with 30 days written notice. If you rejoin later, your rate will be the current published rate — not your original founding rate.</p>,
-            },
-            {
-              question: 'Can I upgrade or downgrade my tier?',
-              answer: <p>Yes. Upgrades take effect immediately (prorated for the current month). Downgrades take effect at the next billing cycle. No fee to change tiers.</p>,
+              answer: <p>No. Membership is non-transferable. The named member must be the primary renter on every booking made under the membership. A guest may drive — but the member must be present and listed on the rental agreement.</p>,
             },
             {
               question: 'What is a "Founding Member" rate?',
-              answer: <p>Members who join during Year 1 (the first 12 months Sterling Reserve is offered) lock their monthly rate for life, as long as they maintain membership without a lapse of 60+ days. Founding rates do not increase when we raise prices for new members.</p>,
+              answer: <p>Members who join during the founding period lock their enrollment price for life, provided membership is renewed before expiration. A lapse of more than 60 days resets to current published pricing. Founding rates do not increase when we raise prices for new members.</p>,
             },
             {
               question: 'Do members still pay the dump fee and cleaning fee?',
-              answer: <p>Yes. Every renter at every tier is responsible for dumping the tanks and returning the van in clean condition. Membership does not waive these fees. There are no exceptions.</p>,
+              answer: <p>Reserve and Gold members, yes — tank dump and cleaning fees apply to every rental, every tier. Black members have these fees waived as part of the membership. There are no other exceptions.</p>,
             },
             {
               question: 'What is the Hoadley Group preferred client access (Black tier)?',
-              answer: <p>Black members gain access to the Hoadley Group professional network — which includes real estate brokerage, land acquisition, and custom construction services in South Florida. This means priority scheduling for property showings, site tours, and investor transportation coordination. It is a professional benefit, not a personal one.</p>,
-            },
-            {
-              question: 'What does "first right of refusal on second van" mean?',
-              answer: <p>When Sterling Route adds a second vehicle to the fleet, Black members get the first opportunity to claim a membership slot before it opens to the public. No obligation — just the option.</p>,
+              answer: <p>Black members gain access to the Hoadley Group professional network — real estate brokerage, land acquisition, and custom construction services in South Florida. Priority scheduling for property showings, site tours, and investor transportation coordination. A professional benefit.</p>,
             },
           ]}
         />

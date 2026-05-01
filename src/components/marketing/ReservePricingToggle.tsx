@@ -5,21 +5,19 @@ import Link from 'next/link'
 const tiers = [
   {
     label: 'Reserve',
-    tagline: 'For the group that goes 3–4 times a year.',
+    tagline: 'For the group that moves three or four times a year.',
     price: '$3,995',
-    period: 'paid annually, upfront',
-    credits: '10',
-    retailValue: '$7,950+',
-    savings: '~50%',
+    period: 'paid in full at enrollment',
+    credits: '10 day-credits',
+    creditsNote: 'Loaded to your account immediately',
     additionalRate: '$695/day',
     bookingWindow: '7 days before public',
     rollover: 'Credits expire Dec 31',
     perks: [
-      '10 day-credits loaded at purchase',
-      'Use in any configuration (1–3 day blocks)',
-      'Priority calendar: 7 days before public',
-      'Additional days at $695/day',
-      'Preferences on file',
+      '10 days of priority van access',
+      'Calendar opens to you before the public',
+      'Your preferences on file',
+      'Additional days at member rate ($695/day)',
     ],
     borderClass: 'border-[#433d38]',
     bgClass: 'bg-[#0f0e0c]',
@@ -32,22 +30,20 @@ const tiers = [
   },
   {
     label: 'Gold',
-    tagline: 'For the group that treats the van like a membership, not a rental.',
+    tagline: 'For the group that treats the van like it belongs to them.',
     price: '$6,995',
-    period: 'paid annually, upfront',
-    credits: '20',
-    retailValue: '$15,900+',
-    savings: '~56%',
+    period: 'paid in full at enrollment',
+    credits: '20 day-credits',
+    creditsNote: 'Loaded to your account immediately',
     additionalRate: '$645/day',
     bookingWindow: '21 days before public',
     rollover: 'Credits expire Dec 31',
     perks: [
-      '20 day-credits loaded at purchase',
-      'Use in any configuration (1–7 day blocks)',
-      'Priority calendar: 21 days before public',
-      'Additional days at $645/day',
+      '20 days of priority van access',
+      'Calendar opens 21 days before the public',
       'Van pre-set on every arrival',
       'Preferences on file · member line',
+      'Additional days at member rate ($645/day)',
     ],
     borderClass: 'border-[#c9a96e]/50',
     bgClass: 'bg-[#0f0e0c]',
@@ -60,23 +56,21 @@ const tiers = [
   },
   {
     label: 'Black',
-    tagline: 'For operators and families who want the van always available.',
+    tagline: 'For operators and families who move on their schedule, not the calendar.',
     price: '$11,995',
-    period: 'paid annually, upfront',
-    credits: '36',
-    retailValue: '$28,620+',
-    savings: '~58%',
+    period: 'paid in full at enrollment',
+    credits: '36 day-credits',
+    creditsNote: 'Loaded immediately · carry to next year',
     additionalRate: '$595/day',
-    bookingWindow: 'First right of refusal · 30 days out',
-    rollover: 'Credits roll to next year',
+    bookingWindow: 'First call on any date · 30 days out',
+    rollover: 'Credits carry to the following year',
     perks: [
-      '36 day-credits loaded at purchase',
-      'Use in any configuration (1–14 day blocks)',
-      'First right of refusal on any date',
-      'Additional days at $595/day',
-      'All fees waived (dump, cleaning)',
-      'Day-credits roll to following year',
+      '36 days — first call on any date, any time',
+      'First right of refusal 30 days before public',
+      'All operational fees waived (dump, cleaning)',
+      'Day-credits carry to the following year',
       'Van pre-set · member line · priority everything',
+      'Additional days at member rate ($595/day)',
     ],
     borderClass: 'border-[#433d38]',
     bgClass: 'bg-[#0a0904]',
@@ -95,12 +89,9 @@ export function ReservePricingToggle() {
       {/* Header note */}
       <div className="mb-12 max-w-2xl">
         <p className="text-[#a09890] text-base leading-relaxed mb-3">
-          All memberships are paid annually, upfront — no monthly billing, no surprises.
-          Day-credits are loaded to your account at purchase and drawn down as you book.
+          All memberships are paid in full at enrollment — one payment, no monthly billing, no surprises.
+          Day-credits are loaded to your account immediately and drawn down as you book.
           Membership is by application. Limited to 8 members total across all tiers.
-        </p>
-        <p className="text-xs text-[#5f5850]">
-          Retail value calculated at $795/day base rate. Actual savings vary with trip timing.
         </p>
       </div>
 
@@ -115,7 +106,7 @@ export function ReservePricingToggle() {
               <div className="absolute top-0 left-0 right-0 h-px bg-[#c9a96e]" />
             )}
             {tier.featured && (
-              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-1">Most Popular</p>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-1">Most Requested</p>
             )}
 
             <p className={`text-xs tracking-[0.3em] uppercase ${tier.labelClass} mb-2`}>
@@ -131,20 +122,10 @@ export function ReservePricingToggle() {
 
             <div className={`w-12 h-px ${tier.dividerClass} mb-6`} />
 
-            {/* Value math */}
-            <div className="bg-[#c9a96e]/5 border border-[#c9a96e]/20 p-4 mb-6">
-              <div className="flex justify-between text-xs mb-1.5">
-                <span className="text-[#5f5850]">Day-credits included</span>
-                <span className="text-[#f0e6d0] font-medium">{tier.credits} days</span>
-              </div>
-              <div className="flex justify-between text-xs mb-1.5">
-                <span className="text-[#5f5850]">Retail value</span>
-                <span className="text-[#f0e6d0]">{tier.retailValue}</span>
-              </div>
-              <div className="flex justify-between text-xs">
-                <span className="text-[#5f5850]">You save</span>
-                <span className="text-[#c9a96e] font-medium">{tier.savings}</span>
-              </div>
+            {/* Credits block */}
+            <div className="mb-6">
+              <p className="font-serif text-2xl text-[#f0e6d0] mb-1">{tier.credits}</p>
+              <p className="text-xs text-[#5f5850]">{tier.creditsNote}</p>
             </div>
 
             {/* Perks */}
@@ -158,8 +139,10 @@ export function ReservePricingToggle() {
             </ul>
 
             {/* Footer details */}
-            <p className="text-xs text-[#5f5850] mb-1">{tier.bookingWindow}</p>
-            <p className="text-xs text-[#433d38] mb-5">{tier.rollover}</p>
+            <div className="mb-5 space-y-1.5">
+              <p className="text-xs text-[#5f5850]">Priority window: {tier.bookingWindow}</p>
+              <p className="text-xs text-[#433d38]">{tier.rollover}</p>
+            </div>
 
             <Link
               href={tier.ctaHref}
@@ -175,9 +158,9 @@ export function ReservePricingToggle() {
       <div className="mt-10 p-6 border border-[#433d38]/40 bg-[#0f0e0c]">
         <p className="text-sm text-[#5f5850] leading-relaxed">
           <span className="text-[#c9a96e]">How credits work:</span> Day-credits are pre-purchased units of van time.
-          One credit = one rental day. Book your credits in any combination throughout the year —
+          One credit = one rental day. Book them in any combination throughout the year —
           a single Saturday, a long weekend, a full week. Credits are drawn from your account when you confirm a booking.
-          Unused credits (except Black) expire December 31. They have no cash value and are non-transferable.
+          Unused credits (except Black tier) expire December 31. They have no cash value and are non-transferable.
         </p>
       </div>
     </div>

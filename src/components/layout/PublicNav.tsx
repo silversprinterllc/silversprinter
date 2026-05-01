@@ -31,7 +31,7 @@ export function PublicNav() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {[
-            { href: '/fleet', label: 'Fleet' },
+            { href: '/fleet', label: 'The Van' },
             { href: '/gallery', label: 'Gallery' },
             { href: '/rates', label: 'Rates' },
           ].map((l) => (
@@ -98,7 +98,7 @@ export function PublicNav() {
       {open && (
         <div className="md:hidden border-t border-[#433d38] bg-[#0a0a0a] px-6 py-4 flex flex-col gap-1">
           {[
-            { href: '/fleet', label: 'Fleet' },
+            { href: '/fleet', label: 'The Van' },
             { href: '/gallery', label: 'Gallery' },
             { href: '/rates', label: 'Rates' },
             { href: '/about', label: 'About' },

@@ -123,7 +123,7 @@ export default function TermsPage() {
 
         <Section number={7} title="Third-Party Links">
           <p>
-            This Site may contain links to third-party websites or services, including but not limited to Stripe (payments), Roamly (insurance), and other partners or resources. These links are provided for convenience only.
+            This Site may contain links to third-party websites or services, including but not limited to Stripe (payments), Bonzah or RentalCover (insurance), and other partners or resources. These links are provided for convenience only.
           </p>
           <p>
             Sterling Route LLC has no control over the content, privacy practices, or availability of third-party sites and is not responsible for any harm or damages arising from your use of those sites. Linking does not imply endorsement.

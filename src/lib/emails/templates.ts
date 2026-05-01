@@ -186,7 +186,7 @@ export function bookingConfirmationEmail(data: {
                       Email proof of <strong style="color:#f0e6d0;">$1M+ liability coverage</strong> to
                       <a href="mailto:hello@sterlingroute.com" style="color:#c9a96e;text-decoration:none;">hello@sterlingroute.com</a>
                       before your trip begins.<br/>
-                      Need coverage? Get it at <a href="https://www.roamly.com/get-your-quote" style="color:#c9a96e;text-decoration:none;">roamly.com</a> — fast, easy, designed for van rentals.
+                      Need coverage? Get it at <a href="https://www.bonzah.com" style="color:#c9a96e;text-decoration:none;">bonzah.com</a> or <a href="https://www.rentalcover.com" style="color:#c9a96e;text-decoration:none;">rentalcover.com</a> — instant quotes, designed for rentals.
                     </p>
                   </td>
                 </tr>
@@ -204,7 +204,7 @@ export function bookingConfirmationEmail(data: {
                     <table cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td width="28" valign="top" style="font-family:Arial,sans-serif;font-size:13px;color:#c9a96e;font-weight:700;">1.</td>
-                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#c0b0a0;line-height:1.5;">Get Roamly insurance and email proof to <a href="mailto:hello@sterlingroute.com" style="color:#c9a96e;text-decoration:none;">hello@sterlingroute.com</a></td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#c0b0a0;line-height:1.5;">Get rental coverage via Bonzah or RentalCover and email proof to <a href="mailto:hello@sterlingroute.com" style="color:#c9a96e;text-decoration:none;">hello@sterlingroute.com</a></td>
                       </tr>
                     </table>
                   </td>
