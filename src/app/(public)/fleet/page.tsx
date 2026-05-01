@@ -72,7 +72,7 @@ export default function FleetPage() {
           <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl mb-6">
             A Midwestern Automotive Design luxury Sprinter conversion — owned, maintained, and driven to the same standard as when the owner&apos;s own family is in the seats.
           </p>
-          <p className="text-sm text-[#5f5850]">$795/day · Palm Beach County · 10 occupants maximum</p>
+          <p className="text-sm text-[#5f5850]">$900/day · Palm Beach County · 10 occupants maximum</p>
         </div>
       </section>
 
@@ -117,8 +117,8 @@ export default function FleetPage() {
           <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">Rates</p>
           <div className="divide-y divide-[#433d38]/40">
             {[
-              { label: 'Standard daily rate', value: '$795/day' },
-              { label: 'Weekend rate (Fri–Sun)', value: '$895/day' },
+              { label: 'Standard daily rate', value: '$900/day' },
+              { label: 'Weekend rate (Fri–Sun)', value: '$995/day' },
               { label: 'Premium dates (holidays, events)', value: '$1,095/day' },
               { label: 'Included mileage', value: '150 miles/day' },
               { label: 'Mileage overage', value: '$0.55/mile' },

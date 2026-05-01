@@ -126,7 +126,7 @@ export default function FAQPage() {
             },
             {
               question: 'What\'s the minimum rental period?',
-              answer: <p>One day (24 hours). Minimum charge $795. No half-days, no hourly rates.</p>,
+              answer: <p>One day (24 hours). Minimum charge $900. No half-days, no hourly rates.</p>,
             },
             {
               question: 'Can I extend my rental while on the road?',

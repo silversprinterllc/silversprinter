@@ -42,10 +42,9 @@ export default function RatesPage() {
               </thead>
               <tbody className="divide-y divide-[#433d38]/30">
                 {[
-                  { type: 'Off-Peak Weekday', rate: '$795', days: 'Monday – Thursday' },
-                  { type: 'Standard Rate', rate: '$995', days: 'Year-round benchmark' },
-                  { type: 'Peak Weekend', rate: '$1,095', days: 'Friday, Saturday, Sunday' },
-                  { type: 'Peak Holiday', rate: '$1,095', days: 'Federal holidays + holiday weekends' },
+                  { type: 'Standard', rate: '$900', days: 'Monday – Thursday' },
+                  { type: 'Weekend', rate: '$995', days: 'Friday, Saturday, Sunday' },
+                  { type: 'Premium / Holiday', rate: '$1,095', days: 'Federal holidays + holiday weekends' },
                   { type: 'Signature Events', rate: '$1,295', days: 'Masters Week, Super Bowl, Memorial Day, July 4th, Labor Day, New Year\'s' },
                 ].map((row) => (
                   <tr
@@ -62,7 +61,7 @@ export default function RatesPage() {
           </div>
 
           <div className="space-y-3 text-sm text-[#5f5850]">
-            <p>Minimum 1-day rental. Minimum charge $795. Rates are per 24-hour rental period.</p>
+            <p>Minimum 1-day rental. Minimum charge $900. Rates are per 24-hour rental period.</p>
             <p>Public included mileage: <span className="text-[#a09890]">150 miles/day.</span> Overage: <span className="text-[#a09890]">$0.50/mile.</span></p>
             <p className="text-[#5f5850]/70 text-xs">Reference: WPB → Miami RT ≈ 140 mi · WPB → Streamsong RT ≈ 240 mi · WPB → Tampa RT ≈ 280 mi</p>
             <p>Minimum 72-hour advance booking notice required for public bookings.</p>
@@ -235,7 +234,7 @@ export default function RatesPage() {
               href="/sterling-reserve"
               className="inline-block border border-[#c9a96e]/50 text-[#c9a96e] font-sans text-sm tracking-[0.2em] uppercase px-10 py-4 hover:bg-[#c9a96e]/10 transition-colors duration-200 text-center"
             >
-              Apply for Reserve
+              Explore Road Club
             </Link>
           </div>
         </div>

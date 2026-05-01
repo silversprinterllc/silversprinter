@@ -20,7 +20,7 @@ const perks = [
   },
   {
     icon: Calendar,
-    title: 'Reserve Access for Repeat Travel',
+    title: 'Road Club for Repeat Travel',
     description: 'Companies that move quarterly should look at Sterling Reserve membership — priority calendar access, one upfront payment, preferred daily rate. Van is there when you need it.',
   },
   {
@@ -64,7 +64,7 @@ export default function CorporatePage() {
           <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl mb-6">
             A MAD Daycruiser D6 for executive travel, client transport, and corporate offsites. Self-drive. No driver. Up to 10 occupants. The whole team, one vehicle, no excuses.
           </p>
-          <p className="text-sm text-[#5f5850]">From $795/day · Palm Beach County · Available by application for Sterling Reserve</p>
+          <p className="text-sm text-[#5f5850]">From $900/day · Palm Beach County · Road Club available by application</p>
         </div>
       </section>
 

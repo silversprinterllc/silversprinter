@@ -44,7 +44,7 @@ export function HeroSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { value: '10', label: 'Passengers' },
-            { value: '$795', label: 'Starting / Day' },
+            { value: '$900', label: 'Starting / Day' },
             { value: 'MAD D6', label: 'Daycruiser' },
             { value: 'WPB', label: 'Pickup & Return' },
           ].map(({ value, label }) => (

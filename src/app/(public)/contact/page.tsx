@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { ContactForm } from '@/components/marketing/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Contact Sterling Route — Book, Inquire, or Apply for Reserve',
-  description: 'Questions about the van, availability, Sterling Reserve membership, or corporate rates. We respond within a few hours.',
+  title: 'Contact Sterling Route — Book, Inquire, or Apply for the Road Club',
+  description: 'Questions about the van, availability, Road Club membership, or corporate rates. We respond within a few hours.',
 }
 
 export default function ContactPage() {
