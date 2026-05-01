@@ -191,7 +191,7 @@ export default function FAQPage() {
           items={[
             {
               question: 'What is the Sterling Road Club?',
-              answer: <p>A private annual membership — four charter seats, $25,000 per seat, paid in full at enrollment. Each seat includes one Signature Week (7 days, locked at enrollment) and 25 day-credits at $750/day. When the four seats are filled, the Club is closed to new members.</p>,
+              answer: <p>A private annual membership — four charter seats, $22,500 per seat, paid in full at enrollment. Each seat includes one Signature Week (7 days, locked at enrollment) and 25 day-credits at $750/day. When the four seats are filled, the Club is closed to new members.</p>,
             },
             {
               question: 'What is the Signature Week?',

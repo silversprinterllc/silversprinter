@@ -23,7 +23,7 @@ export default function SterlingReservePage() {
             Sterling Road Club is not a loyalty program. It is a private annual membership — four seats, one van, a dedicated week that is yours every year.
             When the seats are filled, the Club is closed.
           </p>
-          <p className="text-sm text-[#5f5850] tracking-wide">$25,000/year · 4 charter seats · founding price locked for life</p>
+          <p className="text-sm text-[#5f5850] tracking-wide">$22,500/year · 4 charter seats · founding price locked for life</p>
         </div>
       </section>
 
@@ -99,7 +99,7 @@ export default function SterlingReservePage() {
           <h2 className="font-serif text-4xl text-[#f0e6d0] mb-8">Four Seats. One Van. Then Two.</h2>
           <div className="space-y-6 text-[#a09890] text-base leading-relaxed">
             <p>
-              Four charter seats at $25,000 each is $100,000. That is the down payment on the second van.
+              Four charter seats at $22,500 each is $90,000. That is the down payment on the second van.
             </p>
             <p>
               When the second van arrives, Road Club members get first access to the new seats — before any public announcement, before any waitlist, before anyone else knows the calendar has expanded. Founding members of the first Club have the option to hold a seat in the second Club at the same rate they paid when they joined.

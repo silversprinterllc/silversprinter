@@ -23,7 +23,7 @@ export function ReservePricingToggle() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-12">
           <div>
             <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-3">Sterling Road Club</p>
-            <p className="font-serif text-5xl md:text-6xl text-[#f0e6d0] mb-4">$25,000</p>
+            <p className="font-serif text-5xl md:text-6xl text-[#f0e6d0] mb-4">$22,500</p>
             <p className="text-sm text-[#5f5850]">per seat · paid in full at enrollment</p>
           </div>
           <div className="md:text-right">
@@ -69,7 +69,7 @@ export function ReservePricingToggle() {
           <div className="w-px bg-[#433d38]/50 hidden sm:block" />
           <div className="flex-1">
             <p className="text-xs tracking-[0.2em] uppercase text-[#5f5850] mb-1">Your Seat Fee</p>
-            <p className="font-serif text-3xl text-[#f0e6d0]">$25,000</p>
+            <p className="font-serif text-3xl text-[#f0e6d0]">$22,500</p>
             <p className="text-xs text-[#433d38] mt-1">paid once · credits load immediately</p>
           </div>
           <div className="w-px bg-[#433d38]/50 hidden sm:block" />

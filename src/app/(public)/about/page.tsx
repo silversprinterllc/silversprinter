@@ -107,7 +107,7 @@ export default function AboutPage() {
           <h2 className="font-serif text-3xl text-[#f0e6d0] mb-3">Sterling Road Club</h2>
           <p className="text-[#5f5850] text-sm mb-8">Four charter seats. One van. A dedicated week that is yours every year.</p>
           <p className="text-[#a09890] text-base leading-relaxed mb-10">
-            The Road Club exists for people who use the van regularly and don&apos;t want to compete for dates. Four seats at $25,000 each. Each seat includes one Signature Week — locked at enrollment, immovable — plus 25 day-credits to draw down throughout the year. When the four seats are filled, the Club is closed.
+            The Road Club exists for people who use the van regularly and don&apos;t want to compete for dates. Four seats at $22,500 each. Each seat includes one Signature Week — locked at enrollment, immovable — plus 25 day-credits to draw down throughout the year. When the four seats are filled, the Club is closed.
             Four memberships funds the second van. The Club grows from there.
           </p>
           <Link
