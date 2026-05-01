@@ -67,7 +67,7 @@ export default function RatesPage() {
             <p className="text-[#5f5850]/70 text-xs">Reference: WPB → Miami RT ≈ 140 mi · WPB → Streamsong RT ≈ 240 mi · WPB → Tampa RT ≈ 280 mi</p>
             <p>Minimum 72-hour advance booking notice required for public bookings.</p>
             <p className="text-[#a09890]">
-              Signature event dates are released seasonally. Sterling Reserve Black members have first access.
+              Signature event dates are released seasonally. Road Club members have priority access via round-robin.
             </p>
             <p className="text-[#a09890]">
               Multi-day rentals of 5+ consecutive days: 10% off total rental cost. Contact us to apply.
@@ -76,47 +76,39 @@ export default function RatesPage() {
         </div>
       </section>
 
-      {/* SECTION 2: MEMBER RATES */}
+      {/* SECTION 2: ROAD CLUB MEMBER RATES */}
       <section className="py-24 px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
             <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-4">Section 2</p>
-            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Sterling Reserve Member Rates</h2>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0]">Sterling Road Club Member Rates</h2>
           </div>
 
-          <div className="overflow-x-auto border border-[#433d38]/50 mb-6">
-            <table className="w-full text-sm min-w-[400px]">
-              <thead>
-                <tr className="bg-[#c9a96e]/10 border-b border-[#c9a96e]/30">
-                  <th className="px-6 py-4 text-left text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Day Type</th>
-                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Public</th>
-                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Reserve</th>
-                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Gold</th>
-                  <th className="px-6 py-4 text-center text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Black</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#433d38]/30">
-                {[
-                  { type: 'Off-Peak Weekday', public: '$795', reserve: '$636', gold: '$596', black: '$557' },
-                  { type: 'Standard', public: '$995', reserve: '$796', gold: '$746', black: '$697' },
-                  { type: 'Peak Weekend', public: '$1,095', reserve: '$876', gold: '$821', black: '$767' },
-                ].map((row) => (
-                  <tr key={row.type} className="hover:bg-[#c9a96e]/3 transition-colors">
-                    <td className="px-6 py-4 text-[#f0e6d0]">{row.type}</td>
-                    <td className="px-6 py-4 text-center text-[#5f5850]">{row.public}</td>
-                    <td className="px-6 py-4 text-center text-[#a09890]">{row.reserve}</td>
-                    <td className="px-6 py-4 text-center text-[#a09890]">{row.gold}</td>
-                    <td className="px-6 py-4 text-center text-[#c9a96e]">{row.black}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="border border-[#c9a96e]/30 bg-[#0f0e0c] p-8 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-2">Signature Week</p>
+                <p className="font-serif text-3xl text-[#f0e6d0] mb-1">Included</p>
+                <p className="text-xs text-[#433d38]">7 days · locked at enrollment · no additional charge</p>
+              </div>
+              <div>
+                <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-2">Day-Credit Rate</p>
+                <p className="font-serif text-3xl text-[#f0e6d0] mb-1">$750<span className="text-lg text-[#5f5850]">/day</span></p>
+                <p className="text-xs text-[#433d38]">flat rate · any date · 25 credits included</p>
+              </div>
+              <div>
+                <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-2">Additional Days</p>
+                <p className="font-serif text-3xl text-[#f0e6d0] mb-1">$750<span className="text-lg text-[#5f5850]">/day</span></p>
+                <p className="text-xs text-[#433d38]">beyond your 25 credits · same member rate</p>
+              </div>
+            </div>
           </div>
 
           <p className="text-sm text-[#5f5850]">
-            Member rates reflect 20%, 25%, and 30% discounts respectively. Founding member rates are locked.{' '}
+            Road Club day-credits are valid on any date, including weekends. Signature event dates available
+            to members via round-robin priority system.{' '}
             <Link href="/sterling-reserve" className="text-[#c9a96e]/70 hover:text-[#c9a96e] transition-colors">
-              Learn about Sterling Reserve →
+              Learn about the Road Club →
             </Link>
           </p>
         </div>
@@ -156,9 +148,8 @@ export default function RatesPage() {
             </table>
           </div>
 
-          <div className="p-5 border border-[#433d38]/50 bg-[#0f0e0c] text-sm text-[#5f5850] space-y-2">
-            <p>Gold members receive add-ons at cost + $25 setup fee.</p>
-            <p>Black members receive add-ons at cost, no setup fee.</p>
+          <div className="p-5 border border-[#433d38]/50 bg-[#0f0e0c] text-sm text-[#5f5850]">
+            <p>Road Club members receive add-ons at cost plus a $25 setup fee. Van is pre-configured before every arrival — preferences on file.</p>
           </div>
         </div>
       </section>

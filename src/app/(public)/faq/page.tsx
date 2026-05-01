@@ -187,31 +187,39 @@ export default function FAQPage() {
         />
 
         <FAQSection
-          title="Sterling Reserve Membership"
+          title="Sterling Road Club"
           items={[
             {
-              question: 'How does the annual block model work?',
-              answer: <p>Sterling Reserve is paid in full at enrollment — one payment, no monthly billing. That payment loads a block of day-credits to your account immediately. You draw them down as you book throughout the year. Reserve gets 10 credits, Gold gets 20, Black gets 36. Use them in any configuration — a single day, a long weekend, a full week.</p>,
+              question: 'What is the Sterling Road Club?',
+              answer: <p>A private annual membership — four charter seats, $25,000 per seat, paid in full at enrollment. Each seat includes one Signature Week (7 days, locked at enrollment) and 25 day-credits at $750/day. When the four seats are filled, the Club is closed to new members.</p>,
             },
             {
-              question: 'Do unused day-credits roll over?',
-              answer: <p>For Reserve and Gold members: credits expire December 31st of the enrollment year. For Black members: credits carry over to the following calendar year. There are no extensions, no cash value, and no credit for unused days.</p>,
+              question: 'What is the Signature Week?',
+              answer: <p>Seven consecutive days you choose when you enroll. Those dates are locked on the calendar — no public booking, no other member, no exception can displace them. They are yours for the year. You can plan twelve months in advance knowing the van is already reserved.</p>,
             },
             {
-              question: 'Can I share my membership with a friend or colleague?',
-              answer: <p>No. Membership is non-transferable. The named member must be the primary renter on every booking made under the membership. A guest may drive — but the member must be present and listed on the rental agreement.</p>,
+              question: 'How do day-credits work?',
+              answer: <p>25 day-credits are loaded to your account at enrollment. One credit equals one rental day. Book them in any configuration throughout the year — a single day, a long weekend, or back-to-back. Credits are drawn from your account when you confirm a booking. Unused credits expire December 31 with no cash value.</p>,
             },
             {
-              question: 'What is a "Founding Member" rate?',
-              answer: <p>Members who join during the founding period lock their enrollment price for life, provided membership is renewed before expiration. A lapse of more than 60 days resets to current published pricing. Founding rates do not increase when we raise prices for new members.</p>,
+              question: 'How does round-robin work for peak dates?',
+              answer: <p>Holiday weekends and high-demand dates are allocated by rotating priority among the four members. Year one goes in enrollment order — first to join picks first. Year two reverses. It rotates annually. Your Signature Week is never subject to round-robin — those dates are always yours.</p>,
             },
             {
-              question: 'Do members still pay the dump fee and cleaning fee?',
-              answer: <p>Reserve and Gold members, yes — tank dump and cleaning fees apply to every rental, every tier. Black members have these fees waived as part of the membership. There are no other exceptions.</p>,
+              question: 'Can I share my seat with someone else?',
+              answer: <p>No. Seats are non-transferable. The named member must be the primary renter on every booking. A guest may drive — but the member must be present and listed on the rental agreement.</p>,
             },
             {
-              question: 'What is the Hoadley Group preferred client access (Black tier)?',
-              answer: <p>Black members gain access to the Hoadley Group professional network — real estate brokerage, land acquisition, and custom construction services in South Florida. Priority scheduling for property showings, site tours, and investor transportation coordination. A professional benefit.</p>,
+              question: 'What is a founding member rate?',
+              answer: <p>Members who enroll during the founding period lock their seat price for life, provided the seat is renewed before expiration. A lapse of more than 60 days resets to current published pricing. Founding rates do not increase when we raise prices for new seats or new vans.</p>,
+            },
+            {
+              question: 'Do Road Club members still pay operational fees?',
+              answer: <p>Yes. Tank dump and cleaning fees apply to every member on every rental — no exceptions. These are operational requirements, not courtesies. If you return the van dirty or with tanks undumped, you will be billed.</p>,
+            },
+            {
+              question: 'What happens when a second van is added?',
+              answer: <p>Road Club members from the first van get first access to seats on the second van — before any public announcement. Founding members have the option to hold a seat at the rate they originally paid.</p>,
             },
           ]}
         />

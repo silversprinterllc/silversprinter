@@ -101,19 +101,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* STERLING RESERVE */}
+      {/* STERLING ROAD CLUB */}
       <section className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-serif text-3xl text-[#f0e6d0] mb-3">Sterling Reserve</h2>
-          <p className="text-[#5f5850] text-sm mb-8">For the clients who want first access, preferred rates, and a concierge who handles the details.</p>
+          <h2 className="font-serif text-3xl text-[#f0e6d0] mb-3">Sterling Road Club</h2>
+          <p className="text-[#5f5850] text-sm mb-8">Four charter seats. One van. A dedicated week that is yours every year.</p>
           <p className="text-[#a09890] text-base leading-relaxed mb-10">
-            We built a membership tier for the people who use the van regularly — the golf group that goes four times a year, the corporate team that runs investor tours, the family that&apos;s made the summer run a tradition. Sterling Reserve gives you priority booking, lower rates, and a planning contact who already knows your preferences. Three tiers. Limited availability.
+            The Road Club exists for people who use the van regularly and don&apos;t want to compete for dates. Four seats at $25,000 each. Each seat includes one Signature Week — locked at enrollment, immovable — plus 25 day-credits to draw down throughout the year. When the four seats are filled, the Club is closed.
+            Four memberships funds the second van. The Club grows from there.
           </p>
           <Link
             href="/sterling-reserve"
             className="inline-block border border-[#c9a96e]/50 text-[#c9a96e] text-xs tracking-[0.2em] uppercase px-8 py-3 hover:bg-[#c9a96e]/10 transition-colors"
           >
-            Explore Sterling Reserve
+            Explore the Road Club
           </Link>
         </div>
       </section>

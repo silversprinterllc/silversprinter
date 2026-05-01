@@ -82,7 +82,7 @@ export function PublicNav() {
 
         <div className="hidden md:flex items-center gap-3">
           <Link href="/sterling-reserve" className="text-sm text-[#c9a96e]/70 hover:text-[#c9a96e] transition-colors tracking-wide">
-            Reserve
+            Road Club
           </Link>
           <Button size="sm" asChild>
             <Link href="/insurance">Book Now</Link>
@@ -117,7 +117,7 @@ export function PublicNav() {
           </div>
           <div className="border-t border-[#433d38]/40 mt-2 pt-3 flex flex-col gap-3">
             <Link href="/sterling-reserve" className="text-sm text-[#c9a96e]/70" onClick={() => setOpen(false)}>
-              Sterling Reserve
+              Road Club
             </Link>
             <Button size="sm" asChild>
               <Link href="/insurance" onClick={() => setOpen(false)}>Book Now</Link>

@@ -10,9 +10,9 @@ const quickLinks = [
     sub: 'Check dates and reserve with a deposit',
   },
   {
-    label: 'Sterling Reserve',
+    label: 'Road Club',
     href: '/sterling-reserve',
-    sub: 'Apply for priority access and preferred rates',
+    sub: 'Four charter seats. Apply for priority access.',
   },
   {
     label: 'Rate Card',
@@ -223,7 +223,7 @@ export function ContactForm() {
                   <option value="" className="bg-[#0f0e0c]">Select one…</option>
                   <option value="General Question" className="bg-[#0f0e0c]">General Question</option>
                   <option value="Booking Inquiry" className="bg-[#0f0e0c]">Booking Inquiry</option>
-                  <option value="Sterling Reserve Application" className="bg-[#0f0e0c]">Sterling Reserve Application</option>
+                  <option value="Road Club Application" className="bg-[#0f0e0c]">Road Club Application</option>
                   <option value="Corporate Rates" className="bg-[#0f0e0c]">Corporate Rates</option>
                   <option value="Hoadley Group Client" className="bg-[#0f0e0c]">Hoadley Group Client</option>
                   <option value="Other" className="bg-[#0f0e0c]">Other</option>

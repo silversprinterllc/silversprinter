@@ -8,7 +8,7 @@ export function Footer() {
         <div className="border-b border-[#433d38]/40 pb-12 mb-12">
           <div className="max-w-md">
             <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Stay in the Loop</p>
-            <p className="text-sm text-[#5f5850] mb-5">Availability updates, new routes, and Sterling Reserve openings. No noise.</p>
+            <p className="text-sm text-[#5f5850] mb-5">Availability updates and Road Club seat openings. No noise.</p>
             <form
               action="https://api.web3forms.com/submit"
               method="POST"
