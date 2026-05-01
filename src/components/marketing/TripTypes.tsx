@@ -17,7 +17,7 @@ const trips = [
   {
     icon: Briefcase,
     title: 'Corporate',
-    body: 'Executive team travel, client transport, incentive trips. Net-30 invoicing and dedicated coordination.',
+    body: 'Executive team travel, client transport, investor tours. Paid in advance. Van ready when you arrive.',
     href: '/corporate',
   },
   {
@@ -36,7 +36,7 @@ const trips = [
     icon: Users,
     title: 'Groups',
     body: 'Bachelorettes, wine tours, any occasion with eight to ten people who deserve to arrive together.',
-    href: '/book',
+    href: '/insurance',
   },
 ]
 
