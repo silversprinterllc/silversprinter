@@ -209,7 +209,7 @@ export default function RentalTermsPage() {
 
         <Section number={18} title="Privacy & Identity Verification">
           <Para>
-            Company collects personal information for the purposes of completing the rental transaction and conducting identity and background verification. Company may use third-party verification services including Forewarn to confirm renter identity and safety. By completing a reservation, Renter consents to this verification. Company does not sell personal data to third parties.
+            Company collects personal information for the purposes of completing the rental transaction and conducting identity and background verification. Company may use third-party verification services to confirm renter identity and safety. By completing a reservation, Renter consents to this verification. Company does not sell personal data to third parties.
           </Para>
         </Section>
 
