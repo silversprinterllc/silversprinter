@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const TIER_KEYS = ['system', 'intensive', 'concierge'] as const
 
@@ -9,15 +10,19 @@ const tiers = [
     name: 'The System',
     type: 'Self-Paced Course',
     price: '$1,997',
-    priceSub: 'or 4x $549',
-    description: 'The complete Hub-and-Spoke Revenue System — all 10 modules, every template, lifetime access.',
+    priceSub: 'one-time · best value',
+    planPrice: '$549',
+    planSub: '× 4 monthly payments',
+    description: 'The complete Hub-and-Spoke Revenue System — all 14 modules, every template, lifetime access.',
     ideal: '1-10 unit owners who are self-starters and want to build at their own pace.',
     features: [
-      'All 10 course modules (40+ lessons)',
+      'All 14 modules (95+ lessons)',
       '60+ templates, checklists & swipe files',
       'Revenue Per Night Calculator',
       'Direct Booking Website Template',
       'Email sequence pack (25+ emails)',
+      'Local Guide Engine Playbook',
+      'Backlink Authority System + target tracker',
       'Influencer outreach kit',
       'Private community access',
       'Lifetime access + updates',
@@ -29,8 +34,10 @@ const tiers = [
   {
     name: 'The Intensive',
     type: 'Done-With-You Cohort',
-    price: '$2,997',
-    priceSub: 'or 3x $1,099',
+    price: '$4,997',
+    priceSub: 'one-time · best value',
+    planPrice: '$1,749',
+    planSub: '× 3 monthly payments',
     description: 'Choose your track: Direct Booking, Automation, or Content & Growth. 5 focused coaching calls with personalized review of your property and systems.',
     ideal: 'Owners who want expert eyes on their work and a proven system built right the first time.',
     badge: 'Most Popular',
@@ -51,7 +58,9 @@ const tiers = [
     name: 'The Concierge',
     type: 'Done-For-You Build',
     price: '$7,500',
-    priceSub: 'or 2x $3,950',
+    priceSub: 'one-time · or 2x $3,950',
+    planPrice: '$3,950',
+    planSub: '× 2 payments',
     description: 'We build your direct booking system, automation stack, or content engine — and hand you the keys. You approve milestones. We do the work.',
     ideal: '1-30 unit operators who value speed over learning curve and want expert execution.',
     features: [
@@ -72,24 +81,33 @@ const tiers = [
 
 export default function PricingTiers() {
   const [loading, setLoading] = useState<string | null>(null)
+  const [planMode, setPlanMode] = useState<'full' | 'plan'>('full')
+  const router = useRouter()
 
   async function handleCheckout(tierIndex: number) {
     const tierKey = TIER_KEYS[tierIndex]
+
+    // Concierge goes to application form, not Stripe
+    if (tierKey === 'concierge') {
+      router.push('/course/apply')
+      return
+    }
+
     setLoading(tierKey)
     try {
       const res = await fetch('/api/course/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: tierKey }),
+        body: JSON.stringify({ tier: tierKey, planType: planMode }),
       })
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('Something went wrong. Please try again or email ben@thehoadleygroup.com')
+        alert('Something went wrong. Please try again or email ben@spokebnb.com')
       }
     } catch {
-      alert('Something went wrong. Please try again or email ben@thehoadleygroup.com')
+      alert('Something went wrong. Please try again or email ben@spokebnb.com')
     } finally {
       setLoading(null)
     }
@@ -109,9 +127,35 @@ export default function PricingTiers() {
             <span className="sf-gold-gradient">Your Revenue Machine</span>
           </h2>
           <p className="text-[var(--sf-navy)]/60">
-            Every tier includes the full 10-module curriculum. The difference is how
+            Every tier includes the full 14-module curriculum. The difference is how
             much support you get building it.
           </p>
+        </div>
+
+        {/* Payment Toggle */}
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex items-center bg-[var(--sf-navy)]/8 rounded-full p-1 gap-1">
+            <button
+              onClick={() => setPlanMode('full')}
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
+                planMode === 'full'
+                  ? 'bg-[var(--sf-navy)] text-white shadow-sm'
+                  : 'text-[var(--sf-navy)]/50 hover:text-[var(--sf-navy)]/80'
+              }`}
+            >
+              Pay in full
+            </button>
+            <button
+              onClick={() => setPlanMode('plan')}
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
+                planMode === 'plan'
+                  ? 'bg-[var(--sf-navy)] text-white shadow-sm'
+                  : 'text-[var(--sf-navy)]/50 hover:text-[var(--sf-navy)]/80'
+              }`}
+            >
+              Payment plan
+            </button>
+          </div>
         </div>
 
         {/* Pricing Cards */}
@@ -162,18 +206,18 @@ export default function PricingTiers() {
               {/* Price */}
               <div className="mb-6">
                 <span
-                  className={`text-4xl font-bold ${
+                  className={`text-4xl font-bold transition-all ${
                     tier.highlighted ? 'text-white' : 'text-[var(--sf-navy)]'
                   }`}
                 >
-                  {tier.price}
+                  {planMode === 'plan' && tier.planPrice ? tier.planPrice : tier.price}
                 </span>
                 <span
                   className={`text-sm ml-2 ${
                     tier.highlighted ? 'text-white/40' : 'text-[var(--sf-navy)]/40'
                   }`}
                 >
-                  {tier.priceSub}
+                  {planMode === 'plan' && tier.planSub ? tier.planSub : tier.priceSub}
                 </span>
               </div>
 

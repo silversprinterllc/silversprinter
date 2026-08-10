@@ -5,11 +5,12 @@ import { useState } from 'react'
 const SPOTS_REMAINING = 12
 
 const perks = [
-  'Full course access as modules launch (all 10 modules)',
+  'Full course access as modules launch (all 14 modules)',
   'Founding Member badge — permanent recognition',
   'Direct Slack access to Ben (not available at any other tier)',
   'Priority enrollment for future Intensives & cohorts',
   '60+ templates, checklists & swipe files',
+  'Local Guide Engine Playbook — the crown jewel module',
   'Lifetime access + every future update',
 ]
 
@@ -28,10 +29,10 @@ export default function FoundingMemberBanner() {
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('Something went wrong. Please try again or email ben@thehoadleygroup.com')
+        alert('Something went wrong. Please try again or email ben@spokebnb.com')
       }
     } catch {
-      alert('Something went wrong. Please try again or email ben@thehoadleygroup.com')
+      alert('Something went wrong. Please try again or email ben@spokebnb.com')
     } finally {
       setLoading(false)
     }

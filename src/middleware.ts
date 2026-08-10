@@ -27,7 +27,8 @@ export default withAuth(
         if (
           pathname.startsWith('/portal') ||
           pathname.startsWith('/dispatcher') ||
-          pathname.startsWith('/corporate')
+          pathname.startsWith('/corporate') ||
+          pathname.startsWith('/course/deal-analysis')
         ) {
           return !!token
         }
@@ -38,5 +39,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ['/portal/:path*', '/dispatcher/:path*', '/corporate/:path*'],
+  matcher: ['/portal/:path*', '/dispatcher/:path*', '/corporate/:path*', '/course/deal-analysis/:path*'],
 }
