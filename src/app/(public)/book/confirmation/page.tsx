@@ -248,7 +248,7 @@ export default async function ConfirmationPage({
             </p>
             <p>
               <span className="text-[#f0e6d0] font-medium">🚭 NO SMOKING</span> — Anywhere inside
-              the vehicle. $350 fee. No exceptions.
+              the vehicle. $500 fee. No exceptions.
             </p>
             <p>
               <span className="text-[#f0e6d0] font-medium">⛽ RETURN FUEL FULL</span> — Same

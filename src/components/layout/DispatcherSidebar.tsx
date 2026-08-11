@@ -1,14 +1,12 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Map, List, Truck, Users, LogOut } from 'lucide-react'
+import { Map, List, LogOut } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 
 const navItems = [
-  { href: '/dispatcher', label: 'Live Map', icon: Map, exact: true },
+  { href: '/dispatcher', label: 'Dashboard', icon: Map, exact: true },
   { href: '/dispatcher/bookings', label: 'Bookings', icon: List },
-  { href: '/dispatcher/fleet', label: 'Fleet', icon: Truck },
-  { href: '/dispatcher/chauffeurs', label: 'Chauffeurs', icon: Users },
 ]
 
 export function DispatcherSidebar() {

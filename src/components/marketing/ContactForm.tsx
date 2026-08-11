@@ -49,27 +49,13 @@ export function ContactForm() {
     setError('')
 
     try {
-      const payload = {
-        access_key: 'YOUR_WEB3FORMS_ACCESS_KEY',
-        subject: 'New Sterling Route Inquiry',
-        from_name: 'Sterling Route Website',
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        inquiry_type: formData.inquiryType,
-        preferred_dates: formData.preferredDates,
-        message: formData.message,
-      }
-
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       })
 
-      const json = await res.json()
-
-      if (json.success) {
+      if (res.ok) {
         setSuccess(true)
       } else {
         setError('Something went wrong. Please try again or email us directly at hello@sterlingroute.com.')

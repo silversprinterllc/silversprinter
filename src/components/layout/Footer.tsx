@@ -49,7 +49,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-[#433d38]/30 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-xs text-[#433d38]">© {new Date().getFullYear()} Sterling Route. All rights reserved.</p>
         <div className="flex gap-6">
-          {['Privacy', 'Terms', 'Cookies'].map((l) => (
+          {['Privacy', 'Terms'].map((l) => (
             <Link key={l} href={`/${l.toLowerCase()}`} className="text-xs text-[#433d38] hover:text-[#5f5850] transition-colors">{l}</Link>
           ))}
         </div>

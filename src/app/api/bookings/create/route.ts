@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
         tripTypeOther: tripType === 'Other' ? tripTypeOther : null,
         specialRequests: specialRequests || null,
         hearAboutUs: hearAboutUs || null,
-        dailyRate: 995,
+        dailyRate: pricing.avgRate ?? 995,
         baseTotal: pricing.baseTotal,
         addonsTotal: pricing.addonsTotal,
         subtotal: pricing.subtotal,

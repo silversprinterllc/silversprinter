@@ -9,18 +9,13 @@ export default async function PortalPage() {
   const session = await getServerSession(authOptions)
   if (!session) return null
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let bookings: any[] = []
-  try {
-    bookings = await prisma.booking.findMany({
-      where: {
-        userId: session.user.id,
-        status: { in: ['PENDING', 'CONFIRMED', 'CHAUFFEUR_ASSIGNED', 'EN_ROUTE', 'ARRIVED', 'IN_PROGRESS'] },
-      },
-      include: { vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'asc' },
-    })
-  } catch { /* DB not yet connected */ }
+  const bookings = await prisma.rentalBooking.findMany({
+    where: {
+      email: session.user.email!,
+      status: { in: ['PENDING', 'CONFIRMED'] },
+    },
+    orderBy: { startDate: 'asc' },
+  })
 
   return (
     <div>
@@ -34,7 +29,7 @@ export default async function PortalPage() {
           <p className="font-serif text-2xl text-[#f0e6d0] mb-2">No upcoming trips</p>
           <p className="text-[#5f5850] text-sm">Ready for your next journey?</p>
           <a href="/book" className="inline-block mt-6 px-6 py-2.5 bg-[#c9a96e] text-[#0a0a0a] text-sm font-medium">
-            Book a Ride
+            Book the Van
           </a>
         </div>
       ) : (
@@ -43,15 +38,16 @@ export default async function PortalPage() {
             <TripCard
               key={b.id}
               id={b.id}
-              bookingRef={b.bookingRef}
-              pickupAddress={b.pickupAddress}
-              destinationAddress={b.destinationAddress}
-              pickupAt={b.pickupAt}
-              vehicleName={b.vehicle.name}
-              chauffeurName={b.chauffeur?.name}
+              firstName={b.firstName}
+              lastName={b.lastName}
+              startDate={b.startDate}
+              endDate={b.endDate}
+              days={b.days}
+              tripType={b.tripType}
               status={b.status}
-              totalAmount={Number(b.totalAmount)}
-              isUpcoming
+              subtotal={b.subtotal}
+              depositAmount={b.depositAmount}
+              balanceAmount={b.balanceAmount}
             />
           ))}
         </div>

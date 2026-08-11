@@ -23,9 +23,9 @@ async function main() {
         'mini fridge, 32" TV, Bluetooth, and WiFi. This is your living room on wheels — for golf trips, ' +
         'game days, corporate events, or any occasion that deserves the finest ride.',
       capacity: 10,
-      basePrice: 350,
+      basePrice: 795,
       pricePerHour: null,
-      pricePerDay: 595,
+      pricePerDay: 995,
       year: 2021,
       make: 'Mercedes-Benz',
       model: 'Sprinter',

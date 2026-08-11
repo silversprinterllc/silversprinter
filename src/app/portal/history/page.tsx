@@ -9,16 +9,14 @@ export default async function HistoryPage() {
   const session = await getServerSession(authOptions)
   if (!session) return null
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let bookings: any[] = []
-  try {
-    bookings = await prisma.booking.findMany({
-      where: { userId: session.user.id, status: { in: ['COMPLETED', 'CANCELLED', 'NO_SHOW'] } },
-      include: { vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'desc' },
-      take: 50,
-    })
-  } catch { /* DB not yet connected */ }
+  const bookings = await prisma.rentalBooking.findMany({
+    where: {
+      email: session.user.email!,
+      status: { in: ['COMPLETED', 'CANCELLED'] },
+    },
+    orderBy: { startDate: 'desc' },
+    take: 50,
+  })
 
   return (
     <div>
@@ -37,14 +35,16 @@ export default async function HistoryPage() {
             <TripCard
               key={b.id}
               id={b.id}
-              bookingRef={b.bookingRef}
-              pickupAddress={b.pickupAddress}
-              destinationAddress={b.destinationAddress}
-              pickupAt={b.pickupAt}
-              vehicleName={b.vehicle.name}
-              chauffeurName={b.chauffeur?.name}
+              firstName={b.firstName}
+              lastName={b.lastName}
+              startDate={b.startDate}
+              endDate={b.endDate}
+              days={b.days}
+              tripType={b.tripType}
               status={b.status}
-              totalAmount={Number(b.totalAmount)}
+              subtotal={b.subtotal}
+              depositAmount={b.depositAmount}
+              balanceAmount={b.balanceAmount}
             />
           ))}
         </div>

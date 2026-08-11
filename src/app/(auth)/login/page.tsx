@@ -22,7 +22,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <Link href="/" className="block font-serif text-2xl text-[#f0e6d0] text-center mb-10">
-          Silver<span className="text-[#c9a96e]">Sprinter</span>
+          Sterling <span className="text-[#c9a96e]">Route</span>
         </Link>
 
         {sent ? (

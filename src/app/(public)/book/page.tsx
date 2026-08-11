@@ -5,7 +5,26 @@ import { useRouter } from 'next/navigation'
 import { PublicNav } from '@/components/layout/PublicNav'
 import { Footer } from '@/components/layout/Footer'
 
-const DAILY_RATE = 995
+function getDailyRate(dateStr: string): number {
+  const d = new Date(dateStr + 'T12:00:00')
+  const day = d.getDay()
+  // Fri=5, Sat=6, Sun=0 → Peak Weekend $1,095; Mon–Thu → Off-Peak $795
+  return (day === 0 || day === 5 || day === 6) ? 1095 : 795
+}
+
+function calcBaseTotal(startDate: string, endDate: string): { days: number; baseTotal: number; breakdown: { date: string; rate: number }[] } {
+  const breakdown: { date: string; rate: number }[] = []
+  const start = new Date(startDate + 'T12:00:00')
+  const end = new Date(endDate + 'T12:00:00')
+  const days = Math.max(1, Math.round((end.getTime() - start.getTime()) / 86400000))
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start)
+    d.setDate(d.getDate() + i)
+    const dateStr = d.toISOString().split('T')[0]
+    breakdown.push({ date: dateStr, rate: getDailyRate(dateStr) })
+  }
+  return { days, baseTotal: breakdown.reduce((s, b) => s + b.rate, 0), breakdown }
+}
 
 const ADD_ONS = [
   { id: 'stocked-cooler', name: 'Stocked Cooler', price: 65, description: 'Arrives loaded: 2 bags of ice, 24 bottles of water, 12 assorted sodas, 6 sports drinks. Ready to go at pickup. You handle the beer — we handle the basics.' },
@@ -107,16 +126,14 @@ export default function BookPage() {
 
   const pricing = useMemo(() => {
     if (!form.startDate || !form.endDate) return null
-    const start = new Date(form.startDate + 'T12:00:00')
-    const end = new Date(form.endDate + 'T12:00:00')
-    const days = Math.max(1, Math.round((end.getTime() - start.getTime()) / 86400000))
-    const baseTotal = DAILY_RATE * days
+    const { days, baseTotal, breakdown } = calcBaseTotal(form.startDate, form.endDate)
     const selected = ADD_ONS.filter((a) => form.selectedAddOns.includes(a.id))
     const addonsTotal = selected.reduce((s, a) => s + a.price, 0)
     const subtotal = baseTotal + addonsTotal
     const deposit = Math.round(subtotal * 0.35)
     const balance = subtotal - deposit
-    return { days, baseTotal, addonsTotal, subtotal, deposit, balance }
+    const avgRate = Math.round(baseTotal / days)
+    return { days, baseTotal, addonsTotal, subtotal, deposit, balance, avgRate, breakdown }
   }, [form.startDate, form.endDate, form.selectedAddOns])
 
   function canNext() {
@@ -593,7 +610,7 @@ export default function BookPage() {
                 <div className="px-5 py-4 space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-[#5f5850]">
-                      {fmt(DAILY_RATE)}/day × {pricing.days} {pricing.days === 1 ? 'day' : 'days'}
+                      {pricing.days} {pricing.days === 1 ? 'day' : 'days'} (avg {fmt(pricing.avgRate)}/day)
                     </span>
                     <span className="text-[#f0e6d0]">{fmt(pricing.baseTotal)}</span>
                   </div>
@@ -682,7 +699,7 @@ export default function BookPage() {
               <div className="space-y-2 text-sm text-[#5f5850]">
                 <p>Select your dates to see pricing.</p>
                 <div className="h-px bg-[#433d38]/30 my-4" />
-                <p className="text-xs">{fmt(DAILY_RATE)}/day flat rate</p>
+                <p className="text-xs">$795/day weekday · $1,095/day weekend</p>
                 <p className="text-xs">35% deposit to reserve</p>
                 <p className="text-xs">Balance due 48 hrs before departure</p>
               </div>
@@ -690,7 +707,7 @@ export default function BookPage() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-[#5f5850]">
-                    {pricing.days}d × {fmt(DAILY_RATE)}
+                    {pricing.days}d (avg {fmt(pricing.avgRate)}/day)
                   </span>
                   <span className="text-[#f0e6d0]">{fmt(pricing.baseTotal)}</span>
                 </div>

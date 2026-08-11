@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { sendReviewRequest } from '@/lib/emails/send'
 
@@ -9,6 +11,12 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!['DISPATCHER', 'SUPER_ADMIN'].includes(session.user.role)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
     const { id } = await params
     const { status } = await req.json()
 
@@ -24,11 +32,9 @@ export async function PATCH(
       data: { status },
     })
 
-    // When a booking is marked COMPLETED, send the review request email
     if (status === 'COMPLETED') {
       const reviewToken = booking.reviewToken ?? booking.id
 
-      // If reviewToken is not yet set on the booking, persist a generated one
       if (!booking.reviewToken) {
         try {
           await prisma.rentalBooking.update({
@@ -49,7 +55,6 @@ export async function PATCH(
         })
       } catch (emailError) {
         console.error('Review request email failed:', emailError)
-        // Don't throw — status update succeeded
       }
     }
 
