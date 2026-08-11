@@ -105,7 +105,7 @@ export default function FleetPage() {
               That creates a different level of accountability. The van is cleaned between every rental the way you clean a vehicle before your family gets in it. It is fueled, checked, and configured before you arrive. Every rental.
             </p>
             <p>
-              The downside: when the van is booked, it is booked. There is no fallback. If the dates matter, book early. If you want guaranteed access before the calendar opens, apply for Sterling Reserve.
+              The downside: when the van is booked, it is booked. There is no fallback. If the dates matter, book early. If you want guaranteed access before the calendar opens, apply for the Road Club.
             </p>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function FleetPage() {
               { label: 'Weekend rate (Fri–Sun)', value: '$995/day' },
               { label: 'Premium dates (holidays, events)', value: '$1,095/day' },
               { label: 'Included mileage', value: '150 miles/day' },
-              { label: 'Mileage overage', value: '$0.55/mile' },
+              { label: 'Mileage overage', value: '$0.50/mile' },
               { label: 'Security deposit', value: '$1,500 held at booking' },
             ].map((row) => (
               <div key={row.label} className="flex justify-between items-center py-4">
@@ -145,7 +145,7 @@ export default function FleetPage() {
             The Van Is Ready.
           </h2>
           <p className="text-[#5f5850] text-base leading-relaxed mb-12 max-w-lg mx-auto">
-            Check availability for your dates. If you move more than a few times a year, ask about Sterling Reserve.
+            Check availability for your dates. If you move more than a few times a year, ask about the Road Club.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -158,7 +158,7 @@ export default function FleetPage() {
               href="/sterling-reserve"
               className="inline-block border border-[#c9a96e]/50 text-[#c9a96e] font-sans text-sm tracking-[0.2em] uppercase px-12 py-4 hover:bg-[#c9a96e]/10 transition-colors duration-200"
             >
-              Sterling Reserve
+              Road Club
             </Link>
           </div>
         </div>

@@ -292,50 +292,40 @@ export default function YouthSportsPage() {
         </div>
       </section>
 
-      {/* ── Sterling Reserve for Teams ── */}
+      {/* ── Road Club for Teams ── */}
       <section className="py-24 px-6 bg-[#0d0b09] border-t border-[#433d38]/40">
         <div className="max-w-4xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-6">For Teams That Travel Regularly</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-6">For Programs That Travel Regularly</p>
           <h2 className="font-serif text-3xl md:text-4xl text-[#f0e6d0] mb-4">
-            Sterling Reserve Pays for Itself.
+            The Road Club Makes the Math Easy.
           </h2>
           <p className="text-[#a09890] text-lg mb-16 max-w-2xl leading-relaxed">
-            If your team has 10+ tournaments a season, the math on membership is hard to argue with.
-            Included days are priced well below rack rate — and the more you use it, the more it makes sense.
+            Four charter seats. $22,500/year. 32 days included — one Signature Week locked at enrollment, 25 flexible day-credits at $750/day. If your program moves 10+ times a season, one seat covers it all and then some.
           </p>
 
-          {/* Comparison table */}
+          {/* Comparison */}
           <div className="overflow-x-auto mb-10">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-[#433d38]">
-                  <th className="text-left py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Membership</th>
-                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Included Days/Year</th>
+                  <th className="text-left py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Option</th>
+                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Days Available</th>
                   <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">Annual Cost</th>
                   <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#c9a96e] font-normal">Effective $/Day</th>
-                  <th className="text-center py-4 px-6 text-xs tracking-[0.2em] uppercase text-[#5f5850] font-normal">vs. Team Rate</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  { tier: 'Reserve', days: 12, annual: '$4,788', perDay: '$399', savings: 'Save $446/day' },
-                  { tier: 'Gold', days: 24, annual: '$9,588', perDay: '$399', savings: 'Save $446/day' },
-                  { tier: 'Black', days: 36, annual: '$14,340', perDay: '$398', savings: 'Save $447/day' },
-                ].map(({ tier, days, annual, perDay, savings }, i) => (
-                  <tr key={tier} className={`border-b border-[#433d38]/40 ${i === 1 ? 'bg-[#1a1612]' : ''}`}>
-                    <td className="py-5 px-6 font-serif text-[#f0e6d0]">Sterling Reserve {tier}</td>
-                    <td className="py-5 px-6 text-center text-[#a09890]">{days} days</td>
-                    <td className="py-5 px-6 text-center text-[#a09890]">{annual}/yr</td>
-                    <td className="py-5 px-6 text-center font-serif text-xl text-[#c9a96e]">{perDay}</td>
-                    <td className="py-5 px-6 text-center text-xs text-[#5f5850]">{savings}</td>
-                  </tr>
-                ))}
+                <tr className="border-b border-[#433d38]/40 bg-[#1a1612]">
+                  <td className="py-5 px-6 font-serif text-[#f0e6d0]">Sterling Road Club Seat</td>
+                  <td className="py-5 px-6 text-center text-[#a09890]">32 days</td>
+                  <td className="py-5 px-6 text-center text-[#c9a96e] font-medium">$22,500/yr</td>
+                  <td className="py-5 px-6 text-center font-serif text-xl text-[#c9a96e]">$703</td>
+                </tr>
                 <tr className="border-b border-[#433d38]/40 opacity-50">
-                  <td className="py-5 px-6 text-[#5f5850]">Pay Per Trip (Rack Rate)</td>
-                  <td className="py-5 px-6 text-center text-[#5f5850]">—</td>
+                  <td className="py-5 px-6 text-[#5f5850]">Public Booking (Rack Rate)</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">As available</td>
                   <td className="py-5 px-6 text-center text-[#5f5850]">Pay per trip</td>
-                  <td className="py-5 px-6 text-center text-[#5f5850]">$995</td>
-                  <td className="py-5 px-6 text-center text-[#5f5850]">Baseline</td>
+                  <td className="py-5 px-6 text-center text-[#5f5850]">$900–$1,295</td>
                 </tr>
               </tbody>
             </table>
@@ -344,13 +334,13 @@ export default function YouthSportsPage() {
           <div className="border border-[#433d38]/50 bg-[#1a1612] p-8 mb-8 max-w-2xl">
             <p className="text-xs tracking-[0.2em] uppercase text-[#c9a96e] mb-3">Example: 12-Tournament Season</p>
             <p className="text-[#a09890] text-sm leading-relaxed mb-3">
-              Rack rate: 12 days × $995 = <span className="text-[#f0e6d0]">$11,940/year</span>
+              Rack rate: 12 days × avg $950 = <span className="text-[#f0e6d0]">$11,400/year</span>
             </p>
             <p className="text-[#a09890] text-sm leading-relaxed mb-3">
-              Reserve membership: 12 included days for <span className="text-[#c9a96e]">$4,788/year</span>
+              Road Club: 12 day-credits from your 25 included = <span className="text-[#c9a96e]">already covered</span>
             </p>
             <p className="text-[#5f5850] text-xs leading-relaxed border-t border-[#433d38] pt-4 mt-4">
-              That&apos;s $7,152 back in the program budget. Priority booking, preferred rates on additional days, and a concierge who already knows your schedule.
+              You still have 13 credits left in the year. Priority booking means you get tournament weekends before the calendar opens to the public. Four seats total — applications are accepted now.
             </p>
           </div>
 
@@ -358,7 +348,7 @@ export default function YouthSportsPage() {
             href="/sterling-reserve"
             className="inline-flex items-center justify-center gap-2 px-10 py-4 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase hover:bg-[#c9a96e] hover:text-[#0a0a0a] transition-colors duration-200"
           >
-            Explore Sterling Reserve <ArrowRight size={16} />
+            Apply for a Road Club Seat <ArrowRight size={16} />
           </Link>
         </div>
       </section>

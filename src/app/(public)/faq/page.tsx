@@ -118,11 +118,11 @@ export default function FAQPage() {
           items={[
             {
               question: 'How far in advance can I book?',
-              answer: <p>Public customers book based on live availability — first come, first served. Reserve members see the calendar 7 days before public. Gold members get 21 days. Black members have first right of refusal 30 days out with full calendar visibility at all times.</p>,
+              answer: <p>Public customers book based on live availability — first come, first served. Road Club members see the calendar 7 days before the public window opens and have priority access to peak dates via the round-robin system. Signature Week dates are locked at enrollment and are never subject to availability.</p>,
             },
             {
               question: 'Is there a minimum advance booking notice?',
-              answer: <p>Yes. Public bookings require a minimum of 72 hours advance notice — same-day and next-day bookings are not available for public customers. Sterling Reserve members get reduced minimum notice windows: Gold members 24-hour minimum, Black members same-day booking available subject to availability.</p>,
+              answer: <p>Yes. Public bookings require a minimum of 72 hours advance notice — same-day and next-day bookings are not available for public customers. Road Club members have a reduced minimum notice window of 24 hours and may request same-day booking subject to availability.</p>,
             },
             {
               question: 'What\'s the minimum rental period?',

@@ -21,7 +21,7 @@ const perks = [
   {
     icon: Calendar,
     title: 'Road Club for Repeat Travel',
-    description: 'Companies that move quarterly should look at Sterling Reserve membership — priority calendar access, one upfront payment, preferred daily rate. Van is there when you need it.',
+    description: 'Companies that move quarterly should look at the Sterling Road Club — priority calendar access, one upfront payment, preferred daily rate. Van is there when you need it.',
   },
   {
     icon: Shield,
@@ -102,16 +102,16 @@ export default function CorporatePage() {
       {/* RESERVE CTA */}
       <section className="py-24 px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">Sterling Reserve</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">Sterling Road Club</p>
           <h2 className="font-serif text-4xl text-[#f0e6d0] mb-6">Move More Than Three Times a Year?</h2>
           <p className="text-[#a09890] text-base leading-relaxed mb-10">
-            The annual membership structure is built for companies and individuals who need reliable access without calling every time. One payment. Day-credits loaded. Calendar access before the public. The van is there when you need it.
+            Four charter seats at $22,500/year. One upfront payment, 32 days loaded, calendar access before the public opens. Van is there when you need it — no calls, no checking, no getting shut out on peak dates.
           </p>
           <Link
             href="/sterling-reserve"
             className="inline-block border border-[#c9a96e]/50 text-[#c9a96e] text-xs tracking-[0.2em] uppercase px-8 py-3 hover:bg-[#c9a96e]/10 transition-colors"
           >
-            Explore Sterling Reserve →
+            Explore the Road Club →
           </Link>
         </div>
       </section>
@@ -123,7 +123,7 @@ export default function CorporatePage() {
             Ready to Book?
           </h2>
           <p className="text-[#5f5850] text-base leading-relaxed mb-12 max-w-lg mx-auto">
-            Check availability for your dates, or contact us to discuss corporate access and Sterling Reserve.
+            Check availability for your dates, or contact us to discuss corporate access and the Road Club.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

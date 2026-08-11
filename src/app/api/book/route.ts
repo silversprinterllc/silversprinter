@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { z } from 'zod'
+import { isHoliday } from '@/lib/utils'
 
 const schema = z.object({
   vehicleId: z.string().min(1),
@@ -22,9 +23,10 @@ const schema = z.object({
 
 function getDayRate(dateStr: string): number {
   const d = new Date(dateStr + 'T12:00:00')
+  if (isHoliday(d)) return 1095
   const dow = d.getDay()
-  if (dow === 5 || dow === 6 || dow === 0) return 1095
-  return 795
+  if (dow === 5 || dow === 6 || dow === 0) return 995
+  return 900
 }
 
 function calcPricing(startDate: string, endDate: string) {

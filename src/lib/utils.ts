@@ -50,7 +50,12 @@ export const HOLIDAYS_2026 = [
   '2026-07-04', '2026-09-07', '2026-11-26', '2026-12-25',
 ]
 
+export const HOLIDAYS_2027 = [
+  '2027-01-01', '2027-01-18', '2027-02-15', '2027-05-31',
+  '2027-07-04', '2027-07-05', '2027-09-06', '2027-11-25', '2027-12-25',
+]
+
 export function isHoliday(date: Date): boolean {
   const dateStr = date.toISOString().split('T')[0]
-  return [...HOLIDAYS_2025, ...HOLIDAYS_2026].includes(dateStr)
+  return [...HOLIDAYS_2025, ...HOLIDAYS_2026, ...HOLIDAYS_2027].includes(dateStr)
 }
