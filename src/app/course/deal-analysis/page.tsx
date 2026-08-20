@@ -50,8 +50,8 @@ interface AirDNAData {
 interface AnalysisResult {
   score: 'Strong Buy' | 'Buy' | 'Hold' | 'Pass'
   scoreColor: string
-  revenuePerNight: number
-  revenuePerNightTarget: number
+  SpokeBnB: number
+  SpokeBnBTarget: number
   revenueGap: number
   revenueAfterSystem: number
   noi: number
@@ -119,10 +119,10 @@ function runAnalysis(
 
   // Revenue Per Night
   const availableNights = 365
-  const revenuePerNight = grossRevenue / availableNights
+  const SpokeBnB = grossRevenue / availableNights
   const marketTop25RevPAR = airbnb.marketTop25ADR * (airbnb.marketTop25Occupancy / 100)
-  const revenuePerNightTarget = marketTop25RevPAR
-  const revenueGap = (revenuePerNightTarget - revenuePerNight) * availableNights
+  const SpokeBnBTarget = marketTop25RevPAR
+  const revenueGap = (SpokeBnBTarget - SpokeBnB) * availableNights
 
   // Hub-and-Spoke projections
   const pricingUplift = grossRevenue * 0.18 // 15-20% from dynamic pricing
@@ -225,7 +225,7 @@ function runAnalysis(
   }
 
   return {
-    score, scoreColor, revenuePerNight, revenuePerNightTarget, revenueGap,
+    score, scoreColor, SpokeBnB, SpokeBnBTarget, revenueGap,
     revenueAfterSystem, noi, monthlyCashFlow, annualCashFlow, capRate,
     cashOnCash, dscr, totalCashNeeded, monthlyMortgage, annualExpenses,
     commissionSavings, projectedDirectBookingRevenue, breakEvenMonths,
@@ -529,7 +529,7 @@ export default function DealAnalysisPage() {
             <div>
               <h3 className="text-sm font-semibold text-[var(--sf-navy)]/60 uppercase tracking-wider mb-4">Key Metrics</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-                <MetricCard label="Revenue Per Night" value={fmt(result.revenuePerNight)} sub={'Target: ' + fmt(result.revenuePerNightTarget)} good={result.revenuePerNight >= result.revenuePerNightTarget} />
+                <MetricCard label="Revenue Per Night" value={fmt(result.SpokeBnB)} sub={'Target: ' + fmt(result.SpokeBnBTarget)} good={result.SpokeBnB >= result.SpokeBnBTarget} />
                 <MetricCard label="Net Operating Income" value={fmt(result.noi)} sub="Annual" good={result.noi > 0} />
                 <MetricCard label="Monthly Cash Flow" value={fmt(result.monthlyCashFlow)} sub="After debt service" good={result.monthlyCashFlow > 0} />
                 <MetricCard label="Cap Rate" value={fmtPct(result.capRate)} sub="Target: 6%+" good={result.capRate >= 6} />
@@ -546,7 +546,7 @@ export default function DealAnalysisPage() {
                 Hub-and-Spoke Revenue Projection
               </h3>
               <p className="text-xs text-[var(--sf-navy)]/50 mb-6">
-                Projected revenue after implementing the RevenuePerNight system (dynamic pricing, direct booking, guest retention, experiences).
+                Projected revenue after implementing the SpokeBnB system (dynamic pricing, direct booking, guest retention, experiences).
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                 <div className="bg-white rounded-xl p-4 text-center">

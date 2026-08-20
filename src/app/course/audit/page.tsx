@@ -6,7 +6,7 @@ import ToolFAQ from '@/components/store/ToolFAQ'
 import AuditForm from './AuditForm'
 
 export const metadata: Metadata = {
-  title: 'Free Airbnb Listing Audit | {{BRAND_NAME}}',
+  title: 'Free Airbnb Listing Audit | SpokeBnB',
   description:
     'Get a personalized 40-point audit of your Airbnb listing. 5 spots available per week.',
   alternates: { canonical: '/course/audit' },

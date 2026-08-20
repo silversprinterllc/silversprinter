@@ -6,7 +6,7 @@ import ToolFAQ from '@/components/store/ToolFAQ'
 import GuidebookForm from './GuidebookForm'
 
 export const metadata: Metadata = {
-  title: 'Free Local Area Guidebook Template | {{BRAND_NAME}}',
+  title: 'Free Local Area Guidebook Template | SpokeBnB',
   description:
     'The Notion guidebook template that adds $2,400/year in passive affiliate revenue.',
   alternates: { canonical: '/course/guidebook' },

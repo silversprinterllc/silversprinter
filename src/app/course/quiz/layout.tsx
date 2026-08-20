@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Free STR Saturation Quiz | {{BRAND_NAME}}',
+  title: 'Free STR Saturation Quiz | SpokeBnB',
   description:
     'Find out if your short-term rental market is about to saturate. Get a personalized report in 60 seconds with the 3 things you can fix this week.',
   keywords: [
@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     'airbnb host quiz',
   ],
   openGraph: {
-    title: 'Is Your STR Market About to Saturate? | {{BRAND_NAME}}',
+    title: 'Is Your STR Market About to Saturate? | SpokeBnB',
     description:
       'Free 60-second diagnostic. Score your property across 8 dimensions. Get a personalized report with the 3 moves that raise your score fastest.',
     type: 'website',
-    siteName: '{{BRAND_NAME}}',
+    siteName: 'SpokeBnB',
     locale: 'en_US',
     images: [
       {

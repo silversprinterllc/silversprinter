@@ -7,7 +7,7 @@ import RegulationSearch from './RegulationSearch'
 import RegulationAlertForm from './RegulationAlertForm'
 
 export const metadata: Metadata = {
-  title: 'STR Regulation Lookup | Is Airbnb Legal in Your City? | {{BRAND_NAME}}',
+  title: 'STR Regulation Lookup | Is Airbnb Legal in Your City? | SpokeBnB',
   description:
     'Check short-term rental laws, license requirements, and tax obligations for any US city. Free regulation database.',
   alternates: { canonical: '/course/regulations' },

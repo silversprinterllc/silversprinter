@@ -88,10 +88,10 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Note */}
-        <p className="text-center text-xs text-[var(--sf-navy)]/30 mt-8">
+        {/* Note — hidden until real testimonials replace placeholders */}
+        {/* <p className="text-center text-xs text-[var(--sf-navy)]/30 mt-8">
           * Placeholder testimonials — will be replaced with real student results after first cohort.
-        </p>
+        </p> */}
       </div>
     </section>
   )

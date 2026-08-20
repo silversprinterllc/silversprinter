@@ -2,8 +2,8 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata = {
-  title: 'Terms of Service | RevenuePerNight',
-  description: 'Terms of Service for the RevenuePerNight program and related services.',
+  title: 'Terms of Service | SpokeBnB',
+  description: 'Terms of Service for the SpokeBnB program and related services.',
 }
 
 export default function TermsPage() {
@@ -26,7 +26,7 @@ export default function TermsPage() {
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">1. Agreement to Terms</h2>
               <p>
                 By accessing or purchasing any product, course, service, or digital content
-                (&quot;Services&quot;) offered through RevenuePerNight (&quot;Company,&quot;
+                (&quot;Services&quot;) offered through SpokeBnB (&quot;Company,&quot;
                 &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), operated by Barefoot Realty
                 &amp; Investments LLC, you (&quot;Student,&quot; &quot;you,&quot; or
                 &quot;your&quot;) agree to be bound by these Terms of Service (&quot;Terms&quot;).
@@ -39,7 +39,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">2. Services Provided</h2>
               <p>
-                RevenuePerNight provides digital educational courses, live cohort coaching programs,
+                SpokeBnB provides digital educational courses, live cohort coaching programs,
                 done-for-you implementation services, downloadable templates, calculators, and
                 related digital content focused on short-term rental (STR) business optimization.
                 Services are delivered through our online platform, live video calls, and digital
@@ -110,7 +110,7 @@ export default function TermsPage() {
               </p>
 
               <h3 className="text-base font-semibold text-[var(--sf-navy)] mb-2">
-                Self-Paced Course ($1,997) &amp; Intensive Cohort ($2,997)
+                Self-Paced Course ($1,997) &amp; Intensive Cohort ($4,997)
               </h3>
               <p className="mb-3">
                 You may request a full refund within <strong>14 days</strong> of purchase,
@@ -123,7 +123,7 @@ export default function TermsPage() {
               </ul>
               <p className="mb-3">
                 Refund requests must be submitted via email to{' '}
-                <strong>support@revenuepernight.com</strong> with your completed worksheets
+                <strong>ben@spokebnb.com</strong> with your completed worksheets
                 attached. Refunds are processed within 5-10 business days.
               </p>
               <p className="mb-4">
@@ -191,7 +191,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">9. No Professional Advice</h2>
               <p>
-                RevenuePerNight provides educational content about short-term rental business
+                SpokeBnB provides educational content about short-term rental business
                 optimization. Nothing in our Services constitutes professional financial,
                 investment, legal, tax, or real estate advice. You are solely responsible for
                 your own business and investment decisions. We recommend consulting with
@@ -271,7 +271,7 @@ export default function TermsPage() {
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">15. Contact</h2>
               <p>
                 For questions about these Terms, contact us at:{' '}
-                <strong>support@revenuepernight.com</strong>
+                <strong>ben@spokebnb.com</strong>
               </p>
               <p className="mt-2">
                 Barefoot Realty &amp; Investments LLC

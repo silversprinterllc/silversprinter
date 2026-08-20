@@ -6,9 +6,9 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata: Metadata = {
-  title: 'Refund Policy | {{BRAND_NAME}}',
+  title: 'Refund Policy | SpokeBnB',
   description:
-    'Our completion-based refund policy for {{BRAND_NAME}} courses, cohorts, done-for-you services, and add-ons.',
+    'Our completion-based refund policy for SpokeBnB courses, cohorts, done-for-you services, and add-ons.',
   alternates: { canonical: '/course/legal/refund' },
   robots: { index: true, follow: true },
 }
@@ -74,7 +74,7 @@ export default function RefundPolicyPage() {
                 1. Policy Overview
               </h2>
               <p className="mb-4">
-                {`{{BRAND_NAME}}`} offers a completion-based refund policy
+                {`SpokeBnB`} offers a completion-based refund policy
                 designed to protect students who genuinely engage with the
                 material while safeguarding the integrity of our community from
                 content piracy and refund abuse.
@@ -106,7 +106,7 @@ export default function RefundPolicyPage() {
                 </p>
               </blockquote>
               <p>
-                This policy applies to the self-paced {`{{BRAND_NAME}}`} System
+                This policy applies to the self-paced {`SpokeBnB`} System
                 course. All three conditions must be met: (1) completion of
                 Modules 0 and 1, (2) submission of the associated worksheets,
                 and (3) evidence of a good-faith implementation attempt. Requests
@@ -126,7 +126,7 @@ export default function RefundPolicyPage() {
                     href="mailto:support@spokebnb.com"
                     className="text-[var(--sf-gold)] hover:underline"
                   >
-                    support@{`{{BRAND_NAME}}`}.com
+                    support@{`SpokeBnB`}.com
                   </a>{' '}
                   with the subject line &quot;Refund Request.&quot;
                 </li>
@@ -240,7 +240,7 @@ export default function RefundPolicyPage() {
                   href="mailto:support@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@{`{{BRAND_NAME}}`}.com
+                  support@{`SpokeBnB`}.com
                 </a>{' '}
                 first. We resolve legitimate issues quickly.
               </p>
@@ -261,7 +261,7 @@ export default function RefundPolicyPage() {
                 10. Why This Policy Exists
               </h2>
               <p>
-                The {`{{BRAND_NAME}}`} System works when implemented. Our
+                The {`SpokeBnB`} System works when implemented. Our
                 completion-based refund ensures students who genuinely engage
                 have full protection, while protecting the integrity of our
                 community, our content, and the students who show up to do the
@@ -280,7 +280,7 @@ export default function RefundPolicyPage() {
                   href="mailto:support@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@{`{{BRAND_NAME}}`}.com
+                  support@{`SpokeBnB`}.com
                 </a>
                 . We typically respond within 2 business days.
               </p>

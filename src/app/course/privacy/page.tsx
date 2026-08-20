@@ -2,8 +2,8 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata = {
-  title: 'Privacy Policy | RevenuePerNight',
-  description: 'Privacy Policy for the RevenuePerNight platform and services.',
+  title: 'Privacy Policy | SpokeBnB',
+  description: 'Privacy Policy for the SpokeBnB platform and services.',
 }
 
 export default function PrivacyPage() {
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">1. Who We Are</h2>
               <p>
-                RevenuePerNight is operated by Barefoot Realty &amp; Investments LLC
+                SpokeBnB is operated by Barefoot Realty &amp; Investments LLC
                 (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;).
                 This Privacy Policy explains how we collect, use, disclose, and protect your
                 personal information when you visit our website, purchase our products, or
@@ -147,7 +147,7 @@ export default function PrivacyPage() {
               </ul>
               <p className="mt-3">
                 To exercise any of these rights, email us at{' '}
-                <strong>privacy@revenuepernight.com</strong>. We will respond within 30 days.
+                <strong>ben@spokebnb.com</strong>. We will respond within 30 days.
               </p>
             </div>
 
@@ -159,7 +159,7 @@ export default function PrivacyPage() {
                 Consumer Privacy Act (CCPA), including the right to know what personal information
                 we collect, the right to request deletion, and the right to opt out of the sale
                 of personal information. We do not sell personal information. To make a CCPA
-                request, email <strong>privacy@revenuepernight.com</strong>.
+                request, email <strong>ben@spokebnb.com</strong>.
               </p>
             </div>
 
@@ -199,7 +199,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">13. Contact</h2>
               <p>
                 For privacy-related questions or requests:{' '}
-                <strong>privacy@revenuepernight.com</strong>
+                <strong>ben@spokebnb.com</strong>
               </p>
               <p className="mt-2">
                 Barefoot Realty &amp; Investments LLC

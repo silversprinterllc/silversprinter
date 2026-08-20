@@ -6,7 +6,7 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata: Metadata = {
-  title: 'Affiliate Disclosure | {{BRAND_NAME}}',
+  title: 'Affiliate Disclosure | SpokeBnB',
   description:
     'Our FTC-compliant disclosure of affiliate partnerships and commissions earned on tool recommendations.',
   alternates: { canonical: '/course/legal/affiliate-disclosure' },
@@ -87,7 +87,7 @@ export default function AffiliateDisclosurePage() {
                 2. How We Earn Commissions
               </h2>
               <p>
-                {`{{BRAND_NAME}}`} participates in affiliate and partner
+                {`SpokeBnB`} participates in affiliate and partner
                 programs with several short-term rental software vendors, tool
                 providers, and service companies. When you click a link on our
                 website, in our emails, or in our course materials, and
@@ -183,7 +183,7 @@ export default function AffiliateDisclosurePage() {
                   href="mailto:support@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@{`{{BRAND_NAME}}`}.com
+                  support@{`SpokeBnB`}.com
                 </a>
                 .
               </p>

@@ -46,7 +46,7 @@ export default function BundleOffer() {
               <p className="text-white/40 text-sm mb-8">Save $3,000 vs. purchasing individually</p>
 
               <a
-                href="#"
+                href="/course/apply"
                 className="inline-flex items-center justify-center bg-[var(--sf-gold)] text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-xl hover:shadow-[var(--sf-gold)]/20"
               >
                 Apply for Full Revenue Engine

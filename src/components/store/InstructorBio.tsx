@@ -35,7 +35,7 @@ export default function InstructorBio() {
 
             <div className="space-y-4 text-[var(--sf-navy)]/60 leading-relaxed">
               <p>
-                RevenuePerNight was developed from the inside — by operators who manage
+                SpokeBnB was developed from the inside — by operators who manage
                 real short-term rental portfolios, optimize real revenue, and close real
                 property deals every month.
               </p>

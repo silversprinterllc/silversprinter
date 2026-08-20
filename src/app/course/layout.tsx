@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'RevenuePerNight — Turn Your Rental Into a Revenue Machine',
+  title: 'SpokeBnB — Turn Your Rental Into a Revenue Machine',
   description:
     'The performance-driven growth platform that transforms short-term rentals into high-earning, fully optimized hospitality businesses. 10 modules. 8 demand channels. One system.',
   keywords: [
@@ -23,16 +23,16 @@ export const metadata: Metadata = {
     'vacation rental systems',
   ],
   openGraph: {
-    title: 'RevenuePerNight — The Hub-and-Spoke Revenue System for STR Owners',
+    title: 'SpokeBnB — The Hub-and-Spoke Revenue System for STR Owners',
     description:
       'Stop relying on Airbnb alone. Build 8 demand channels that drive bookings, maximize nightly rates, and turn your rental into a scalable business.',
     type: 'website',
-    siteName: 'RevenuePerNight',
+    siteName: 'SpokeBnB',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RevenuePerNight — Turn Your Rental Into a Revenue Machine',
+    title: 'SpokeBnB — Turn Your Rental Into a Revenue Machine',
     description:
       'The Hub-and-Spoke Revenue System: 10 modules, 8 demand channels, 60+ templates. Transform your STR from a passive listing into a scalable business.',
   },
@@ -56,12 +56,12 @@ function CourseJsonLd() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Course',
-    name: 'The RevenuePerNight System',
+    name: 'The SpokeBnB System',
     description:
       'The Hub-and-Spoke Revenue System that transforms short-term rentals into high-earning, fully optimized hospitality businesses with 8 demand channels.',
     provider: {
       '@type': 'Organization',
-      name: 'RevenuePerNight',
+      name: 'SpokeBnB',
       description: 'A product of Barefoot Realty & Investments',
     },
     offers: [
@@ -76,7 +76,7 @@ function CourseJsonLd() {
       {
         '@type': 'Offer',
         name: 'The Intensive — Done-With-You Cohort',
-        price: '2997',
+        price: '4997',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
         category: 'Live Cohort Program',
@@ -122,7 +122,7 @@ function FaqJsonLd() {
     mainEntity: [
       {
         '@type': 'Question',
-        name: 'Who is RevenuePerNight for?',
+        name: 'Who is SpokeBnB for?',
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Experienced or aspiring STR hosts and operators running 1-30 units who want to stop relying on a single platform and build a diversified, high-revenue hospitality business.',
@@ -133,7 +133,7 @@ function FaqJsonLd() {
         name: 'How is this different from other STR courses?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Most courses teach one thing. RevenuePerNight teaches the entire ecosystem with the Hub-and-Spoke model — 8 demand channels, distribution, direct booking, dynamic pricing, automation, content, influencer marketing, guest retention, and experiences in one system.',
+          text: 'Most courses teach one thing. SpokeBnB teaches the entire ecosystem with the Hub-and-Spoke model — 8 demand channels, distribution, direct booking, dynamic pricing, automation, content, influencer marketing, guest retention, and experiences in one system.',
         },
       },
       {
@@ -146,10 +146,10 @@ function FaqJsonLd() {
       },
       {
         '@type': 'Question',
-        name: 'What is the 30-day money-back guarantee?',
+        name: 'What is the 14-day conditional money-back guarantee?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'If you complete Module 0 and Module 1 within 30 days and do not see the value, email us for a full refund. No questions asked.',
+          text: 'Complete Modules 0 and 1 and submit your homework within 14 days. If you do not see the value, email ben@spokebnb.com and we will refund every penny.',
         },
       },
     ],

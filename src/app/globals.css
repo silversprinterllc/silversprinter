@@ -40,7 +40,7 @@
   /* Gold gradient */
   --background-gold-gradient: linear-gradient(135deg, #c9a96e 0%, #b8934a 50%, #9a7438 100%);
 
-  /* ── RevenuePerNight Storefront ── */
+  /* ── SpokeBnB Storefront ── */
 
   /* Navy palette */
   --color-navy-50: #f0f3f8;
@@ -127,7 +127,7 @@ body {
   animation: pulse-gold 2s ease-in-out infinite;
 }
 
-/* ── RevenuePerNight Storefront Styles ── */
+/* ── SpokeBnB Storefront Styles ── */
 
 @keyframes fade-in {
   from { opacity: 0; }

@@ -6,9 +6,9 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | {{BRAND_NAME}}',
+  title: 'Privacy Policy | SpokeBnB',
   description:
-    'How {{BRAND_NAME}} collects, uses, and protects your data. Our commitments under CCPA, GDPR, and general privacy law.',
+    'How SpokeBnB collects, uses, and protects your data. Our commitments under CCPA, GDPR, and general privacy law.',
   alternates: { canonical: '/course/legal/privacy' },
   robots: { index: true, follow: true },
 }
@@ -78,7 +78,7 @@ export default function PrivacyPolicyPage() {
                 1. Who We Are
               </h2>
               <p className="mb-4">
-                {`{{BRAND_NAME}}`} (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is
+                {`SpokeBnB`} (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is
                 an educational platform providing training, tools, and coaching for
                 short-term rental operators. We are based in the State of Florida,
                 United States. This Privacy Policy explains how we collect, use,

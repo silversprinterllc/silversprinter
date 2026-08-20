@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: 'How is this different from other STR courses?',
-    a: 'Most courses teach one thing — Airbnb arbitrage, co-hosting, or direct bookings. RevenuePerNight teaches the entire ecosystem. The Hub-and-Spoke model builds 8 demand channels around your property simultaneously. No other program covers distribution, direct booking, dynamic pricing, automation, content, influencer marketing, guest retention, experiences, and property acquisition in one system.',
+    a: 'Most courses teach one thing — Airbnb arbitrage, co-hosting, or direct bookings. SpokeBnB teaches the entire ecosystem. The Hub-and-Spoke model builds 8 demand channels around your property simultaneously. No other program covers distribution, direct booking, dynamic pricing, automation, content, influencer marketing, guest retention, experiences, and property acquisition in one system.',
   },
   {
     q: 'Do I need to buy additional tools?',
@@ -25,11 +25,11 @@ const faqs = [
   },
   {
     q: 'What is the difference between the Intensive and DFY?',
-    a: 'The Intensive ($2,997) is done-with-you — you build it yourself with live coaching, expert review, and group accountability over 6 weeks. The DFY ($7,500) is done-for-you — our team builds your system while you approve milestones. Choose Intensive if you want to learn the system deeply. Choose DFY if your time is worth more than the price difference.',
+    a: 'The Intensive ($4,997) is done-with-you — you build it yourself with live coaching, expert review, and group accountability. The DFY ($7,500) is done-for-you — our team builds your system while you approve milestones. Choose Intensive if you want to learn the system deeply. Choose DFY if your time is worth more than the price difference.',
   },
   {
-    q: 'What is the 30-day money-back guarantee?',
-    a: 'If you complete Module 0 (Foundation) and Module 1 (Distribution Platforms) within 30 days and do not see the value, email us for a full refund. No questions, no hoops, no hard feelings. We are confident because the system works — but we want you to be too.',
+    q: 'What is the 14-day conditional money-back guarantee?',
+    a: 'Complete Modules 0 and 1 and submit your homework within 14 days. If you do not see the value, email us and we will refund every penny. No hard feelings. The guarantee exists because the system works — we want you to see that for yourself before committing fully.',
   },
   {
     q: 'Can I take the Intensive for more than one track?',

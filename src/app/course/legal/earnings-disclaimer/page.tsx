@@ -6,9 +6,9 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata: Metadata = {
-  title: 'Earnings Disclaimer | {{BRAND_NAME}}',
+  title: 'Earnings Disclaimer | SpokeBnB',
   description:
-    'Important information about income representations, results, and the non-advice nature of {{BRAND_NAME}} educational content.',
+    'Important information about income representations, results, and the non-advice nature of SpokeBnB educational content.',
   alternates: { canonical: '/course/legal/earnings-disclaimer' },
   robots: { index: true, follow: true },
 }
@@ -82,7 +82,7 @@ export default function EarningsDisclaimerPage() {
                 materials, or within our courses.
               </p>
               <p>
-                By using any {`{{BRAND_NAME}}`} content, you acknowledge and
+                By using any {`SpokeBnB`} content, you acknowledge and
                 agree to the disclosures below.
               </p>
             </section>
@@ -120,7 +120,7 @@ export default function EarningsDisclaimerPage() {
               <p>
                 Individual outcomes vary significantly. Most people who buy
                 educational products do not implement them fully or at all, and
-                therefore do not achieve material results. {`{{BRAND_NAME}}`}
+                therefore do not achieve material results. {`SpokeBnB`}
                 {' '}does not and cannot guarantee any specific income, revenue,
                 occupancy, ADR, ROI, or other business result.
               </p>
@@ -151,7 +151,7 @@ export default function EarningsDisclaimerPage() {
                 5. Education, Not Financial or Real-Estate Advice
               </h2>
               <p className="mb-4">
-                {`{{BRAND_NAME}}`} content is educational in nature. It is{' '}
+                {`SpokeBnB`} content is educational in nature. It is{' '}
                 <strong>not</strong>:
               </p>
               <ul className="list-disc pl-6 space-y-2">
@@ -164,7 +164,7 @@ export default function EarningsDisclaimerPage() {
               <p className="mt-4">
                 Nothing in our materials creates a fiduciary, advisory,
                 brokerage, or professional relationship between you and{' '}
-                {`{{BRAND_NAME}}`} or its personnel.
+                {`SpokeBnB`} or its personnel.
               </p>
             </section>
 
@@ -236,7 +236,7 @@ export default function EarningsDisclaimerPage() {
               </h2>
               <p>
                 You, and only you, are responsible for your business decisions
-                and outcomes. {`{{BRAND_NAME}}`} is not responsible for the
+                and outcomes. {`SpokeBnB`} is not responsible for the
                 business decisions you make based on information in our
                 courses or marketing materials, including decisions about
                 property acquisition, financing, pricing, staffing, marketing

@@ -6,9 +6,9 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | {{BRAND_NAME}}',
+  title: 'Terms of Service | SpokeBnB',
   description:
-    'The legal agreement between you and {{BRAND_NAME}} governing use of our website, courses, and services.',
+    'The legal agreement between you and SpokeBnB governing use of our website, courses, and services.',
   alternates: { canonical: '/course/legal/terms' },
   robots: { index: true, follow: true },
 }
@@ -84,7 +84,7 @@ export default function TermsOfServicePage() {
               <p className="mb-4">
                 These Terms of Service (the &quot;Terms&quot;) are a binding
                 legal agreement between you (&quot;you&quot; or
-                &quot;Customer&quot;) and {`{{BRAND_NAME}}`} (&quot;we,&quot;
+                &quot;Customer&quot;) and {`SpokeBnB`} (&quot;we,&quot;
                 &quot;us,&quot; or &quot;our&quot;). By accessing our website,
                 creating an account, purchasing a product, or using any service
                 we provide, you agree to these Terms and to our{' '}
@@ -108,7 +108,7 @@ export default function TermsOfServicePage() {
                 2. License Grant (Not Ownership)
               </h2>
               <p className="mb-4">
-                When you purchase access to a {`{{BRAND_NAME}}`} course,
+                When you purchase access to a {`SpokeBnB`} course,
                 worksheet, template, or community, you are purchasing a{' '}
                 <strong>limited, non-exclusive, non-transferable,
                 revocable license</strong> to access and use the content for
@@ -127,9 +127,9 @@ export default function TermsOfServicePage() {
               </h2>
               <p className="mb-4">
                 All content, materials, videos, workbooks, templates, SOPs,
-                frameworks, marks, logos, and systems provided by {`{{BRAND_NAME}}`}
-                &mdash; including the {`{{BRAND_NAME}}`} System and Hub-and-Spoke
-                methodology &mdash; are owned by {`{{BRAND_NAME}}`} or our
+                frameworks, marks, logos, and systems provided by {`SpokeBnB`}
+                &mdash; including the {`SpokeBnB`} System and Hub-and-Spoke
+                methodology &mdash; are owned by {`SpokeBnB`} or our
                 licensors and are protected by U.S. and international copyright,
                 trademark, and other intellectual-property laws.
               </p>
@@ -170,7 +170,7 @@ export default function TermsOfServicePage() {
                 5. Course Access &amp; Delivery
               </h2>
               <p className="mb-4">
-                Upon successful payment, you receive access to the {`{{BRAND_NAME}}`}
+                Upon successful payment, you receive access to the {`SpokeBnB`}
                 System for the duration described at the time of purchase. Unless
                 otherwise stated, access is offered as &quot;lifetime access&quot;
                 &mdash; meaning for as long as we operate the course platform and
@@ -241,7 +241,7 @@ export default function TermsOfServicePage() {
                 8. No Guarantees of Results
               </h2>
               <p className="mb-4">
-                {`{{BRAND_NAME}}`} provides education and tools, not guaranteed
+                {`SpokeBnB`} provides education and tools, not guaranteed
                 income, real-estate advice, investment advice, legal advice, or
                 professional consulting. Your results depend on factors outside
                 our control, including your property, market, effort, and
@@ -319,7 +319,7 @@ export default function TermsOfServicePage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  {`{{BRAND_NAME}}`} and its owners, officers, employees,
+                  {`SpokeBnB`} and its owners, officers, employees,
                   contractors, and affiliates will not be liable for any
                   indirect, incidental, consequential, special, exemplary, or
                   punitive damages, including lost profits, lost revenue, lost
@@ -344,7 +344,7 @@ export default function TermsOfServicePage() {
               </h2>
               <p>
                 You agree to defend, indemnify, and hold harmless
-                {' '}{`{{BRAND_NAME}}`} and its owners, officers, employees, and
+                {' '}{`SpokeBnB`} and its owners, officers, employees, and
                 affiliates from any claims, losses, damages, liabilities, and
                 expenses (including reasonable attorneys&apos; fees) arising
                 from: (a) your use of our services; (b) your breach of these
@@ -372,7 +372,7 @@ export default function TermsOfServicePage() {
                 jurisdiction.
               </p>
               <p className="mb-4">
-                <strong>Class-action waiver.</strong> You and {`{{BRAND_NAME}}`}
+                <strong>Class-action waiver.</strong> You and {`SpokeBnB`}
                 {' '}agree that each may bring claims against the other only in
                 an individual capacity and not as a plaintiff or class member
                 in any purported class, collective, or representative
@@ -437,7 +437,7 @@ export default function TermsOfServicePage() {
               <p>
                 These Terms, together with the Privacy Policy, Refund Policy,
                 Earnings Disclaimer, and Affiliate Disclosure, constitute the
-                entire agreement between you and {`{{BRAND_NAME}}`} regarding
+                entire agreement between you and {`SpokeBnB`} regarding
                 our services and supersede any prior agreements.
               </p>
             </section>

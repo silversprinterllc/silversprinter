@@ -2,8 +2,8 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata = {
-  title: 'Refund Policy | RevenuePerNight',
-  description: 'Refund policy for RevenuePerNight courses and services.',
+  title: 'Refund Policy | SpokeBnB',
+  description: 'Refund policy for SpokeBnB courses and services.',
 }
 
 export default function RefundPolicyPage() {
@@ -32,7 +32,7 @@ export default function RefundPolicyPage() {
             {/* Course + Intensive */}
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">
-                Self-Paced Course ($1,997) &amp; Intensive Cohort ($2,997)
+                Self-Paced Course ($1,997) &amp; Intensive Cohort ($4,997)
               </h2>
               <div className="bg-white rounded-xl border border-[var(--sf-navy)]/10 p-6 mb-4">
                 <p className="font-semibold text-[var(--sf-navy)] mb-3">
@@ -46,7 +46,7 @@ export default function RefundPolicyPage() {
                   <li>You have completed Module 0 (Foundation) and Module 1 (Distribution Platforms)</li>
                   <li>You have submitted the associated homework assignments</li>
                   <li>You can demonstrate that you made a good-faith effort to implement the strategies taught</li>
-                  <li>You submit your refund request via email to <strong>support@revenuepernight.com</strong> with your completed worksheets attached</li>
+                  <li>You submit your refund request via email to <strong>ben@spokebnb.com</strong> with your completed worksheets attached</li>
                 </ol>
               </div>
 
@@ -110,7 +110,7 @@ export default function RefundPolicyPage() {
                 How to Request a Refund
               </h2>
               <ol className="list-decimal pl-6 space-y-2">
-                <li>Email <strong>support@revenuepernight.com</strong> with the subject line &quot;Refund Request — [Your Name]&quot;</li>
+                <li>Email <strong>ben@spokebnb.com</strong> with the subject line &quot;Refund Request — [Your Name]&quot;</li>
                 <li>Include your completed Module 0 and Module 1 worksheets</li>
                 <li>Briefly explain why the program did not meet your expectations</li>
                 <li>We will review your request and respond within 3 business days</li>
@@ -140,7 +140,7 @@ export default function RefundPolicyPage() {
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">Contact</h2>
               <p>
-                Questions about our refund policy: <strong>support@revenuepernight.com</strong>
+                Questions about our refund policy: <strong>ben@spokebnb.com</strong>
               </p>
             </div>
           </div>

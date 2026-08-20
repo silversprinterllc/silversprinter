@@ -1,7 +1,7 @@
 export default function HeroSection() {
   return (
     <section
-      aria-label="RevenuePerNight course overview"
+      aria-label="SpokeBnB course overview"
       className="relative overflow-hidden sf-navy-gradient min-h-[80vh] lg:min-h-[90vh] flex items-center pt-20 lg:pt-24"
     >
       {/* Background Pattern */}

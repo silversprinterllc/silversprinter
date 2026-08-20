@@ -2,8 +2,8 @@ import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
 
 export const metadata = {
-  title: 'Earnings Disclaimer | RevenuePerNight',
-  description: 'Earnings disclaimer and affiliate disclosure for RevenuePerNight.',
+  title: 'Earnings Disclaimer | SpokeBnB',
+  description: 'Earnings disclaimer and affiliate disclosure for SpokeBnB.',
 }
 
 export default function EarningsDisclaimerPage() {
@@ -77,7 +77,7 @@ export default function EarningsDisclaimerPage() {
                 Not Professional Advice
               </h2>
               <p>
-                RevenuePerNight is an educational program. Nothing in our courses, coaching
+                SpokeBnB is an educational program. Nothing in our courses, coaching
                 sessions, templates, calculators, or any other materials constitutes
                 professional financial, investment, legal, tax, or real estate advice. All
                 content is for educational purposes only. You are solely responsible for your
@@ -165,7 +165,7 @@ export default function EarningsDisclaimerPage() {
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">Contact</h2>
               <p>
-                Questions about this disclaimer: <strong>support@revenuepernight.com</strong>
+                Questions about this disclaimer: <strong>ben@spokebnb.com</strong>
               </p>
               <p className="mt-2">
                 Barefoot Realty &amp; Investments LLC

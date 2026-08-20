@@ -84,10 +84,10 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-[var(--sf-gold)] flex items-center justify-center">
-                <span className="text-white font-bold text-sm">R</span>
+                <span className="text-white font-bold text-sm">S</span>
               </div>
               <span className="font-[var(--font-display)] text-lg font-semibold">
-                Revenue<span className="text-[var(--sf-gold)]">PerNight</span>
+                Spoke<span className="text-[var(--sf-gold)]">BnB</span>
               </span>
             </div>
             <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
@@ -133,7 +133,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/20">
-            &copy; {new Date().getFullYear()} RevenuePerNight. A product of Barefoot
+            &copy; {new Date().getFullYear()} SpokeBnB. A product of Barefoot
             Realty &amp; Investments. All rights reserved.
           </p>
           <p className="text-xs text-white/20">
