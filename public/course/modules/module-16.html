@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 16: Tax Strategy — SpokeBnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (light) ─────────────────────────────────── */
+:root {
+  --navy: #09263A; --navy-mid: #0d3550;
+  --gold: #D4A017; --cream: #F7F3EA;
+  --text: #1a2f3f; --muted: #4a6070;
+  --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+  --mistake-bg: #fff7ed; --mistake-border: #f97316;
+  --math-bg: #f0f9ff; --math-border: #0284c7;
+  --tip-bg: #f0fdf4; --tip-border: #16a34a;
+  --warn-bg: #fefce8; --warn-border: #ca8a04;
+  --danger-bg: #fff1f2; --danger-border: #dc2626;
+  --gold-bg: rgba(212,160,23,0.06);
+  --table-head-bg: var(--navy);
+  --table-head-text: #fff;
+  --table-row-alt: rgba(9,38,58,0.03);
+}
+
+/* ── Dark mode (system) ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1f2e; --card: #0f2639;
+    --text: #e8dfc8; --muted: #8ba5b8;
+    --border: rgba(255,255,255,0.08);
+    --cream: #0b1f2e;
+    --mistake-bg: #2a1200; --math-bg: #001624;
+    --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+    --gold-bg: rgba(212,160,23,0.1);
+    --table-head-bg: #0a1a26;
+    --table-row-alt: rgba(255,255,255,0.03);
+  }
+}
+/* ── Dark mode (explicit toggle) ───────────────────────────── */
+:root[data-theme="dark"] {
+  --bg: #0b1f2e; --card: #0f2639;
+  --text: #e8dfc8; --muted: #8ba5b8;
+  --border: rgba(255,255,255,0.08);
+  --cream: #0b1f2e;
+  --mistake-bg: #2a1200; --math-bg: #001624;
+  --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+  --gold-bg: rgba(212,160,23,0.1);
+  --table-head-bg: #0a1a26;
+  --table-row-alt: rgba(255,255,255,0.03);
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+img { max-width: 100%; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 20px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.05rem; margin-bottom: 8px; }
+p { margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
+strong { font-weight: 600; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Dark mode toggle ───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── Chain bar ──────────────────────────────────────────────── */
+.chain-bar {
+  background: var(--navy-mid);
+  padding: 10px 0;
+  overflow-x: auto;
+}
+.chain-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.chain-bar-inner .arrow { color: var(--gold); opacity: 0.6; }
+.chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+/* ── Module header ──────────────────────────────────────────── */
+.mod-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0 56px;
+}
+.mod-header-inner { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+.mod-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.18);
+  color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(212,160,23,0.3);
+}
+.mod-header h1 { color: #fff; margin-bottom: 16px; }
+.mod-header .subtitle {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 700px;
+}
+.mod-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mod-meta-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500;
+}
+.mod-meta-item strong { color: #fff; }
+
+/* ── Deliverable banner ─────────────────────────────────────── */
+.deliverable-banner {
+  background: var(--gold-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 40px 0 24px;
+}
+.deliverable-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.deliverable-banner h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 10px;
+}
+.deliverable-banner ul { margin: 0; }
+.deliverable-banner li { font-size: 14px; color: var(--muted); }
+
+/* ── Disclaimer ─────────────────────────────────────────────── */
+.disclaimer {
+  background: var(--card);
+  border-top: 3px solid #6b7280;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 0 0 32px;
+}
+.disclaimer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #6b7280;
+  margin-bottom: 8px;
+}
+.disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── Main content ───────────────────────────────────────────── */
+.content { padding: 48px 0 80px; }
+
+/* ── Lesson section ─────────────────────────────────────────── */
+.lesson { margin-bottom: 80px; }
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.lesson-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+}
+.lesson-title-wrap { flex: 1; }
+.lesson-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.lesson-title-wrap h2 { margin-bottom: 0; }
+.objective {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px; color: var(--muted);
+}
+.objective strong { color: var(--text); }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.callout p { font-size: 14.5px; line-height: 1.65; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul { font-size: 14.5px; }
+.callout.tip    { background: var(--tip-bg);     border-color: var(--tip-border); }
+.callout.tip    .callout-label { color: #16a34a; }
+.callout.math   { background: var(--math-bg);    border-color: var(--math-border); }
+.callout.math   .callout-label { color: #0284c7; }
+.callout.warn   { background: var(--warn-bg);    border-color: var(--warn-border); }
+.callout.warn   .callout-label { color: #ca8a04; }
+.callout.mistake { background: var(--mistake-bg); border-color: var(--mistake-border); }
+.callout.mistake .callout-label { color: #f97316; }
+.callout.danger { background: var(--danger-bg);  border-color: var(--danger-border); }
+.callout.danger .callout-label { color: #dc2626; }
+
+/* ── Classification buckets ─────────────────────────────────── */
+.bucket-grid { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+.bucket-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+.bucket-card-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.bucket-card-label.good  { color: #16a34a; }
+.bucket-card-label.warn  { color: #ca8a04; }
+.bucket-card-label.muted { color: var(--muted); }
+.bucket-card h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--text); margin-bottom: 8px;
+}
+.bucket-card p { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+
+/* ── Comparison table ───────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 32px 0; border-radius: 10px; border: 1px solid var(--border); }
+.compare-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px;
+}
+.compare-table thead tr { background: var(--table-head-bg); }
+.compare-table thead th {
+  color: var(--table-head-text);
+  padding: 12px 14px;
+  text-align: left; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.compare-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+.compare-table tbody tr:nth-child(even) td { background: var(--table-row-alt); }
+.compare-table tbody tr:last-child td { border-bottom: none; }
+.td-yes  { color: #16a34a; font-weight: 600; }
+.td-no   { color: #dc2626; font-weight: 600; }
+.td-ltd  { color: #ca8a04; font-weight: 600; }
+
+/* ── Depreciation phase-down ────────────────────────────────── */
+.phase-down { margin: 24px 0; }
+.phase-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.phase-row:last-child { border-bottom: none; }
+.phase-year {
+  min-width: 60px; font-weight: 700; color: var(--text);
+}
+.phase-bar-wrap { flex: 1; background: var(--border); border-radius: 4px; height: 10px; }
+.phase-bar { height: 10px; border-radius: 4px; background: var(--gold); }
+.phase-pct { min-width: 44px; text-align: right; font-weight: 600; color: var(--muted); }
+.phase-pct.expired { color: var(--danger-border); }
+
+/* ── AI Prompt block ────────────────────────────────────────── */
+.ai-prompt {
+  background: #1a0533;
+  border: 2px solid #7c3aed;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.ai-prompt-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #a78bfa;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ai-prompt-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(124,58,237,0.3);
+}
+.ai-prompt h4 {
+  font-size: 14px; font-weight: 700; color: #e9d5ff;
+  margin-bottom: 12px; margin-top: 0;
+  font-family: 'Inter', sans-serif;
+}
+.ai-prompt-box {
+  background: #0a0117;
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12.5px; color: #c4b5fd;
+  line-height: 1.8; white-space: pre-wrap;
+  margin-bottom: 14px; overflow-x: auto;
+}
+.ai-prompt-note {
+  font-size: 12.5px; color: rgba(167,139,250,0.75);
+  line-height: 1.65;
+  border-top: 1px solid rgba(124,58,237,0.2);
+  padding-top: 12px; margin: 0;
+}
+
+/* ── Machine feed ───────────────────────────────────────────── */
+.machine-feed {
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 48px 0 80px;
+}
+.mf-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+.machine-feed h3 {
+  font-size: 1.25rem; color: #fff;
+  margin-bottom: 16px;
+}
+.machine-feed p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.75; }
+
+/* ── Checkpoint ─────────────────────────────────────────────── */
+.checkpoint {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 48px;
+}
+.checkpoint-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.checkpoint h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; margin-bottom: 16px;
+}
+.checkpoint-items { list-style: none; padding: 0; }
+.checkpoint-items li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75); font-size: 14px;
+}
+.checkpoint-items li:last-child { border-bottom: none; }
+.cp-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid rgba(212,160,23,0.5);
+  border-radius: 4px; margin-top: 2px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.lesson-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 64px 0;
+}
+
+/* ── IRC callout inline ─────────────────────────────────────── */
+.irc-tag {
+  display: inline-block;
+  background: rgba(2,132,199,0.1);
+  color: #0284c7;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 1px 7px; border-radius: 4px;
+  margin-left: 4px;
+  font-family: 'Menlo', 'Consolas', monospace;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12.5px;
+}
+footer span { color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lesson-header { flex-direction: column; gap: 12px; }
+  .mod-meta { flex-direction: column; }
+  .chain-bar-inner { font-size: 11px; gap: 7px; }
+  .ai-prompt { padding: 18px 16px; }
+  .ai-prompt-box { font-size: 11.5px; }
+  .machine-feed { padding: 22px 20px; }
+  .checkpoint { padding: 22px 20px; }
+  .compare-table { font-size: 12px; }
+  .compare-table thead th,
+  .compare-table tbody td { padding: 9px 10px; }
+  .phase-row { flex-wrap: wrap; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme');if(!t){r.setAttribute('data-theme','dark');}else if(t==='dark'){r.setAttribute('data-theme','light');}else{r.removeAttribute('data-theme');}})()">
+  Toggle Dark
+</button>
+
+<!-- Chain bar -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 14: Exit</span>
+    <span class="arrow">→</span>
+    <span>Module 15: Insurance</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 16: Tax Strategy</span>
+    <span class="arrow">→</span>
+    <span>Module 17: Mid-Term Rentals</span>
+  </div>
+</div>
+
+<!-- Module header -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 16 — Supplementary</div>
+    <h1>STR Income Tax — The Rules Most Operators Never Learn and the Deductions They Leave on the Table</h1>
+    <p class="subtitle">The IRS 14-day rule and what it determines, Schedule E versus Schedule C, depreciation and bonus depreciation, cost segregation, the real estate professional designation, and how to find a CPA who actually understands STR tax treatment</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase:</strong>&nbsp;Supplementary</div>
+      <div class="mod-meta-item"><strong>Lessons:</strong>&nbsp;4</div>
+      <div class="mod-meta-item"><strong>Time:</strong>&nbsp;3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Prerequisite:</strong>&nbsp;Module 11 (Regulations) recommended</div>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="content">
+<div class="container">
+
+  <!-- Deliverable banner -->
+  <div class="deliverable-banner">
+    <div class="deliverable-label">Module Deliverables</div>
+    <h3>By the end of this module you will have:</h3>
+    <ul>
+      <li>A written assessment of your current tax position for STR activity</li>
+      <li>A list of questions to bring to your next CPA meeting</li>
+      <li>A decision on whether cost segregation analysis is worth pursuing for your property</li>
+      <li>A bookkeeping system in place that makes Schedule E filing painless</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-label">Educational Content — Not Tax or Legal Advice</div>
+    <p>This module is provided for educational purposes only. SpokeBnB and its instructors are not licensed CPAs, tax attorneys, or financial advisors. Nothing in this module constitutes tax advice or a recommendation to take any specific tax position. Tax rules change frequently. Consult a licensed CPA or tax attorney before making any tax-related decisions for your STR business.</p>
+  </div>
+
+  <!-- ─── LESSON 1 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The IRS 14-Day Rule — The Classification That Determines Everything</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand how the IRS classifies your STR property based on personal use versus rental use days — and why that classification controls your ability to deduct losses, which tax schedule applies, and whether the passive activity loss rules apply to you.
+    </div>
+
+    <p>This is the rule most STR operators have never read. The IRS classifies rental properties into three buckets based on personal use days versus rental use days, and which bucket you land in determines everything that follows — whether you can deduct losses, which schedule your income goes on, and whether the passive activity rules apply at all.</p>
+
+    <p>Most operators assume tax treatment is simple: you rent the property, you report the income, you deduct the expenses. The actual rules are more specific, and landing in the wrong bucket by a few days can eliminate thousands of dollars in annual deductions.</p>
+
+    <div class="bucket-grid">
+
+      <div class="bucket-card">
+        <div class="bucket-card-label good">Bucket 1 — The Good One</div>
+        <h4>Rental Property</h4>
+        <p>You use the property for personal purposes <strong>14 days or fewer per year</strong>, AND fewer than 10% of the days the property is actually rented. All rental income and expenses go on Schedule E. If expenses exceed income, you have a rental loss — which may be deductible against other income depending on your AGI and participation level. This is where serious STR operators want to be.</p>
+      </div>
+
+      <div class="bucket-card">
+        <div class="bucket-card-label warn">Bucket 2 — The Expensive One</div>
+        <h4>Vacation Home / Mixed-Use</h4>
+        <p>You use the property for personal purposes <strong>more than 14 days OR more than 10% of rental days</strong>. You must allocate expenses proportionally between rental and personal use. You cannot deduct rental expenses beyond your rental income — there is no loss deduction. You pay full taxes on every dollar of profit, but you cannot offset losses against other income. Most "owner-occupied vacation rentals" fall here.</p>
+      </div>
+
+      <div class="bucket-card">
+        <div class="bucket-card-label muted">Bucket 3 — The Excluded One</div>
+        <h4>Primary Residence — 14-Day Exception</h4>
+        <p>If you rent fewer than <strong>15 days per year total</strong>, rental income is completely excluded from income tax. You also cannot deduct any rental expenses. This is the "vacation home exception" — the Augusta Rule — and it applies only to occasional renters who stay well under 15 rental days annually. Relevant if you rent your own home during a major local event.</p>
+      </div>
+
+    </div>
+
+    <h3>What Counts as a Personal Use Day</h3>
+    <p>Personal use days are defined more broadly than most operators expect. The following are personal use days under IRC §280A:</p>
+    <ul>
+      <li>Days you personally use the property — even to check on the property briefly, if the primary purpose was personal use</li>
+      <li>Days any family member uses the property, even if they pay fair market rent (most interpretations treat family-at-FMV as personal use; some tax practitioners take the opposite position — get this in writing from your CPA)</li>
+      <li>Days rented to anyone at below-market rates</li>
+      <li>Days you or family members stay "for free" as owners</li>
+    </ul>
+
+    <h3>What Does NOT Count as Personal Use</h3>
+    <ul>
+      <li>Days spent performing repair and maintenance work — <em>if that is the genuine primary purpose of being at the property</em>. Document these with timestamps, receipts, contractor communications, and photos. The IRS does not accept a general claim that you were "working on the property."</li>
+      <li>Days the property was available for rent but was not occupied by any guest</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-label">The Family Discount Trap</div>
+      <p>Allowing family members to stay at a below-market rate counts as personal use — even if they pay something. If your property has a $250/night market rate and you charge your sister $50 for a week, those 7 days are personal use days. Two such arrangements per year can push you from the Rental Property bucket (Bucket 1) into the Vacation Home bucket (Bucket 2), eliminating your ability to deduct losses. Either charge full market rate — documented to show it reflects the going market for your area and dates — or account for those days explicitly as personal use when you count your annual total.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">Maintenance Days Under Scrutiny</div>
+      <p>The IRS allows days spent primarily on repair and maintenance to be excluded from personal use — but "primarily" is the operative word. A day where you spend 3 hours fixing the deck and 4 hours sitting on the deck is a personal use day in an audit. Document all maintenance activities with timestamps, receipts, and photos taken before and after each task. Your OwnerRez maintenance log is a starting point, not a complete record. Supplement it with dated photos, contractor invoices, and any communications about the work performed.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 2 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Schedule E vs. Schedule C — Which Form, What Rules, What It Costs</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Know the difference between passive rental income treatment (Schedule E) and active business income treatment (Schedule C), understand the passive activity loss rules and their exceptions, and evaluate whether the Real Estate Professional designation is achievable for your situation.
+    </div>
+
+    <p>Most STR operators file on Schedule E — the supplemental income and loss form for passive rental activity. Some operators qualify for Schedule C. The difference has meaningful tax implications in both directions, and getting this wrong costs money in one form or another.</p>
+
+    <h3>Schedule E — Passive Rental Activity</h3>
+    <p>This is the standard treatment for residential rental income. Income is taxed as ordinary income. Losses are subject to the passive activity loss (PAL) rules <span class="irc-tag">IRC §469</span> — which means, by default, rental losses cannot offset active income such as wages or business income. Two exceptions matter for STR operators:</p>
+    <ul>
+      <li><strong>The $25,000 allowance:</strong> If your adjusted gross income (AGI) is below $100,000 and you actively participate in management decisions (you review guest applications, set prices, determine rental terms — you don't have to do all the physical work), you can deduct up to $25,000 in rental losses against other income. This allowance phases out between $100,000 and $150,000 AGI at $0.50 for every dollar above $100,000. At $150,000 AGI, the allowance is fully eliminated.</li>
+      <li><strong>Real Estate Professional status:</strong> Covered in detail below — this is the exception that unlocks unlimited loss deduction.</li>
+    </ul>
+    <p><strong>Self-employment tax:</strong> Schedule E income is NOT subject to self-employment tax. This is a meaningful advantage over Schedule C for profitable operators.</p>
+
+    <h3>Schedule C — Active Business Income</h3>
+    <p>Schedule C applies if your STR activity rises to the level of a "trade or business" — a legal standard that typically requires substantial services provided to guests beyond the basics of providing lodging. Cleaning between stays and providing linens do not qualify as "substantial services" in IRS practice. Hotel-like services — daily maid service, concierge, meals — move toward Schedule C territory.</p>
+    <p><strong>The Schedule C tradeoff is unfavorable for most STR operators:</strong></p>
+    <ul>
+      <li>Income is taxed as ordinary income — same as Schedule E</li>
+      <li>Self-employment tax (15.3%) applies to net profit up to the Social Security wage base — an additional tax burden that Schedule E avoids</li>
+      <li>Losses are deductible against other income without passive activity restrictions — this is the primary advantage</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">The Self-Employment Tax Calculation</div>
+      <p>Schedule C income at $50,000 net profit means <strong>$7,650 in SE tax</strong> (15.3% × $50,000 × 0.9235 employer-equivalent deduction ≈ $7,065 — simplified here as 15.3% of 50% of net per the SE tax structure). A Schedule E operator with the same $50,000 profit pays zero SE tax. The difference is approximately $7,000/year — a real cost that must be weighed against the loss-deductibility advantages Schedule C provides. For most STR operators with profitable properties, Schedule E is the correct structure. The case for Schedule C only strengthens when losses significantly and consistently exceed income.</p>
+    </div>
+
+    <h3>The Real Estate Professional Designation</h3>
+    <p>This is the designation that unlocks unlimited loss deduction for Schedule E filers. To qualify under IRC §469(c)(7):</p>
+    <ol>
+      <li>You spend <strong>more than 750 hours per year</strong> in real estate activities — this includes rental management, property management, acquisition analysis, development, construction coordination, and brokerage activities</li>
+      <li>Real estate activities represent <strong>more than 50% of your total working hours</strong> for the year — this test eliminates most full-time W-2 employees from qualifying</li>
+      <li>You <strong>materially participate</strong> in each rental activity — the standard under IRC §469 for active involvement</li>
+    </ol>
+    <p>If you qualify as a Real Estate Professional AND materially participate in managing your STR, rental losses from Schedule E become unlimited deductions against ordinary income. For an operator with $30,000 in paper losses from depreciation (see Lesson 3), Real Estate Professional status means approximately $10,000 in annual tax savings at a 33% marginal rate.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">Document Your Hours — The IRS Is Skeptical</div>
+      <p>The IRS audits Real Estate Professional claims more aggressively than almost any other individual tax position. A year-end estimate of hours that happens to clear 750 by a comfortable margin is an audit red flag. Keep a contemporaneous log — a simple spreadsheet, updated at least weekly, with date, activity description, and hours spent. Entries logged in real time carry far more weight than a reconstructed log built in February when you're preparing returns. This is not optional for anyone claiming REP status — it is the documentation that determines whether the claim survives an examination.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Tax Feature</th>
+            <th>Schedule E (default)</th>
+            <th>Schedule C (active business)</th>
+            <th>Schedule E + REP Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Self-employment tax</td>
+            <td class="td-yes">No SE tax</td>
+            <td class="td-no">15.3% on net profit</td>
+            <td class="td-yes">No SE tax</td>
+          </tr>
+          <tr>
+            <td>Losses deductible against wages</td>
+            <td class="td-ltd">Up to $25K (AGI limit)</td>
+            <td class="td-yes">Yes, unlimited</td>
+            <td class="td-yes">Yes, unlimited</td>
+          </tr>
+          <tr>
+            <td>Passive activity rules apply</td>
+            <td class="td-yes">Yes</td>
+            <td class="td-no">No</td>
+            <td class="td-no">No (with material participation)</td>
+          </tr>
+          <tr>
+            <td>Ordinary income tax on profit</td>
+            <td>Yes (marginal rate)</td>
+            <td>Yes (marginal rate)</td>
+            <td>Yes (marginal rate)</td>
+          </tr>
+          <tr>
+            <td>Best fit</td>
+            <td>Profitable operators, AGI &lt;$100K</td>
+            <td>Rarely optimal for STR</td>
+            <td>High-depreciation, high-income operators</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 3 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Depreciation, Bonus Depreciation, and Cost Segregation</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand how straight-line depreciation generates annual tax savings, how cost segregation reclassifies components to shorter-lived property, how bonus depreciation accelerates those deductions into Year 1, and what depreciation recapture means at sale.
+    </div>
+
+    <p>This is where STR operators who understand the tax code keep $8,000–$15,000 per year that uninformed operators send to the IRS without realizing it. Depreciation, bonus depreciation, and cost segregation are not aggressive tax strategies — they are standard rules the IRS wrote into the code specifically to allow property owners to recover the cost of their investment assets over time. Not using them is leaving money on the table.</p>
+
+    <h3>Depreciation Basics — Straight-Line, 27.5 Years</h3>
+    <p>The IRS allows you to deduct the cost of a residential rental property over 27.5 years <span class="irc-tag">IRC §168</span>. Land does not depreciate — it never wears out. The depreciable basis is the purchase price minus land value, plus any capitalized improvements.</p>
+    <p><strong>Example:</strong> You paid $400,000 for a lake house. The land is worth $80,000. Depreciable basis = $320,000. Divided by 27.5 years = <strong>$11,636/year</strong> in depreciation deduction. This is a paper loss — no cash leaves your account, but it reduces your taxable income by $11,636 every year the property is in service as a rental.</p>
+    <p>On a property generating $60,000 in rental income with $35,000 in cash expenses, taxable income before depreciation is $25,000. After $11,636 in depreciation, taxable income is $13,364. At a 24% marginal rate, that $11,636 depreciation deduction saves <strong>$2,792 in federal taxes — every year, without any additional spending.</strong></p>
+
+    <h3>Bonus Depreciation — The Phase-Down Schedule</h3>
+    <p>Bonus depreciation <span class="irc-tag">IRC §168(k)</span> allows you to deduct a percentage of the cost of eligible assets in Year 1, rather than spreading deductions over their full useful life. The eligible assets are NOT the building itself (27.5-year property), but personal property within the building — furniture, appliances, equipment — and certain land improvements.</p>
+    <p>The current bonus depreciation phase-down schedule, unless Congress extends or modifies it:</p>
+
+    <div class="phase-down">
+      <div class="phase-row">
+        <div class="phase-year">2022</div>
+        <div class="phase-bar-wrap"><div class="phase-bar" style="width:100%"></div></div>
+        <div class="phase-pct">100%</div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-year">2023</div>
+        <div class="phase-bar-wrap"><div class="phase-bar" style="width:80%"></div></div>
+        <div class="phase-pct">80%</div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-year">2024</div>
+        <div class="phase-bar-wrap"><div class="phase-bar" style="width:60%"></div></div>
+        <div class="phase-pct">60%</div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-year">2025</div>
+        <div class="phase-bar-wrap"><div class="phase-bar" style="width:40%"></div></div>
+        <div class="phase-pct">40%</div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-year">2026</div>
+        <div class="phase-bar-wrap"><div class="phase-bar" style="width:20%"></div></div>
+        <div class="phase-pct">20%</div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-year">2027+</div>
+        <div class="phase-bar-wrap"><div class="phase-bar" style="width:0%"></div></div>
+        <div class="phase-pct expired">0%*</div>
+      </div>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">*Unless Congress acts. Legislation to extend bonus depreciation has been introduced and debated repeatedly. Your CPA will know the current status at the time you are reading this.</p>
+
+    <h3>Cost Segregation — The Engineering-Based Reclassification</h3>
+    <p>A cost segregation study is an engineering analysis that reclassifies components of your building from 27.5-year property to shorter-lived categories — 5-year, 7-year, or 15-year. This reclassification then combines with bonus depreciation to front-load deductions into the acquisition year instead of spreading them over 27.5 years.</p>
+    <p>Common reclassifications:</p>
+    <ul>
+      <li><strong>Carpet and flooring:</strong> 5-year property (not 27.5)</li>
+      <li><strong>Appliances:</strong> 5-year property</li>
+      <li><strong>Specialty lighting:</strong> 5-year property</li>
+      <li><strong>Land improvements (landscaping, paving, fencing):</strong> 15-year property</li>
+      <li><strong>Certain HVAC systems:</strong> 15-year property if structurally separable</li>
+      <li><strong>Cabinetry:</strong> Depends — some is 5-year, some is structural and stays at 27.5</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">The Cost Segregation Math</div>
+      <p>A cost segregation study on a $400,000 property might reclassify $70,000–$100,000 in components from 27.5-year to 5–15-year property. At the 2026 bonus depreciation rate of 20%, that $80,000 reclassified generates <strong>$16,000 in additional Year 1 deductions</strong>. At a 32% marginal rate, that is $5,120 in additional Year 1 tax savings — compared to the $580 in annual savings those same components would produce under straight-line 27.5-year depreciation. The total Year 1 benefit of the study is approximately $4,540 more than the no-study baseline. At 2024's 60% rate, that same $80,000 reclassification produced $48,000 in Year 1 deductions — a $15,360 Year 1 tax benefit at a 32% rate. The window is narrowing; the math still works in 2026, but less powerfully than it did in 2022–2024.</p>
+      <p><strong>Cost of the study:</strong> $3,000–$8,000 for a residential property. ROI is positive for most properties above $300,000 in the current bonus depreciation environment, and clearly positive on any property acquired before 2026 where a retroactive cost segregation "catch-up" is available.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">The Acquisition-Year Opportunity</div>
+      <p>The most powerful time to do a cost segregation study is the year you acquire the property. You can claim bonus depreciation on the reclassified components retroactively for prior acquisition years via a <strong>Form 3115 change in accounting method</strong> — this is a legitimate IRS mechanism, not a correction or an amended return. If you acquired your property in 2022, 2023, or 2024 and never did a cost segregation study, you may be sitting on a catch-up deduction available to you right now. Talk to a cost-segregation-experienced CPA — this is a time-sensitive opportunity that closes when the phase-down reaches 0%.</p>
+    </div>
+
+    <h3>Depreciation Recapture — The Tax That Waits at Sale</h3>
+    <p>Depreciation is not free money. When you sell, the IRS recaptures the depreciation deductions you took — taxed at a <strong>maximum 25% rate</strong> under IRC §1250 (unrecaptured Section 1250 gain), separate from and in addition to capital gains rates. This is why cost segregation is a timing decision, not a permanent tax elimination.</p>
+    <p>Example: If you claimed $80,000 in accelerated depreciation via cost segregation, you will owe up to $20,000 in recapture tax when you sell (25% × $80,000) — regardless of how long you hold. The deduction you took in Year 1 shifts from your marginal ordinary income rate to the 25% recapture rate, which may or may not be favorable depending on your tax situation at sale.</p>
+    <p>The recapture is deferred, not forgiven, by a <strong>1031 like-kind exchange</strong>. Module 14 covers the mechanics of a 1031 exchange and how it rolls recapture forward into the replacement property's basis. Operators who plan to hold long-term or exchange into a larger property can use cost segregation aggressively; operators who plan to sell in 2–3 years should model the recapture tax before pursuing an aggressive study.</p>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 4 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The STR-Savvy CPA and the Bookkeeping System That Pays for Itself</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Know how to identify a CPA who actually understands STR tax treatment, ask the five questions that separate competent from generalist, and set up a bookkeeping system that makes annual Schedule E filing accurate and painless.
+    </div>
+
+    <p>Most CPAs have never prepared a Schedule E with STR-specific issues. The 14-day rule, cost segregation, bonus depreciation, the Real Estate Professional designation, the passive activity loss rules under IRC §469 — these are specialized knowledge. Hiring a generalist CPA and expecting them to optimize your STR tax position is like hiring a general contractor to do electrical work. Technically someone gets the job done. The quality of the work is not guaranteed.</p>
+
+    <h3>Five Interview Questions for Any CPA Candidate</h3>
+    <p>Ask these verbatim before engaging a CPA for STR tax work. The answers tell you whether they have real experience or are improvising.</p>
+    <ol>
+      <li><strong>"Have you prepared Schedule E for short-term rental clients — specifically STR, not long-term residential rentals?"</strong> If they say "sure, rental income goes on Schedule E," that is not the right answer. The right answer distinguishes between STR and LTR treatment, mentions the 14-day rule, and acknowledges the personal use day tracking requirement.</li>
+      <li><strong>"Are you familiar with the IRS 14-day rule under IRC §280A and how it affects personal use day classification and expense allocation?"</strong> If they do not know this rule by name, keep looking. This is foundational — not esoteric.</li>
+      <li><strong>"Have you coordinated cost segregation studies for residential rental clients? Do you work with engineers who conduct them?"</strong> You want someone who has coordinated this process, has referrals to cost segregation engineers, and understands how the study output maps to a tax return. Not someone who has to Google "cost segregation" after the call.</li>
+      <li><strong>"Do any of your clients qualify as Real Estate Professionals under IRC §469(c)(7)? What documentation do you require from them?"</strong> The right answer involves knowing the 750-hour test, the 50%-of-time test, the material participation standard, and — critically — the contemporaneous log requirement. A CPA who doesn't ask for contemporaneous logs is not protecting their REP clients from audit risk.</li>
+      <li><strong>"How do you handle bonus depreciation for residential rental property — specifically 5-year personal property within an STR?"</strong> They should be able to discuss the current phase-down schedule, what qualifies as 5-year property, and the interaction with cost segregation studies. Vague answers about "depreciation" without the specifics of IRC §168(k) are insufficient.</li>
+    </ol>
+
+    <h3>Building Your Bookkeeping System</h3>
+    <p>OwnerRez exports financial data — payouts by reservation, channel fees, cleaning fees collected, refunds. Export this monthly and categorize it. Three revenue buckets matter most for Schedule E filing:</p>
+    <ul>
+      <li><strong>Gross rental income:</strong> Total payout before OwnerRez fees — all income received from guests regardless of channel</li>
+      <li><strong>Platform fees:</strong> Airbnb host service fee (15.5%), VRBO service fee (approximately 5%), OwnerRez monthly subscription — all deductible Schedule E expenses</li>
+      <li><strong>Direct booking revenue:</strong> No platform fee deducted — full payout is gross income, offset by any credit card processing fees if you collect payment through Stripe, Square, or similar</li>
+    </ul>
+
+    <p>Operating expense categories to track separately throughout the year — each is a legitimate Schedule E deduction:</p>
+    <ul>
+      <li>Cleaning fees paid (to your cleaner or cleaning service)</li>
+      <li>Property supplies (toiletries, paper goods, kitchen consumables, replacement linens)</li>
+      <li>Maintenance and repairs (contractor invoices, parts, labor — <em>not</em> improvements; improvements must be capitalized)</li>
+      <li>Utilities (electricity, gas, water, trash — pro-rated if partially personal use)</li>
+      <li>Internet service (fully deductible if the property is rented as a full-time STR)</li>
+      <li>Insurance premium (your STR-specific policy from Module 15)</li>
+      <li>Software subscriptions: OwnerRez, StayFi, Enso Connect, Kit, any PMS or revenue management tool</li>
+      <li>Photography (professional photos are a marketing expense — deductible)</li>
+      <li>Advertising (promoted Airbnb listings, Google Ads for direct booking site, Meta ads)</li>
+      <li>Mortgage interest (deductible on Schedule E, pro-rated in vacation home situations)</li>
+      <li>Property taxes (deductible on Schedule E — separate from the SALT deduction on Schedule A)</li>
+      <li>CPA and professional fees related to the rental property</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">Repairs vs. Improvements — The Distinction That Determines Timing</div>
+      <p>A repair restores something to its prior condition — deductible in the year incurred. An improvement adds value, extends useful life, or adapts the property to a new use — must be capitalized and depreciated over time. Replacing a broken water heater with an equivalent unit: repair. Upgrading from a standard water heater to a tankless system: improvement (at least partially). Replacing individual deck boards as they fail: repair. Replacing the entire deck: improvement. Your CPA makes this determination for large expenditures. For items under $2,500 per invoice, the IRS safe harbor allows immediate deduction as a repair under the tangible property regulations — confirm your CPA is applying this safe harbor annually.</p>
+    </div>
+
+    <h3>Tools for Single-Property Operators</h3>
+    <ul>
+      <li><strong>Wave (free):</strong> Cloud accounting software that works well for a single-property operator. Manual categorization, but the export-and-categorize workflow fits OwnerRez data. No automation, but free is real for operators watching margin.</li>
+      <li><strong>QuickBooks Self-Employed ($15/month):</strong> Connects to bank accounts and credit cards for automatic transaction import. Cleaner workflow for an operator who wants less manual entry. Has a Schedule C focus that requires some workarounds for Schedule E, but manageable.</li>
+      <li><strong>QuickBooks Online Simple Start ($30/month):</strong> Better fit for Schedule E structure if you have the budget. Supports multiple accounts, class tracking, and a cleaner separation of rental vs. personal expenses.</li>
+      <li><strong>A purpose-built spreadsheet:</strong> For a single-property operator with clear OwnerRez exports and a consistent monthly categorization habit, a well-structured spreadsheet produces clean Schedule E inputs. The discipline is the system — the tool is secondary.</li>
+    </ul>
+
+    <!-- AI Prompt -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Audit Your Current Tax Position for STR-Specific Issues</h4>
+      <div class="ai-prompt-box">Help me identify the key tax issues and planning opportunities for my STR property, and prepare me for a productive conversation with a CPA.
+
+My situation:
+- Property type: [LAKE HOUSE / CABIN / COTTAGE / etc.]
+- How I hold the property: [PERSONAL NAME / LLC / PARTNERSHIP / TRUST]
+- Purchase price: [$XXX,XXX]
+- Year acquired: [YEAR]
+- Estimated land value: [$XX,XXX]
+- Annual gross rental income: [$XX,XXX]
+- Estimated annual cash operating expenses (excluding mortgage): [$XX,XXX]
+- My approximate AGI from other income (W-2, business, etc.): [$XXX,XXX — or 'under $100K' / 'over $150K']
+- Personal use days per year: [X days]
+- Employment status: [W-2 EMPLOYEE / SELF-EMPLOYED / RETIRED / etc.]
+- Have I done a cost segregation study: [YES / NO]
+- Have I taken bonus depreciation on this property before: [YES / NO / DON'T KNOW]
+
+Do five things:
+
+1. BUCKET CLASSIFICATION
+Based on my personal use days and rental activity, which IRS classification bucket am I in under IRC §280A — Rental Property, Vacation Home/Mixed-Use, or Primary Residence exception? What does that classification mean for my Schedule E treatment and my ability to deduct losses?
+
+2. DEPRECIATION ESTIMATE
+Estimate my annual straight-line depreciation deduction based on my purchase price and estimated land value. What is the approximate annual federal tax savings at my marginal rate? Show the math step by step.
+
+3. COST SEGREGATION ASSESSMENT
+Based on my purchase price, acquisition year, and the current bonus depreciation phase-down schedule, is a cost segregation study likely to produce positive ROI? Estimate the range of components that might be reclassified for a property of my type and value, and the approximate Year 1 tax benefit at my marginal rate. What is the break-even study cost?
+
+4. REAL ESTATE PROFESSIONAL SCREENING
+Based on my AGI and employment situation, am I a plausible candidate for Real Estate Professional designation under IRC §469(c)(7)? What would I need to demonstrate — specifically hours and documentation — to support this claim? Are there any disqualifying factors in my situation?
+
+5. CPA BRIEFING DOCUMENT
+Write a one-page briefing I can share with my CPA before our first meeting. Include: my STR situation summary, the specific tax issues I want to address, the five interview questions to confirm STR competence, and the top three planning opportunities I want to explore in our first conversation.</div>
+      <p class="ai-prompt-note">Fill in every bracketed field with your actual numbers before running this prompt. The bucket classification and cost segregation assessment are most useful when AGI, personal use days, and purchase year are accurate. Bring the output to your CPA meeting as a prepared agenda — it signals that you know the rules well enough to have a productive conversation, which changes the quality of the advice you receive.</p>
+    </div>
+
+    <!-- Module checkpoint -->
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 16 Checkpoint</div>
+      <h3>Before moving to Module 17, confirm the following:</h3>
+      <ul class="checkpoint-items">
+        <li>
+          <span class="cp-box"></span>
+          <span>I have counted my personal use days this year and confirmed which IRS classification bucket I am in — Rental Property (14 days or fewer), Vacation Home, or Primary Residence exception</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I know which schedule my STR income goes on — Schedule E — and understand the passive activity loss rules and the two exceptions ($25K allowance and Real Estate Professional status)</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have calculated my approximate annual straight-line depreciation deduction and know what it saves me in federal taxes at my marginal rate</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have assessed whether cost segregation is worth pursuing given my property value, acquisition year, and the current bonus depreciation phase-down schedule</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have evaluated whether Real Estate Professional status is achievable given my hours, employment situation, and AGI — and I understand what contemporaneous documentation that claim requires</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have a bookkeeping system in place — OwnerRez export reviewed and categorized monthly — that cleanly separates rental income, platform fees, and operating expenses</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have identified at least one STR-savvy CPA to interview — or I am already working with one who can answer all five interview questions from Lesson 4 without hesitation</span>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Machine feed -->
+  <div class="machine-feed">
+    <div class="mf-label">The Machine</div>
+    <h3>Every Direct Booking Is Also a Tax Event</h3>
+    <p>OTA fees paid are deductible business expenses. Direct bookings eliminate those fees — and the reduction in gross payout at the same net revenue means less taxable income reported on Schedule E. The operator who converts 40% of bookings to direct isn't just saving the 15.5% Airbnb service fee — they're reducing their taxable rental income by that 15.5%, then saving again at their marginal rate on that reduced income.</p>
+    <p>Depreciation is a paper deduction on a real asset. Cost segregation is a timing decision that moves deductions from Year 10 to Year 1. Bonus depreciation is the multiplier that makes that timing decision more valuable when rates are still above zero. The Real Estate Professional designation is the unlock that makes unlimited losses deductible for operators whose income and hours qualify.</p>
+    <p>The operators who understand these rules don't work harder than the operators who don't. They don't earn more gross revenue. They keep more of what they earn — because they learned the rules before they needed them, and they worked with CPAs who knew the same rules they did.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <span>SpokeBnB</span> · Module 16: Tax Strategy · Supplementary Module
+</footer>
+
+</body>
+</html>

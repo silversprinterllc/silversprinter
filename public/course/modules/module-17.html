@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 17: Mid-Term Rentals — SpokeBnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (light) ─────────────────────────────────── */
+:root {
+  --navy: #09263A; --navy-mid: #0d3550;
+  --gold: #D4A017; --cream: #F7F3EA;
+  --text: #1a2f3f; --muted: #4a6070;
+  --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+  --mistake-bg: #fff7ed; --mistake-border: #f97316;
+  --math-bg: #f0f9ff; --math-border: #0284c7;
+  --tip-bg: #f0fdf4; --tip-border: #16a34a;
+  --warn-bg: #fefce8; --warn-border: #ca8a04;
+  --danger-bg: #fff1f2; --danger-border: #dc2626;
+  --gold-bg: rgba(212,160,23,0.06);
+  --table-head-bg: var(--navy);
+  --table-head-text: #fff;
+  --table-row-alt: rgba(9,38,58,0.03);
+}
+
+/* ── Dark mode (system) ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1f2e; --card: #0f2639;
+    --text: #e8dfc8; --muted: #8ba5b8;
+    --border: rgba(255,255,255,0.08);
+    --cream: #0b1f2e;
+    --mistake-bg: #2a1200; --math-bg: #001624;
+    --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+    --gold-bg: rgba(212,160,23,0.1);
+    --table-head-bg: #0a1a26;
+    --table-row-alt: rgba(255,255,255,0.03);
+  }
+}
+/* ── Dark mode (explicit toggle) ───────────────────────────── */
+:root[data-theme="dark"] {
+  --bg: #0b1f2e; --card: #0f2639;
+  --text: #e8dfc8; --muted: #8ba5b8;
+  --border: rgba(255,255,255,0.08);
+  --cream: #0b1f2e;
+  --mistake-bg: #2a1200; --math-bg: #001624;
+  --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+  --gold-bg: rgba(212,160,23,0.1);
+  --table-head-bg: #0a1a26;
+  --table-row-alt: rgba(255,255,255,0.03);
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+img { max-width: 100%; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 20px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.05rem; margin-bottom: 8px; }
+p { margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
+strong { font-weight: 600; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Dark mode toggle ───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── Chain bar ──────────────────────────────────────────────── */
+.chain-bar {
+  background: var(--navy-mid);
+  padding: 10px 0;
+  overflow-x: auto;
+}
+.chain-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.chain-bar-inner .arrow { color: var(--gold); opacity: 0.6; }
+.chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+/* ── Module header ──────────────────────────────────────────── */
+.mod-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0 56px;
+}
+.mod-header-inner { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+.mod-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.18);
+  color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(212,160,23,0.3);
+}
+.mod-header h1 { color: #fff; margin-bottom: 16px; }
+.mod-header .subtitle {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 700px;
+}
+.mod-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mod-meta-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500;
+}
+.mod-meta-item strong { color: #fff; }
+
+/* ── Deliverable banner ─────────────────────────────────────── */
+.deliverable-banner {
+  background: var(--gold-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 40px 0 24px;
+}
+.deliverable-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.deliverable-banner h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 10px;
+}
+.deliverable-banner ul { margin: 0; }
+.deliverable-banner li { font-size: 14px; color: var(--muted); }
+
+/* ── Disclaimer ─────────────────────────────────────────────── */
+.disclaimer {
+  background: var(--card);
+  border-top: 3px solid #6b7280;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 0 0 32px;
+}
+.disclaimer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #6b7280;
+  margin-bottom: 8px;
+}
+.disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── Main content ───────────────────────────────────────────── */
+.content { padding: 48px 0 80px; }
+
+/* ── Lesson section ─────────────────────────────────────────── */
+.lesson { margin-bottom: 80px; }
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.lesson-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+}
+.lesson-title-wrap { flex: 1; }
+.lesson-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.lesson-title-wrap h2 { margin-bottom: 0; }
+.objective {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px; color: var(--muted);
+}
+.objective strong { color: var(--text); }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.callout p { font-size: 14.5px; line-height: 1.65; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul { font-size: 14.5px; }
+.callout.tip    { background: var(--tip-bg);     border-color: var(--tip-border); }
+.callout.tip    .callout-label { color: #16a34a; }
+.callout.math   { background: var(--math-bg);    border-color: var(--math-border); }
+.callout.math   .callout-label { color: #0284c7; }
+.callout.warn   { background: var(--warn-bg);    border-color: var(--warn-border); }
+.callout.warn   .callout-label { color: #ca8a04; }
+.callout.mistake { background: var(--mistake-bg); border-color: var(--mistake-border); }
+.callout.mistake .callout-label { color: #f97316; }
+.callout.danger { background: var(--danger-bg);  border-color: var(--danger-border); }
+.callout.danger .callout-label { color: #dc2626; }
+
+/* ── Strategy sub-section ───────────────────────────────────── */
+.strategy-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 26px;
+  margin: 28px 0;
+}
+.strategy-block-num {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 8px;
+}
+.strategy-block h3 { margin-bottom: 10px; }
+.strategy-block p { font-size: 14.5px; color: var(--muted); }
+.strategy-block p:last-child { margin-bottom: 0; }
+
+/* ── Comparison block ───────────────────────────────────────── */
+.comparison-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 28px 0;
+}
+.comparison-col {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.comparison-col-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.comparison-col-label.str { color: #0284c7; }
+.comparison-col-label.mtr { color: #16a34a; }
+.comparison-col p { font-size: 13.5px; color: var(--muted); margin-bottom: 8px; }
+.comparison-col p:last-child { margin-bottom: 0; }
+.comparison-col .total {
+  font-size: 14px; font-weight: 700; color: var(--text);
+  border-top: 1px solid var(--border);
+  padding-top: 10px; margin-top: 10px;
+}
+@media (max-width: 540px) {
+  .comparison-wrap { grid-template-columns: 1fr; }
+}
+
+/* ── AI Prompt block ────────────────────────────────────────── */
+.ai-prompt {
+  background: #1a0533;
+  border: 2px solid #7c3aed;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.ai-prompt-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #a78bfa;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ai-prompt-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(124,58,237,0.3);
+}
+.ai-prompt h4 {
+  font-size: 14px; font-weight: 700; color: #e9d5ff;
+  margin-bottom: 12px; margin-top: 0;
+  font-family: 'Inter', sans-serif;
+}
+.ai-prompt-box {
+  background: #0a0117;
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12.5px; color: #c4b5fd;
+  line-height: 1.8; white-space: pre-wrap;
+  margin-bottom: 14px; overflow-x: auto;
+}
+.ai-prompt-note {
+  font-size: 12.5px; color: rgba(167,139,250,0.75);
+  line-height: 1.65;
+  border-top: 1px solid rgba(124,58,237,0.2);
+  padding-top: 12px; margin: 0;
+}
+
+/* ── Machine feed ───────────────────────────────────────────── */
+.machine-feed {
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 48px 0 80px;
+}
+.mf-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+.machine-feed h3 {
+  font-size: 1.25rem; color: #fff;
+  margin-bottom: 16px;
+}
+.machine-feed p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.75; }
+
+/* ── Checkpoint ─────────────────────────────────────────────── */
+.checkpoint {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 48px;
+}
+.checkpoint-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.checkpoint h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; margin-bottom: 16px;
+}
+.checkpoint-items { list-style: none; padding: 0; }
+.checkpoint-items li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75); font-size: 14px;
+}
+.checkpoint-items li:last-child { border-bottom: none; }
+.cp-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid rgba(212,160,23,0.5);
+  border-radius: 4px; margin-top: 2px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.lesson-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 64px 0;
+}
+
+/* ── Platform fee row ───────────────────────────────────────── */
+.fee-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.fee-row:last-child { border-bottom: none; }
+.fee-platform {
+  font-weight: 600; font-size: 14px; color: var(--text);
+  min-width: 160px;
+}
+.fee-detail { font-size: 13.5px; color: var(--muted); flex: 1; }
+.fee-highlight { font-weight: 700; color: var(--text); }
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12.5px;
+}
+footer span { color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lesson-header { flex-direction: column; gap: 12px; }
+  .mod-meta { flex-direction: column; }
+  .chain-bar-inner { font-size: 11px; gap: 7px; }
+  .ai-prompt { padding: 18px 16px; }
+  .ai-prompt-box { font-size: 11.5px; }
+  .machine-feed { padding: 22px 20px; }
+  .checkpoint { padding: 22px 20px; }
+  .strategy-block { padding: 18px 18px; }
+  .fee-row { flex-direction: column; gap: 4px; }
+  .fee-platform { min-width: unset; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme');if(!t){r.setAttribute('data-theme','dark');}else if(t==='dark'){r.setAttribute('data-theme','light');}else{r.removeAttribute('data-theme');}})()">
+  Toggle Dark
+</button>
+
+<!-- Chain bar -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 15: Insurance</span>
+    <span class="arrow">→</span>
+    <span>Module 16: Tax Strategy</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 17: Mid-Term Rentals</span>
+    <span class="arrow">→</span>
+    <span>Module 18: Damage Protection</span>
+  </div>
+</div>
+
+<!-- Module header -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 17 — Supplementary</div>
+    <h1>Mid-Term Rentals — A Second Spoke for Regulated Markets, Shoulder Seasons, and Portfolio Diversification</h1>
+    <p class="subtitle">What qualifies as mid-term, who books it, how Furnished Finder works, how to price a 30-day stay differently than a 3-day stay, and when MTR is a regulatory hedge vs. a primary channel</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase:</strong>&nbsp;Supplementary</div>
+      <div class="mod-meta-item"><strong>Lessons:</strong>&nbsp;4</div>
+      <div class="mod-meta-item"><strong>Time:</strong>&nbsp;2–4 Hours</div>
+      <div class="mod-meta-item"><strong>Prerequisite:</strong>&nbsp;Module 11 (Regulations) recommended</div>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="content">
+<div class="container">
+
+  <!-- Deliverable banner -->
+  <div class="deliverable-banner">
+    <div class="deliverable-label">Module Deliverables</div>
+    <h3>By the end of this module you will have:</h3>
+    <ul>
+      <li>A written assessment of whether your property and market are good MTR candidates</li>
+      <li>A Furnished Finder listing evaluated and ready to publish — or a documented decision not to</li>
+      <li>An MTR pricing model built: monthly rate, deposit terms, and screening process</li>
+      <li>A clear understanding of which Airbnb bookings over 28 days trigger tenant rights issues in your state</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-label">Educational Content — Not Legal or Financial Advice</div>
+    <p>This module is provided for educational purposes only. SpokeBnB and its instructors are not licensed attorneys, financial advisors, or real estate brokers. Nothing in this module constitutes legal advice regarding tenant rights, lease law, or local rental regulations. Laws governing mid-term rentals vary significantly by state and jurisdiction. Consult a licensed attorney in your area before entering into any lease agreement or MTR operation.</p>
+  </div>
+
+  <!-- ─── LESSON 1 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>What Mid-Term Rental Is — And Who Needs It</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Define mid-term rental precisely, understand the guest profile that fills it, and identify whether MTR represents a strategic opportunity or a regulatory necessity in your specific market.
+    </div>
+
+    <p>Mid-term rental is a stay of 30 days or more — sometimes 28+ days on platforms that use that threshold. It is not a short-term vacation stay and not a traditional 12-month lease. The guest profile is entirely different from a weekend traveler, and that difference is the source of MTR's operational advantages: lower risk, higher total booking value, and no cleaning turnover between stays.</p>
+
+    <h3>Who Books Mid-Term Stays</h3>
+    <ul>
+      <li><strong>Traveling nurses and medical professionals</strong> — 13-week hospital contracts, 60–90 day stays. The single largest segment of Furnished Finder's guest base.</li>
+      <li><strong>Corporate housing</strong> — employees on project assignment, typically 1–3 months. Often paid by the employer through a corporate housing account.</li>
+      <li><strong>Relocating professionals</strong> — between permanent housing, needing 30–60 days while a home purchase closes or a lease starts.</li>
+      <li><strong>Insurance displacement</strong> — families displaced by home damage. The insurance company pays the housing cost directly — claim-covered stays, no budget sensitivity.</li>
+      <li><strong>Military PCS moves</strong> — Permanent Change of Station transitions. Often 30–90 days in transition between duty stations.</li>
+      <li><strong>Graduate students and researchers</strong> — semester-length stays, visiting scholar positions, fellowship placements.</li>
+      <li><strong>Snowbirds and digital nomads</strong> — 60–90 day winter stays or location-independent workers who prefer furnished monthly housing to hotels or long leases.</li>
+    </ul>
+
+    <h3>Why This Guest Profile Is Lower-Risk Than Typical STR</h3>
+    <p>The MTR guest is not a vacationer. They are a professional or a family in a transitional circumstance. That context changes the risk profile in meaningful ways:</p>
+    <ul>
+      <li><strong>Professional accountability:</strong> Hospital credential checks, corporate backing, and employer letters create a layer of accountability that a weekend Airbnb guest does not have.</li>
+      <li><strong>Familiarity with rental processes:</strong> MTR guests understand lease agreements, security deposits, and refund conditions. They are not surprised by structure — they expect it.</li>
+      <li><strong>Higher total booking value, zero cleaning turnover:</strong> A $3,000/month MTR booking over three months generates $9,000 with one cleaning at departure. A $300/night STR booking over 90 days with 35% occupancy generates $9,450 with 10-15 cleanings at $150-200 each.</li>
+      <li><strong>No party risk:</strong> The traveling nurse working a 60-hour hospital week is not throwing parties. They are there to sleep, cook, and do their job.</li>
+    </ul>
+
+    <h3>The Regulatory Arbitrage Case</h3>
+    <p>Many jurisdictions that prohibit STR — stays under 30 days — either exempt MTR explicitly or regulate it under an entirely different framework. A property in a Yellow or Red market from Module 11's regulatory assessment may be fully STR-prohibited but completely unrestricted for 30+ day stays. MTR is a legal operating path in markets where STR has been closed — and a revenue bridge while STR permitting is pending.</p>
+
+    <p>This is not a loophole. Thirty-day-and-over stays are a different category in housing law, governed by residential lease law rather than transient occupancy law. The distinction is real, it is well-established, and it is the reason MTR deserves a place in any operator's toolkit — not as a fallback, but as a deliberate channel.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">The Furnished Finder Niche in Medical Markets</div>
+      <p>Properties within 20 miles of major hospitals or medical centers have structural MTR demand. Hospital systems actively maintain vendor relationships with corporate housing providers, and traveling nurses actively search Furnished Finder by proximity to their assignment. Your Furnished Finder listing, filtered for the "Medical Housing" category, may already have demand you don't know about.</p>
+      <p>Check the Furnished Finder heat map for your market before deciding MTR isn't relevant to you. A lake house 15 miles from a regional hospital has a guest pool that a beach house in an STR-saturated market cannot access. The medical market does not follow vacation demand curves.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 2 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Furnished Finder — How the Platform Works and How to List Well</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand Furnished Finder's fee model, guest verification system, and listing mechanics — and know what MTR guests actually look for in a listing description.
+    </div>
+
+    <p>Furnished Finder is the dominant platform for MTR bookings in the US medical and corporate housing market. It was built specifically for the traveling nurse and corporate housing segment, and it shows: the search filters, the category system, and the guest verification tools are purpose-built for this guest profile. If you are going to operate MTR, Furnished Finder is your primary channel.</p>
+
+    <h3>Platform Economics — No Commission</h3>
+    <p>The fee model is the first thing operators notice, because it is structurally different from every other platform in the stack:</p>
+
+    <div style="margin: 24px 0;">
+      <div class="fee-row">
+        <span class="fee-platform">Furnished Finder</span>
+        <span class="fee-detail"><span class="fee-highlight">$99/year</span> flat listing fee. No per-booking transaction fee. No commission. Ever.</span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-platform">Airbnb (host-only)</span>
+        <span class="fee-detail"><span class="fee-highlight">15.5%</span> of each booking paid by the host.</span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-platform">VRBO</span>
+        <span class="fee-detail"><span class="fee-highlight">~8%</span> combined host fee (5% base + ~3% payment processing).</span>
+      </div>
+    </div>
+
+    <p>The $99/year listing fee amounts to approximately $0.27 per day of listing. On a $3,000/month MTR booking, Furnished Finder's prorated cost is roughly $8. Airbnb's fee on the same booking would be $465. The platform difference is not marginal — it is structural.</p>
+
+    <h3>Guest Verification and the Request-to-Book Model</h3>
+    <p>Furnished Finder runs on a Request-to-Book model by design. Guests create profiles that include employment verification, professional references, and optional background check consent. Corporate guests often arrive with pre-verified status through their employer's housing program. You review, screen, and accept — consistent with the SpokeBnB approach to every channel.</p>
+
+    <p>This is not a platform that auto-accepts bookings. It is a platform where you are the decision-maker on every stay. The inquiry arrives, you evaluate the guest's profile and employment documentation, and you extend or decline. That control is a feature, not a friction point.</p>
+
+    <h3>Lease Agreements — Required, Not Optional</h3>
+    <p>Furnished Finder facilitates lease agreements between host and guest. For a 30, 60, or 90-day stay, a lease is not optional — it is legally appropriate for both parties and operationally necessary for you. The lease specifies the monthly rate, deposit terms, payment schedule, rules, and checkout conditions. OwnerRez has MTR lease templates compatible with Furnished Finder workflows. If you use OwnerRez as your property management system, you already have the infrastructure to execute this correctly.</p>
+
+    <h3>Secondary MTR Channels</h3>
+    <p>Furnished Finder is the primary MTR channel, but it is not the only one. Your existing platform listings have MTR-adjacent reach if configured correctly:</p>
+    <ul>
+      <li><strong>VRBO's 28+ day filter:</strong> Guests searching for stays of 28 days or longer can filter specifically for this on VRBO. Your existing VRBO listing is already visible in these search results if you have not excluded long stays. Confirm your VRBO minimum stay settings allow it.</li>
+      <li><strong>Airbnb's monthly stays filter:</strong> Airbnb has a monthly pricing option that surfaces your listing to guests filtering for monthly stays. Enable monthly discounts in your Airbnb listing settings to participate. Note the tenant rights caveat from Lesson 3 before activating this.</li>
+      <li><strong>Direct corporate outreach:</strong> Covered in Lesson 4. The highest-margin MTR channel, with no platform fee of any kind.</li>
+    </ul>
+
+    <h3>How to List Well on Furnished Finder</h3>
+    <p>An MTR listing description is not a vacation pitch. The traveling nurse reading your listing is evaluating a functional living arrangement, not a getaway. Write accordingly:</p>
+    <ul>
+      <li><strong>Category selection:</strong> Choose "Traveling Nurses &amp; Medical Professionals" if within 20 miles of a hospital or medical center. Choose "Corporate Housing" for business district proximity. Both if applicable — the platform allows it.</li>
+      <li><strong>Amenities that matter most to MTR guests:</strong> Fast WiFi (minimum 100 Mbps — list the actual speed), washer and dryer in-unit (not shared), fully equipped kitchen, dedicated workspace, parking. These are not upgrades — they are baseline expectations for a month-long professional stay.</li>
+      <li><strong>Monthly rate, not nightly:</strong> Furnished Finder displays pricing as a monthly rate. Present your monthly figure prominently and clearly. Lesson 3 covers how to set that number.</li>
+      <li><strong>Minimum stay:</strong> Set 30 days as your floor. Shorter stays on Furnished Finder undercut the platform's purpose and put you closer to STR territory in markets where that matters.</li>
+      <li><strong>Calendar sync:</strong> Sync OwnerRez to Furnished Finder to block STR availability windows from MTR inquiries automatically. A double-booking between an Airbnb weekend guest and a 90-day MTR guest is operationally catastrophic. The sync is not optional.</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">The No-Commission Math on a 90-Day Booking</div>
+      <p>A 90-day stay at $2,800/month gross = $8,400 total booking value.</p>
+      <p><strong>On Airbnb at 15.5% host-only fee:</strong> You keep $7,098. Airbnb takes $1,302.</p>
+      <p><strong>On Furnished Finder at $99/year listing fee:</strong> Prorated listing cost for 90 days = $24. You keep $8,376.</p>
+      <p>The platform difference on one 90-day booking: <strong>approximately $1,278</strong>. That is three months of a cleaning service, a new piece of patio furniture, or simply margin. The $99/year listing fee is not a cost — it is an arbitrage on commission-heavy platforms at scale.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 3 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>MTR Pricing — Monthly Rates, Deposit Structure, and Screening</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Build a monthly rate for your property, structure the deposit and lease terms correctly, and establish a screening process that differentiates MTR from an unprotected long-stay situation.
+    </div>
+
+    <p>MTR pricing is structurally different from STR pricing. You are not selling an experience. You are pricing a functional living arrangement for a professional guest who is comparison-shopping against corporate apartments, extended-stay hotels, and other furnished rentals. The frame is different, and the math is different.</p>
+
+    <h3>Monthly Rate Construction</h3>
+    <p>Build your monthly MTR rate from your STR nightly rate, then apply a deliberate discount:</p>
+    <ol>
+      <li><strong>Peak nightly rate × 30</strong> = theoretical full monthly rate. At $250/night: $7,500/month.</li>
+      <li><strong>Apply a 30–40% monthly discount.</strong> This is industry standard for furnished monthly rentals and accounts for the long-stay trade-off (no turnover, reduced operational load). At 35% off: $4,875/month theoretical maximum.</li>
+      <li><strong>Evaluate against actual shoulder-season occupancy.</strong> If your property sits vacant 40% of the time in shoulder season at $250/night, a $3,200/month MTR booking — lower rate but 100% occupancy for 30 days with zero cleaning turnover — may generate more actual net revenue than 18 occupied nights on Airbnb.</li>
+    </ol>
+
+    <p>Your MTR rate should not be a discounted vacation rate. It should be a competitive furnished monthly rental rate for your market and property type — informed by what comparable furnished rentals list for in your area, not only by your own peak STR pricing.</p>
+
+    <h3>The NOI Comparison — Shoulder Season Arithmetic</h3>
+    <p>This is where MTR decisions get concrete. Run this comparison for your own numbers:</p>
+
+    <div class="comparison-wrap">
+      <div class="comparison-col">
+        <div class="comparison-col-label str">STR — Shoulder Season (Best Case)</div>
+        <p>25 nights occupied at $250/night</p>
+        <p>Gross revenue: $6,250</p>
+        <p>Less Airbnb fee (15.5%): −$969</p>
+        <p>Less 3 cleanings at $180 each: −$540</p>
+        <p class="total">Net: ~$4,741</p>
+      </div>
+      <div class="comparison-col">
+        <div class="comparison-col-label mtr">MTR — Same 30 Days</div>
+        <p>One booking at $3,500/month</p>
+        <p>Gross revenue: $3,500</p>
+        <p>Less Furnished Finder (prorated): −$8</p>
+        <p>Less one departure clean: −$180</p>
+        <p class="total">Net: ~$3,312</p>
+      </div>
+    </div>
+
+    <p>At best-case STR occupancy (25/30 nights), STR wins on net. But best-case shoulder-season occupancy is often 12–15 nights, not 25. Re-run that comparison at 14 booked nights: gross $3,500, less $543 Airbnb fee, less 4 cleanings at $180 = $1,837 net. The MTR booking at $3,312 net wins by $1,475 — and you did none of the operational work of 14 separate guest turnovers.</p>
+
+    <p>The math is not universally in MTR's favor. It depends on your shoulder-season occupancy, your cleaning costs, and your monthly rate. Run it with your actual numbers before deciding.</p>
+
+    <h3>Security Deposit for MTR</h3>
+    <p>MTR security deposits are structurally different from STR damage protection. You are collecting a deposit before a month-long stay by a guest you've never hosted. One month's rent is the standard:</p>
+    <ul>
+      <li><strong>Standard MTR security deposit: 1 month's rent.</strong> A $3,500/month MTR booking warrants a $3,500 security deposit collected at lease signing.</li>
+      <li>This is not the $200–$500 hold on a weekend Airbnb stay. It is a formal deposit, documented in the lease, and refunded on a specific timeline after departure inspection.</li>
+      <li>OwnerRez handles MTR deposits as a hold through its standard payment processing workflow. Refund terms are specified in the lease — typically within 14 days of checkout pending inspection.</li>
+    </ul>
+
+    <h3>Application and Screening</h3>
+    <p>The screening step is what separates a well-run MTR operation from an unprotected long-stay situation. Every MTR inquiry should go through a consistent application process before you execute a lease:</p>
+    <ul>
+      <li>Furnished Finder's built-in application collects employment information, professional references, and background check consent. Use it.</li>
+      <li>For corporate bookings, request a letter from the employer confirming the stay duration and payment method. Most corporate housing programs have a standard letter format.</li>
+      <li>For traveling nurses, a copy of the hospital contract confirms the stay length and professional context. This is a 2-minute request and a standard ask in the MTR market — qualified guests expect it.</li>
+      <li>Decline anyone who cannot provide appropriate documentation. The screening step is not a bureaucratic burden — it is the mechanism by which you distinguish an MTR guest from a long-stay Airbnb guest who has no accountability structure.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">The 28-Day Tenant Rights Trap on Airbnb</div>
+      <p>In many states — California, New York, Illinois, and others — a guest who stays 28 or more consecutive days acquires tenant rights, including eviction protections that require 30–60 days written notice to vacate. This is true even on Airbnb. If you accept a 30-day Airbnb booking without understanding the tenant rights laws in your jurisdiction, you may find that removing a problematic guest requires a formal eviction proceeding — not a call to Airbnb support, not a platform dispute, not a refusal to extend.</p>
+      <p>This is not a fringe scenario. It is the reason MTR without a proper lease structure is operationally dangerous. Before enabling monthly stays on Airbnb, verify the tenant rights rules for your state and county. Furnished Finder's lease agreement structure addresses this explicitly — guests understand they are entering a lease relationship, not a platform booking. That distinction matters when something goes wrong.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 4 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>When to Pivot to MTR — The Regulatory Hedge, Shoulder Fill, and Portfolio Strategy</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Identify which of three strategic contexts makes MTR the right call for your situation — and build the action plan for the one that applies.
+    </div>
+
+    <p>MTR is not a backup plan. It is a deliberate channel with specific strategic contexts where it outperforms STR or complements it. There are three of those contexts. One of them probably applies to your operation right now.</p>
+
+    <div class="strategy-block">
+      <div class="strategy-block-num">Strategy 1 of 3</div>
+      <h3>The Regulatory Hedge</h3>
+      <p>If your jurisdiction has moved from Green to Yellow, or Yellow to Red — or if a new STR ordinance is pending in your market — having an active MTR operation gives you an immediate alternative revenue channel on Day 1 of a new regulation. The properties that suffer most when STR regulations tighten are the ones with no pivot strategy. Properties already generating MTR revenue continue operating legally under the new ordinance.</p>
+      <p>Consider maintaining an active Furnished Finder listing even while your STR operation is running well. The listing is $99/year. The optionality is worth more than the cost. A regulatory shift that closes your STR operation tomorrow does not close an MTR operation you already have running. You are not pivoting under pressure — you are already there.</p>
+    </div>
+
+    <div class="strategy-block">
+      <div class="strategy-block-num">Strategy 2 of 3</div>
+      <h3>The Shoulder Season Fill</h3>
+      <p>Certain markets have strong STR demand for 5–6 months and weak demand for the other 6. In those markets, the carrying cost of vacancy — mortgage, utilities, insurance — during off-season is a real number: often $2,000–$4,000/month in fixed costs that run regardless of whether a guest is in the property.</p>
+      <p>An MTR booking at $2,800/month eliminates that vacancy cost entirely. One 3-month MTR booking at $2,800/month = $8,400 total. Forty-five actual STR nights booked at $180/night average = $8,100 total — and that 45-night figure is a realistic target in a strong shoulder season, not a guaranteed outcome. The MTR wins on net, and at far lower operational overhead. Run the comparison with your own rates and your own honest shoulder-season occupancy numbers.</p>
+    </div>
+
+    <div class="strategy-block">
+      <div class="strategy-block-num">Strategy 3 of 3</div>
+      <h3>The Two-Property Portfolio Strategy</h3>
+      <p>An operator with two properties can run one as a full-time STR and one as a full-time MTR, creating two different risk and revenue profiles in the portfolio. The STR generates higher peak-season ADR and upside. The MTR generates predictable monthly revenue with lower operational overhead.</p>
+      <p>The portfolio hedge: if STR demand drops — recession, travel downturn, platform algorithm shift, new competition — the MTR property is stable. If MTR demand drops — medical market shift, corporate housing pullback — the STR property is running at full capacity. Neither channel alone hedges both risks. Together, they do. The machine with two operating modes is more resilient than the machine with one.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Direct Corporate Outreach — The MTR Channel No One Uses</div>
+      <p>Major employers, hospital systems, and university medical centers in your area often have a housing coordinator or relocation coordinator who manages temporary housing for new hires, visiting researchers, and contract staff. A single email to the HR or relocation department — with your property details, monthly rate, and Furnished Finder profile link — can result in a referral relationship that fills your shoulder season for years.</p>
+      <p>Five emails to local employers is an afternoon of work. The conversion rate is low — one in ten is a realistic expectation. But one relationship with a hospital housing coordinator who places 8–10 traveling nurses per year is worth $15,000–$30,000 in annual bookings, at no platform fee. You do not need ten of those relationships. You need one.</p>
+    </div>
+
+    <!-- AI Prompt -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Evaluate Whether Your Property and Market Are Strong MTR Candidates</h4>
+      <div class="ai-prompt-box">Help me evaluate whether my STR property and market are good candidates for mid-term rental (MTR) operations, and if so, build a basic MTR pricing model.
+
+My property:
+- Location (city/county/state): [LOCATION]
+- Property type: [LAKE HOUSE / CABIN / CONDO / COTTAGE / etc.]
+- Number of bedrooms: [X]
+- Number of bathrooms: [X]
+- Distance from nearest major hospital or medical center: [X miles or 'not applicable']
+- Distance from major employer or university campus: [X miles or 'not applicable']
+- My market's STR regulatory status: [GREEN / YELLOW / RED — from Module 11 assessment]
+- My peak season months: [MONTHS]
+- My current shoulder-season average occupancy rate: [X%]
+- My current nightly rate (peak): [$XXX]
+- My current nightly rate (shoulder): [$XXX]
+
+Do four things:
+
+1. MTR DEMAND ASSESSMENT
+Based on my location relative to medical facilities and major employers, assess the likely MTR demand in my market. Is this a strong, moderate, or weak MTR market? What guest profile is most likely?
+
+2. REGULATORY ANALYSIS
+Given my STR regulatory status, would MTR provide a meaningful regulatory hedge? Are there additional restrictions I should research — state tenant rights laws, 30-day threshold rules, local MTR ordinances?
+
+3. MTR PRICING MODEL
+Build a monthly rate recommendation and compare it to my shoulder-season STR NOI. Show the math: MTR monthly rate vs. actual shoulder-season STR revenue accounting for platform fees, cleaning costs, and realistic occupancy — not 100% occupancy. Which is higher NOI, and under what occupancy assumptions does that answer flip?
+
+4. FURNISHED FINDER LISTING BRIEF
+Write a 150-word property description optimized for Furnished Finder — emphasizing the amenities MTR guests prioritize (workspace, kitchen, laundry, connectivity) rather than vacation-feel features. Include a recommended category selection and minimum stay setting.</div>
+      <p class="ai-prompt-note">Fill in every bracketed field before running this prompt. Be honest about shoulder-season occupancy — an optimistic number produces a misleading comparison. The prompt's MTR pricing model is only as useful as the inputs you give it. After running it, use the Furnished Finder listing brief as your first draft and refine it against actual comparable listings on the platform.</p>
+    </div>
+
+    <!-- Checkpoint -->
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 17 Checkpoint</div>
+      <h3>Before moving to Module 18, confirm the following:</h3>
+      <ul class="checkpoint-items">
+        <li>
+          <span class="cp-box"></span>
+          <span>Assessed MTR demand in my market — know whether hospitals, corporate campuses, or universities create structural demand within a relevant distance</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Researched 30-day tenant rights rules for my state — know whether accepting Airbnb monthly bookings creates eviction-protection exposure in my jurisdiction</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Built my MTR pricing model — know my monthly rate target and how it compares to shoulder-season STR NOI at realistic occupancy</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Decided on Furnished Finder — either listed with category selected and calendar synced, or made a documented decision not to with the reasoning written down</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Reviewed OwnerRez MTR lease template — know how it works, what it covers, and when to use it vs. a platform inquiry</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Identified one potential corporate housing or hospital housing contact to reach out to — name, employer, and a draft outreach email ready to send</span>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Machine feed -->
+  <div class="machine-feed">
+    <div class="mf-label">The Machine</div>
+    <h3>MTR Is Not a Backup Plan — It Is a Second Spoke</h3>
+    <p>The hub-and-spoke model has four revenue spokes in the STR tier: Airbnb, VRBO, Google Vacation Rentals, and direct bookings. MTR is a fifth spoke that operates in a different time horizon and guest segment entirely. An operator who runs STR-only has all their revenue dependent on the short-stay travel market — subject to its seasonal swings, platform algorithm shifts, and regulatory risk. Add MTR, even one shoulder-season booking per year, and you have meaningful diversification.</p>
+    <p>Add a corporate housing relationship, and you have a revenue floor the short-stay market cannot touch. The traveling nurse's hospital contract does not care whether travel demand is up or down. The relocating professional needs housing whether the tourism season is in or out.</p>
+    <p>The machine with five spokes is more resilient than the machine with four. The listing is $99/year. The optionality cost is not zero, but it is close.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <span>SpokeBnB</span> · Module 17: Mid-Term Rentals · Supplementary Module
+</footer>
+
+</body>
+</html>

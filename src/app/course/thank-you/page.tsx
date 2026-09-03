@@ -24,7 +24,7 @@ const NEXT_STEPS: Record<string, TierContent> = {
       { n: '01', title: 'Check your email', body: 'Look for an email from ben@spokebnb.com with your access link. If it isn\'t there in 5 minutes, check spam or email ben@spokebnb.com.' },
       { n: '02', title: 'Start Module 0 tonight', body: 'The Foundation module is 45 minutes. It reframes how you think about your property and where demand actually comes from. Don\'t skip it.' },
       { n: '03', title: 'Join the community', body: 'Your dashboard includes access to the private SpokeBnB community. Introduce yourself and share your property.' },
-      { n: '04', title: 'Block 2 hours this week', body: 'Module 1 is where revenue strategy begins. One focused session and you\'ll have your platform decision locked.' },
+      { n: '04', title: 'Block 2 hours this week', body: 'Module 04 is where revenue strategy begins. One focused session and you\'ll have your pricing framework and platform decision locked.' },
     ],
     upgrade: {
       show: true,
@@ -133,10 +133,6 @@ function ThankYouContent() {
             Questions?{' '}
             <a href="mailto:ben@spokebnb.com" className="text-[var(--sf-gold)] hover:underline">
               ben@spokebnb.com
-            </a>{' '}
-            or{' '}
-            <a href="mailto:ben@thehoadleygroup.com" className="text-[var(--sf-gold)] hover:underline">
-              ben@thehoadleygroup.com
             </a>
           </p>
           <Link

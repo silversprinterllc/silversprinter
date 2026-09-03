@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         from: `SpokeBnB Applications <${COURSE_FROM}>`,
         to: BEN_EMAIL,
         replyTo: email,
-        subject: `New Concierge Application — ${name} (${trackLabel})`,
+        subject: `New DFY Application — ${name} (${trackLabel})`,
         html: buildAdminEmail(applicationData),
       })
       .catch((err) => console.error('[apply] admin email failed:', err))
@@ -90,7 +90,7 @@ function buildAdminEmail(data: ReturnType<typeof buildApplicationData>) {
 
   return `<!DOCTYPE html><html><body style="font-family:system-ui,sans-serif;background:#f5f5f5;padding:20px;">
   <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;">
-    <div style="background:#09263A;padding:16px 20px;"><p style="margin:0;font-size:13px;font-weight:700;color:#D4A017;">New Concierge Application — ${applicant.name}</p></div>
+    <div style="background:#09263A;padding:16px 20px;"><p style="margin:0;font-size:13px;font-weight:700;color:#D4A017;">New DFY Application — ${applicant.name}</p></div>
     <table style="width:100%;border-collapse:collapse;">${rows}</table>
     <div style="padding:14px 20px;background:#f9f9f9;"><a href="mailto:${applicant.email}" style="background:#D4A017;color:#09263A;font-weight:700;padding:9px 20px;border-radius:6px;text-decoration:none;font-size:13px;">Reply to Applicant</a></div>
   </div></body></html>`
@@ -103,11 +103,11 @@ function buildApplicantEmail(name: string) {
 <body style="margin:0;padding:20px;background:#f0ede8;font-family:system-ui,-apple-system,sans-serif;">
   <div style="max-width:520px;margin:0 auto;background:#09263A;border-radius:12px;overflow:hidden;">
     <div style="padding:26px 30px 18px;border-bottom:1px solid rgba(255,255,255,0.08);">
-      <p style="margin:0 0 5px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:#D4A017;font-weight:600;">SpokeBnB — The Concierge</p>
+      <p style="margin:0 0 5px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:#D4A017;font-weight:600;">SpokeBnB — Custom DFY Application</p>
       <h1 style="margin:0;font-size:20px;font-weight:700;color:#F7F3EA;">Application received, ${firstName}.</h1>
     </div>
     <div style="padding:22px 30px;">
-      <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:rgba(247,243,234,0.65);">I review every Concierge application myself. You'll get a personal reply at this email within 1 business day — not a form letter, an actual message about your property and your goals.</p>
+      <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:rgba(247,243,234,0.65);">I review every application myself. You'll get a personal reply at this email within 1 business day — not a form letter, an actual message about your property and your goals.</p>
       <p style="margin:0 0 22px;font-size:15px;line-height:1.65;color:rgba(247,243,234,0.65);">In the meantime, if you want to get a head start, the full course curriculum is at <a href="https://spokebnb.com/course" style="color:#D4A017;">spokebnb.com/course</a>.</p>
       <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:0 0 18px;">
       <p style="margin:0;font-size:13px;color:rgba(247,243,234,0.3);">Questions? Reply to this email — it goes directly to me.</p>

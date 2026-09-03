@@ -1,0 +1,880 @@
+<title>Module 00 — Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A;
+    --navy-mid: #0d3550;
+    --gold: #D4A017;
+    --cream: #F7F3EA;
+    --text: #1a2f3f;
+    --muted: #4a6070;
+    --border: rgba(9,38,58,0.1);
+    --bg: #F7F3EA;
+    --card: #ffffff;
+    --mistake-bg: #fff7ed;
+    --mistake-border: #f97316;
+    --math-bg: #f0f9ff;
+    --math-border: #0284c7;
+    --tip-bg: #f0fdf4;
+    --tip-border: #16a34a;
+    --template-bg: #fafaf7;
+    --checkpoint-bg: #09263A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e;
+      --gold: #D4A017; --cream: #1a2f3f;
+      --text: #e4ddd0; --muted: #8ba8bc;
+      --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --mistake-border: #f97316;
+      --math-bg: #0a1f2d; --math-border: #0284c7;
+      --tip-bg: #0a2018; --tip-border: #16a34a;
+      --template-bg: #122232; --checkpoint-bg: #0d3550;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e;
+    --gold: #D4A017; --cream: #1a2f3f;
+    --text: #e4ddd0; --muted: #8ba8bc;
+    --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --mistake-border: #f97316;
+    --math-bg: #0a1f2d; --math-border: #0284c7;
+    --tip-bg: #0a2018; --tip-border: #16a34a;
+    --template-bg: #122232; --checkpoint-bg: #0d3550;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  /* Header */
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 860px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  /* Lesson nav */
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 860px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: all 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* Main */
+  .main { max-width: 860px; margin: 0 auto; padding: 0 32px 80px; }
+
+  /* Deliverable banner */
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  /* Lesson section */
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  /* Step boxes */
+  .steps { counter-reset: step; margin: 24px 0; }
+  .step { display: flex; gap: 16px; margin-bottom: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-width: 28px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 12px; font-weight: 700; margin-top: 1px; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .step-num { background: var(--gold); color: var(--navy); } }
+  :root[data-theme="dark"] .step-num { background: var(--gold); color: var(--navy); }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 8px; font-size: 14.5px; }
+  .step-content p:last-child { margin-bottom: 0; }
+  .step-content strong { color: var(--text); }
+
+  /* Callout boxes */
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 28px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p { color: #fdba74; }
+
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p { color: #7dd3fc; }
+
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p { color: #86efac; } }
+  :root[data-theme="dark"] .tip p { color: #86efac; }
+
+  /* Formula display */
+  .formula { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 20px 0; text-align: center; }
+  .formula .eq { font-size: 1.1rem; font-weight: 700; color: var(--navy); font-family: 'Playfair Display', serif; margin-bottom: 8px; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .formula .eq { color: #e4ddd0; } }
+  :root[data-theme="dark"] .formula .eq { color: #e4ddd0; }
+  .formula .example { font-size: 13px; color: var(--muted); }
+  .formula .result { font-size: 13px; color: var(--gold); font-weight: 600; margin-top: 4px; }
+
+  /* Template boxes */
+  .template-box { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+  .template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .template-field { margin-bottom: 16px; }
+  .template-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .template-field .field-line { border-bottom: 1px solid var(--border); padding-bottom: 4px; min-height: 24px; color: var(--muted); font-size: 13px; font-style: italic; }
+  .template-field:last-child { margin-bottom: 0; }
+
+  /* Spoke grid */
+  .spoke-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin: 24px 0; }
+  .spoke-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .spoke-card .spoke-num { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 6px; }
+  .spoke-card h4 { font-size: 14px; font-weight: 700; color: var(--text); margin: 0 0 6px; text-transform: none; letter-spacing: 0; }
+  .spoke-card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  /* Benchmark table */
+  .bench-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .bench-table th { background: var(--navy); color: var(--gold); text-align: left; padding: 10px 14px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+  .bench-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
+  .bench-table tr:last-child td { border-bottom: none; }
+  .bench-table td strong { color: var(--text); }
+  @media (max-width: 600px) { .bench-table { font-size: 12px; } .bench-table th, .bench-table td { padding: 8px 10px; } }
+
+  /* Roadmap */
+  .roadmap { margin: 24px 0; }
+  .roadmap-row { display: grid; grid-template-columns: 110px 1fr; gap: 0; }
+  .roadmap-milestone { background: var(--navy); color: var(--gold); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 14px 16px; display: flex; align-items: flex-start; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .roadmap-content { background: var(--card); border-bottom: 1px solid var(--border); padding: 14px 18px; }
+  .roadmap-content p { font-size: 13.5px; margin: 0; }
+  .roadmap-row:first-child .roadmap-milestone { border-radius: 10px 0 0 0; }
+  .roadmap-row:first-child .roadmap-content { border-radius: 0 10px 0 0; }
+  .roadmap-row:last-child .roadmap-milestone { border-radius: 0 0 0 10px; border-bottom: none; }
+  .roadmap-row:last-child .roadmap-content { border-radius: 0 0 10px 0; border-bottom: none; }
+
+  /* Checkpoint */
+  .checkpoint { background: var(--checkpoint-bg); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .check-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+
+  /* Footer */
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .machine-feed .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .machine-feed .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px 0; }
+  .tier-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-top: 3px solid var(--border); }
+  .tier-card.tier-capture { border-top-color: var(--gold); background: var(--gold-bg); }
+  .tier-card.tier-owned { border-top-color: #16a34a; background: var(--tip-bg); }
+  .tier-num { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .tier-card.tier-capture .tier-num { color: var(--gold); }
+  .tier-card.tier-owned .tier-num { color: #16a34a; }
+  .tier-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .tier-spokes { font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+  .tier-card.tier-owned .tier-spokes { color: #16a34a; }
+  .tier-card p { font-size: 13px; color: var(--muted); line-height: 1.65; margin: 0; }
+  .tier-card p strong { color: var(--text); }
+  @media (max-width: 640px) { .tier-grid { grid-template-columns: 1fr; } }
+</style>
+
+<!-- MODULE HEADER -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 00</div>
+    <h1>Foundation — The Hub</h1>
+    <p class="subtitle">The mental model that makes everything else in this course work</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 1: Acquire</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>2–3 Hours</div>
+      <div class="mod-meta-item"><strong>Next Module</strong>Module 01 — Acquisition</div>
+    </div>
+  </div>
+</header>
+
+<!-- LESSON NAV -->
+<nav class="lesson-nav" aria-label="Lessons in this module">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Hub-and-Spoke Model</a>
+    <a href="#lesson-2">02 — The Three Numbers</a>
+    <a href="#lesson-3">03 — Operator Mindset</a>
+    <a href="#lesson-4">04 — Your 12-Month Roadmap</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- MODULE DELIVERABLE -->
+  <div class="deliverable-banner">
+    <div class="icon">🎯</div>
+    <div>
+      <div class="label">Module 00 Deliverable</div>
+      <p>By the end of this module you will have: a completed Hub-and-Spoke property map, your 12-month performance targets (Occupancy Rate, ADR, RevPAR), and a written business identity statement. These three documents become the measuring stick for every decision you make in this course.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Hub-and-Spoke Model</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand the Hub-and-Spoke model well enough to map your own property against it and identify which spokes you currently have active and which you don't.
+    </div>
+
+    <p>Here is the problem most STR operators don't realize they have: they don't own a rental business. They own a listing on someone else's platform. Airbnb controls the search algorithm, the guest relationship, the pricing recommendations, the messaging, the cancellation policies, and the fee structure. When Airbnb changes any of those — and they do, regularly — you have no leverage and no alternative.</p>
+
+    <p>The Hub-and-Spoke model fixes this structurally, not tactically.</p>
+
+    <h3>The Model, Defined</h3>
+
+    <p>Your property is the <strong>hub</strong>. Every source of demand that flows toward it — every booking channel, marketing channel, and revenue stream — is a <strong>spoke</strong>. The goal of this course is to build as many of those spokes as possible, so that no single platform can cut your income by changing the rules.</p>
+
+    <p>A property with one spoke (Airbnb) is vulnerable. When the algorithm shifts, a new host enters the market, or Airbnb raises fees, you feel all of it immediately and you have nothing to fall back on. A property with eight spokes absorbs a loss in any one channel without losing the business.</p>
+
+    <h3>The 8 Core Demand Spokes</h3>
+
+    <div class="spoke-grid">
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 01</div>
+        <h4>Airbnb</h4>
+        <p>Your primary distribution platform. The largest marketplace for short-term rentals globally. You optimize it — you don't depend on it exclusively.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 02</div>
+        <h4>VRBO</h4>
+        <p>The second-largest STR marketplace, skewing older traveler, higher income, longer stays, and family groups. A distinct audience from Airbnb — not an afterthought.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 03</div>
+        <h4>Google Vacation Rentals</h4>
+        <p>Free metasearch visibility in Google's search results — alongside hotel and OTA listings, at zero commission. Most operators miss this entirely, which makes it an uncontested advantage for those who use it.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 04</div>
+        <h4>Direct Booking Site</h4>
+        <p>Your owned channel. No commission, no algorithm, no platform risk. Every direct booking is a 15.5% raise. This is the single highest-leverage spoke you build — and it compounds every year.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 05</div>
+        <h4>Email Marketing</h4>
+        <p>Your list of past guests and opt-in subscribers. The only marketing channel that reaches people who have already proven they'll pay to stay at your property. A list is an asset — it cannot be algorithm'd away.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 06</div>
+        <h4>Local SEO &amp; Content</h4>
+        <p>Guide pages, area content, and activity pages that rank in Google search results organically. This spoke is slow to build and permanent once built. It is still generating bookings three years from now without additional spend.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 07</div>
+        <h4>Social Media &amp; Short-Form Video</h4>
+        <p>Instagram, TikTok, Pinterest, YouTube. Content that reaches new audiences and drives them to your direct booking site. The goal is booking attribution — not follower count.</p>
+      </div>
+      <div class="spoke-card">
+        <div class="spoke-num">Spoke 08</div>
+        <h4>Creator &amp; Influencer Network</h4>
+        <p>Hosted stays that produce content reaching targeted audiences at a fraction of paid ad cost. Two to three relationships with the right creators drive more qualified bookings than most paid campaigns.</p>
+      </div>
+    </div>
+
+    <p>Two additional spokes — <strong>Curated Experiences &amp; Revenue Layers</strong> (Module 11) and <strong>Referral Loops</strong> (Module 06) — layer on top of the eight core spokes and add revenue without adding inventory.</p>
+
+    <h3>The Spoke Hierarchy — Not All Spokes Are Equal</h3>
+    <p>The 8 spokes are not equal in strategic value. Understanding the difference determines where you invest your attention beyond Month 3.</p>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-num">Tier 1 — Demand Sources</div>
+        <div class="tier-name">OTA Platforms</div>
+        <div class="tier-spokes">Spokes 01–03: Airbnb · VRBO · Google Vacation Rentals</div>
+        <p>Fill your calendar. Generate your first guest relationships. You don't own these channels — they can change fees, algorithms, and policies at any time. Build them first because you need them first. Not because they're the most valuable long-term.</p>
+      </div>
+      <div class="tier-card tier-capture">
+        <div class="tier-num">Capture Layer</div>
+        <div class="tier-name">The Connective Systems</div>
+        <div class="tier-spokes">WiFi email capture · Guidebook QR code · Automated messages</div>
+        <p>Not traditional spokes — operational systems that convert every Tier 1 booking into a lead for Tier 3. This is the layer that makes the transition from OTA-dependent to OTA-optional possible. Built in Modules 02 and 05.</p>
+      </div>
+      <div class="tier-card tier-owned">
+        <div class="tier-num">Tier 3 — Owned Channels</div>
+        <div class="tier-name">The Economic Destination</div>
+        <div class="tier-spokes">Spokes 04–08: Direct Booking · Email · SEO · Social · Creators</div>
+        <p>These channels compound. The email list grows with every stay. The SEO content ranks better as it ages. The past-guest base grows every year. These are assets — they cannot be taken from you. <strong>Direct booking is the most valuable: zero commission, full price control, owned guest relationship.</strong></p>
+      </div>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ Common Mistake</div>
+      <p>Operators often add VRBO as a "second channel" and call their spoke-building done. VRBO is distribution — it's still a platform you don't control. The highest-value spokes are the ones you own outright: your direct booking site, your email list, and your SEO content. Those cannot be fee-hiked, deprioritized, or taken from you. Build the owned channels with the same urgency you gave the OTA channels.</p>
+    </div>
+
+    <h3>The Three Operational Stages</h3>
+    <p>Every operator moves through three stages. Knowing which one you're in tells you where to focus your energy.</p>
+
+    <ul>
+      <li><strong>Stage 1 — Operational (Months 1–3):</strong> Insurance, permits, listing optimization, pricing, cleaning systems, guest communication, and smart home setup. The property is live and reviewed. You are building the foundation. Nothing else matters until this stage is complete.</li>
+      <li><strong>Stage 2 — Growth (Months 3–12):</strong> Guest capture, direct booking site, local SEO content, email marketing, social media. You are building the spokes that reduce platform dependence and create compounding demand. Most operators never leave Stage 1 mentally — they keep tweaking Airbnb instead of building the channels they own.</li>
+      <li><strong>Stage 3 — Scale (Year 2+):</strong> Portfolio expansion, experiences and revenue layers, creator networks, service business opportunities. The systems built in Stages 1 and 2 run reliably with under 2 hours/week of active management per property, freeing you to replicate or expand.</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Key Insight</div>
+      <p>You can only be in one stage at a time — but you can see all three from where you are. The operators who thrive are the ones who complete Stage 1 cleanly and quickly, then move into Stage 2 with the same urgency. The operators who struggle are the ones who stay in Stage 1 for years, convinced that one more Airbnb optimization is the answer.</p>
+    </div>
+
+    <h3>Your Action Step — Map Your Current Spokes</h3>
+    <p>Before you move to Lesson 2, complete this spoke map. Be honest. A spoke is only active if it is generating demand right now — not if you've thought about it or plan to do it.</p>
+
+    <div class="template-box">
+      <div class="template-label">Your Hub-and-Spoke Map</div>
+      <div class="template-field">
+        <label>Property Name / Nickname</label>
+        <div class="field-line">e.g., "Lakeside Landing FLX" or "The Ridge House"</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 01 — Airbnb</label>
+        <div class="field-line">Active / Not Yet Started — Current average monthly bookings: ___</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 02 — VRBO</label>
+        <div class="field-line">Active / Not Yet Started — Current average monthly bookings: ___</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 03 — Google Vacation Rentals</label>
+        <div class="field-line">Active / Not Yet Started</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 04 — Direct Booking Site</label>
+        <div class="field-line">Active / Not Yet Started — URL (if live): ___</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 05 — Email Marketing</label>
+        <div class="field-line">Active / Not Yet Started — Current list size: ___</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 06 — Local SEO &amp; Content</label>
+        <div class="field-line">Active / Not Yet Started — Current monthly organic visitors: ___</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 07 — Social Media</label>
+        <div class="field-line">Active / Not Yet Started — Primary platform: ___</div>
+      </div>
+      <div class="template-field">
+        <label>Spoke 08 — Creator Network</label>
+        <div class="field-line">Active / Not Yet Started — Partnerships completed: ___</div>
+      </div>
+      <div class="template-field">
+        <label>Your Spoke Score Today</label>
+        <div class="field-line">___ / 8 active spokes. (Most operators starting this course: 1–2.)</div>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Your Hub-and-Spoke Spoke Gap Analysis</span>
+      </div>
+      <p class="ai-prompt-instruction">Use this after filling in your Spoke Map above. Paste your current-state assessment and let the AI identify which spokes to build first and in what order — based on your specific property type and operational stage.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">I'm working through the SpokeBnB Hub-and-Spoke model and have completed my initial spoke map. I need help identifying my highest-leverage next moves given where I currently stand.
+
+MY PROPERTY:
+- Location: [City, State]
+- Property type: [cabin / lake house / condo / house]
+- Bedrooms: [X] | Max guests: [X]
+- Time in operation: [brand new / X months / X years]
+- Current review count: [X reviews]
+- Current platforms active: [Airbnb only / Airbnb + VRBO / other]
+
+MY CURRENT SPOKE STATUS:
+- Spoke 01 — Airbnb: [Active / Not Yet Started]
+- Spoke 02 — VRBO/Vrbo: [Active / Not Yet Started]
+- Spoke 03 — Direct Booking Website: [Active / Not Yet Started — if active, URL: X]
+- Spoke 04 — Email List: [Active / Not Yet Started — if active, list size: X]
+- Spoke 05 — Google Vacation Rentals: [Active / Not Yet Started]
+- Spoke 06 — Social Media: [Active / Not Yet Started — platform(s): X]
+- Spoke 07 — Local Guide: [Active / Not Yet Started]
+- Spoke 08 — Creator Network: [Active / Not Yet Started]
+
+MY SPOKE MAP SCORE: [X] / 8 active spokes
+
+Based on this, give me:
+1. My current operational stage (Launch / Stabilize / Scale) and why
+2. The single highest-leverage spoke I should activate next and exactly why this one before others
+3. The second-highest-leverage spoke and the trigger condition for when to start it
+4. Any spokes I should NOT prioritize yet and why (so I don't split attention)
+5. The one thing that would most meaningfully improve my revenue in the next 30 days given my current spoke count</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You can describe the Hub-and-Spoke model to someone else in two sentences and point to your spoke map showing exactly where you stand today.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Hub-and-Spoke map completed with honest current-state assessment</li>
+        <li><span class="check-box"></span>All 8 spokes labeled Active or Not Yet Started</li>
+        <li><span class="check-box"></span>You can identify which operational stage you are in right now</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The Three Numbers That Define Your Business</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Calculate your current Occupancy Rate, ADR, and RevPAR — or set credible targets if you haven't launched yet — and understand exactly what each number tells you and how to move it.
+    </div>
+
+    <p>Every decision in this course — pricing, length-of-stay strategy, channel mix, improvement investments — connects to one of three numbers. Operators who don't track them are flying blind. Operators who do track them can diagnose any revenue problem in minutes.</p>
+
+    <p>These metrics come from the hotel industry, where they've been standard for decades. The STR industry adopted them because they work: they capture both dimensions of revenue performance in a way that no single number can.</p>
+
+    <h3>Number 1 — Occupancy Rate</h3>
+
+    <div class="formula">
+      <div class="eq">Occupancy Rate = (Nights Booked ÷ Nights Available) × 100</div>
+      <div class="example">Example: 22 booked nights in a 30-day month = 22 ÷ 30 × 100</div>
+      <div class="result">= 73.3% Occupancy Rate</div>
+    </div>
+
+    <p><strong>What it tells you:</strong> How well you're filling the calendar. A high occupancy rate means demand is strong and your pricing may be too low (if you're filling easily, you're leaving money on the table). A low occupancy rate means either your price is too high relative to your comp set, your listing has a conversion problem, or demand in your market is genuinely soft.</p>
+
+    <p><strong>What "good" looks like:</strong></p>
+    <div style="overflow-x: auto;">
+    <table class="bench-table">
+      <thead>
+        <tr><th>Market Type</th><th>Healthy Occupancy</th><th>Warning Sign</th><th>What It Means</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Year-round leisure</strong><br>(coastal, mountain resort)</td><td>72–85%</td><td>Below 65%</td><td>Pricing or listing issue</td></tr>
+        <tr><td><strong>Seasonal leisure</strong><br>(lake country, ski, summer beach)</td><td>80–92% peak, 50–65% shoulder</td><td>Below 45% shoulder</td><td>Minimum stay too long or flat pricing in shoulder</td></tr>
+        <tr><td><strong>Urban / business travel</strong></td><td>70–80%</td><td>Below 60%</td><td>Market saturation or location mismatch</td></tr>
+        <tr><td><strong>Destination / rural</strong></td><td>60–75%</td><td>Below 50%</td><td>Market size limit — may be ceiling, not failure</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ Common Mistake</div>
+      <p><strong>Chasing 100% occupancy.</strong> A property running at 95% occupancy is almost certainly underpriced. You are leaving money on the table because demand exceeds what you're charging. The goal is not a full calendar — it is maximum revenue. Sometimes a property at 78% occupancy with a higher ADR earns significantly more than the same property at 92% at a lower rate. The third metric (RevPAR) is the one that captures this.</p>
+    </div>
+
+    <p><strong>Where to find your current number:</strong> In your Airbnb Host dashboard, go to <strong>Menu → Performance → Occupancy &amp; Rates</strong>. Select the last 12 months. The occupancy percentage shown is calculated only on nights you had available — if you blocked your calendar for personal use, those nights are excluded. Adjust mentally if significant nights were blocked for non-operational reasons.</p>
+
+    <h3>Number 2 — ADR (Average Daily Rate)</h3>
+
+    <div class="formula">
+      <div class="eq">ADR = Total Room Revenue ÷ Total Nights Booked</div>
+      <div class="example">Example: $18,400 in gross revenue from 92 booked nights = 18,400 ÷ 92</div>
+      <div class="result">= $200 ADR</div>
+    </div>
+
+    <p><strong>What it tells you:</strong> The average price guests are actually paying per night, after discounts, length-of-stay adjustments, and seasonal variation. ADR is what you optimize when you implement dynamic pricing in Module 04. Raising ADR without dropping occupancy is pure profit improvement.</p>
+
+    <p><strong>Important distinction:</strong> ADR is calculated on <em>booked</em> nights, not available nights. It tells you what your booked guests paid — not what you listed. If you have a $250 base price but offer heavy discounts that bring average paid rate to $190, your ADR is $190.</p>
+
+    <p><strong>Where to find your current number:</strong> In Airbnb, go to <strong>Menu → Performance → Earnings</strong>. Take your total gross earnings for the last 12 months and divide by total nights booked for that same period. Airbnb's dashboard shows both numbers — you do the division. Note: Airbnb's "average nightly rate" shown in some dashboard views may include taxes and fees — you want the host payout amount divided by booked nights for your ADR.</p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The Math — What a $20 ADR Lift Is Worth</div>
+      <p>At 150 booked nights per year, a $20 increase in ADR = $3,000 in additional annual revenue. No new bookings required. No new marketing spend. No new amenities. Just better pricing strategy. Module 04 (Revenue Engine) is dedicated entirely to extracting this lift systematically.</p>
+    </div>
+
+    <h3>Number 3 — RevPAR (Revenue Per Available Room)</h3>
+
+    <div class="formula">
+      <div class="eq">RevPAR = ADR × (Occupancy Rate ÷ 100)</div>
+      <div class="example">Example: $200 ADR × 73.3% occupancy = 200 × 0.733</div>
+      <div class="result">= $146.60 RevPAR</div>
+    </div>
+
+    <p>Alternatively: <strong>RevPAR = Total Room Revenue ÷ Total Available Nights</strong></p>
+
+    <p><strong>What it tells you:</strong> RevPAR is the number that captures both dimensions of performance in one figure. It tells you how much revenue each available night generated — whether or not it was booked. It is the closest thing to a single "how is my business doing" metric in STR.</p>
+
+    <p><strong>Why RevPAR beats occupancy rate as a primary metric:</strong> A property at 90% occupancy with a $150 ADR has a RevPAR of $135. A property at 72% occupancy with a $220 ADR has a RevPAR of $158.40. The second property makes more money per available night despite filling fewer of them. Without RevPAR, you would misread the first property as the better performer.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Use This Metric for Comp Set Benchmarking</div>
+      <p>When you pull AirDNA data in Module 01, you will compare your RevPAR against your comp set's median and top-quartile RevPAR. This tells you exactly where you stand relative to the best operators in your market — and gives you a specific target to close the gap toward.</p>
+    </div>
+
+    <h3>Setting Your 12-Month Targets</h3>
+    <p>If you are a new operator, you do not yet have historical data. Use the benchmarking table above and AirDNA market data (covered in Module 01) to set conservative first-year targets. Conservative means: your market's median occupancy rate, not the top quartile. Under-promise, over-deliver. You can revise upward after 90 days of real data.</p>
+
+    <div class="template-box">
+      <div class="template-label">Your Performance Targets Worksheet</div>
+      <div class="template-field">
+        <label>Market Type (select one)</label>
+        <div class="field-line">Year-round leisure / Seasonal leisure / Urban-business / Destination-rural</div>
+      </div>
+      <div class="template-field">
+        <label>Current or Projected Occupancy Rate</label>
+        <div class="field-line">Current: ___% &nbsp;&nbsp; 12-Month Target: ___%</div>
+      </div>
+      <div class="template-field">
+        <label>Current or Projected ADR</label>
+        <div class="field-line">Current: $___ &nbsp;&nbsp; 12-Month Target: $___</div>
+      </div>
+      <div class="template-field">
+        <label>Calculated RevPAR (ADR × Occupancy ÷ 100)</label>
+        <div class="field-line">Current: $___ &nbsp;&nbsp; 12-Month Target: $___</div>
+      </div>
+      <div class="template-field">
+        <label>Projected Annual Gross Revenue (RevPAR × 365)</label>
+        <div class="field-line">Current: $___ &nbsp;&nbsp; 12-Month Target: $___</div>
+      </div>
+      <div class="template-field">
+        <label>Notes — Seasonal adjustments, data sources, assumptions</label>
+        <div class="field-line">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>You have calculated — or credibly projected — your Occupancy Rate, ADR, and RevPAR, and set 12-month targets for each.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Occupancy Rate calculated from platform data (or projected from market benchmarks)</li>
+        <li><span class="check-box"></span>ADR calculated from platform earnings data (or projected)</li>
+        <li><span class="check-box"></span>RevPAR calculated using the formula above</li>
+        <li><span class="check-box"></span>12-Month targets set for all three numbers</li>
+        <li><span class="check-box"></span>Performance Targets Worksheet completed</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Your Property Is a Hospitality Business</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Identify at least three specific ways your current operation would change if you ran it with hotel-GM thinking rather than landlord thinking — and commit to the 2-hour/week active management target.
+    </div>
+
+    <p>The single highest-leverage shift in this entire course costs nothing and takes ten minutes. It is not a tool, a setting, or a template. It is a decision about how you see what you own.</p>
+
+    <p>A landlord owns real estate. A hotel operator runs a hospitality business. Those two people make completely different decisions about the same property — and they get completely different results from it.</p>
+
+    <h3>What Landlord Thinking Looks Like</h3>
+    <ul>
+      <li>Sets a price and leaves it there until something prompts a change</li>
+      <li>Responds to guest messages when they get to them</li>
+      <li>Coordinates cleaning by text message on an as-needed basis</li>
+      <li>Views guest reviews as opinions, not operational data</li>
+      <li>Considers the business "passive" and is surprised when it requires active management</li>
+      <li>Reinvests when something breaks, not before</li>
+      <li>Measures success by "it's mostly booked" rather than by RevPAR against the market</li>
+    </ul>
+
+    <h3>What Operator Thinking Looks Like</h3>
+    <ul>
+      <li>Prices dynamically, auditing the calendar every week against comp set and local events</li>
+      <li>Communicates with every guest through six predetermined touchpoints, all automated</li>
+      <li>Cleaning is confirmed 72 hours before checkout, photo-verified after every turnover</li>
+      <li>Every review — especially critical ones — is mined for operational improvement data</li>
+      <li>Designs the operation so that a 72-hour absence creates no guest-facing problems</li>
+      <li>Reinvests in revenue-generating improvements first (hot tub, outdoor space, photography) before aesthetic improvements</li>
+      <li>Measures success by RevPAR against the top quartile of their comp set</li>
+    </ul>
+
+    <h3>The Hotel Analogy — And Why It Matters for a Single Property</h3>
+
+    <p>A 40-room hotel has a revenue manager, a marketing team, a general manager, and a maintenance department. You are all four. You are doing the work of four people — which is why most STR operators feel overwhelmed. The systems in this course are designed to replace the headcount with technology and process, not with more of your time.</p>
+
+    <p>After completing this course, the operations that currently consume 10–20 hours of your week per property should require <strong>under 2 hours of active management per week per property</strong>. Every hour above that is a system you haven't built yet.</p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The Math — What Operator Thinking Is Worth</div>
+      <p>Published research from VRBO and industry analysis firms consistently shows that optimized STR operators — those who actively manage pricing, guest communication, and listing quality — earn 25–50% more annual revenue than passive operators in the same market with comparable properties. On a property generating $80,000/year, that gap is $20,000–40,000 annually. The operators who earn the premium are not working more hours. They have built better systems.</p>
+    </div>
+
+    <h3>The 2-Hour Week — What It Looks Like</h3>
+    <p>By the time you complete Modules 03 and 05, your weekly active STR management time per property should be measurable as:</p>
+
+    <ul>
+      <li><strong>15 minutes:</strong> PriceLabs calendar audit — review the next 45 days, manually adjust any rates the algorithm missed (local events, anomalies)</li>
+      <li><strong>15 minutes:</strong> Inbox review — approve AI-drafted replies, flag anything requiring personal attention</li>
+      <li><strong>20 minutes:</strong> Turno photo verification review — confirm cleaner's photo checklist after any turnover that week</li>
+      <li><strong>10 minutes:</strong> Review responses — reply to any new guest reviews posted that week</li>
+      <li><strong>30–60 minutes (variable):</strong> Any vendor coordination, supply orders, or maintenance items that arose that week</li>
+    </ul>
+
+    <p>The remaining tasks — guest messages, booking confirmations, cleaning scheduling, pricing updates — run automatically. Every additional hour you spend beyond this target is a signal that a specific system is missing or broken.</p>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ Common Mistake</div>
+      <p><strong>"Being available" as a strategy.</strong> Many new operators believe that being highly responsive and hands-on is what makes a great host. It is for the first 10 bookings — you learn the property, the guests, and the common questions. After that, it is a trap. If you are the communication system, you are not scalable. A guest who messages at 2am on a Saturday deserves a response in minutes — and you deserve to be asleep. Build the systems that make both things possible.</p>
+    </div>
+
+    <h3>Your Action Step — The Landlord-to-Operator Audit</h3>
+    <p>Answer these five questions honestly. They tell you exactly where landlord thinking is costing you money right now.</p>
+
+    <div class="template-box">
+      <div class="template-label">Landlord-to-Operator Audit</div>
+      <div class="template-field">
+        <label>1. When did you last change your base price, and what prompted it?</label>
+        <div class="field-line">If the answer is "I set it when I launched and haven't changed it" — that is landlord thinking. Operator answer: "I audit pricing weekly and respond to comp set data."</div>
+      </div>
+      <div class="template-field">
+        <label>2. If a guest messages you right now at 11pm, how long until they receive a substantive response?</label>
+        <div class="field-line">If the answer is "whenever I see it" — that is landlord thinking. Operator answer: "Within 5 minutes via automated response, with escalation for anything urgent."</div>
+      </div>
+      <div class="template-field">
+        <label>3. How do you confirm your cleaner completed the turnover correctly?</label>
+        <div class="field-line">If the answer is "I trust them / I check in after bad reviews" — that is landlord thinking. Operator answer: "Every turnover is photo-verified in Turno before I get the notification."</div>
+      </div>
+      <div class="template-field">
+        <label>4. If you were unreachable for 72 hours, what would break for your guests?</label>
+        <div class="field-line">List every gap. Each one is a system to build in Modules 03 and 05.</div>
+      </div>
+      <div class="template-field">
+        <label>5. How many hours per week do you currently spend on active STR management?</label>
+        <div class="field-line">Current: ___ hours/week. Target after Module 05: under 2 hours/week per property.</div>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>You have identified the specific landlord-thinking gaps in your current operation and committed to the 2-hour/week standard.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Landlord-to-Operator Audit completed honestly</li>
+        <li><span class="check-box"></span>At least 3 specific gaps identified with the module that closes each one</li>
+        <li><span class="check-box"></span>72-hour absence test completed — all failure points documented</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>What You Are Building — The 12-Month Roadmap</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Complete your personal 12-month roadmap and write your Business Identity Statement — the document that every decision in this course is measured against.
+    </div>
+
+    <p>Before you touch any tool, configure any setting, or write any listing copy, you need to know where you are going. Operators who skip this step spend the next 12 months reacting. Operators who complete it spend the next 12 months executing.</p>
+
+    <p>This is not a vision board exercise. This is a specific, measurable plan with clear milestones — the kind your bank would want to see if you were asking them to finance the property.</p>
+
+    <h3>The 12-Month Milestone Map</h3>
+
+    <div class="roadmap">
+      <div class="roadmap-row">
+        <div class="roadmap-milestone">Month 1</div>
+        <div class="roadmap-content"><p><strong>Operational Foundation Complete.</strong> Insurance active, permit in hand, listing live on Airbnb and VRBO, smart lock installed, cleaner confirmed, PMS connected, 6 automated messages configured, PriceLabs running. First bookings are coming in. You are in the Stage 1 operational mode — stabilize before you optimize.</p></div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-milestone">Month 3</div>
+        <div class="roadmap-content"><p><strong>Review Flywheel Running.</strong> 10+ reviews collected, rating 4.8+, new-listing pricing period ended and steady-state dynamic pricing in place, first guest email captures from StayFi, automation running under 2 hours/week active management. You are ready to move from Stage 1 to Stage 2. If you are not here by Month 3, identify the specific gap and close it before building growth channels.</p></div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-milestone">Month 6</div>
+        <div class="roadmap-content"><p><strong>Growth Engine Live.</strong> Direct booking site accepting payments, Google Business Profile claimed and active, local guide content published (first 3 pages minimum), StayFi capturing every guest, email sequences running automatically, first direct booking completed. You now have 4–5 active spokes. OTA dependence has measurably decreased.</p></div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-milestone">Month 9</div>
+        <div class="roadmap-content"><p><strong>Compounding Systems Visible.</strong> Google Search Console showing organic impressions on guide pages, social content generating traffic to direct booking site (tracked via UTM), first creator partnership completed. Email list has 100+ contacts. Some months now showing 10–15% of bookings from direct channel. You can feel the spokes starting to generate independently.</p></div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-milestone">Month 12</div>
+        <div class="roadmap-content"><p><strong>Year-1 Business Review.</strong> 20–30% of revenue from direct bookings. Organic Google traffic measurable and growing month-over-month. Email list 200+ contacts with returning guest revenue documented. RevPAR up 15–25% from where you started. Active management time: under 2 hours/week per property. You have a business — not a listing.</p></div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-milestone">Year 2+</div>
+        <div class="roadmap-content"><p><strong>Scale.</strong> Portfolio expansion using the systems and underwriting criteria from Module 01. Service business (Module 14) generating revenue from managing other operators' properties. SEO content compounding — organic traffic grows without additional work. The eight spokes are all active and generating independently. Time to look at the next acquisition.</p></div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ On Realistic Timelines</div>
+      <p>These milestones assume consistent execution — not perfection, not 40-hour weeks. An operator who completes one module per week, implements what they learn, and advances only when the deliverable is done will hit these milestones. An operator who watches videos without completing the action steps will be in the same place in Month 12 as they were in Month 1. The course is the vehicle. Execution is the engine.</p>
+    </div>
+
+    <h3>Write Your Business Identity Statement</h3>
+    <p>This is the single most important document you complete in Module 00. It forces you to commit — in writing — to who you are hosting, why they come, what makes you different, and what you are building toward. Every subsequent module decision gets checked against it.</p>
+
+    <p>A property without a defined guest avatar tries to be everything to everyone and succeeds at nothing. A property with a clear identity attracts the right guests, earns better reviews, commands premium pricing, and builds a recognizable brand over time.</p>
+
+    <div class="template-box">
+      <div class="template-label">Business Identity Statement Template</div>
+      <div class="template-field">
+        <label>Property Name</label>
+        <div class="field-line">The name guests will know this property by (e.g., "Lakeside Landing FLX")</div>
+      </div>
+      <div class="template-field">
+        <label>Property Type and Location</label>
+        <div class="field-line">e.g., "A 4-bedroom lakefront A-frame on Seneca Lake in the Finger Lakes region of New York"</div>
+      </div>
+      <div class="template-field">
+        <label>Primary Guest Avatar</label>
+        <div class="field-line">e.g., "Couples and small groups of 2–4 adults, 35–55, wine and outdoor experience travelers from NYC and Philadelphia metro areas, booking 3–5 nights"</div>
+      </div>
+      <div class="template-field">
+        <label>Primary Demand Driver</label>
+        <div class="field-line">e.g., "The Seneca Lake wine trail — 40+ wineries within 20 minutes, with Watkins Glen State Park and kayak access on the property"</div>
+      </div>
+      <div class="template-field">
+        <label>Differentiator — The One Thing</label>
+        <div class="field-line">The single feature or experience that makes this property distinct from its comp set. e.g., "Private dock with two kayaks included and a hot tub overlooking the water — the only listing in this price tier offering both"</div>
+      </div>
+      <div class="template-field">
+        <label>Year-1 Performance Targets (from Lesson 2 worksheet)</label>
+        <div class="field-line">Target Occupancy: ___% &nbsp;&nbsp; Target ADR: $___ &nbsp;&nbsp; Target RevPAR: $___ &nbsp;&nbsp; Target Annual Gross: $___</div>
+      </div>
+      <div class="template-field">
+        <label>Direct Booking Target — Year 1</label>
+        <div class="field-line">e.g., "20% of bookings from direct channel by Month 12"</div>
+      </div>
+      <div class="template-field">
+        <label>The Complete Statement (fill in using the fields above)</label>
+        <div class="field-line" style="min-height: 80px;">[Property Name] is a [property type] in [location], designed specifically for [primary guest avatar]. The primary reason guests visit this area is [demand driver]. What makes this property distinct is [differentiator]. By the end of my first year, I am targeting [occupancy]% occupancy at $[ADR] ADR, generating approximately $[annual gross] in gross revenue, with [X]% coming from direct bookings.</div>
+      </div>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ Common Mistake</div>
+      <p><strong>Writing a vague differentiator.</strong> "Beautifully decorated" is not a differentiator — every listing claims it. "The only lakefront property in this market with a private dock, kayaks included, and a hot tub within 10 feet of the water" is a differentiator. It is specific, it is verifiable, and it creates a clear expectation the guest is booking for. If your differentiator is a sentence a competitor could copy-paste onto their listing, it is not a differentiator yet.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Module 00</div>
+      <h4>Write your business identity statement</h4>
+      <div class="ai-prompt-box">I'm building a short-term rental business and want to write a clear business identity statement that guides every decision I make in this course.
+
+Here's what I know about my situation:
+- Property type: [e.g., 3-bed lakehouse, studio cabin, beachfront condo]
+- Market / location: [city, region, or lake/destination name]
+- My target guest: [e.g., couples celebrating anniversaries, family groups of 6-8, outdoor recreation enthusiasts]
+- My unique property angle: [e.g., private dock access, mountain views, walking distance to downtown]
+- Current stage: [not yet purchased / just listed / operating for X months]
+- My 12-month revenue goal: $___
+
+Write me:
+1. A two-sentence business identity statement I can state from memory — it should name my property type, my target guest, what I deliver that they can't get elsewhere, and my revenue goal
+2. A 90-day priority list — the 3 most important things I need to accomplish given my current stage (Operational / Growth / Scale)
+3. One sentence I can say to a stranger that explains what I'm building — not just "I have an Airbnb"</div>
+      <p class="ai-prompt-note"><strong>Use this output</strong> to fill in your Business Identity Statement in the Module 00 deliverable worksheet. Paste your identity statement somewhere you'll see it daily — in your notes app, your OwnerRez dashboard notes, or at the top of your course notebook. The operators who treat this as a real document (not a homework exercise) make better decisions throughout the entire course.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 00 Complete When:</div>
+      <h3>All three Module 00 deliverables exist in writing and you can state your business identity in two sentences from memory.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Hub-and-Spoke Map completed — all 8 spokes rated Active or Not Yet Started</li>
+        <li><span class="check-box"></span>Performance Targets Worksheet completed — Occupancy Rate, ADR, RevPAR, and annual gross targets set for 12 months</li>
+        <li><span class="check-box"></span>Business Identity Statement written in full — property, avatar, demand driver, differentiator, and targets all captured</li>
+        <li><span class="check-box"></span>Landlord-to-Operator Audit completed — gaps identified and mapped to the modules that close them</li>
+        <li><span class="check-box"></span>You can describe the Hub-and-Spoke model, the Three Numbers, and your property's 12-month target to someone else without looking at your notes</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<section class="machine-feed">
+  <div class="mf-label">Direct Booking Machine</div>
+  <h3>Everything You're About to Build Points Here</h3>
+  <p>The Hub-and-Spoke model gives you a distribution framework. But distribution has a hierarchy — and understanding that hierarchy is what separates operators who build a real business from operators who build a permanent dependency on Airbnb.</p>
+  <p>Clearly stated: <strong>direct booking is the highest-value spoke in the system.</strong> The other spokes exist to fill dates and generate one thing that grows in value every single year: past guests who know your property and can be marketed to directly.</p>
+  <ul>
+    <li><strong>Demand Sources</strong> (Airbnb, VRBO, Google VR) — fill your calendar. Generate the first guest relationships.</li>
+    <li><strong>Capture Systems</strong> (StayFi, Guidebook Section 08, automated messages) — convert every stay into a persistent email relationship that you own.</li>
+    <li><strong>Nurture Systems</strong> (Kit email campaigns, content, reviews) — convert captured relationships into direct booking events at 15.5% higher margin per night.</li>
+  </ul>
+  <p>Every module in this course builds one or more components of this machine. When you complete the course, <strong>the direct booking channel you've built is the most valuable asset in your STR business</strong> — more valuable than your OTA rankings, because it cannot be taken from you by a platform algorithm change, a policy update, or an account suspension.</p>
+</section>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 00: Foundation &nbsp;·&nbsp; Next: Module 01 — Acquisition
+</footer>

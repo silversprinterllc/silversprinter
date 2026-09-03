@@ -8,7 +8,7 @@ const perks = [
   'Full course access as modules launch (all 14 modules)',
   'Founding Member badge — permanent recognition',
   'Direct Slack access to Ben (not available at any other tier)',
-  'Priority enrollment for future Intensives & cohorts',
+  'Priority access for future Build launches & live cohorts',
   '60+ templates, checklists & swipe files',
   'Local Guide Engine Playbook — the crown jewel module',
   'Lifetime access + every future update',

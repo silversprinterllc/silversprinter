@@ -67,7 +67,7 @@ function CourseJsonLd() {
     offers: [
       {
         '@type': 'Offer',
-        name: 'The System — Self-Paced Course',
+        name: 'The System — Self-Paced Online Course',
         price: '1997',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
@@ -75,19 +75,19 @@ function CourseJsonLd() {
       },
       {
         '@type': 'Offer',
-        name: 'The Intensive — Done-With-You Cohort',
-        price: '4997',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        category: 'Live Cohort Program',
-      },
-      {
-        '@type': 'Offer',
-        name: 'The Concierge — Done-For-You Build',
-        price: '7500',
+        name: 'The Build — Done-For-You Website',
+        price: '5497',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
         category: 'Done-For-You Service',
+      },
+      {
+        '@type': 'Offer',
+        name: 'The Bundle — System + Build',
+        price: '6994',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        category: 'Bundle',
       },
     ],
     hasCourseInstance: {

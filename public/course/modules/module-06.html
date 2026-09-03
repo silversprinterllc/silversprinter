@@ -1,0 +1,1071 @@
+<title>Module 06 — Guest Capture & Lifetime Value</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7;
+    --gold-bg: rgba(212,160,23,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232; --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232; --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+  a { color: var(--gold); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Gold statement block — the thesis */
+  .gold-block { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 36px 40px; margin: 40px 0; text-align: center; }
+  .gold-block p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-style: italic; color: #fff; line-height: 1.6; margin: 0; }
+  .gold-block p strong { color: var(--gold); font-style: normal; }
+
+  /* Math table */
+  .math-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0; }
+  .math-table thead tr { background: var(--navy); }
+  .math-table thead th { padding: 10px 16px; text-align: left; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .math-table tbody tr { border-bottom: 1px solid var(--border); }
+  .math-table tbody tr:last-child { border-bottom: none; }
+  .math-table td { padding: 12px 16px; vertical-align: top; color: var(--muted); }
+  .math-table td:first-child { font-weight: 600; color: var(--text); }
+  .math-table .highlight { background: var(--gold-bg); }
+  .math-table .win { color: #16a34a; font-weight: 700; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math-table .win { color: #86efac; } }
+  :root[data-theme="dark"] .math-table .win { color: #86efac; }
+
+  /* Funnel diagram */
+  .funnel { margin: 28px 0; }
+  .funnel-step { display: flex; gap: 16px; margin-bottom: 8px; align-items: flex-start; }
+  .funnel-icon { width: 44px; height: 44px; min-width: 44px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .funnel-body { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; flex: 1; }
+  .funnel-body .f-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .funnel-body .f-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .funnel-body p { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .funnel-arrow { text-align: center; color: var(--gold); font-size: 18px; margin: 2px 0 2px 52px; }
+
+  /* Site requirements */
+  .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+  .site-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .site-card.required { border-left: 3px solid var(--gold); }
+  .site-card.required .sc-tag { color: var(--gold); }
+  .site-card .sc-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .site-card .sc-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .site-card p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  /* Email templates */
+  .email-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+  .email-header { background: var(--navy); padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+  .email-num { width: 28px; height: 28px; min-width: 28px; background: var(--gold); color: var(--navy); border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .email-meta { flex: 1; }
+  .email-trigger { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+  .email-name { font-size: 14px; font-weight: 700; color: #fff; }
+  .email-timing { font-size: 11px; color: var(--gold); font-weight: 600; }
+  .email-body { padding: 20px; }
+  .email-subject { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .email-subject span { color: var(--text); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 14px; }
+  .email-text { background: var(--math-bg); border: 1px solid var(--math-border); border-left-width: 3px; border-radius: 8px; padding: 16px 18px; font-size: 14px; color: var(--text); line-height: 1.8; white-space: pre-line; font-style: italic; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .email-text { color: #7dd3fc; } }
+  :root[data-theme="dark"] .email-text { color: #7dd3fc; }
+  .email-note { font-size: 12px; color: var(--muted); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+  .step-content ul { font-size: 14px; margin-top: 6px; }
+
+  /* Comparison */
+  .compare-wrap { overflow-x: auto; margin: 24px 0; }
+  .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  /* Year-over-year tracker */
+  .growth-track { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 24px 0; }
+  .growth-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; text-align: center; }
+  .growth-card .g-year { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .growth-card .g-pct { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .growth-card .g-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .growth-card.gold-tier { border: 2px solid var(--gold); background: var(--gold-bg); }
+
+  /* Template */
+  .template-box { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+  .template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .field .line { border-bottom: 1px solid var(--border); min-height: 22px; font-size: 12px; color: var(--muted); font-style: italic; padding-bottom: 2px; }
+
+  /* Case study */
+  .case-study { background: var(--navy); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .case-study-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .case-study h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 12px; }
+  .case-study p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 10px; }
+  .case-study p:last-child { margin-bottom: 0; }
+  .case-study strong { color: rgba(255,255,255,0.9); }
+  .case-study ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; }
+  .case-study li { margin-bottom: 6px; }
+
+  /* Checkpoint */
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  /* ── Machine Frame ── */
+  .machine-frame { margin: 56px 0; }
+  .machine-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .machine-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text); margin-bottom: 16px; }
+  .machine-intro { color: var(--muted); font-size: 15px; line-height: 1.8; max-width: 720px; margin-bottom: 40px; }
+
+  .machine-diagram { display: grid; grid-template-columns: 1fr 36px 1fr; gap: 0 8px; align-items: start; }
+
+  .machine-feeds { display: flex; flex-direction: column; gap: 10px; }
+  .machine-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; margin-top: 4px; line-height: 1.6; }
+  .machine-section-label span { display: block; font-weight: 400; color: var(--muted); letter-spacing: 0; text-transform: none; font-size: 11px; margin-top: 1px; }
+
+  .feed-card { display: flex; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .feed-card.mod { border-left: 3px solid rgba(9,38,58,0.35); }
+  .feed-card.capture { border-left: 3px solid var(--gold); }
+  .feed-card.nurture { border-left: 3px solid #16a34a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .feed-card.mod { border-left-color: rgba(212,160,23,0.25); } }
+  :root[data-theme="dark"] .feed-card.mod { border-left-color: rgba(212,160,23,0.25); }
+  .feed-mod { width: 30px; min-width: 30px; height: 30px; background: var(--navy); color: var(--gold); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; letter-spacing: 0.05em; margin-top: 2px; }
+  .feed-mod.cap { background: var(--gold); color: var(--navy); }
+  .feed-mod.nur { background: #16a34a; color: #fff; }
+  .feed-body { flex: 1; }
+  .feed-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .feed-role { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  /* arrow column */
+  .machine-arrow-col { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 140px; }
+  .machine-arrow-line { flex: 1; width: 2px; background: linear-gradient(to bottom, transparent, var(--gold) 20%, var(--gold) 80%, transparent); max-height: 480px; }
+  .machine-arrow-head { color: var(--gold); font-size: 22px; writing-mode: vertical-rl; transform: rotate(90deg) translateY(4px); }
+
+  /* output column */
+  .machine-output { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 24px; }
+  .output-hub { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 24px; text-align: center; }
+  .output-icon { font-size: 32px; margin-bottom: 12px; }
+  .output-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .output-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 20px; line-height: 1.5; }
+  .output-fee { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 16px; text-align: left; }
+  .output-fee-line { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 12px; }
+  .fee-gone { color: rgba(255,255,255,0.4); text-decoration: line-through; }
+  .fee-keep { color: #86efac; font-weight: 600; }
+  .fee-label { color: var(--gold); font-weight: 700; font-size: 11px; }
+
+  .output-metrics { display: flex; flex-direction: column; gap: 10px; }
+  .output-metric { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
+  .output-metric.gold-metric { border-color: var(--gold); background: var(--gold-bg); }
+  .om-value { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); min-width: 64px; text-align: center; }
+  .om-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .output-truth { background: var(--navy); border-radius: 12px; padding: 22px 24px; }
+  .ot-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .output-truth p { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.75; margin: 0; }
+  .output-truth p strong { color: rgba(255,255,255,0.9); }
+
+  @media (max-width: 700px) {
+    .machine-diagram { grid-template-columns: 1fr; }
+    .machine-arrow-col { flex-direction: row; padding-top: 0; padding: 8px 0; }
+    .machine-arrow-line { flex: 1; height: 2px; width: auto; max-height: none; background: linear-gradient(to right, transparent, var(--gold) 20%, var(--gold) 80%, transparent); }
+    .machine-arrow-head { writing-mode: initial; transform: none; }
+    .machine-output { position: static; }
+  }
+  @media (max-width: 600px) {
+    .growth-track { grid-template-columns: repeat(2,1fr); }
+    .site-grid { grid-template-columns: 1fr; }
+  }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 06</div>
+    <h1>Guest Capture & Lifetime Value</h1>
+    <p class="subtitle">The economics of platform independence, building your booking site, connecting Google Vacation Rentals, and running the past-guest reactivation campaigns that compound your direct channel every single year</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 2: Own</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>6–10 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 05 — Operations</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 07 — Email Marketing</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 03: Launch</span>
+    <span class="arrow">→</span>
+    <span>Module 04: Revenue</span>
+    <span class="arrow">→</span>
+    <span>Module 05: Operations</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 06: Direct Booking</span>
+    <span class="arrow">→</span>
+    <span>Module 07: Email Marketing</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Economics</a>
+    <a href="#lesson-2">02 — Your Booking Site</a>
+    <a href="#lesson-3">03 — Google Vacation Rentals</a>
+    <a href="#lesson-4">04 — Past Guest Reactivation</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🔑</div>
+    <div>
+      <div class="label">Module 06 Deliverable</div>
+      <p>A live direct booking site with a working calendar and payment processing. Google Vacation Rentals connected through OwnerRez, making your property searchable on Google. Your first past-guest reactivation email campaign sent to your StayFi list. A written Direct Booking Rate target and a 12-month tracking plan for growing the channel.</p>
+    </div>
+  </div>
+
+  <div class="gold-block">
+    <p>Every Airbnb booking, every VRBO booking — you are renting the guest relationship. The platform holds the email. The platform holds the review. The platform holds the next booking. <strong>Direct booking is the act of ending that arrangement</strong> — of saying: this guest is mine, this relationship is mine, and if Airbnb changes its algorithm tomorrow, my business is still standing.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STRATEGIC FRAME: THE DIRECT BOOKING MACHINE           -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="machine-frame">
+    <div class="machine-label">The SpokeBnB Strategic Model</div>
+    <h2 class="machine-title">The Direct Booking Machine</h2>
+    <p class="machine-intro">Look back at every module in this course. Each one built a component of a single system — and this is the system it was building. Airbnb fills your calendar in the short term. But every guest who stays becomes a lead for the highest-margin transaction in your business: a direct booking. The capture tools, the nurture tools, the multi-channel strategy — they exist to grow the direct booking channel. That is where the economics of this business permanently shift in your favor.</p>
+
+    <div class="machine-diagram">
+      <!-- FEED COLUMN -->
+      <div class="machine-feeds">
+        <div class="machine-section-label">Demand Sources<br><span>Fill your calendar, create past-guest relationships</span></div>
+        <div class="feed-card mod">
+          <div class="feed-mod">M03</div>
+          <div class="feed-body">
+            <div class="feed-name">Airbnb</div>
+            <div class="feed-role">Primary demand engine — the new-listing window, review velocity, and algorithm placement fill your calendar with your first guests. Every Airbnb guest is a future direct booking lead.</div>
+          </div>
+        </div>
+        <div class="feed-card mod">
+          <div class="feed-mod">M04</div>
+          <div class="feed-body">
+            <div class="feed-name">VRBO</div>
+            <div class="feed-role">Second demand channel — longer stays, different guest profile. Fills shoulder dates Airbnb misses. Each VRBO guest enters your StayFi capture system the same way Airbnb guests do.</div>
+          </div>
+        </div>
+        <div class="feed-card mod">
+          <div class="feed-mod">M06</div>
+          <div class="feed-body">
+            <div class="feed-name">Google Vacation Rentals</div>
+            <div class="feed-role">Free search distribution. Routes high-intent search traffic directly to your booking site — not to Airbnb. No commission. The only OTA-adjacent channel that points directly into the direct booking machine.</div>
+          </div>
+        </div>
+
+        <div class="machine-section-label" style="margin-top:28px;">Capture Systems<br><span>Convert every stay into a persistent guest relationship</span></div>
+        <div class="feed-card capture">
+          <div class="feed-mod cap">M02</div>
+          <div class="feed-body">
+            <div class="feed-name">StayFi WiFi Capture</div>
+            <div class="feed-role">Every guest who connects to your WiFi opts into your Kit list. This is the primary email capture mechanism — it runs during every stay, on every channel, forever. The list grows automatically.</div>
+          </div>
+        </div>
+        <div class="feed-card capture">
+          <div class="feed-mod cap">M05</div>
+          <div class="feed-body">
+            <div class="feed-name">Branded Guidebook — Section 08</div>
+            <div class="feed-role">The in-property direct booking offer. Physical QR code → direct booking site → conversion during or after the stay. The only OTA-compliant touchpoint that can include a direct booking link.</div>
+          </div>
+        </div>
+        <div class="feed-card capture">
+          <div class="feed-mod cap">M05</div>
+          <div class="feed-body">
+            <div class="feed-name">Automated Message Sequence</div>
+            <div class="feed-role">6 touchpoints across every stay. Builds a personal relationship between you and the guest. A guest who remembers the host is 3× more likely to search for a direct booking option before returning to Airbnb.</div>
+          </div>
+        </div>
+
+        <div class="machine-section-label" style="margin-top:28px;">Nurture Systems<br><span>Convert captured relationships into direct bookings</span></div>
+        <div class="feed-card nurture">
+          <div class="feed-mod nur">M07</div>
+          <div class="feed-body">
+            <div class="feed-name">Email Marketing — Kit</div>
+            <div class="feed-role">Seasonal campaigns, pre-sale windows, and the past-guest reactivation sequence. The primary engine that converts your StayFi list into direct booking events. ROI compounds as the list grows.</div>
+          </div>
+        </div>
+        <div class="feed-card nurture">
+          <div class="feed-mod nur">M08</div>
+          <div class="feed-body">
+            <div class="feed-name">Content &amp; SEO</div>
+            <div class="feed-role">Organic search traffic routed to your direct booking site. Local guides, area content, and property-specific pages that rank in Google over time. Zero cost per visit, zero commission per booking.</div>
+          </div>
+        </div>
+        <div class="feed-card nurture">
+          <div class="feed-mod nur">M10</div>
+          <div class="feed-body">
+            <div class="feed-name">Reviews</div>
+            <div class="feed-role">The social proof layer that converts direct booking site visitors who haven't stayed before. A 4.9-star Airbnb profile linked from your direct site is the trust signal that closes cold-traffic bookings.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <div class="machine-arrow-col">
+        <div class="machine-arrow-line"></div>
+        <div class="machine-arrow-head">▶</div>
+      </div>
+
+      <!-- OUTPUT COLUMN -->
+      <div class="machine-output">
+        <div class="machine-section-label">The Destination<br><span>The highest-margin transaction in your business</span></div>
+        <div class="output-hub">
+          <div class="output-icon">🔑</div>
+          <div class="output-title">Direct Booking</div>
+          <div class="output-sub">Your direct booking site<br>OwnerRez + Stripe + Custom Domain</div>
+          <div class="output-fee">
+            <div class="output-fee-line"><span class="fee-gone">15.5% Airbnb host fee</span><span class="fee-label">→ Gone</span></div>
+            <div class="output-fee-line"><span class="fee-keep">100% of your listed rate</span><span class="fee-label">→ Yours</span></div>
+          </div>
+        </div>
+
+        <div class="output-metrics">
+          <div class="output-metric">
+            <div class="om-value">$46.50</div>
+            <div class="om-label">per night returned to you &amp; guest on a $300 listing</div>
+          </div>
+          <div class="output-metric">
+            <div class="om-value">3,720</div>
+            <div class="om-label">dollars in avoided fees at 80 direct nights/year</div>
+          </div>
+          <div class="output-metric gold-metric">
+            <div class="om-value">∞</div>
+            <div class="om-label">The guest list grows every year. The machine never resets.</div>
+          </div>
+        </div>
+
+        <div class="output-truth">
+          <div class="ot-label">The Strategic Truth</div>
+          <p>Airbnb and VRBO are not the destination. They are the acquisition layer — the platforms that introduce guests to your property. Once a guest has stayed, they belong in your direct booking system. The OTA channels exist to fill dates and generate leads. <strong>Every system you build in this course exists to grow the percentage of your bookings that happen without a platform between you and the guest.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Economics — What You Lose to Platforms Every Year, and What You Get Back</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand exactly what OTA platforms cost you per booking, what direct booking saves both you and your guest, and why the guest list — not the fee savings — is the real long-term asset.
+    </div>
+
+    <p>The conversation about direct booking usually starts with fees. That's the right place to start — the math is motivating — but it's not where the real argument ends. Fee savings are the immediate return. The guest relationship is the compounding asset. The two together are why direct booking is the highest-leverage spoke on the Hub-and-Spoke wheel.</p>
+
+    <h3>The Airbnb Fee Structure — Where the Money Goes</h3>
+    <p>Airbnb operates on a <strong>host-only fee model at 15.5%</strong>. The full platform charge is deducted from your payout — the guest sees only your listed rate with no separate service fee added on top. On a $300/night, 3-night booking ($900 subtotal):</p>
+    <ul>
+      <li><strong>You pay: $139.50</strong> — Airbnb deducts 15.5% ($46.50/night) from your payout before transferring your earnings</li>
+      <li><strong>Guest pays: $900</strong> — exactly what your listing shows, no surcharge</li>
+      <li><strong>You receive: $760.50</strong> — $253.50/night on a $300 listed rate</li>
+    </ul>
+    <p>The platform cost per booking at $300/night: <strong>$46.50 per night</strong>, entirely from your side of the transaction. This is the spread that makes direct booking economics work — you have $46.50 per night in room to offer a meaningful guest discount, earn more than you would through Airbnb, and return zero to the platform.</p>
+
+    <h3>The Win-Win Pricing Equation</h3>
+    <p>Because Airbnb holds 15.5% of every booking on your behalf, you have significant room to price your direct booking site <em>below</em> your Airbnb listed rate, deliver real guest savings, and still net substantially more per night than you receive from Airbnb. The $46.50/night the platform was collecting doesn't disappear — it redistributes between you and the guest, in whatever proportion you choose.</p>
+
+    <div class="compare-wrap">
+      <table class="math-table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Your Listed/Direct Rate</th>
+            <th>What Guest Pays (All-In)</th>
+            <th>What You Receive</th>
+            <th>Platform Earnings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Airbnb booking</td>
+            <td>$300/night listed</td>
+            <td>$300/night (no separate service fee)</td>
+            <td>$253.50/night ($300 − 15.5% host fee)</td>
+            <td>$46.50/night ($139.50 on a 3-night stay)</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>Direct booking — Option A</strong></td>
+            <td>$280/night direct (~7% off)</td>
+            <td>$280/night (saves $20 vs. Airbnb)</td>
+            <td class="win">$280/night (+$26.50 vs. Airbnb)</td>
+            <td class="win">$0</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>Direct booking — Option B</strong></td>
+            <td>$265/night direct (~12% off)</td>
+            <td>$265/night (saves $35 vs. Airbnb)</td>
+            <td class="win">$265/night (+$11.50 vs. Airbnb)</td>
+            <td class="win">$0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Option A: you earn $26.50 more per night. Guest saves $20 vs. Airbnb. Platform earns nothing.<br>
+    Option B: you earn $11.50 more per night. Guest saves $35 vs. Airbnb. Platform earns nothing.<br>
+    Either option: both parties are ahead. <strong>The $46.50/night Airbnb was collecting is the source of every dollar of benefit in this transaction.</strong></p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Annual Value of Growing Your Direct Channel</div>
+      <p><strong>Year 1 goal: 15 direct-booked nights.</strong> At $280/night (Option A): you earn $397 more than you would have from the same nights on Airbnb. Solid for Year 1. The real math is in what you built: a live direct booking site, a growing past-guest list, and a working conversion funnel that operates without you.</p>
+      <p><strong>Year 2 goal: 40 direct nights.</strong> Additional earnings vs. Airbnb: $1,060. Your guest list is growing with every stay. The guidebook QR code is converting. Google Vacation Rentals is sending search traffic you didn't pay for.</p>
+      <p><strong>Year 3 goal: 80 direct nights (roughly 30% of annual inventory).</strong> Additional earnings vs. Airbnb: $2,120. Platform fees you did not pay on those 80 nights: $3,720 (80 × $46.50). Combined economic benefit of the direct channel: <strong>over $5,800 in Year 3 alone</strong> — and the channel is still growing.</p>
+      <p>These are conservative projections using Option A pricing. <strong>Operators with 30–40% direct booking rates consistently report their direct channel as the highest-margin revenue in their business</strong> — not just from fee savings, but because direct guests have higher average stays, higher repeat rates, and are more likely to refer others.</p>
+    </div>
+
+    <h3>The Argument That Goes Beyond the Fees</h3>
+    <p>Suppose Airbnb changes its algorithm tomorrow and deprioritizes your listing. Your booking rate drops 40%. If your entire business runs through Airbnb, your income drops 40%. If 30% of your bookings are direct, your income drops 28% — still painful, but survivable, and you have the tools to close the gap through your own channel.</p>
+
+    <p>Suppose Airbnb suspends your listing over a dispute. Happens more than operators realize — a false damage claim from a guest, a neighborhood noise complaint that escalates to a platform review, a policy violation you didn't know about. Your Airbnb income goes to zero while the investigation runs. Your direct bookings continue. Your VRBO bookings continue. Your email list is still there. Your website is still there. The suspension is serious — not catastrophic.</p>
+
+    <p><strong>Platform dependency is existential risk.</strong> Every OTA booking you convert to a direct relationship is a hedge against that risk. Not because OTA platforms are your enemy — they are valuable distribution partners — but because your business cannot afford to be fully owned by any single entity you don't control.</p>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You understand the fee structure, can articulate the win-win pricing equation, and have set a Year 1 direct booking night target.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Fee math calculated for your property: what Airbnb takes per night at your current ADR</li>
+        <li><span class="cp-box"></span>Direct booking pricing decided: Option A (price slightly above Airbnb listed rate, guest still saves) or Option B (match or slight discount)</li>
+        <li><span class="cp-box"></span>Year 1 direct booking target set: ___ nights direct out of ___ total projected nights</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Your Booking Site — The Minimum Viable Version and What It Must Do</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Launch a live direct booking site that handles availability, payments, and guest communication — starting with OwnerRez's built-in hosted site, and understanding when and how to upgrade it.
+    </div>
+
+    <p>The most common reason operators delay building their direct booking site is believing it requires a web developer, a complex technical setup, and significant time investment. The minimum viable direct booking site requires none of those things. You already have everything you need: OwnerRez (from Module 02), your listing photos, your description, and your calendar. The site itself takes an afternoon to configure correctly.</p>
+
+    <h3>What Your Direct Booking Site Must Do — Non-Negotiable Requirements</h3>
+
+    <div class="site-grid">
+      <div class="site-card required">
+        <div class="sc-tag">Required</div>
+        <div class="sc-name">Live Availability Calendar</div>
+        <p>Shows which dates are open and which are blocked. Syncs with your Airbnb and VRBO calendars through OwnerRez. A guest who can see availability will attempt to book. A guest who can't will go back to Airbnb.</p>
+      </div>
+      <div class="site-card required">
+        <div class="sc-tag">Required</div>
+        <div class="sc-name">Online Payment Processing</div>
+        <p>Stripe or PayPal, connected through OwnerRez. The guest completes the full payment flow on your site. No "call to pay by phone" — that friction kills conversions. Credit card processing must work flawlessly on mobile.</p>
+      </div>
+      <div class="site-card required">
+        <div class="sc-tag">Required</div>
+        <div class="sc-name">Automated Booking Confirmation</div>
+        <p>Your PMS fires the same 6-message sequence for a direct booking as it does for an Airbnb booking. The guest should not experience a lower-quality communication flow just because they booked direct. If anything, the direct booking flow should feel more personal.</p>
+      </div>
+      <div class="site-card required">
+        <div class="sc-tag">Required</div>
+        <div class="sc-name">Cover Photo + Property Description</div>
+        <p>Your best photo and your listing description. Guests arriving at your direct booking site need immediate confidence that this is the real property. Use your best Airbnb listing photo and your best description copy — you already wrote it.</p>
+      </div>
+      <div class="site-card required">
+        <div class="sc-tag">Required</div>
+        <div class="sc-name">Reviews or Social Proof</div>
+        <p>A guest who finds your site through the QR code has already stayed. A guest who finds you through Google has not. For the latter, your reviews are everything. Link your Airbnb profile where reviews are visible, or embed selected review quotes manually.</p>
+      </div>
+      <div class="site-card">
+        <div class="sc-tag">Highly Recommended</div>
+        <div class="sc-name">Direct Booking Discount Offer</div>
+        <p>Make the value of booking direct explicit. "Book direct and save $[X] per night — I pass my platform savings to you" stated clearly on the page. Use a specific dollar amount, not a percentage. At $280/night direct vs. $300 on Airbnb, that's "Save $20/night by booking here." The guest needs to see an immediate, concrete reason to book direct over returning to Airbnb.</p>
+      </div>
+      <div class="site-card">
+        <div class="sc-tag">Optional — Add Later</div>
+        <div class="sc-name">Area Guide Section</div>
+        <p>Your local recommendations from the guidebook, adapted for the web. Adds credibility, answers pre-booking questions, and improves Google ranking for local search terms ("things to do near Seneca Lake," "Finger Lakes vacation rental").</p>
+      </div>
+      <div class="site-card">
+        <div class="sc-tag">Optional — Add Later</div>
+        <div class="sc-name">Email Opt-In</div>
+        <p>A field to capture the email of website visitors who didn't book. Connected to your Kit account. Turns browsing visitors into future email subscribers — important for Module 07's email marketing campaign.</p>
+      </div>
+    </div>
+
+    <h3>Building the Site — OwnerRez Hosted Website (Start Here)</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>In OwnerRez: go to Websites → Add Website.</strong> OwnerRez's hosted website builder creates a single-property booking page that is live within minutes. It automatically pulls your property name, photos, description, amenities, calendar, and pricing from your OwnerRez property setup. You are not building a site from scratch — you are publishing what you already built.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Choose a domain name and connect it.</strong> OwnerRez provides a default URL ([yourproperty].ownerreservations.com) that works immediately. For a professional direct booking presence, buy your own domain. Recommended format: [PropertyName].com or [PropertyName]stays.com or book[PropertyName].com. Use Namecheap or Google Domains — a domain costs $10–15/year. In your domain registrar's DNS settings, point the domain to OwnerRez following their domain connection guide. This takes 24–48 hours to propagate.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Connect Stripe for payment processing.</strong> In OwnerRez: Settings → Payment Methods → Add Stripe. Stripe's setup is a 10-minute process — you'll need your bank account information and Social Security Number or EIN for identity verification. Once connected, your direct booking site accepts credit card payments that deposit directly into your bank account within 2 business days. OwnerRez handles the PCI compliance layer — you do not need to build payment processing yourself.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Set your direct booking pricing.</strong> In OwnerRez: Properties → [Your Property] → Rates. Create a rate override for direct bookings (or use a rate source specific to your direct channel). Set this at your decided direct booking rate from Lesson 1. If you're using PriceLabs, verify that the direct channel rate is syncing correctly — PriceLabs can manage direct booking pricing through OwnerRez the same way it manages Airbnb and VRBO rates.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Add the direct booking savings statement to your site's header or hero section.</strong> OwnerRez's website builder allows you to add custom text to your property page. Use a specific dollar amount: "Book directly and save $20 per night — same property, same experience, better rate." Specific savings outperform percentage-based framing every time. Guests who arrive from the guidebook QR code already know the property — give them an immediate, concrete reason to complete the booking here rather than returning to Airbnb.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Test a complete booking on your live site.</strong> Open your site from your phone (not as the owner — as a guest would). Attempt to book a 2-night stay in the next 30 days. Walk through the entire flow: calendar availability check → select dates → enter guest details → payment information → confirmation. Verify that the booking appears in OwnerRez, the calendar updates on Airbnb and VRBO (confirming the sync is bidirectional), and the automated message sequence fires. Correct any friction in the flow before the QR code in your guidebook starts sending guests to the site.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ When to Upgrade Beyond OwnerRez's Hosted Site</div>
+      <p>OwnerRez's hosted site is a fully functional direct booking site. It is not, however, a custom-designed brand experience. If your direct booking channel grows to 30%+ of bookings and your property has strong brand recognition (a memorable name, a social presence, repeat guests who follow you), upgrading to a custom website (Webflow, WordPress with a booking plugin, or Hospitable's direct booking feature) is worth the investment. Build the OwnerRez site first — get bookings, understand what your guests ask about before booking, and build the custom site when you know what it needs to do. Do not let the perfect be the enemy of the live.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your "Why Book Direct" Page Copy</h4>
+      <div class="ai-prompt-box">You are helping me write the "Why Book Direct" section for my vacation rental's direct booking website.
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE — e.g., Seneca Lake, NY]
+Property type: [CABIN / LAKE HOUSE / BEACH HOUSE / COTTAGE]
+Airbnb nightly listed rate: $[LISTED RATE]
+My Airbnb net payout per night: $[LISTED RATE × 0.845] (after 15.5% host fee)
+My direct booking rate: $[DIRECT RATE — typically $15–25 below listed rate]
+Guest savings vs. Airbnb listed price: $[LISTED minus DIRECT] per night
+
+Write three things:
+1. A headline for the "Why Book Direct" section — one punchy line, not a question
+2. Three bullet points explaining the guest benefit — fee savings, personal host access, and flexibility
+3. A 2-sentence closing call to action encouraging the visitor to check availability or reach out directly
+
+Tone: warm and direct, like a host talking to a future guest — not corporate, not salesy.</div>
+      <p class="ai-prompt-note"><strong>Before pasting:</strong> Replace all bracketed fields with your actual numbers from Lesson 1's fee math. The guest savings figure is your conversion anchor — use the specific dollar amount, not a percentage. "Save $20 per night" outperforms "save a percentage" significantly in click-through tests.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your direct booking site is live, has a custom domain, accepts payments, and a complete test booking has been successfully processed.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>OwnerRez hosted website published — property name, description, photos, and calendar pulling correctly</li>
+        <li><span class="cp-box"></span>Custom domain purchased and connected — live at [PropertyName].com or equivalent</li>
+        <li><span class="cp-box"></span>Stripe connected and payment processing confirmed with a test transaction</li>
+        <li><span class="cp-box"></span>Direct booking pricing set — rate configured in OwnerRez for the direct channel</li>
+        <li><span class="cp-box"></span>Discount language added to the site header or hero</li>
+        <li><span class="cp-box"></span>Complete test booking processed — calendar sync confirmed bidirectional, message sequence confirmed firing</li>
+        <li><span class="cp-box"></span>Direct booking URL updated in the guidebook's Section 08 QR code — confirmed the QR code links to the live site</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Google Vacation Rentals — Free Search Traffic to Your Direct Booking Site</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Connect your direct booking site to Google Vacation Rentals through OwnerRez, so your property appears in Google Search results when travelers search for vacation rentals in your market — driving free, high-intent traffic directly to your booking site, not to Airbnb or VRBO.
+    </div>
+
+    <p>When someone opens Google and types "vacation rentals Seneca Lake" or "lake house Finger Lakes," they see a Google Vacation Rentals result block — a curated list of properties that link directly to booking pages. If you are not in that result block, you are invisible to every guest who starts their search on Google rather than Airbnb. If you are in that result block, Google sends those guests to your direct booking site, not to Airbnb. For free. This is among the highest-value actions in this entire module.</p>
+
+    <p>Google Vacation Rentals is not a separate listing platform — it is a search surface that aggregates property data from connected PMSs. OwnerRez has a direct Google Vacation Rentals integration. When you connect it, Google ingests your property listing, calendar, and pricing from OwnerRez and makes your property searchable. The booking still happens on your OwnerRez-hosted direct booking site — Google just provides the discovery.</p>
+
+    <h3>Setting Up Google Vacation Rentals in OwnerRez</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>In OwnerRez: go to Channels → Google Vacation Rentals → Connect.</strong> OwnerRez's Google VR integration is a native channel connection — the same way you connected Airbnb and VRBO. Follow the setup wizard. You will need a Google account (your existing Google account is fine) to authorize the connection. OwnerRez will prompt you to verify property ownership through a simple domain verification process.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Complete the property profile for Google VR.</strong> Google Vacation Rentals has specific data requirements beyond what your OwnerRez setup automatically provides. Review these carefully: geo-coordinates (Google pulls from your address but verify they map correctly), property type classification, amenity tags (choose every applicable amenity — Google uses these for filtered search), and a minimum of 10 property photos with specific required shots (exterior, bedroom, bathroom, kitchen). Missing data fields can cause your listing to be excluded from search results.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Set your Google VR pricing strategy.</strong> Google shows guests the nightly rate and total trip cost when they hover over your listing in search results. The rate it shows comes from your OwnerRez pricing. If you're using PriceLabs through OwnerRez, Google VR inherits the dynamic rates automatically — your Google pricing stays current without manual management. Verify that your direct booking rate (not your Airbnb rate) is what Google VR displays. Guests clicking from Google should land on your direct booking site at the direct booking price.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Submit for Google review and wait for listing activation.</strong> Google reviews all new vacation rental listings for policy compliance before making them searchable. This process typically takes 1–5 business days. You will receive an email notification when your listing is approved. After approval, search "vacation rentals [your market]" on Google — your property should appear in the results block. If it doesn't appear within 2 weeks of approval, review OwnerRez's Google VR troubleshooting guide for missing data requirements.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Monitor Google VR performance in OwnerRez.</strong> OwnerRez tracks referral source for every booking — you will be able to see how many bookings originated from Google Vacation Rentals over time. In the first 3–6 months, Google VR bookings are typically a small fraction of total bookings. Over 12–18 months, as Google's algorithm indexes your listing and your property accumulates reviews, organic Google search traffic grows. Operators who have been on Google VR for 2+ years with strong direct booking sites often report it as their second-largest booking source after Airbnb.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>What Google VR Is and Is Not</h3>
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Google Vacation Rentals Is</th><th>Google Vacation Rentals Is Not</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>A free search distribution channel that drives traffic to your direct booking site</td>
+            <td>A booking platform like Airbnb — Google doesn't manage the booking, payment, or guest relationship</td>
+          </tr>
+          <tr>
+            <td>High-intent search traffic — guests searching "vacation rentals near X" are actively looking to book</td>
+            <td>Guaranteed immediate bookings — it takes time for Google's algorithm to rank your listing within its market</td>
+          </tr>
+          <tr>
+            <td>Commission-free. Google earns nothing per booking — there is no platform fee, no guest service fee.</td>
+            <td>A replacement for OTA channels — it adds a channel; it doesn't remove the need for Airbnb or VRBO</td>
+          </tr>
+          <tr>
+            <td>A competitive advantage against operators who haven't connected it — most haven't</td>
+            <td>Maintenance-free — your listing data must stay current (photos, amenities, pricing) or Google may demote it</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Local SEO — The Long Game Alongside Google VR</div>
+      <p>Google Vacation Rentals is a structured product. Alongside it runs organic Google search — when someone searches "Finger Lakes vacation rental lake view hot tub," your website can appear in the regular organic results if it has the right content. Your direct booking site's area guide section (added in Lesson 2's "Optional — Add Later" items) is the primary driver of organic SEO. Each page on your site that covers a specific local topic ("best wineries near Watkins Glen," "things to do on Seneca Lake") becomes a potential organic search result. This builds over months, not days — but the operator who starts building it in Month 6 is years ahead of the one who starts in Year 3.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>Google Vacation Rentals is connected through OwnerRez, your listing is approved, and you can find your property in Google search results for your market.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>OwnerRez → Google Vacation Rentals channel connected and authorized</li>
+        <li><span class="cp-box"></span>Property profile completed — geo-coordinates verified, minimum 10 photos uploaded, all applicable amenity tags selected</li>
+        <li><span class="cp-box"></span>Pricing confirmed — Google VR displays your direct booking rate, not Airbnb rate</li>
+        <li><span class="cp-box"></span>Google review submitted — listing approval email received</li>
+        <li><span class="cp-box"></span>Google search test: search "[your market] vacation rentals" and confirm your property appears in the Google VR results block</li>
+        <li><span class="cp-box"></span>Booking referral source tracking verified in OwnerRez — Google VR channel is distinguishable from other sources</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Past Guest Reactivation — The Highest-Converting Campaign You'll Ever Run</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Use your StayFi guest email list to run a past guest reactivation campaign — three emails, a direct booking offer, and a system for running it seasonally, every year, as the list grows.
+    </div>
+
+    <p>Since the moment your StayFi system went live in Module 02, every guest who connected to your WiFi opted into your email list. They gave you their name and email address in exchange for internet access. They didn't think of it as a marketing opt-in — but it is. These are people who have already been to your property, experienced the hot tub and the lake view and the fire pit, and went home with a positive memory. They are the most likely humans on earth to book your property again.</p>
+
+    <p>The reactivation campaign's job is simple: remind them it exists, make booking direct easy, and give them a reason to do it now rather than later. That reason is the direct booking discount — the same discount that costs you nothing to offer because the OTA fees you're saving pay for it entirely.</p>
+
+    <h3>How the Three-Email Sequence Works</h3>
+    <p>The reactivation campaign runs through Kit (your email platform from Module 02). Set it up as a sequence that fires over 3 weeks. Every guest from your StayFi list who clicks the direct booking link and books removes themselves from the sequence automatically (Kit's automation handles this — they don't need to receive emails 2 and 3 after they've already booked).</p>
+
+    <p>Run this campaign twice a year: 6 weeks before your shoulder season opens and 8 weeks before your peak season opens. Shoulder campaign gives past guests first access to shoulder dates at a modest discount. Peak campaign gives past guests a brief pre-sale window before you open the calendar fully to OTA channels.</p>
+
+    <div class="email-card">
+      <div class="email-header">
+        <div class="email-num">1</div>
+        <div class="email-meta">
+          <div class="email-trigger">Reactivation Sequence — Email 1</div>
+          <div class="email-name">The Return Invitation</div>
+        </div>
+        <div class="email-timing">Send: Day 1 of campaign</div>
+      </div>
+      <div class="email-body">
+        <div class="email-subject">Subject line: <span>[Property Name] — have you thought about coming back?</span></div>
+        <div class="email-text">Hi [First Name],
+
+You stayed at [Property Name] [season/year], and I've been thinking about the guests who made that stretch of the calendar memorable.
+
+[Season] is coming up, and the [lake is calm / leaves are starting to turn / fire pit season is officially here]. The property is in the best shape it's been — [one specific improvement or addition since they stayed, if any].
+
+If you've thought about coming back, now is the right time. I'm offering past guests who book directly a 10% discount — no Airbnb service fees, no platform markup. Just the property at a better rate than you'd find anywhere else.
+
+[BOOK DIRECT — SAVE 10%]
+[Direct booking site URL]
+
+Use code RETURNGUEST at checkout or reach out directly and I'll apply it.
+
+Looking forward to hosting you again,
+[Your Name]
+[Property Name]</div>
+        <div class="email-note"><strong>Notes:</strong> The subject line is personal and low-pressure — it invites rather than promotes. The specific seasonal detail grounds it in the current moment. The improvement line (if you have one) shows that the property is actively maintained and evolving. The direct booking link is prominent and clear — one click to see availability, one more to book. Kit will track who opens and who clicks.</div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-header">
+        <div class="email-num">2</div>
+        <div class="email-meta">
+          <div class="email-trigger">Reactivation Sequence — Email 2</div>
+          <div class="email-name">The Soft Urgency</div>
+        </div>
+        <div class="email-timing">Send: Day 10 — to openers who didn't click</div>
+      </div>
+      <div class="email-body">
+        <div class="email-subject">Subject line: <span>A few peak dates are already gone — what's left at [Property Name]</span></div>
+        <div class="email-text">Hi [First Name],
+
+Quick update from [Property Name]: [Month] is filling in. The holiday weekend and the [local event / wine festival / foliage peak / July 4th] weekend went first, as they always do.
+
+There's still good availability for [specific remaining dates or date ranges] — and the 10% past-guest discount is still on the table through the end of this month.
+
+[SEE WHAT'S AVAILABLE]
+[Direct booking site URL]
+
+No pressure either way. If the timing doesn't work this season, I hope you'll keep us in mind for the next one.
+
+[Your Name]</div>
+        <div class="email-note"><strong>Notes:</strong> This email is only sent to guests who opened Email 1 but didn't click through to the booking site. Kit's segmentation handles this automatically. The soft urgency is real — your calendar is actually filling. Don't manufacture scarcity. The brevity of this email is intentional — long Email 2s feel like spam; short ones feel like a thoughtful follow-up from a person.</div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-header">
+        <div class="email-num">3</div>
+        <div class="email-meta">
+          <div class="email-trigger">Reactivation Sequence — Email 3</div>
+          <div class="email-name">The Last Call</div>
+        </div>
+        <div class="email-timing">Send: Day 21 — final send to non-converters</div>
+      </div>
+      <div class="email-body">
+        <div class="email-subject">Subject line: <span>Last call — [Property Name] discount expires [Date]</span></div>
+        <div class="email-text">Hi [First Name],
+
+The 10% past-guest discount for [season] at [Property Name] expires [specific date, 3 days from send].
+
+After that, it's standard pricing — still a better rate direct than through Airbnb, but the extra 10% is gone.
+
+If [Property Name] has been on your mind, this is the moment.
+
+[BOOK BEFORE [DATE]]
+[Direct booking site URL]
+
+If this season doesn't work, no worries. I'll reach out again before the next one.
+
+[Your Name]</div>
+        <div class="email-note"><strong>Notes:</strong> The specific expiration date is the only urgency mechanism in this campaign. It must be real — set it, honor it, and remove the discount when it expires. Email 3 is sent to everyone who hasn't booked, including non-openers of Email 1. The subject line with a date is one of the highest open-rate formats in email marketing because it creates clear, specific urgency without manufactured scarcity.</div>
+      </div>
+    </div>
+
+    <h3>Building the Sequence in Kit</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>In Kit: go to Automations → Create a Sequence.</strong> Name it "Past Guest Reactivation — [Season] [Year]." Set up three emails at Day 1, Day 10, and Day 21. Copy the email templates above, customize the brackets, and save each email as a draft.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Set up the purchase trigger automation.</strong> In Kit: Automations → Add Rule → "If subscriber clicks [direct booking link], then remove from this sequence." This ensures that guests who book don't receive the remaining emails in the sequence. Kit tracks link clicks within emails — use the link tracking feature to connect the direct booking URL in each email to this automation rule.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Segment your StayFi list before sending.</strong> Your StayFi list includes every guest who connected to the property's WiFi — including guests who had issues or left negative reviews. Exclude anyone who had an unresolved complaint from the reactivation campaign. In Kit: add a tag "do not reactivate" to any subscriber from a problematic stay. Filter this tag out when selecting recipients for the sequence.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Create the direct booking discount code in OwnerRez.</strong> In OwnerRez: Rates → Discount Codes → Create. Set a 10% discount code named RETURNGUEST (or equivalent). Set an expiration date matching Email 3's stated deadline. The guest enters this code at checkout on your direct booking site and the discount applies automatically. Verify it works with a test booking before the campaign launches.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Schedule the campaign launch.</strong> 6 weeks before your shoulder season opens. 8 weeks before peak. Mark both dates on your annual revenue calendar from Module 04. The campaign runs automatically once launched — you don't send emails manually. Your job is to ensure dates are set, the discount code is active, and the direct booking site is working before you hit send on Email 1.</p></div>
+      </div>
+    </div>
+
+    <h3>The Compounding Math — Why This Gets Better Every Year</h3>
+
+    <div class="growth-track">
+      <div class="growth-card">
+        <div class="g-year">Year 1</div>
+        <div class="g-pct">20–40</div>
+        <div class="g-label">Past guests on your StayFi list (first full year of operation)</div>
+      </div>
+      <div class="growth-card">
+        <div class="g-year">Year 2</div>
+        <div class="g-pct">80–120</div>
+        <div class="g-label">Cumulative past guests. Open rate typically 35–45% — guests remember the property.</div>
+      </div>
+      <div class="growth-card">
+        <div class="g-year">Year 3</div>
+        <div class="g-pct">180–250</div>
+        <div class="g-label">List size that drives 10–15 direct bookings per campaign. Two campaigns per year = 20–30 direct nights annually from email alone.</div>
+      </div>
+      <div class="growth-card gold-tier">
+        <div class="g-year">Year 5+</div>
+        <div class="g-pct">400+</div>
+        <div class="g-label">A past-guest list this size is a genuine marketing asset — worth thousands in avoided OTA fees per year, compounding indefinitely.</div>
+      </div>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Year 3 Campaign Math</div>
+      <p>200 past guests on the StayFi list. Email 1 sent to all 200. 40% open rate = 80 opens. 25% click rate of openers = 20 clicks to the direct booking site. 50% of clickers book = 10 direct bookings per campaign, averaging 2.5 nights each = 25 direct nights per campaign.</p>
+      <p>Two campaigns per year = 50 direct nights from email alone, not counting Google VR traffic, the guidebook QR code, or direct referrals. At $295/night direct (vs. $291 Airbnb net), you earn $4 more per night: $200 incremental. Plus the combined OTA fee avoidance: $51 per night × 50 nights = $2,550 in fees you never paid.</p>
+      <p><strong>Total Year 3 direct booking economic benefit from email alone: ~$2,750 vs. booking the same nights through Airbnb.</strong> This number grows every year as the list grows. This is what "compounding" means in an STR context.</p>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study-label">The Real Value</div>
+      <h3>The List Is the Business</h3>
+      <p>Airbnb can change its algorithm. VRBO can raise its fees. Google can update its product. The vacation rental landscape will look different in 5 years than it looks today — it always does.</p>
+      <p>Your past-guest email list will still exist. The relationship you built with every guest who connected to your WiFi, received your 6-message sequence, found an insider tip in your mid-stay message, and came back to stay again — that is not owned by any platform. It is yours. It is the only marketing asset in this entire course that cannot be deplatformed.</p>
+      <p><strong>The operators who build large past-guest lists are the ones who survive platform disruption.</strong> When Airbnb changed its algorithm in 2022 and hundreds of operators saw their visibility and bookings drop overnight, the operators with established direct channels barely felt it. Their past guests came back through email. Their Google VR traffic kept coming. Their guidebook QR codes kept working. The platform change was a bad quarter for them — a bad year for operators with no owned channel.</p>
+      <p>Build the list. Protect the list. Market to the list. Everything else in this course makes the stays good enough that the list fills itself.</p>
+    </div>
+
+    <div class="template-box">
+      <div class="template-label">Direct Booking Rate Tracker — Review Annually</div>
+      <div class="field-row">
+        <div class="field"><label>Year</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Total Nights Booked</label><div class="line">___</div></div>
+        <div class="field"><label>Direct Nights</label><div class="line">___</div></div>
+        <div class="field"><label>Direct Booking Rate</label><div class="line">___% (direct ÷ total)</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Airbnb Nights</label><div class="line">___</div></div>
+        <div class="field"><label>VRBO Nights</label><div class="line">___</div></div>
+        <div class="field"><label>Google VR Nights</label><div class="line">___</div></div>
+        <div class="field"><label>Other</label><div class="line">___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>StayFi List Size (end of year)</label><div class="line">___</div></div>
+        <div class="field"><label>Campaigns Sent This Year</label><div class="line">___</div></div>
+        <div class="field"><label>Direct Bookings from Email</label><div class="line">___</div></div>
+        <div class="field"><label>Fees Avoided (direct nights × $51)</label><div class="line">$___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="grid-column:1/-1"><label>Next Year's Direct Booking Target</label><div class="line">___ nights (___ % of projected total)</div></div>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your 3-Email Past-Guest Reactivation Sequence</h4>
+      <div class="ai-prompt-box">You are helping me customize a 3-email past-guest reactivation campaign for my vacation rental. I will send this to past guests who stayed more than 6 months ago.
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+Target season I'm filling: [e.g., "fall shoulder season" / "February off-season"]
+Direct booking discount code: [CODE NAME] — [X]% off
+Discount expiry date: [DATE — 21 days from when you send Email 1]
+Direct booking site URL: [URL]
+One thing guests consistently mention in reviews: [EXACT DETAIL — e.g., "the fire pit at sunset" / "waking up to the lake view"]
+
+Write all 3 emails in full:
+
+Email 1 — Day 1: The Return Invitation. Warm and personal. Reference the specific guest-loved detail. Present the discount and a clear CTA linking to the booking site.
+
+Email 2 — Day 10 (to openers who did not click): Soft urgency. Reference the expiry date. Add a seasonal angle — describe what the property is like in [target season] right now.
+
+Email 3 — Day 21: Final call. Discount expires in 48 hours. Direct and brief — no new information, just the deadline.
+
+Subject lines for all 3 emails. Each email: 3 paragraphs max, personal first-person voice, one CTA per email.</div>
+      <p class="ai-prompt-note"><strong>The "thing guests mention in reviews" field matters most.</strong> Pull an actual phrase from your Airbnb or VRBO reviews — a specific sensory detail that a generic property would not have. AI output built on a real specific detail outperforms AI output built on a generic one. The more honest and particular, the better the email.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 06 Complete When:</div>
+      <h3>Your direct booking site is live. Google Vacation Rentals is connected. Your first past-guest reactivation campaign is built in Kit and scheduled to send.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Direct booking site live at custom domain — availability, payment, and confirmation all working</li>
+        <li><span class="cp-box"></span>Google Vacation Rentals connected through OwnerRez — listing approved and appearing in Google search results</li>
+        <li><span class="cp-box"></span>Discount code RETURNGUEST (or equivalent) created in OwnerRez with expiration date set</li>
+        <li><span class="cp-box"></span>Kit reactivation sequence built — 3 emails loaded, click-trigger automation set, exclusion tag applied to any problematic past guests</li>
+        <li><span class="cp-box"></span>StayFi list reviewed — all collected emails exported to Kit, list segmented and clean</li>
+        <li><span class="cp-box"></span>First campaign scheduled in Kit — send date confirmed for 6 weeks before next shoulder season</li>
+        <li><span class="cp-box"></span>Annual tracker created — direct booking rate will be reviewed each December</li>
+        <li><span class="cp-box"></span>Proceed to Module 07 — Email Marketing: turning your Kit list from a reactivation tool into a full guest marketing channel, with seasonal campaigns, content, and the referral flywheel that turns one guest into many</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 06: Direct Booking &nbsp;·&nbsp; Next: Module 07 — Email Marketing
+</footer>

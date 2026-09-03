@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 20: Guest Security & Fraud Prevention — SpokeBnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (light) ─────────────────────────────────── */
+:root {
+  --navy: #09263A; --navy-mid: #0d3550;
+  --gold: #D4A017; --cream: #F7F3EA;
+  --text: #1a2f3f; --muted: #4a6070;
+  --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+  --mistake-bg: #fff7ed; --mistake-border: #f97316;
+  --math-bg: #f0f9ff; --math-border: #0284c7;
+  --tip-bg: #f0fdf4; --tip-border: #16a34a;
+  --warn-bg: #fefce8; --warn-border: #ca8a04;
+  --danger-bg: #fff1f2; --danger-border: #dc2626;
+  --gold-bg: rgba(212,160,23,0.06);
+  --table-head-bg: var(--navy);
+  --table-head-text: #fff;
+  --table-row-alt: rgba(9,38,58,0.03);
+}
+
+/* ── Dark mode (system) ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #091d2a; --card: #0d2738;
+    --text: #e8e0d0; --muted: #8ba0b0;
+    --border: rgba(255,255,255,0.08);
+    --cream: #091d2a;
+    --mistake-bg: #2a1200; --math-bg: #001624;
+    --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+    --gold-bg: rgba(212,160,23,0.1);
+    --table-head-bg: #0a1a26;
+    --table-row-alt: rgba(255,255,255,0.03);
+  }
+}
+/* ── Dark mode (explicit toggle) ───────────────────────────── */
+:root[data-theme="dark"] {
+  --bg: #091d2a; --card: #0d2738;
+  --text: #e8e0d0; --muted: #8ba0b0;
+  --border: rgba(255,255,255,0.08);
+  --cream: #091d2a;
+  --mistake-bg: #2a1200; --math-bg: #001624;
+  --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+  --gold-bg: rgba(212,160,23,0.1);
+  --table-head-bg: #0a1a26;
+  --table-row-alt: rgba(255,255,255,0.03);
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+img { max-width: 100%; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 20px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.05rem; margin-bottom: 8px; }
+p { margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
+strong { font-weight: 600; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Dark mode toggle ───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── Chain bar ──────────────────────────────────────────────── */
+.chain-bar {
+  background: var(--navy-mid);
+  padding: 10px 0;
+  overflow-x: auto;
+}
+.chain-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.chain-bar-inner .arrow { color: var(--gold); opacity: 0.6; }
+.chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+/* ── Module header ──────────────────────────────────────────── */
+.mod-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0 56px;
+}
+.mod-header-inner { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+.mod-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.18);
+  color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(212,160,23,0.3);
+}
+.mod-header h1 { color: #fff; margin-bottom: 16px; }
+.mod-header .subtitle {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 700px;
+}
+.mod-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mod-meta-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500;
+}
+.mod-meta-item strong { color: #fff; }
+
+/* ── Deliverable banner ─────────────────────────────────────── */
+.deliverable-banner {
+  background: var(--gold-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 40px 0 24px;
+}
+.deliverable-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.deliverable-banner h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 10px;
+}
+.deliverable-banner ul { margin: 0; }
+.deliverable-banner li { font-size: 14px; color: var(--muted); }
+
+/* ── Disclaimer ─────────────────────────────────────────────── */
+.disclaimer {
+  background: var(--card);
+  border-top: 3px solid #6b7280;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 0 0 32px;
+}
+.disclaimer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #6b7280;
+  margin-bottom: 8px;
+}
+.disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── Main content ───────────────────────────────────────────── */
+.content { padding: 48px 0 80px; }
+
+/* ── Lesson section ─────────────────────────────────────────── */
+.lesson { margin-bottom: 80px; }
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.lesson-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+}
+.lesson-title-wrap { flex: 1; }
+.lesson-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.lesson-title-wrap h2 { margin-bottom: 0; }
+.objective {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px; color: var(--muted);
+}
+.objective strong { color: var(--text); }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.callout p { font-size: 14.5px; line-height: 1.65; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul { font-size: 14.5px; }
+.callout.tip    { background: var(--tip-bg);     border-color: var(--tip-border); }
+.callout.tip    .callout-label { color: #16a34a; }
+.callout.math   { background: var(--math-bg);    border-color: var(--math-border); }
+.callout.math   .callout-label { color: #0284c7; }
+.callout.warn   { background: var(--warn-bg);    border-color: var(--warn-border); }
+.callout.warn   .callout-label { color: #ca8a04; }
+.callout.mistake { background: var(--mistake-bg); border-color: var(--mistake-border); }
+.callout.mistake .callout-label { color: #f97316; }
+.callout.danger { background: var(--danger-bg);  border-color: var(--danger-border); }
+.callout.danger .callout-label { color: #dc2626; }
+
+/* ── Tool cards ─────────────────────────────────────────────── */
+.tool-stack { display: flex; flex-direction: column; gap: 16px; margin: 28px 0; }
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: var(--gold);
+}
+.tool-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 6px;
+}
+.tool-card h4 {
+  font-size: 15px; font-weight: 700; color: var(--navy);
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tool-card h4 { color: #e8e0d0; }
+}
+:root[data-theme="dark"] .tool-card h4 { color: #e8e0d0; }
+.tool-card p { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+.tool-card ul { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+.tool-card ol { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+
+/* ── Evidence steps ─────────────────────────────────────────── */
+.evidence-steps { list-style: none; padding: 0; margin: 20px 0; }
+.evidence-steps li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.evidence-steps li:last-child { border-bottom: none; }
+.ev-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  margin-top: 2px;
+}
+.ev-body { flex: 1; }
+.ev-body strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 3px; }
+.ev-body p { font-size: 13.5px; color: var(--muted); margin: 0; }
+
+/* ── Flag checklist ─────────────────────────────────────────── */
+.flag-list { list-style: none; padding: 0; margin: 16px 0; }
+.flag-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--text);
+}
+.flag-list li:last-child { border-bottom: none; }
+.flag-icon {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  background: rgba(212,160,23,0.15);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--gold);
+  margin-top: 1px;
+}
+
+/* ── Statute table ──────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 32px 0; border-radius: 10px; border: 1px solid var(--border); }
+.stat-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px;
+}
+.stat-table thead tr { background: var(--table-head-bg); }
+.stat-table thead th {
+  color: var(--table-head-text);
+  padding: 12px 14px;
+  text-align: left; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.stat-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+.stat-table tbody tr:nth-child(even) td { background: var(--table-row-alt); }
+.stat-table tbody tr:last-child td { border-bottom: none; }
+.td-yes  { color: #16a34a; font-weight: 600; }
+.td-no   { color: #dc2626; font-weight: 600; }
+.td-ltd  { color: #ca8a04; font-weight: 600; }
+
+/* ── AI Prompt block ────────────────────────────────────────── */
+.ai-prompt {
+  background: #1a0533;
+  border: 2px solid #7c3aed;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.ai-prompt-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #a78bfa;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ai-prompt-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(124,58,237,0.3);
+}
+.ai-prompt h4 {
+  font-size: 14px; font-weight: 700; color: #e9d5ff;
+  margin-bottom: 12px; margin-top: 0;
+  font-family: 'Inter', sans-serif;
+}
+.ai-prompt-box {
+  background: #0a0117;
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12.5px; color: #c4b5fd;
+  line-height: 1.8; white-space: pre-wrap;
+  margin-bottom: 14px; overflow-x: auto;
+}
+.ai-prompt-note {
+  font-size: 12.5px; color: rgba(167,139,250,0.75);
+  line-height: 1.65;
+  border-top: 1px solid rgba(124,58,237,0.2);
+  padding-top: 12px; margin: 0;
+}
+
+/* ── Machine feed ───────────────────────────────────────────── */
+.machine-feed {
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 48px 0 80px;
+}
+.mf-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+.machine-feed h3 {
+  font-size: 1.25rem; color: #fff;
+  margin-bottom: 16px;
+}
+.machine-feed p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.75; }
+.machine-feed p + p { margin-top: 12px; }
+
+/* ── Checkpoint ─────────────────────────────────────────────── */
+.checkpoint {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 48px;
+}
+.checkpoint-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.checkpoint h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; margin-bottom: 16px;
+}
+.checkpoint-items { list-style: none; padding: 0; }
+.checkpoint-items li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75); font-size: 14px;
+}
+.checkpoint-items li:last-child { border-bottom: none; }
+.cp-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid rgba(212,160,23,0.5);
+  border-radius: 4px; margin-top: 2px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.lesson-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 64px 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12.5px;
+}
+footer span { color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lesson-header { flex-direction: column; gap: 12px; }
+  .mod-meta { flex-direction: column; }
+  .chain-bar-inner { font-size: 11px; gap: 7px; }
+  .ai-prompt { padding: 18px 16px; }
+  .ai-prompt-box { font-size: 11.5px; }
+  .machine-feed { padding: 22px 20px; }
+  .checkpoint { padding: 22px 20px; }
+  .stat-table { font-size: 12px; }
+  .stat-table thead th,
+  .stat-table tbody td { padding: 9px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme');if(!t){r.setAttribute('data-theme','dark');}else if(t==='dark'){r.setAttribute('data-theme','light');}else{r.removeAttribute('data-theme');}})()">
+  Toggle Dark
+</button>
+
+<!-- Chain bar -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 18: Damage Protection</span>
+    <span class="arrow">→</span>
+    <span>Module 19: Paid Traffic</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 20: Guest Security</span>
+  </div>
+</div>
+
+<!-- Module header -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 20 — Supplementary</div>
+    <h1>Guest Security &amp; Fraud Prevention — Identity Verification, Chargeback Defense, and What "Defrauding an Innkeeper" Actually Means</h1>
+    <p class="subtitle">How to verify guest identity for direct bookings, why chargeback fraud is growing and how to fight it, the criminal statute most STR operators don't know exists, and how to prevent high-risk bookings before they happen</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase:</strong>&nbsp;Supplementary</div>
+      <div class="mod-meta-item"><strong>Lessons:</strong>&nbsp;4</div>
+      <div class="mod-meta-item"><strong>Time:</strong>&nbsp;2–3 Hours</div>
+      <div class="mod-meta-item"><strong>Prerequisites:</strong>&nbsp;Module 05 (Operations), Module 06 (Direct Booking Machine)</div>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="content">
+<div class="container">
+
+  <!-- Deliverable banner -->
+  <div class="deliverable-banner">
+    <div class="deliverable-label">Module Deliverables</div>
+    <h3>By the end of this module you will have:</h3>
+    <ul>
+      <li>A guest screening protocol in place for direct bookings — ID verification configured in OwnerRez or through a third-party tool</li>
+      <li>A chargeback defense packet template — organized and ready before you need it, not assembled in a panic after the fact</li>
+      <li>Knowledge of the defrauding an innkeeper statute in your state — dollar threshold, misdemeanor vs. felony, how to file</li>
+      <li>A fraud-pattern checklist that flags high-risk booking inquiries before they are confirmed</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-label">Educational Content — Not Legal Advice</div>
+    <p>This module is provided for educational purposes only. SpokeBnB and its instructors are not licensed attorneys. Nothing in this module constitutes legal advice or a recommendation to pursue any specific legal action. Laws vary by state and jurisdiction — verify the statutes applicable to your property's location with a licensed attorney before relying on them. Platform policies, screening tools, and card issuer dispute procedures change — verify current terms directly with each provider before acting.</p>
+  </div>
+
+  <!-- ─── LESSON 1 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Identity Gap in Direct Bookings</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand why direct bookings create an identity verification gap that platform bookings don't, and configure the right tool to close it before a bad actor fills it for you.
+    </div>
+
+    <p>Airbnb and VRBO have built-in identity verification — guests who book through the platforms submit government ID, and Airbnb's trust infrastructure backstops the interaction. When a guest books through your direct booking site, there is no platform standing between you and an unverified stranger. You are the identity check.</p>
+
+    <p>Most operators learn this the hard way — a direct booking arrives with a clean OwnerRez confirmation, the guest checks in, something goes wrong, and there is no Airbnb case number, no platform mediation, and no trust infrastructure to fall back on.</p>
+
+    <h3>Identity Verification Tools for Direct Bookings</h3>
+
+    <div class="tool-stack">
+
+      <div class="tool-card">
+        <div class="tool-badge">Recommended — Screening + Coverage</div>
+        <h4>Superhog (superhog.com)</h4>
+        <p>The leading STR-specific guest screening product. Integrates with OwnerRez. The verification flow runs automatically for every direct booking:</p>
+        <ol style="margin-top:10px">
+          <li>Guest submits a booking inquiry or confirms a booking on your direct site</li>
+          <li>Superhog sends a verification request to the guest via email or SMS</li>
+          <li>Guest submits government ID, selfie match, and background check consent</li>
+          <li>Superhog returns a verification score and recommendation: approve / review / decline</li>
+          <li>OwnerRez automates next steps — approve only guests who pass verification</li>
+        </ol>
+        <p style="margin-top:10px">Verification typically takes 15–30 minutes. For guests unfamiliar with it, roughly 3–5% will abandon the process — these are almost always lower-quality bookings. Pricing: $7–12 per booking.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-badge">Alternative — Screening + $5M Coverage</div>
+        <h4>Safely (safely.com)</h4>
+        <p>Background check, ID verification, and damage coverage up to $5M in one product. Good alternative if you want screening and coverage bundled. Integrates with OwnerRez. Pricing is similar to Superhog.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-badge">High Volume / Multi-Property</div>
+        <h4>Autohost (autohost.ai)</h4>
+        <p>AI-powered screening designed for STR. Analyzes booking patterns, guest profiles, and risk signals beyond ID verification. Better suited for operators with high booking volume or multi-property operations where Superhog or Safely's per-booking model becomes a significant cost.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-badge">Manual Baseline — No Tool Required</div>
+        <h4>Manual Screening Protocol</h4>
+        <p>For operators not ready to pay for automated tools. Require at minimum for every direct booking:</p>
+        <ul style="margin-top:10px">
+          <li>First and last name matching a payment method</li>
+          <li>A signed rental agreement — OwnerRez generates these automatically</li>
+          <li>Email address that matches the booking contact</li>
+          <li>Phone number that answers when you call before check-in</li>
+        </ul>
+        <p style="margin-top:10px">The signed rental agreement is the most important document of these four. It establishes the contractual basis for enforcing house rules, damage claims, and overstay fees — and it is the primary document in a chargeback dispute.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-badge">Free — Manual Pre-Confirmation Check</div>
+        <h4>ForewARN (forwarn.com)</h4>
+        <p>A free background check tool provided by the National Association of Realtors (NAR) to licensed real estate agents and associated professionals. ForewARN pulls criminal records, sex offender registry data, address history, and other risk indicators against a person's name and last four digits of their phone number or full phone number — in seconds, with no cost to the operator.</p>
+        <p style="margin-top:10px"><strong>How to use it for STR:</strong> Before confirming any direct booking from a guest you have no prior relationship with — particularly for higher-risk indicators (last-minute booking, large group, local address) — run a ForewARN check using the name on the booking and the phone number they provided. It takes approximately 90 seconds and is free to anyone with active NAR membership or access through a member broker.</p>
+        <ul style="margin-top:10px">
+          <li>Works on any booking where you have the guest's legal name and phone number</li>
+          <li>Returns results in under 2 minutes — does not slow down the confirmation process</li>
+          <li>Combines with Superhog or Safely (those do identity verification; ForewARN adds the criminal/sex offender layer)</li>
+          <li>Particularly useful for Request-to-Book direct bookings where you're manually approving before access codes are released</li>
+        </ul>
+        <p style="margin-top:10px"><strong>Access:</strong> forwarn.com — requires NAR membership or access through a member broker. If you hold a real estate license, check with your broker. If not, a licensed agent in your network can often run checks on your behalf as a professional courtesy.</p>
+      </div>
+
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">The New Guest + Last-Minute + Cash Discount Cluster</div>
+      <p>Three booking patterns that together constitute the highest-risk inquiry profile: (1) the guest has never stayed at your property before, (2) the booking is for check-in within 72 hours, AND (3) they are asking for a discount, requesting to pay via Venmo or CashApp, or attempting to avoid the standard payment process.</p>
+      <p style="margin-top:10px">Any single factor is benign. All three together is a pattern. Require standard payment processing for all bookings — no exceptions for cash, Venmo, or cryptocurrency regardless of the guest's claimed reason.</p>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">Note on Airbnb Verification</div>
+      <p>You cannot use Airbnb's ID verification for a non-Airbnb booking. Do not ask guests to "verify through Airbnb" — that mechanism does not exist. Airbnb's verification is tied to Airbnb accounts and Airbnb bookings only. For direct bookings, use one of the tools above.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 2 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Chargeback Fraud — What It Is and How to Fight It</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand why chargeback fraud is growing in the STR space, assemble the documentation package that wins disputes, and build it before you need it.
+    </div>
+
+    <p>Chargeback fraud is when a guest books, stays at the property, and then contacts their credit card issuer to dispute the charge — claiming they "didn't stay," "the property wasn't as described," or "did not authorize the charge." The credit card company opens a dispute, temporarily reverses the charge, and sends you a chargeback notice with typically 7–14 days to respond.</p>
+
+    <h3>Why It Is Growing in the STR Space</h3>
+    <ul>
+      <li>Credit card companies default to consumer-favorable resolutions in ambiguous cases</li>
+      <li>STR operators rarely have the documentation needed to fight chargebacks effectively</li>
+      <li>Guests know that one-star Airbnb reviews are public and permanent; chargebacks are anonymous</li>
+      <li>Airbnb AirCover and VRBO damage protection focus on property damage — not chargeback defense</li>
+    </ul>
+
+    <h3>The Chargeback Response Package That Wins</h3>
+    <p>Organize your evidence chronologically — booking confirmation through post-departure — and submit as a single PDF package with a brief cover memo. The pieces:</p>
+
+    <ol class="evidence-steps">
+      <li>
+        <span class="ev-num">1</span>
+        <div class="ev-body">
+          <strong>Signed rental agreement</strong>
+          <p>Proves the guest agreed to the booking terms, the property description, and the cancellation policy before check-in. OwnerRez generates and stores this automatically for every booking.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">2</span>
+        <div class="ev-body">
+          <strong>Check-in evidence</strong>
+          <p>Keypad access log showing the guest's unique code was used on the check-in date — OwnerRez and most smart lock integrations log this — or a gate entry record, or a welcome message exchange timestamped to the check-in date.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">3</span>
+        <div class="ev-body">
+          <strong>Photo documentation</strong>
+          <p>Timestamped pre-arrival photos showing the property in the condition advertised, and post-departure photos showing it was available and occupied as described. Your Module 18 documentation protocol already produces this.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">4</span>
+        <div class="ev-body">
+          <strong>Communication record</strong>
+          <p>The full message thread between you and the guest, exported from Airbnb, VRBO, or OwnerRez. Any message where the guest thanks you, asks about the property, or communicates normally during the stay is evidence of occupancy and satisfaction.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">5</span>
+        <div class="ev-body">
+          <strong>IP address and device data from booking</strong>
+          <p>OwnerRez and most booking engines log the IP address and device used to complete the booking. This is strong evidence of an authorized transaction when the guest claims "did not authorize the charge."</p>
+        </div>
+      </li>
+    </ol>
+
+    <p><strong>Response format:</strong> Most card issuers — Visa, Mastercard, Amex — accept PDF documentation packages. Include a brief cover memo of 3–4 sentences stating factually: the guest booked, arrived, occupied the property as confirmed by the access log, and departed without raising any concerns during the stay.</p>
+
+    <div class="table-wrap">
+      <table class="stat-table">
+        <thead>
+          <tr>
+            <th>Documentation Present</th>
+            <th>Expected Win Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Full package: signed agreement + access log + photos + messages + IP data</td>
+            <td class="td-yes">60–80%</td>
+          </tr>
+          <tr>
+            <td>Partial: signed agreement + messages only</td>
+            <td class="td-ltd">35–50%</td>
+          </tr>
+          <tr>
+            <td>No documentation: verbal account only</td>
+            <td class="td-no">Under 20%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-label">The 120-Day Chargeback Window</div>
+      <p>Visa and Mastercard allow cardholders up to 120 days from the transaction date to initiate a chargeback. A guest who stays in June can file a chargeback in September. Your check-in evidence and signed rental agreement need to be archived for at least 13 months per booking.</p>
+      <p style="margin-top:10px">Set a standing policy: all booking documentation retained for 14 months from checkout date. OwnerRez retains booking records indefinitely — confirm your communication exports and access logs are also backed up on a schedule you control.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 3 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Defrauding an Innkeeper — The Criminal Statute You Can Actually Use</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Learn the criminal statute that applies to fraudulent STR bookings, when and how to use it, and why filing a police report changes the outcome of every related dispute.
+    </div>
+
+    <p>Most STR operators have never heard of this statute. Almost every state has one. Understanding it changes how you think about high-damage guests, party-booking fraudsters, and stolen-card bookings.</p>
+
+    <h3>What "Defrauding an Innkeeper" Means</h3>
+    <p>In most states, it is a criminal offense — not just a civil wrong — to obtain lodging from an innkeeper through fraudulent means with the intent to defraud. STR operators qualify as innkeepers under this statute in most jurisdictions. Examples that typically qualify:</p>
+    <ul>
+      <li>Booking with a stolen or fraudulently obtained credit card</li>
+      <li>Providing false identity to obtain a booking</li>
+      <li>Booking a property with the intent to host an unauthorized party, cause damage, and leave without paying for it</li>
+      <li>Booking under false pretenses — representing the stay is for one purpose when it is intended for a prohibited use</li>
+    </ul>
+
+    <p>The statute varies by state in whether it is a misdemeanor or felony — often depending on the dollar amount. Felony thresholds are typically $500–$1,000 in damages or booking value. In many states, the criminal threshold is low enough that a single-night party booking with damage qualifies.</p>
+
+    <h3>How to Use It</h3>
+
+    <ol class="evidence-steps">
+      <li>
+        <span class="ev-num">1</span>
+        <div class="ev-body">
+          <strong>Document everything</strong>
+          <p>As covered in Module 18 — the pre/post photo protocol. The same documentation package that supports a damage claim supports a criminal complaint.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">2</span>
+        <div class="ev-body">
+          <strong>Confirm the booking was made with false information or a stolen payment method</strong>
+          <p>Contact your payment processor. OwnerRez uses Stripe. Stripe can confirm whether a card was reported stolen — this information is often available within 24–48 hours of filing a dispute.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">3</span>
+        <div class="ev-body">
+          <strong>File a police report with the local jurisdiction where the property is located</strong>
+          <p>File where the property is — not where you live if different. Bring your documentation package. The responding officer creates a report number.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">4</span>
+        <div class="ev-body">
+          <strong>Provide the police report number to relevant parties</strong>
+          <p>Submit it to Airbnb, VRBO, or your payment processor as part of any fraud claim. It significantly strengthens your position in every downstream dispute.</p>
+        </div>
+      </li>
+      <li>
+        <span class="ev-num">5</span>
+        <div class="ev-body">
+          <strong>Let the DA's office determine whether to prosecute</strong>
+          <p>Your job is to document and report. The prosecutorial decision belongs to the district attorney. You cannot control it — and you do not need to. The police report is the value, regardless of prosecution outcome.</p>
+        </div>
+      </li>
+    </ol>
+
+    <p>The STR operator who knows this statute files a police report for fraudulent bookings. The operator who doesn't writes it off as a bad guest and moves on. The difference: a police report creates a paper trail on a guest's record that protects future operators from the same individual.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">The Police Report Is Also a Chargeback Defense Document</div>
+      <p>A police report filed under the defrauding-an-innkeeper statute — stating that you believe the booking was made fraudulently — is powerful documentation in a chargeback dispute. Credit card issuers treat law enforcement involvement as strong evidence that the cardholder was not an authorized user, and that the charge is legitimate.</p>
+      <p style="margin-top:10px">File the police report before filing the chargeback response. Include the report number and filing jurisdiction in the cover memo of your dispute package.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 4 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Fraud Prevention — Patterns, Party Bookings, and Noise Monitoring</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Build the prevention-side infrastructure — the booking pattern checklist, guest requirements, noise monitoring disclosure, and house rules enforcement stack — that catches high-risk situations before they escalate.
+    </div>
+
+    <p>Prevention is cheaper than recovery. These are the specific signals and tools that catch high-risk situations before they become claims, disputes, or police reports.</p>
+
+    <h3>High-Risk Booking Pattern Checklist</h3>
+    <p>Flag and manually review any booking that matches three or more of these. Any single flag is not a reason to decline. Multiple flags together are a reason to require Superhog verification and do a brief phone screening call before confirming.</p>
+
+    <ul class="flag-list">
+      <li>
+        <span class="flag-icon">!</span>
+        <span>No prior reviews on Airbnb — new account with zero history</span>
+      </li>
+      <li>
+        <span class="flag-icon">!</span>
+        <span>Check-in within 48–72 hours of the booking request — last-minute with no time for screening to work</span>
+      </li>
+      <li>
+        <span class="flag-icon">!</span>
+        <span>Number of guests listed is unusually low relative to property size — booking a 10-person cabin for "2 guests"</span>
+      </li>
+      <li>
+        <span class="flag-icon">!</span>
+        <span>Unusual communication pattern — no questions about the property, no normal guest curiosity, very short or generic messages</span>
+      </li>
+      <li>
+        <span class="flag-icon">!</span>
+        <span>Guest location is very close to the property — local bookings are the most common party-booking scenario</span>
+      </li>
+      <li>
+        <span class="flag-icon">!</span>
+        <span>Request to reduce the guest count in the reservation but accommodate more on site</span>
+      </li>
+      <li>
+        <span class="flag-icon">!</span>
+        <span>Payment method friction — wanting to pay outside OwnerRez, requesting a wire transfer, asking for a Venmo "friends and family" rate</span>
+      </li>
+    </ul>
+
+    <h3>Setting Minimum Review Requirements on Airbnb</h3>
+    <p>Navigate to Settings → Listing → Guest requirements on Airbnb. You can require guests to have a minimum number of positive reviews before booking is allowed. This does not eliminate all risk — a guest with 10 positive reviews can still book a party. But it eliminates the new-account risk cluster entirely, which accounts for a disproportionate share of high-damage events.</p>
+
+    <h3>Noise Monitoring</h3>
+    <p>NoiseAware and Minut are the two major STR noise monitoring devices. They detect decibel levels exceeding a threshold you set — typically 65–75 dB for interior, adjusted for property type. They do not record audio, which avoids legal issues in most jurisdictions and complies with Airbnb policy on surveillance devices.</p>
+
+    <div class="tool-stack">
+      <div class="tool-card">
+        <div class="tool-badge">Noise Monitoring</div>
+        <h4>NoiseAware and Minut — What They Do</h4>
+        <ul>
+          <li>Real-time alert when noise exceeds your threshold (text or push notification)</li>
+          <li>Guest-facing awareness — disclosure that monitoring is in place creates behavioral deterrence</li>
+          <li>Historical log of noise events per reservation — useful documentation for any claim involving unauthorized gatherings</li>
+          <li>NoiseAware: $8–10/month per device. Minut: similar, with additional occupancy counting features on some models</li>
+        </ul>
+        <p style="margin-top:10px"><strong>Disclosure requirement:</strong> Inform guests in the listing and in the rental agreement that noise monitoring devices are in use. Hiding them creates legal exposure and violates Airbnb policy. The disclosure is also a behavioral tool — guests who know monitoring is in place behave differently than guests who don't.</p>
+      </div>
+    </div>
+
+    <h3>The House Rules Enforcement Stack</h3>
+    <p>House rules are unenforceable if they exist only in the Airbnb listing. For enforceability — especially in disputes, damage claims, and police reports — house rules need to appear in four places:</p>
+
+    <ol>
+      <li><strong>The Airbnb / VRBO listing</strong> — platform visibility at booking</li>
+      <li><strong>The rental agreement</strong> — the legal document the guest signs before check-in</li>
+      <li><strong>The digital guidebook</strong> — reference available throughout the stay</li>
+      <li><strong>The check-in message</strong> — immediate, stay-start reminder via OwnerRez automated message</li>
+    </ol>
+
+    <p>A guest who violates a rule they agreed to in a signed document is in breach of contract. A guest who violates a rule that existed only in listing fine print they never read is harder to hold accountable legally and harder to win a dispute against.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">The Quiet Hours Check-In Message</div>
+      <p>Send a check-in message that includes a single-line reminder of your quiet hours policy: <em>"Quiet hours at [Property Name] are 10pm–8am. Our neighbors and noise monitoring system both appreciate it."</em></p>
+      <p style="margin-top:10px">This one sentence, sent via OwnerRez automated message at check-in time, prevents a significant percentage of late-night noise events. Guests who read the reminder behave differently than guests who only encountered the policy during booking. Configure this message in OwnerRez → Automations → Messaging.</p>
+    </div>
+
+    <!-- AI Prompt -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Build Your Guest Screening and Fraud Prevention Protocol</h4>
+      <div class="ai-prompt-box">Help me build a complete guest screening and fraud prevention protocol for my direct booking operation, including identity verification setup, high-risk booking pattern checklist, and a chargeback defense template.
+
+My operation:
+- Property type: [LAKE HOUSE / CABIN / COTTAGE / etc.]
+- Sleeps: [X] guests
+- Peak booking period: [MONTHS]
+- Primary booking channel split: [e.g., '60% Airbnb, 25% VRBO, 15% direct']
+- Direct booking tool: [OwnerRez / OTHER]
+- Do I have a signed rental agreement in place: [YES / NO]
+- Do I have noise monitoring: [YES (NoiseAware / Minut) / NO]
+- Have I had a chargeback or fraudulent booking before: [YES / NO]
+- Am I in a market where large parties are a known risk: [YES / NO]
+
+Do four things:
+
+1. SCREENING PROTOCOL FOR DIRECT BOOKINGS
+The exact sequence a guest goes through when booking on my direct site — from booking request to confirmed stay. Which ID verification tool to use given my booking volume, how to configure it in OwnerRez, and what the guest sees. What to do if a guest refuses verification.
+
+2. HIGH-RISK BOOKING PATTERN CHECKLIST
+A customized 10-item checklist of red flags for my property type and market. Organized by: 'automatic decline' (1–2 items), 'require additional verification' (5–6 items), and 'monitor during stay' (2–3 items).
+
+3. CHARGEBACK DEFENSE PACKET TEMPLATE
+A template chargeback response memo I can use as a starting point. Include placeholder sections for each piece of evidence (booking confirmation, rental agreement, check-in log, communication record). Write it in the format a card issuer's disputes team expects — factual, chronological, no emotional language.
+
+4. DEFRAUDING AN INNKEEPER RESEARCH PROMPT
+Give me the exact search query and steps to find the defrauding-an-innkeeper statute in my state, and a summary of what I should look for: threshold dollar amounts, misdemeanor vs. felony classification, and reporting steps.</div>
+      <p class="ai-prompt-note">Fill in every bracketed field before running this prompt. The more specific your inputs — property type, booking volume, and past fraud experience — the more precisely the checklist and response template will match your situation. After running it, save the output as a standing SOP and store the chargeback response template somewhere accessible. You will need it on a timeline, not when it's convenient.</p>
+    </div>
+
+    <!-- Module checkpoint -->
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 20 Checkpoint</div>
+      <h3>Before leaving this module, confirm the following:</h3>
+      <ul class="checkpoint-items">
+        <li>
+          <span class="cp-box"></span>
+          <span>Guest identity verification configured for direct bookings — Superhog, Safely, or manual protocol documented and in place</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Signed rental agreement required for every direct booking — generated automatically through OwnerRez</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Noise monitoring device installed and disclosed — in the listing, the rental agreement, and the check-in message</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>High-risk booking pattern checklist documented — know what triggers a manual review before confirming a booking</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Chargeback defense packet template ready — organized and accessible, not assembled in a panic after receiving a dispute notice</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Know the defrauding-an-innkeeper statute in my property's state — dollar threshold, misdemeanor vs. felony, and how to file a police report</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Documentation archive policy in place — all booking records retained for minimum 14 months from checkout date</span>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Machine feed -->
+  <div class="machine-feed">
+    <div class="mf-label">The Machine</div>
+    <h3>The Operators Who Know the Law Use It</h3>
+    <p>Most STR operators think of a bad guest as a hospitality problem — a bad review, a damage claim, an uncomfortable message thread. The operators who know the legal framework think of it differently. A stolen card is credit card fraud and a criminal complaint. A party booking that causes $800 in damage after a guest signed a rental agreement stating no-party rules is a breach of contract and potentially criminal fraud. A false-identity booking that results in damage is defrauding an innkeeper under a statute that exists specifically for this situation.</p>
+    <p>The documentation protocol, the signed rental agreement, the police report, and the chargeback response package are not just defensive tools. They are the infrastructure that converts a bad guest from a loss into a recoverable event — and creates a paper trail that protects the next operator who encounters the same individual.</p>
+    <p>The operators who have this infrastructure in place before they need it recover most of their losses. The operators who build it after their first fraudulent booking recover some. The operators who never build it write off every bad event as a cost of doing business. That is the difference between running a business and being run by it.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <span>SpokeBnB</span> · Module 20: Guest Security &amp; Fraud Prevention · Supplementary Module
+</footer>
+
+</body>
+</html>

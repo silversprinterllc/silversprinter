@@ -11,10 +11,9 @@ const footerLinks = [
   {
     heading: 'Offers',
     links: [
-      { label: 'Self-Paced Course', href: '#pricing' },
-      { label: 'Intensive Cohort', href: '#pricing' },
-      { label: 'Done-For-You', href: '#pricing' },
-      { label: 'Full Revenue Engine', href: '#pricing' },
+      { label: 'The System', href: '#pricing' },
+      { label: 'The Build', href: '#pricing' },
+      { label: 'The Bundle', href: '#pricing' },
     ],
   },
   {

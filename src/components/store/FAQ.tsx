@@ -37,11 +37,11 @@ const faqs = [
   },
   {
     q: 'What does the acquisition module cover?',
-    a: 'Module 12 covers Acquisition & Portfolio Growth — market data methodology, cap rate analysis, DSCR loan structures, off-market sourcing, and portfolio architecture for scaling from one property to many. It applies globally. For Florida-specific STR acquisition, SpokeBnB partners with Barefoot Realty & Investments, a licensed Florida brokerage.',
+    a: 'Module 13 covers Acquisition at Scale, Portfolio Growth & Exit — market data methodology, cap rate analysis, DSCR loan structures, off-market sourcing, and portfolio architecture for scaling from one property to many. It applies globally. For Florida-specific STR acquisition, SpokeBnB partners with Barefoot Realty & Investments, a licensed Florida brokerage.',
   },
   {
     q: 'I have multiple properties. Which product applies?',
-    a: 'The System applies regardless of portfolio size. For The Build, the standard $4,997 product covers one property brand. If you have multiple properties, a portfolio brand, or complex booking architecture — apply through the Portfolio / Custom path and we will scope it correctly.',
+    a: 'The System applies regardless of portfolio size. For The Build, the standard $5,497 product covers one property brand. If you have multiple properties, a portfolio brand, or complex booking architecture — apply through the Portfolio / Custom path and we will scope it correctly.',
   },
 ]
 

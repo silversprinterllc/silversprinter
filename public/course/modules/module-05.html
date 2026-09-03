@@ -1,0 +1,1080 @@
+<title>Module 05 — Systems & Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7;
+    --msg-bg: #f0f7ff; --msg-border: #3b82f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232; --msg-bg: #0a1a2d; --msg-border: #3b82f6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232; --msg-bg: #0a1a2d; --msg-border: #3b82f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+  a { color: var(--gold); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Message templates */
+  .msg-sequence { margin: 28px 0; }
+  .msg-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
+  .msg-header { background: var(--navy); padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+  .msg-num { width: 28px; height: 28px; min-width: 28px; background: var(--gold); color: var(--navy); border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .msg-meta { flex: 1; }
+  .msg-trigger { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+  .msg-name { font-size: 14px; font-weight: 700; color: #fff; }
+  .msg-timing { font-size: 11px; color: var(--gold); font-weight: 600; }
+  .msg-body { padding: 20px; }
+  .msg-subject { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .msg-text { background: var(--msg-bg); border: 1px solid var(--msg-border); border-left-width: 3px; border-radius: 8px; padding: 16px 18px; font-size: 14px; color: var(--text); line-height: 1.8; white-space: pre-line; font-style: italic; }
+  .msg-note { font-size: 12px; color: var(--muted); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .msg-note strong { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 4px; }
+
+  /* Guidebook layout */
+  .gb-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
+  .gb-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .gb-card .gb-top { padding: 16px 20px; border-bottom: 2px solid var(--gold); }
+  .gb-card .gb-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .gb-card .gb-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .gb-card .gb-body { padding: 16px 20px; }
+  .gb-row { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .gb-row:last-child { border-bottom: none; }
+  .gb-row .gb-key { font-weight: 600; color: var(--text); min-width: 100px; flex-shrink: 0; }
+  .gb-row .gb-val { color: var(--muted); }
+  .gb-row .gb-val.yes { color: #16a34a; font-weight: 600; }
+  .gb-row .gb-val.no { color: #dc2626; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .gb-row .gb-val.yes { color: #86efac; } :root:not([data-theme="light"]) .gb-row .gb-val.no { color: #fca5a5; } }
+  :root[data-theme="dark"] .gb-row .gb-val.yes { color: #86efac; }
+  :root[data-theme="dark"] .gb-row .gb-val.no { color: #fca5a5; }
+
+  /* Guidebook template */
+  .gb-template { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 28px; margin: 28px 0; }
+  .gb-template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .gb-template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .gb-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .gb-section { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .gb-section .s-num { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .gb-section .s-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .gb-section ul { padding-left: 16px; font-size: 12.5px; color: var(--muted); margin: 0; }
+  .gb-section li { margin-bottom: 4px; }
+  .gb-section .branded-only { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-top: 8px; display: block; }
+
+  /* Cleaner SOP */
+  .sop-zone { margin: 24px 0; }
+  .sop-zone-header { background: var(--navy); color: var(--gold); padding: 10px 16px; border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+  .sop-zone-body { background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 0; }
+  .sop-item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 13.5px; color: var(--muted); }
+  .sop-item:last-child { border-bottom: none; }
+  .sop-box { width: 16px; height: 16px; min-width: 16px; border: 2px solid rgba(9,38,58,0.2); border-radius: 3px; margin-top: 3px; flex-shrink: 0; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sop-box { border-color: rgba(212,160,23,0.3); } }
+  :root[data-theme="dark"] .sop-box { border-color: rgba(212,160,23,0.3); }
+  .sop-item .photo { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-left: auto; flex-shrink: 0; }
+
+  /* 5-star formula */
+  .star-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 20px 0; }
+  .star-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .star-card .s-category { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .star-card .s-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .star-card p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .star-card.flagged { border-left: 3px solid var(--mistake-border); }
+  .star-card.flagged .s-category { color: var(--mistake-border); }
+
+  .compare-wrap { overflow-x: auto; margin: 24px 0; }
+  .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+  .step-content ul { font-size: 14px; margin-top: 6px; }
+
+  .case-study { background: var(--navy); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .case-study-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .case-study h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 12px; }
+  .case-study p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 10px; }
+  .case-study p:last-child { margin-bottom: 0; }
+  .case-study strong { color: rgba(255,255,255,0.9); }
+  .case-study ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; }
+  .case-study li { margin-bottom: 6px; }
+
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .machine-feed .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .machine-feed .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    .gb-compare { grid-template-columns: 1fr; }
+    .gb-sections { grid-template-columns: 1fr; }
+    .star-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 05</div>
+    <h1>Systems & Automation — Your Business Without You</h1>
+    <p class="subtitle">Write the complete guest communication library, build your branded guidebook with direct booking QR integration, establish your cleaner SOP, and systematize the touchpoints that generate 5-star reviews at every stay</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 1: Systematize</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>6–8 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 04 — Revenue</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 06 — Direct Booking</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 02: Tech Stack</span>
+    <span class="arrow">→</span>
+    <span>Module 03: Launch</span>
+    <span class="arrow">→</span>
+    <span>Module 04: Revenue</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 05: Operations</span>
+    <span class="arrow">→</span>
+    <span>Module 06: Direct Booking</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — Guest Communication System</a>
+    <a href="#lesson-2">02 — The Guidebook</a>
+    <a href="#lesson-3">03 — Cleaner SOPs</a>
+    <a href="#lesson-4">04 — The 5-Star Formula</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">⚙️</div>
+    <div>
+      <div class="label">Module 05 Deliverable</div>
+      <p>All six guest communication templates written and loaded in your PMS. A branded standalone guidebook built from the provided template and placed in the property (with a direct booking QR code in the back). A cleaner SOP checklist completed, printed, and given to your cleaning team. Your 5-star review rate is the measurement: after completing this module, every guest should be receiving a consistent, systematized experience that reliably produces 5-star reviews across all six Airbnb subcategories.</p>
+    </div>
+  </div>
+
+  <div class="callout tip" style="margin-top:0">
+    <div class="callout-label">✓ What This Module Completes</div>
+    <p>In Module 02, you installed your PMS and created six automated message triggers — placeholder versions to get the system live. This module writes the actual copy for those messages. It also builds the guest guidebook that Module 03 referenced but deferred, and formalizes the cleaner system that Module 03's par level sheet started. Everything connects. The automation you built in Module 02 is only as good as the words inside it — this module makes it excellent.</p>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Guest Communication System — All Six Messages, Copy-Ready</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Write all six automated message templates — from booking confirmation through the review request — with copy that feels personal, sets clear expectations, and guides the guest through an experience that earns 5-star reviews.
+    </div>
+
+    <p>Automated messaging in a short-term rental is not about eliminating human contact. It is about ensuring the right information reaches the guest at precisely the right moment — without requiring you to type it from scratch for every reservation. A guest who receives a warm, well-timed booking confirmation feels taken care of before they even pack. A guest who receives clear arrival instructions the morning of check-in doesn't need to call you. A guest who gets a review request one hour after checkout, while the experience is still fresh, is more likely to leave one.</p>
+
+    <p>The templates below are written in first-person and designed to sound human. Customize the bracketed fields for your property. Paste them into your PMS (OwnerRez or Hospitable) under their respective trigger settings.</p>
+
+    <h3>The Messaging Philosophy — Three Rules</h3>
+    <ul>
+      <li><strong>Each message has one job.</strong> The booking confirmation confirms. The pre-arrival instructs. The checkout reminder instructs. Don't combine jobs in one message — long combined messages get skimmed, and guests miss the information they needed.</li>
+      <li><strong>Write in your voice, not corporate voice.</strong> "We hope your stay exceeds all expectations" sounds like a hotel chain's legal department. "The fire pit is stacked — let us know if you need more wood" sounds like a person. Guests are renting from a person. Write like one.</li>
+      <li><strong>Timing matters as much as content.</strong> A check-in message sent 3 days before arrival is useful. The same message sent 2 hours before arrival when the guest is already in the car is noise. Configure your PMS triggers precisely — not just "when to send" but "at what time of day." A pre-arrival message sent at 2am is technically correct and practically useless.</li>
+    </ul>
+
+    <div class="msg-sequence">
+
+      <!-- MSG 1 -->
+      <div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-num">1</div>
+          <div class="msg-meta">
+            <div class="msg-trigger">Trigger: Booking Confirmed</div>
+            <div class="msg-name">Booking Confirmation</div>
+          </div>
+          <div class="msg-timing">Fires: Immediately on confirmation</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-subject">Subject line (for email-connected PMS): Your reservation at [Property Name] is confirmed — [Check-in Date]</div>
+          <div class="msg-text">Hi [Guest First Name],
+
+You're confirmed — and we're looking forward to hosting you at [Property Name].
+
+Here's a quick summary of your stay:
+— Check-in: [Date], anytime after [Check-in Time]
+— Check-out: [Date], by [Check-out Time]
+— Property address: [Full Address]
+
+In the days leading up to your arrival, I'll send you everything you need: exact door code, parking instructions, and a few local recommendations from someone who actually lives here.
+
+In the meantime, don't hesitate to reach out with any questions. I check messages throughout the day.
+
+Looking forward to it,
+[Your Name]
+[Property Name]</div>
+          <div class="msg-note">
+            <strong>What this message does:</strong> Confirms the stay, sets an expectation for the next communication, and establishes you as a responsive and present host. Keep it short — this is a receipt, not an essay. The guest will read the full arrival information when it arrives closer to check-in.
+          </div>
+        </div>
+      </div>
+
+      <!-- MSG 2 -->
+      <div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-num">2</div>
+          <div class="msg-meta">
+            <div class="msg-trigger">Trigger: Pre-Arrival</div>
+            <div class="msg-name">Arrival Instructions</div>
+          </div>
+          <div class="msg-timing">Fires: 3 days before check-in, 10am</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-subject">Subject: Your arrival details for [Property Name] — [Check-in Date]</div>
+          <div class="msg-text">Hi [Guest First Name],
+
+Your stay at [Property Name] is coming up on [Day, Date]. Here's everything you need to arrive without a single question:
+
+GETTING HERE
+Address: [Full Address with Google Maps link]
+Parking: [Describe parking — driveway / pull around back / street / number of cars]
+
+GETTING IN
+Door code: [Code] — works on the keypad at [describe location, e.g., "the front door"]
+No keys to pick up, no check-in desk. Walk up, punch in the code, you're home.
+
+WIFI
+Network: [StayFi Network Name]
+You'll see a quick welcome screen when you connect — put in your name and email and you'll be online in seconds.
+
+ONE THING TO KNOW FIRST
+[A single, specific thing you want them to notice when they arrive — e.g., "The hot tub is preset at 102°F and ready" / "The fire pit wood is stacked on the right side of the deck" / "There's a local wine and a welcome card on the kitchen counter for you."]
+
+LOCAL PICKS
+If you haven't planned your days yet: [One restaurant recommendation] is our go-to for dinner, and [One activity or winery] is worth an hour of anyone's time. Both are within [X minutes].
+
+I'll reach out the morning of your arrival with your final code. If anything comes up before then, I respond to messages within the hour.
+
+See you [Day],
+[Your Name]</div>
+          <div class="msg-note">
+            <strong>What this message does:</strong> Eliminates 90% of pre-arrival guest questions in a single message. The one-thing-to-notice detail is deliberate — it creates a positive first impression the moment they walk in. The local picks position you as a knowledgeable host, not just a lock-box operator. This is the most important message in the sequence.
+          </div>
+        </div>
+      </div>
+
+      <!-- MSG 3 -->
+      <div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-num">3</div>
+          <div class="msg-meta">
+            <div class="msg-trigger">Trigger: Day of Check-In</div>
+            <div class="msg-name">Day-Of Welcome</div>
+          </div>
+          <div class="msg-timing">Fires: Day of check-in, 9am</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-subject">Subject: Today's the day — [Property Name] is ready for you</div>
+          <div class="msg-text">Good morning [Guest First Name],
+
+Today's the day. [Property Name] is ready and we're excited for you to get there.
+
+Quick reminder:
+— Check-in anytime after [Time]
+— Door code: [Code]
+— Address: [Address]
+
+The [specific feature — hot tub / fire pit / dock / fireplace] is all set and waiting. I'll be available all day if anything comes up.
+
+Enjoy every minute,
+[Your Name]</div>
+          <div class="msg-note">
+            <strong>What this message does:</strong> Serves as a final confirmation the guest sees while they're packing or on the road. Short, useful, enthusiastic without being over the top. The code repetition here is intentional — guests lose the pre-arrival message in their inbox and ask for the code again. Giving it here proactively prevents that call.
+          </div>
+        </div>
+      </div>
+
+      <!-- MSG 4 -->
+      <div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-num">4</div>
+          <div class="msg-meta">
+            <div class="msg-trigger">Trigger: Mid-Stay</div>
+            <div class="msg-name">Mid-Stay Check-In</div>
+          </div>
+          <div class="msg-timing">Fires: Day 2 of stay, 10am (for stays 3+ nights)</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-subject">Subject: How's the stay going?</div>
+          <div class="msg-text">Hi [Guest First Name],
+
+Hope you're settled in and [Lake / the Gorge / the view / the mountains] is treating you well.
+
+Just checking in — if anything needs attention or you have questions about the area, don't hesitate to reach out. I'm usually quick to respond.
+
+One thing worth knowing if you haven't been already: [a specific local tip that feels insider knowledge — a restaurant that's hard to find, a trail that's less crowded in the morning, a winery that does free tastings without a reservation, a sunset spot off the main road]. It's one of those places the tourists don't usually find.
+
+Enjoy the rest of your stay,
+[Your Name]</div>
+          <div class="msg-note">
+            <strong>What this message does:</strong> Serves two purposes simultaneously. First, it gives guests who have a minor problem a natural opening to mention it — which lets you address issues before checkout rather than finding out about them in a review. Second, the insider tip demonstrates genuine local knowledge. Guests who receive an insider tip during their stay reference it in reviews more often than almost anything else. Write a different tip for each season.
+          </div>
+        </div>
+      </div>
+
+      <!-- MSG 5 -->
+      <div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-num">5</div>
+          <div class="msg-meta">
+            <div class="msg-trigger">Trigger: Checkout Reminder</div>
+            <div class="msg-name">Checkout Instructions</div>
+          </div>
+          <div class="msg-timing">Fires: Morning of checkout, 8am</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-subject">Subject: Checkout today by [Time] — a few quick notes</div>
+          <div class="msg-text">Good morning [Guest First Name],
+
+Hope it's been a great stay. A few quick checkout notes for this morning:
+
+CHECKOUT IS BY [TIME]
+[If your cleaner needs the extra time between stays, be direct about this — not apologetic, just clear.]
+
+BEFORE YOU GO:
+— [Beds: strip and leave sheets by the washer / leave beds as is — up to you]
+— Dishes run through the dishwasher or rinsed and left in the sink
+— Trash to the [bin location / outdoor can]
+— Lock the door on your way out — the code handles it automatically
+
+That's it. No big checklist, no staged photos required. Just leave it roughly how you found it and we'll take care of the rest.
+
+Thank you for staying at [Property Name]. Genuinely — it was a pleasure to host you. Safe travels home,
+[Your Name]</div>
+          <div class="msg-note">
+            <strong>What this message does:</strong> Handles checkout logistics without sounding like an Airbnb terms-of-service document. The "no big checklist" line is intentional — it lowers anxiety for guests who have seen listings that require 20-step checkouts, and makes them feel like you trust them. The genuine thank-you at the end is the setup for Message 6.
+          </div>
+        </div>
+      </div>
+
+      <!-- MSG 6 -->
+      <div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-num">6</div>
+          <div class="msg-meta">
+            <div class="msg-trigger">Trigger: Post-Checkout</div>
+            <div class="msg-name">Review Request</div>
+          </div>
+          <div class="msg-timing">Fires: 1 hour after checkout time</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-subject">Subject: Thank you — and one small ask</div>
+          <div class="msg-text">Hi [Guest First Name],
+
+I hope you're on the road home with good memories and [the lake / the gorge / the mountain / the view] still in your mind.
+
+I already left you a review — I'd be grateful if you had two minutes to share yours. Your experience is what helps future guests find [Property Name], and it means more than you might think.
+
+Thank you again for being great guests. If you ever come back this way, we'd love to have you.
+
+[Your Name]
+[Property Name]</div>
+          <div class="msg-note">
+            <strong>What this message does:</strong> The 1-hour timing catches guests while they are still in the emotional peak of the experience — in the car, reflecting on the weekend. The mention that you already left them a review is not guilt — it is reciprocity. Humans who receive something are more likely to give something. Do not mention star ratings. Do not say "5-star." Ask for the experience to be shared, not for a specific rating. The tone closes warmly and opens the door for repeat booking without being transactional about it.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Personalize Your 6-Message Guest Sequence</span>
+      </div>
+      <p class="ai-prompt-instruction">Use this prompt to move from the generic templates above to messages that are fully specific to your property, your market, and your voice. Give the AI the details below and it will return all six messages, ready to paste into OwnerRez or Hospitable.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">I'm writing automated guest communication messages for my short-term rental. I need all six messages in the sequence — fully customized for my property, not generic templates. Write them in a warm, professional tone that sounds like a real host, not a bot.
+
+MY PROPERTY:
+- Property name: [e.g., "The Lakeview Cabin"]
+- Location / neighborhood: [e.g., Watkins Glen, NY — on Seneca Lake]
+- Property type: [cabin / lake house / condo / house]
+- Bedrooms / max guests: [X BR / X guests]
+- Standout feature (one thing that wows guests): [e.g., private dock with kayaks and canoes]
+- Unique local insider tip I give every guest: [e.g., "The Tuesday night wine tasting at Silver Thread Vineyard is $15/person and always sells out — book before you arrive"]
+
+MY ARRIVAL LOGISTICS:
+- Check-in time: [e.g., 4pm]
+- Check-out time: [e.g., 11am]
+- Access method: [smart lock / lockbox / key exchange]
+- Door code format: [e.g., 4-digit code sent in booking confirmation / generated per reservation in OwnerRez]
+- Parking: [e.g., 2 spots in gravel driveway, no street parking]
+- WiFi name and password: [or "included in digital guidebook link"]
+- Digital guidebook URL: [if you have one — or note "not yet built"]
+
+MY DIRECT BOOKING SITE: [URL or "not yet live"]
+
+WRITE ALL SIX MESSAGES:
+1. Booking confirmation (fires immediately after booking)
+2. Pre-arrival info (fires 3 days before check-in)
+3. Day-of check-in (fires morning of arrival)
+4. Day-2 check-in (fires morning of Day 2)
+5. Pre-checkout (fires morning of checkout day)
+6. Post-checkout review request (fires 1 hour after checkout)
+
+For the post-checkout message: mention that I have already reviewed the guest, ask them to share their experience, and include a link to my direct booking site for their next trip. Do not say "5-star" or ask for a specific rating. Keep tone warm and genuine, not salesy.
+
+Keep each message under 200 words. Use my property name, standout feature, and insider tip where they fit naturally.</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>All six templates are written, customized for your property, and loaded as active triggers in your PMS.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>All six templates customized — bracketed fields filled in, one-thing-to-notice and insider tip written for your specific property</li>
+        <li><span class="cp-box"></span>Triggers configured in OwnerRez or Hospitable — timing set for each (immediately, 3 days out at 10am, day-of at 9am, Day 2 at 10am, day-of checkout at 8am, 1 hour post-checkout)</li>
+        <li><span class="cp-box"></span>Test reservation created — confirm all six messages fire in sequence and copy displays correctly</li>
+        <li><span class="cp-box"></span>Placeholder templates from Module 02 replaced with the final versions from this lesson</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The Guidebook System — Platform, Branded, and the Direct Booking Play</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build two guidebooks — one for each OTA platform that follows their content rules, and one branded standalone document placed in the property that can include your direct booking link, QR code, and anything else you want guests to find.
+    </div>
+
+    <p>Most operators think of the guest guidebook as a single document. It isn't. You have two guidebooks — and they serve completely different strategic purposes. Confusing them leads operators to put information in the wrong place, violate platform rules they didn't know existed, and miss the direct booking opportunity that the in-property guidebook enables.</p>
+
+    <div class="gb-compare">
+      <div class="gb-card">
+        <div class="gb-top">
+          <div class="gb-label">Platform Guidebook</div>
+          <div class="gb-name">Airbnb Guidebook / VRBO House Guide</div>
+        </div>
+        <div class="gb-body">
+          <div class="gb-row"><span class="gb-key">Where it lives</span><span class="gb-val">Inside the OTA app. Guests access it through their reservation in Airbnb or VRBO.</span></div>
+          <div class="gb-row"><span class="gb-key">Who sees it</span><span class="gb-val">Only guests with a confirmed reservation. Not searchable publicly.</span></div>
+          <div class="gb-row"><span class="gb-key">Direct booking links</span><span class="gb-val no">Not allowed. Including your website, email, or QR codes violates platform policies and can suspend your listing.</span></div>
+          <div class="gb-row"><span class="gb-key">External recommendations</span><span class="gb-val yes">Allowed and encouraged. Restaurants, wineries, trails, activities — anything that helps the guest experience.</span></div>
+          <div class="gb-row"><span class="gb-key">House rules / instructions</span><span class="gb-val yes">Allowed. WiFi, appliances, check-out procedure.</span></div>
+          <div class="gb-row"><span class="gb-key">Best used for</span><span class="gb-val">Local recommendations and in-stay experience. Digital supplement to your physical guidebook.</span></div>
+        </div>
+      </div>
+      <div class="gb-card">
+        <div class="gb-top">
+          <div class="gb-label">Branded Standalone Guidebook</div>
+          <div class="gb-name">Your In-Property Guidebook</div>
+        </div>
+        <div class="gb-body">
+          <div class="gb-row"><span class="gb-key">Where it lives</span><span class="gb-val">Physical: printed and left at the property (binder, saddle-stitched booklet, or framed card). Digital: PDF sent via your email/PMS separately.</span></div>
+          <div class="gb-row"><span class="gb-key">Who sees it</span><span class="gb-val">Any guest who walks in. Also past guests if you email the PDF. Potentially future guests if past guests share it.</span></div>
+          <div class="gb-row"><span class="gb-key">Direct booking links</span><span class="gb-val yes">Fully allowed. This is your property, your document. Include your website, QR code, discount offer, Instagram handle — anything.</span></div>
+          <div class="gb-row"><span class="gb-key">Branded vs. Unbranded</span><span class="gb-val">Branded: your business name and logo visible. Unbranded: generic-looking, no business identity. Use branded if you're building a direct booking identity; unbranded if the property is managed for an owner who prefers anonymity.</span></div>
+          <div class="gb-row"><span class="gb-key">Best used for</span><span class="gb-val">Complete property guide + local area guide + the direct booking conversion opportunity that no OTA guide can include.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Building the Platform Guidebook — Airbnb</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Go to Airbnb Host → Listings → [Your Listing] → Guidebook.</strong> Airbnb's guidebook tool lets you create place cards organized by category: restaurants, cafes, bars, arts &amp; culture, outdoors, shopping. Each card includes a name, address, your personal note (the most important field — this is where you tell guests why you're recommending it), and optionally a photo.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Add at least 8–12 recommendations across 4 categories.</strong> A guidebook with 3 entries doesn't communicate local knowledge. Minimum: 3 restaurants, 2 outdoor experiences, 2 wineries or local attractions, 1 emergency/practical location (nearest urgent care, grocery store). Airbnb displays your guidebook as a map to the guest — the more entries, the more useful the map.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Write a personal note for every entry — this is the differentiator.</strong> "Great restaurant" is useless. "Order the pan-seared lake trout — it's caught locally and changes seasonally, which means it's always worth asking what's fresh when you're there" is why a guest chooses this restaurant over the other one on the list. Your personal note is what makes the recommendation feel like a friend's tip rather than a Yelp listing.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Do not include your contact information, website, or anything that routes guests off the platform.</strong> This is an Airbnb content policy. Violations result in your listing being removed from search or suspended. The platform guidebook exists to enhance the guest experience within the platform's walls — keep it there. Everything that benefits your direct booking business goes in the physical guidebook.</p></div>
+      </div>
+    </div>
+
+    <h3>Building the Platform Guide — VRBO</h3>
+    <p>VRBO's equivalent is the House Guide, accessed through your VRBO listing dashboard under "Property Details → House Guide." It's less visual than Airbnb's guidebook but serves the same purpose. Include: arrival and departure instructions, WiFi and appliance information, house rules, and local area recommendations. Same content policy applies — no external contact information or links.</p>
+
+    <h3>Building Your Branded Standalone Guidebook</h3>
+    <p>This is the document that matters most to your long-term business. It lives in the property. Every guest who stays picks it up. The ones who had a great stay, who are already thinking about coming back, will flip to the back page and find your direct booking offer. This is where an Airbnb guest becomes a direct booking guest — not through a marketing campaign, but through a moment of connection at the property they're about to leave.</p>
+
+    <div class="gb-template">
+      <div class="gb-template-label">Branded Guidebook Structure — Template</div>
+      <div class="gb-sections">
+        <div class="gb-section">
+          <div class="s-num">Section 01</div>
+          <div class="s-title">Welcome</div>
+          <ul>
+            <li>Short welcome message — 2–3 sentences, in your voice</li>
+            <li>Photo of the property (your best exterior shot)</li>
+            <li>Your name and what you want guests to know about you as a host</li>
+            <li>One sentence about why you love this property or this area</li>
+          </ul>
+          <span class="branded-only">Branded: include your logo and property name prominently</span>
+        </div>
+        <div class="gb-section">
+          <div class="s-num">Section 02</div>
+          <div class="s-title">WiFi &amp; Getting Connected</div>
+          <ul>
+            <li>Network name and password (large, easy to read)</li>
+            <li>Note about the StayFi splash screen if applicable</li>
+            <li>Smart TV login instructions</li>
+            <li>Streaming service access (if provided)</li>
+          </ul>
+        </div>
+        <div class="gb-section">
+          <div class="s-num">Section 03</div>
+          <div class="s-title">How Things Work</div>
+          <ul>
+            <li>Smart lock: entering and exiting</li>
+            <li>Thermostat / HVAC instructions (any quirks)</li>
+            <li>Hot tub: temperature, jets, chemicals if guest-accessible</li>
+            <li>Fireplace or fire pit: starting instructions, wood location, rules</li>
+            <li>Washer/dryer: pod location, settings to use</li>
+            <li>Trash: day of pickup, where to bring it, bin location</li>
+          </ul>
+        </div>
+        <div class="gb-section">
+          <div class="s-num">Section 04</div>
+          <div class="s-title">The Kitchen</div>
+          <ul>
+            <li>Coffee setup and how to use it</li>
+            <li>Where to find: spices, oils, basic cooking supplies</li>
+            <li>Closest grocery store (name, address, hours)</li>
+            <li>Closest liquor store (if relevant to your market)</li>
+            <li>One ingredient in the pantry guests can use freely</li>
+          </ul>
+        </div>
+        <div class="gb-section">
+          <div class="s-num">Section 05</div>
+          <div class="s-title">Local Guide — Food &amp; Drink</div>
+          <ul>
+            <li>3–5 restaurant recommendations with your personal notes</li>
+            <li>2–3 wineries/breweries with specific what-to-order notes</li>
+            <li>One hidden gem that tourists don't usually find</li>
+            <li>Best spot for a casual lunch vs. a nice dinner</li>
+            <li>Coffee shop worth stopping at in the morning</li>
+          </ul>
+        </div>
+        <div class="gb-section">
+          <div class="s-num">Section 06</div>
+          <div class="s-title">Local Guide — Experiences</div>
+          <ul>
+            <li>Top 3 things to do within 20 minutes</li>
+            <li>Seasonal activities relevant to when most guests visit</li>
+            <li>Best hike (difficulty level, trailhead location)</li>
+            <li>Where to rent kayaks, bikes, or other equipment</li>
+            <li>Local events calendar source or website</li>
+          </ul>
+        </div>
+        <div class="gb-section">
+          <div class="s-num">Section 07</div>
+          <div class="s-title">Checkout</div>
+          <ul>
+            <li>Checkout time reminder</li>
+            <li>3–4 simple checkout steps (not a 20-item checklist)</li>
+            <li>Where to leave the door code / confirm lock</li>
+            <li>Genuine thank-you</li>
+          </ul>
+        </div>
+        <div class="gb-section" style="border: 2px solid var(--gold)">
+          <div class="s-num">Section 08 — BRANDED VERSION ONLY</div>
+          <div class="s-title">Come Back Direct</div>
+          <ul>
+            <li><strong>A direct booking offer:</strong> "Book your next stay directly and save [10%]. No platform fees — same property, better rate."</li>
+            <li><strong>Your direct booking website URL</strong> in large, readable type</li>
+            <li><strong>A QR code</strong> that links directly to your booking page</li>
+            <li>Your email address or text number for questions</li>
+            <li>Your Instagram or social handle (if you maintain one for the property)</li>
+          </ul>
+          <span class="branded-only">This section is the entire strategic purpose of the physical guidebook. Do not omit it from the branded version.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>The Direct Booking QR Code — Why This Section Matters</h3>
+    <p>Airbnb's platform guidebook and VRBO's house guide are tools for the OTAs. They help the guest experience, but they help the platform more than they help you — every successful stay on an OTA is a guest who doesn't have your contact information and has no obvious way to book direct next time.</p>
+
+    <p>The physical guidebook is different. It is yours. A guest who picked it up, read your restaurant recommendations, used your hot tub guide, and had a great weekend is holding a piece of paper in their hands as they're packing to leave. Section 08 is right there. They take a photo of the QR code with their phone. They're now in your ecosystem — not Airbnb's.</p>
+
+    <p>The economics: an Airbnb guest who books direct on their second stay saves you approximately 3% host fee and saves them 6–12% guest service fee. That's a real discount you can offer them without losing margin. "Save 10% by booking direct" is a credible, appealing offer — and it's funded entirely by the fees you stop paying to the platform.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ The Platform Policy Line — Do Not Cross It</div>
+      <p>The in-property physical guidebook is entirely legal and appropriate. The OTA platform guidebook (digital, hosted inside Airbnb or VRBO) is subject to platform content policies that prohibit off-platform solicitation. Do not add your website or QR codes to your Airbnb or VRBO platform guidebook. The consequence is listing suspension — not worth the risk when the physical guidebook accomplishes the same goal for any guest who actually stays at the property.</p>
+      <p>The rule: OTA platform guidebook = local recommendations and house info only. Physical/branded guidebook = everything, including direct booking conversion.</p>
+    </div>
+
+    <h3>Printing and Placing the Guidebook</h3>
+    <ul>
+      <li><strong>Format recommendation:</strong> A5 size (half of letter paper) saddle-stitched booklet, or a 5.5" × 8.5" coil-bound document. Both are inexpensive to print at a local print shop or Canva Print / VistaPrint. Budget $15–25 per copy. Print 3 copies: one in the property, one spare kept at your home or with your cleaner, one for yourself to reference when building future marketing.</li>
+      <li><strong>Placement:</strong> On the kitchen counter, or on the coffee table, where it is immediately visible when guests walk in. Not in a drawer. Not in a folder. On a surface where it's the first thing they touch when they're settling in.</li>
+      <li><strong>Update cycle:</strong> Review and reprint every 6 months or when any information changes (restaurant hours, business closures, pricing updates, your direct booking site). An outdated guidebook that recommends a restaurant that has since closed generates a bad experience and a review mention.</li>
+      <li><strong>Design tool:</strong> Canva has vacation rental guidebook templates that are fast to customize. Build your branded version in Canva, export as PDF, send to print. The design investment is a few hours once and pays dividends for years.</li>
+    </ul>
+
+    <div class="case-study">
+      <div class="case-study-label">Instructor Note</div>
+      <h3>The Guidebook Is a Relationship Document</h3>
+      <p>The best guidebook I've ever seen in a vacation rental was 12 pages. Half of it was about the property — all the functional stuff, well organized. The other half was about the area: the owner's 10 favorite things to do within 20 minutes, organized by whether you have kids, by whether you want an active day or a relaxed one, by season. It read like a letter from a local to a friend visiting for the first time.</p>
+      <p>At the back was a half-page: <strong>"If you had a great time, we'd love to have you back. Book directly at [website] and mention this guidebook for 10% off your next stay."</strong></p>
+      <p>That operator had a 60%+ direct booking rate. Not because of marketing. Because of relationship. Every guest who stayed at that property walked away feeling like they'd been the personal guest of someone who genuinely loved the place and wanted them to love it too. That feeling converted to repeat bookings, direct bookings, and referrals — none of which cost the operator a dollar in OTA fees.</p>
+      <p>Your guidebook is a relationship. Build it like one.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Both platform guidebooks are live, your branded physical guidebook is printed and placed in the property, and your direct booking QR code is in Section 08.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Airbnb Guidebook completed — 8+ recommendations with personal notes across 4 categories</li>
+        <li><span class="cp-box"></span>VRBO House Guide completed — arrival instructions, WiFi, appliances, local area recommendations</li>
+        <li><span class="cp-box"></span>Branded physical guidebook built in Canva (or equivalent) — all 8 sections complete</li>
+        <li><span class="cp-box"></span>Direct booking QR code generated and placed in Section 08 — tested on a phone to confirm it works</li>
+        <li><span class="cp-box"></span>Guidebook printed and placed visibly in the property — on the kitchen counter or coffee table</li>
+        <li><span class="cp-box"></span>Spare copy stored with your cleaner for replacement if the property copy is taken or damaged</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Cleaner SOPs — The System That Protects Your Rating at Every Turn</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build the standard operating procedure your cleaner follows at every turnover — from the moment they walk in through the final walkthrough — so that your property consistently meets the standard your listing photos represent.
+    </div>
+
+    <p>Your cleaner is the person who determines whether your Airbnb rating stays at 4.8 or slides to 4.6. They are not a commodity you replace when a review mentions a dirty bathroom — they are a critical business partner who should be trained, equipped, and retained. The SOP you build in this lesson is the foundation of that relationship: clear expectations, documented standards, and a protocol that produces consistent results even when you're not there to supervise.</p>
+
+    <p>The turnover SOP has three phases: entry assessment, the clean, and the walkthrough. Each phase has specific tasks that must be completed before moving to the next.</p>
+
+    <h3>Phase 1 — Entry Assessment (5 minutes)</h3>
+    <p>The moment your cleaner arrives, before they touch anything, they should conduct a brief assessment of what the outgoing guests left. This is not about judging the guests — it is about understanding what the turnover requires and identifying any damage or missing items before the property is altered.</p>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header">
+        <span>Entry Assessment</span>
+        <span>Photo every item flagged</span>
+      </div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Walk every room before cleaning. Note anything missing, broken, or damaged.</span><span class="photo">📷 Any damage</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Count all dishes, glasses, and cookware against the par inventory. Flag anything missing or broken.</span><span class="photo">📷 If any missing</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check all linens and towels for stains or damage before washing.</span><span class="photo">📷 Any stains</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Test the smart lock — confirm it is functional and records the guest's last exit.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Text the host with the time of entry and note of anything flagged in the assessment before cleaning begins. "Entered 11:05am. Hot tub cover has a crack on the left side — sending photo."</span></div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Why Documentation Before Cleaning Matters</div>
+      <p>A damaged item discovered after the cleaner has already started and moved things around is a documentation problem — you can't prove it was the outgoing guest's damage vs. something that happened during the turnover. A photo taken at entry, before cleaning, with a timestamp, is your evidence for an Airbnb damage claim. Cleaners who document before they clean protect the operator's ability to be compensated for damage.</p>
+    </div>
+
+    <h3>Phase 2 — The Clean</h3>
+    <p>Work through the property in zones, from furthest from the front door to closest. This prevents cross-contaminating a clean area with a dirty one. The sequence: bedrooms and bathrooms first, then living areas, then kitchen last.</p>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header"><span>Bedrooms</span></div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Strip all beds — sheets, pillowcases, duvet covers to laundry area</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe all hard surfaces — nightstands, dresser tops, windowsills</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check under beds — guests leave items under beds more than anywhere else</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Vacuum or sweep the floor, mop if hard flooring</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Make beds with fresh linens — crisp fold at the top, symmetrical pillows, no visible wrinkles in the duvet</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check all drawers and closets — return anything left to the lost-and-found bag</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check charging cables and outlets for guest items left plugged in</span><span class="photo">📷 Completed bedroom</span></div>
+      </div>
+    </div>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header"><span>Bathrooms</span></div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Remove all used towels and washcloths to laundry</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Scrub toilet inside and out — seat, lid, tank top, base</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Scrub and rinse shower/tub — soap scum, grout lines, door track or curtain</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Clean and polish mirrors — no streaks</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe sink and faucet — lime buildup around the base of faucets is the most common cleanliness miss in reviews</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Restock consumables to par: toilet paper (per par sheet), soap, shampoo, tissues</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Stage fresh towels — folded or rolled, positioned symmetrically</span><span class="photo">📷 Completed bathroom</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check hair dryer is present and in its designated drawer</span></div>
+      </div>
+    </div>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header"><span>Kitchen</span></div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Empty and run dishwasher on high-heat — all dishes must come out completely dry before storage</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe all counters, including backsplash and the space behind the faucet</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Clean stove top and burners — every burner, every drip pan</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe microwave interior and exterior</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe refrigerator shelves and exterior. Remove any guest food left behind.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check for guests' personal items in the refrigerator — some guests forget to check before leaving</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Restock consumables: coffee, paper towels, dish soap to par</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Empty and reline trash cans — kitchen, bathroom(s), bedroom</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Sweep and mop kitchen floor — under the table and under appliance fronts</span><span class="photo">📷 Completed kitchen</span></div>
+      </div>
+    </div>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header"><span>Living Areas &amp; Common Spaces</span></div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Vacuum all upholstered surfaces — sofa, chairs, throw pillows. Remove pet hair with lint roller if needed.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe all hard surfaces — coffee table, side tables, entertainment center</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Fluff and arrange throw pillows and blankets to match listing photos</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Wipe TV screen with a dry microfiber cloth — fingerprints on the screen appear in guest photos</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check all windows and sliding doors — clean glass, functional locks</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Vacuum or sweep and mop floors</span></div>
+      </div>
+    </div>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header"><span>Outdoor Spaces</span></div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Clear and wipe outdoor furniture — chairs, table, railings</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Empty fire pit ash if needed. Restock firewood to par.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Hot tub: check chemistry, clean waterline with spa surface cleaner, rinse cover — if water is cloudy or chemistry is off, text host before adding guests</span><span class="photo">📷 Hot tub water</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Sweep deck/patio. Clear any leaves, debris, spills.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check dock or water access area for guest items left behind</span></div>
+      </div>
+    </div>
+
+    <h3>Phase 3 — The Walkthrough (10 minutes)</h3>
+    <p>The walkthrough is the quality control step that separates average cleaners from exceptional ones. Walk the property exactly as the guest will — from the front door through every room, in the sequence a guest arriving for the first time would experience it. Look for what the guest will see, smell, and touch.</p>
+
+    <div class="sop-zone">
+      <div class="sop-zone-header">
+        <span>Final Walkthrough</span>
+        <span>Send complete photo set to host</span>
+      </div>
+      <div class="sop-zone-body">
+        <div class="sop-item"><span class="sop-box"></span><span>Stand at the front door. Look in. First impression: Is it welcoming? Is it clean-smelling? Is the staging visible?</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Walk to each bedroom. Beds are made to photo standard. Nothing visible on floors. Curtains set correctly.</span><span class="photo">📷 Each bedroom</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check every bathroom mirror — no streaks. Towels staged. Consumables restocked.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Kitchen counters — completely clear except for the staged coffee setup. No dish towel hung on the oven handle (it's a common kitchen photo-ruiner).</span><span class="photo">📷 Kitchen</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Check the guidebook — it should be on the counter, cover visible. Replace if it's been taken or is damaged.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Test the smart lock — enter the next guest's code if pre-loaded. Confirm it works. Report to host if any issue.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Smell test — every room. A clean property smells like nothing. Not like cleaning chemicals. Not like the previous guests' food. If there's a scent issue, identify the source before leaving.</span></div>
+        <div class="sop-item"><span class="sop-box"></span><span>Text host: "Turnover complete at [time]. Property is ready. Photos sent." Attach the photo set to the message.</span><span class="photo">📷 Full set</span></div>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>Your cleaner has the printed SOP, knows the photo documentation protocol, and has completed at least one supervised turnover against the full checklist.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>SOP checklist printed and given to your cleaner — one copy for them, one spare at the property</li>
+        <li><span class="cp-box"></span>Photo documentation protocol established — cleaner knows which items require photos and where to send them</li>
+        <li><span class="cp-box"></span>Par level sheet (from Module 03) cross-referenced with this SOP — restocking tasks match par quantities</li>
+        <li><span class="cp-box"></span>One supervised turnover completed — you walked through with your cleaner and verified every zone against the SOP</li>
+        <li><span class="cp-box"></span>Lost-and-found protocol established: where to store items, how long to hold them, how to contact guests</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The 5-Star Formula — What Airbnb Measures and How to Excel at Each</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand Airbnb's six review subcategories, identify which ones are most likely to drop below 5 stars in your property type, and systematize the specific actions that drive 5-star ratings across all six.
+    </div>
+
+    <p>Airbnb asks guests to rate their stay on six subcategories, each scored 1–5 stars. Your overall rating is a weighted average. A 4.6 in any single category drags your overall rating below 4.8 — the threshold that determines your visibility in search, your eligibility for Superhost status, and how much future guests trust your listing before they book. Understanding which subcategories are most likely to slip, and why, is how you protect your rating systematically rather than hoping each guest's experience goes well.</p>
+
+    <div class="star-grid">
+      <div class="star-card flagged">
+        <div class="s-category">⚠ Most Commonly Drops</div>
+        <div class="s-name">Cleanliness</div>
+        <p>The single most common 4-star subcategory across all property types. Guests have high cleanliness expectations set by their hotel baseline. Any missed cleaning task is visible and stays in their memory. <strong>System fix:</strong> The SOP in Lesson 3, completed at every turnover, with photo documentation and a walkthrough, is the only reliable solution.</p>
+      </div>
+      <div class="star-card flagged">
+        <div class="s-category">⚠ Most Commonly Drops</div>
+        <div class="s-name">Accuracy</div>
+        <p>The listing didn't match what the guest found. The hot tub was smaller than the photos suggested. The "lake view" required binoculars. The WiFi was listed as "fast" but was 15 Mbps. <strong>System fix:</strong> Listing photos that are accurate AND compelling (not dishonestly wide-angled), a description that sets the right expectations, and a WiFi speed test result published on the listing.</p>
+      </div>
+      <div class="star-card flagged">
+        <div class="s-category">⚠ Frequently Drops at Higher Price Points</div>
+        <div class="s-name">Value</div>
+        <p>Guests who pay premium rates have premium expectations. If the experience doesn't match the price — thin towels, a missing amenity listed on the listing, a hot tub that took 3 hours to heat — they feel they overpaid. <strong>System fix:</strong> Match the physical property's quality to your ADR. If you're charging $350/night, every amenity should feel like $350/night. The welcome moment (Module 03) helps here — it is a low-cost signal of high-care.</p>
+      </div>
+      <div class="star-card">
+        <div class="s-category">Typically Consistent</div>
+        <div class="s-name">Check-In</div>
+        <p>Smart lock + the pre-arrival message from Lesson 1 = nearly universal 5-star check-in ratings. The specific door code, sent clearly, tested before the guest arrives, with a backup posting inside the property, is the complete solution. <strong>Watch for:</strong> the lock battery dying between the test and the guest's arrival. Fresh batteries before every busy season.</p>
+      </div>
+      <div class="star-card">
+        <div class="s-category">Typically Consistent</div>
+        <div class="s-name">Communication</div>
+        <p>The automated message sequence from Lesson 1, combined with a response-within-1-hour policy during active hours, generates consistent 5-star communication ratings. Guests want to know you're reachable. They don't need to actually reach you very often — they need to know they could. <strong>Watch for:</strong> A delayed response to a booking request or an in-stay message that sits unread for 4+ hours. Minut's noise alerts should route to your phone so you're never the last to know about an issue at the property.</p>
+      </div>
+      <div class="star-card">
+        <div class="s-category">Typically Consistent</div>
+        <div class="s-name">Location</div>
+        <p>You cannot change your location. What you can do is ensure guests arrive at the stay with accurate expectations of what the location offers — and a guidebook that makes the most of it. A guest who knew exactly what to expect from the location and found it as described rates it 5 stars. A guest who expected to walk to downtown and found it was a 20-minute drive rates it 3. <strong>System fix:</strong> Listing description that describes the location accurately, with driving distances to demand drivers stated clearly.</p>
+      </div>
+    </div>
+
+    <h3>The 5-Star Systemization Checklist — Match Every Category to a System</h3>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Subcategory</th><th>Most Common Failure Point</th><th>System That Prevents It</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cleanliness</strong></td><td>Missed cleaning tasks, soap scum, hair left in drains, missed under-bed areas</td><td>SOP checklist (Lesson 3) completed at every turn. Photo walkthrough sent to host. Cleaner held to the same standard at every turn, not just the first supervised one.</td></tr>
+          <tr><td><strong>Accuracy</strong></td><td>Listing photos that oversell, amenities listed that don't work, WiFi speed not as described</td><td>Honest photography (Module 03). Working appliances verified monthly. WiFi speed test result published. Any amenity listed is tested before each season opens.</td></tr>
+          <tr><td><strong>Value</strong></td><td>Price premium not matched by property quality or amenities</td><td>Welcome moment at arrival. Property quality investments that match ADR (towels, kitchen equipment, outdoor staging). Pricing not raised faster than property quality improves.</td></tr>
+          <tr><td><strong>Check-In</strong></td><td>Lock not working, code not received, no parking instructions</td><td>Pre-arrival message 3 days out + day-of message with code repeated. Smart lock battery checked and replaced before each season. Parking instructions in both messages.</td></tr>
+          <tr><td><strong>Communication</strong></td><td>Slow response to requests or mid-stay problems</td><td>Message templates auto-delivering at every trigger. 1-hour response commitment during active hours. Minut noise alerts and PMS notifications on your phone at all times.</td></tr>
+          <tr><td><strong>Location</strong></td><td>Guest expectations didn't match the actual location</td><td>Listing description states driving distances to all demand drivers explicitly. No exaggeration of proximity ("steps from the lake" when it's a 10-minute walk).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ The Failure Pattern That Compounds — What Declining Ratings Actually Look Like</div>
+      <p>STR ratings rarely drop suddenly. They slide — a 5.0 becomes a 4.9, a 4.9 becomes a 4.7, a 4.7 triggers reduced algorithm visibility, which reduces bookings, which reduces revenue, which leads the operator to discount to fill nights, which attracts more price-sensitive guests, which increases the likelihood of the next issue. The slide that started with a missed bathroom cleaning three months ago ends with a listing that is invisible in search and earning 40% less than its comp set peers.</p>
+      <p><strong>The 4.8 floor is not a marketing target. It is an operational floor.</strong> Every system in this module exists to defend it. Review your six subcategory ratings monthly. If any subcategory is below 4.8, treat it as an operational emergency and trace it to its root cause — not the guest, the system that failed to prevent the experience they had.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Module 05</div>
+      <h4>Design your complete automation stack and cleaner SOP</h4>
+      <div class="ai-prompt-box">I want to design the complete automation stack for my STR business using OwnerRez as the hub. Help me:
+
+My setup:
+- PMS: OwnerRez (or note if different)
+- Listing platforms: [Airbnb / VRBO / direct site / which?]
+- Smart lock brand: [Schlage / Yale / August / Igloohome / other]
+- Dynamic pricing tool: [PriceLabs / Wheelhouse / none]
+- Email marketing: [Kit / Mailchimp / none yet]
+- WiFi capture: [StayFi / none yet]
+- Number of properties: [1 / 2 / portfolio]
+- Do I have a dedicated cleaner? [yes / no / I'm using a service]
+
+Part 1 — Automation map
+List every automation I should have running in OwnerRez, organized by trigger event:
+- On booking confirmed
+- 72 hours before check-in
+- Day of check-in
+- Day 2 of stay
+- Day before checkout
+- Day of checkout
+- 2 hours after checkout
+- 21 days after checkout
+- 30 days after checkout
+
+For each trigger: what message fires, to whom (guest / cleaner / me), and what it accomplishes.
+
+Part 2 — Cleaner SOP (one-page format)
+Write a one-page cleaner turnover SOP for [property name] that covers:
+- Arrival checklist (what to check on entry)
+- Room-by-room reset checklist
+- Restocking thresholds (when to alert me for supplies)
+- Quality photo requirement (3 photos before leaving — which rooms)
+- How to report issues (text to my number, photo required)</div>
+      <p class="ai-prompt-note"><strong>The cleaner SOP is the most underbuilt document in most STR operations.</strong> A cleaner who guesses on restocking thresholds either over-orders (waste) or under-delivers (guest complaint). A cleaner who documents issues via photo gives you the evidence for security deposit claims. Two hours building this document saves 20 hours per year of avoidable problems. Add it to your OwnerRez Notes so it's always accessible.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 05 Complete When:</div>
+      <h3>Guest communication is fully automated and copy-ready. Your branded guidebook is in the property. Your cleaner has the SOP. Every system maps to a specific 5-star subcategory.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>All 6 message templates written, customized, and loaded in the PMS — confirmed to fire in test sequence</li>
+        <li><span class="cp-box"></span>Airbnb Guidebook live — 8+ recommendations with personal notes</li>
+        <li><span class="cp-box"></span>VRBO House Guide live — arrival, WiFi, appliances, area recs</li>
+        <li><span class="cp-box"></span>Branded physical guidebook printed — all 8 sections complete, direct booking QR code in Section 08, placed at the property</li>
+        <li><span class="cp-box"></span>Cleaner SOP distributed and one supervised turnover completed against the full checklist</li>
+        <li><span class="cp-box"></span>Photo documentation protocol in place — cleaner sends photo set to host at every turnover completion</li>
+        <li><span class="cp-box"></span>6-subcategory rating review scheduled — monthly calendar reminder set to review each subcategory and trace any below-4.8 score to a root cause</li>
+        <li><span class="cp-box"></span>Proceed to Module 06 — Direct Booking: the tools and systems that convert past OTA guests into direct booking guests, eliminating platform dependency over time</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<section class="machine-feed">
+  <div class="mf-label">Direct Booking Machine</div>
+  <h3>Operations Is the Quality Gate for the Entire Machine</h3>
+  <p>Every system you built in this module serves the operation. It also serves the direct booking machine. The connection is simple: <strong>guests who have an exceptional experience want to come back. Guests who want to come back are the only leads your direct booking machine ever needs.</strong></p>
+  <ul>
+    <li><strong>Guidebook Section 08</strong> — the direct booking QR code in your branded guidebook is the machine's in-property conversion touchpoint. It is the only OTA-compliant moment during the stay where you can invite a guest to book direct. Every guidebook printed is a permanent, physical direct booking offer running inside your property 365 days a year, on every booking, on every channel.</li>
+    <li><strong>The message sequence</strong> — each of the 6 automated messages builds the relationship between you and the guest. By checkout, they know your name and feel cared for by a host who was attentive without being intrusive. That familiarity is the difference between a guest who returns to Airbnb to search generically and one who specifically searches for your property — or responds immediately when your email campaign lands in their inbox.</li>
+    <li><strong>5-star operations</strong> — a property that consistently earns 5 stars is a property whose guests want to come back. The direct booking machine only works on guests who want to return. Operations is the quality control that makes guests want to be repeat guests — and repeat guests are the direct booking machine's entire fuel supply.</li>
+  </ul>
+  <p>Module 06 is where the machine produces revenue. <strong>This module is where the machine earns its customers.</strong></p>
+</section>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 05: Operations &nbsp;·&nbsp; Next: Module 06 — Direct Booking
+</footer>

@@ -110,14 +110,14 @@ export default function TermsPage() {
               </p>
 
               <h3 className="text-base font-semibold text-[var(--sf-navy)] mb-2">
-                Self-Paced Course ($1,997) &amp; Intensive Cohort ($4,997)
+                The System ($1,997) &amp; The Build ($5,497)
               </h3>
               <p className="mb-3">
                 You may request a full refund within <strong>14 days</strong> of purchase,
                 provided you have:
               </p>
               <ul className="list-disc pl-6 space-y-1.5 mb-3">
-                <li>Completed Module 0 (Foundation) and Module 1 (Distribution Platforms)</li>
+                <li>Completed Module 0 (Foundation) and Module 1 (Market Analysis)</li>
                 <li>Submitted the associated homework assignments</li>
                 <li>Demonstrated good-faith engagement with the material</li>
               </ul>
@@ -134,7 +134,7 @@ export default function TermsPage() {
               </p>
 
               <h3 className="text-base font-semibold text-[var(--sf-navy)] mb-2">
-                Done-For-You Services ($7,500 / $25,000)
+                Done-For-You Services ($5,497 / $25,000)
               </h3>
               <p className="mb-3">
                 Due to the custom nature of implementation services, DFY packages are

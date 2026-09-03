@@ -32,7 +32,7 @@ export default function RefundPolicyPage() {
             {/* Course + Intensive */}
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">
-                Self-Paced Course ($1,997) &amp; Intensive Cohort ($4,997)
+                The System ($1,997) &amp; The Build ($5,497)
               </h2>
               <div className="bg-white rounded-xl border border-[var(--sf-navy)]/10 p-6 mb-4">
                 <p className="font-semibold text-[var(--sf-navy)] mb-3">
@@ -43,7 +43,7 @@ export default function RefundPolicyPage() {
                   <strong> all</strong> of the following conditions:
                 </p>
                 <ol className="list-decimal pl-6 space-y-2">
-                  <li>You have completed Module 0 (Foundation) and Module 1 (Distribution Platforms)</li>
+                  <li>You have completed Module 0 (Foundation) and Module 1 (Market Analysis)</li>
                   <li>You have submitted the associated homework assignments</li>
                   <li>You can demonstrate that you made a good-faith effort to implement the strategies taught</li>
                   <li>You submit your refund request via email to <strong>ben@spokebnb.com</strong> with your completed worksheets attached</li>
@@ -75,7 +75,7 @@ export default function RefundPolicyPage() {
             {/* DFY */}
             <div>
               <h2 className="text-lg font-bold text-[var(--sf-navy)] mb-3">
-                Done-For-You Services ($7,500 / $25,000)
+                Done-For-You Services ($5,497 / $25,000)
               </h2>
               <div className="bg-white rounded-xl border border-[var(--sf-navy)]/10 p-6 mb-4">
                 <p className="mb-3">

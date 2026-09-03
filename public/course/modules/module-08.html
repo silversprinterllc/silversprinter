@@ -1,0 +1,830 @@
+<title>Module 08 — Local Guide & SEO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7;
+    --gold-bg: rgba(212,160,23,0.06);
+    --code-bg: #0f1f2d; --code-text: #7dd3fc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232; --gold-bg: rgba(212,160,23,0.08);
+      --code-bg: #080f18; --code-text: #93c5fd;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232; --gold-bg: rgba(212,160,23,0.08);
+    --code-bg: #080f18; --code-text: #93c5fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Keyword comparison table */
+  .kw-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 20px 0; overflow-x: auto; display: block; }
+  .kw-table thead tr { background: var(--navy); }
+  .kw-table thead th { padding: 10px 16px; text-align: left; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .kw-table tbody tr { border-bottom: 1px solid var(--border); }
+  .kw-table tbody tr:last-child { border-bottom: none; }
+  .kw-table td { padding: 11px 16px; vertical-align: middle; color: var(--muted); }
+  .kw-table td:first-child { font-weight: 600; color: var(--text); }
+  .kw-table .bad { color: #dc2626; font-size: 12px; font-weight: 700; }
+  .kw-table .good { color: #16a34a; font-size: 12px; font-weight: 700; }
+  .kw-table .vol { font-variant-numeric: tabular-nums; }
+  .kw-table .diff-hard { color: #dc2626; }
+  .kw-table .diff-med { color: #ca8a04; }
+  .kw-table .diff-easy { color: #16a34a; }
+
+  /* Content hub diagram */
+  .hub-diagram { margin: 28px 0; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+  .hub-center { background: var(--navy); border: 2px solid var(--gold); border-radius: 12px; padding: 16px 24px; text-align: center; margin: 0 auto 24px; max-width: 320px; }
+  .hub-center-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .hub-center-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .hub-spokes { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .hub-spoke { background: var(--gold-bg); border: 1px solid rgba(212,160,23,0.3); border-radius: 10px; padding: 12px 14px; }
+  .hub-spoke-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .hub-spoke-text { font-size: 13px; color: var(--text); font-weight: 500; }
+  .hub-arrow { text-align: center; color: var(--gold); font-size: 20px; margin-bottom: 12px; }
+
+  /* SEO checklist */
+  .seo-checklist { margin: 20px 0; }
+  .seo-item { display: flex; gap: 14px; padding: 13px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; }
+  .seo-status { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .seo-content { flex: 1; }
+  .seo-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .seo-note { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+  .seo-note code { font-family: monospace; font-size: 11.5px; background: var(--code-bg); color: var(--code-text); padding: 1px 5px; border-radius: 4px; }
+
+  /* Code block */
+  .code-block { background: var(--code-bg); border-radius: 10px; padding: 18px 20px; margin: 16px 0; overflow-x: auto; }
+  .code-block pre { font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: var(--code-text); line-height: 1.7; white-space: pre; }
+  .code-block .code-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(212,160,23,0.7); margin-bottom: 10px; }
+
+  /* Content calendar */
+  .month-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 24px 0; }
+  .month-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .month-name { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .month-topic { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .month-type { font-size: 11px; color: var(--muted); }
+
+  /* Pinterest */
+  .pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+  .pin-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 14px; }
+  .pin-icon { font-size: 20px; margin-bottom: 6px; }
+  .pin-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .pin-note { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  /* Metrics */
+  .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+  .metric-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .metric-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .metric-context { font-size: 11px; color: var(--gold); font-weight: 600; margin-top: 4px; }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  @media (max-width: 640px) {
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+    .pin-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .metrics-row { grid-template-columns: 1fr; }
+    .pin-grid { grid-template-columns: 1fr; }
+  }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 08</div>
+    <h1>Local Guide & SEO — The Compounding Channel</h1>
+    <p class="subtitle">Trip-planning keywords that rank, a hub-and-spoke content architecture that compounds, on-page SEO for your direct booking site, and multi-channel distribution that puts your property in front of guests who have never heard of you</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 2: Own</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>8–12 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 07 — Email Marketing</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 09 — Reviews</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 05: Operations</span>
+    <span class="arrow">→</span>
+    <span>Module 06: Direct Booking</span>
+    <span class="arrow">→</span>
+    <span>Module 07: Email Marketing</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 08: Content & SEO</span>
+    <span class="arrow">→</span>
+    <span>Module 09: Reviews</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Right Keywords</a>
+    <a href="#lesson-2">02 — The Hub Content Piece</a>
+    <a href="#lesson-3">03 — On-Page SEO</a>
+    <a href="#lesson-4">04 — Distribution & Visibility</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🔍</div>
+    <div>
+      <div class="label">Module 08 Deliverable</div>
+      <p>One published hub content piece (your local area travel guide, 1,500+ words, live on your property website). Google Business Profile claimed and verified. Google Search Console connected to your direct booking site. A 12-month content topic list mapped to your seasonal calendar. On-page SEO audit complete — title tags, meta descriptions, schema markup, and image alt text corrected across all key pages.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Right Keywords — Why the Obvious Targets Are a Trap</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand why competing for "[city] vacation rental" produces zero results for independent operators, identify the trip-planning keyword cluster where individual properties can actually rank, and map 10–15 content topics specific to your property's local area.
+    </div>
+
+    <p>Every STR operator who decides to "do SEO" makes the same first mistake: they try to rank for "[their city] vacation rental." It sounds logical. People searching for a Finger Lakes vacation rental want to find Finger Lakes vacation rentals. But the search results for that keyword are Airbnb, VRBO, Vacasa, and Vrbo. Not individual properties. Not ever. Those platforms have hundreds of thousands of inbound links, tens of millions of pages, and a decade-long head start. An individual property website cannot compete there — not for any budget, not at any posting cadence.</p>
+
+    <p>The correct game is different. Guests book vacation rentals after they have already decided where they want to go. The decision about where to go is made earlier — during the trip-planning phase, when they are searching for things like "best things to do in Seneca Lake" or "Finger Lakes itinerary fall foliage" or "where to stay near Watkins Glen." These are trip-planning keywords. The people searching them have not opened Airbnb yet. They are still deciding the destination. If your property's website has content that answers these questions — real, specific, local content — you appear in that decision-making moment.</p>
+
+    <p>This is not a theory. It is the mechanism by which local editorial sites, tourism boards, and small-town travel blogs generate consistent, direct-booking-quality traffic without competing with OTA platforms at all. Your property website can do the same thing at a smaller, property-specific scale.</p>
+
+    <h3>The Keyword Landscape: What's Winnable vs. What Isn't</h3>
+
+    <table class="kw-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Monthly Searches</th>
+          <th>Competition</th>
+          <th>Verdict</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>finger lakes vacation rental</td>
+          <td class="vol">12,000+</td>
+          <td class="diff-hard">Very High</td>
+          <td class="bad">✗ Skip</td>
+          <td>Airbnb, VRBO, Vacasa dominate. Unwinnable.</td>
+        </tr>
+        <tr>
+          <td>seneca lake things to do</td>
+          <td class="vol">4,400</td>
+          <td class="diff-med">Moderate</td>
+          <td class="good">✓ Target</td>
+          <td>Trip-planning intent. Local content can rank.</td>
+        </tr>
+        <tr>
+          <td>finger lakes fall foliage itinerary</td>
+          <td class="vol">1,600</td>
+          <td class="diff-easy">Low</td>
+          <td class="good">✓ Target</td>
+          <td>Specific, seasonal. Tourism board + blogs dominate, not OTAs.</td>
+        </tr>
+        <tr>
+          <td>watkins glen restaurants</td>
+          <td class="vol">3,200</td>
+          <td class="diff-med">Moderate</td>
+          <td class="good">✓ Target</td>
+          <td>High local intent. Trip-planner searching for the full picture.</td>
+        </tr>
+        <tr>
+          <td>where to stay seneca lake</td>
+          <td class="vol">880</td>
+          <td class="diff-easy">Low</td>
+          <td class="good">✓ Target</td>
+          <td>Direct lodging intent at lower competition — ideal.</td>
+        </tr>
+        <tr>
+          <td>finger lakes wine trail map</td>
+          <td class="vol">2,900</td>
+          <td class="diff-med">Moderate</td>
+          <td class="good">✓ Target</td>
+          <td>Trip-planner keyword. Your content + your property as the base.</td>
+        </tr>
+        <tr>
+          <td>[your property name] reviews</td>
+          <td class="vol">~50</td>
+          <td class="diff-easy">Very Low</td>
+          <td class="good">✓ Always</td>
+          <td>Brand search. Every property site must own its name in search.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ How to Find Your Specific Keywords</div>
+      <p>Go to <strong>Google Search Console</strong> (you will connect this in Lesson 3) and look at what queries already bring visitors to your site. Supplement with two free tools: <strong>Google's autocomplete</strong> (start typing "[your area] things to do" and note every autocomplete suggestion — each one is a real search with real volume) and <strong>Ahrefs' free keyword generator</strong> at ahrefs.com/keyword-generator. Enter your location name and filter for keywords with KD (keyword difficulty) under 30. These are your winnable targets. Build a list of 15–20 and prioritize the ones with the clearest connection to why guests would want to be near your specific property.</p>
+    </div>
+
+    <h3>The Trip-Planning Keyword Clusters</h3>
+    <p>For any STR property, content topics fall into five clusters. Map 2–3 topics per cluster for your location to generate your 12-month content plan.</p>
+
+    <ul>
+      <li><strong>Things to Do:</strong> "[Area] things to do," "[Area] outdoor activities," "[Area] family activities," "[Area] date ideas." The broadest trip-planning intent. High volume, moderate competition.</li>
+      <li><strong>Itineraries:</strong> "[Area] 3-day itinerary," "[Area] weekend guide," "[Area] fall/summer/winter trip ideas." Specific and seasonal — easier to rank, captures guests still in planning mode.</li>
+      <li><strong>Local Food & Wine:</strong> "[Area] best restaurants," "[Area] wineries," "[Area] breweries," "[Area] farmers market." High local intent. These searches often happen mid-trip from guests already there — building awareness of your area brand.</li>
+      <li><strong>Events:</strong> "[Event name] tickets," "[Event name] where to stay," "[Local festival] guide." Seasonal with clear booking intent. A well-timed event guide drives last-minute direct bookings from people who waited too long for OTA options.</li>
+      <li><strong>Where to Stay:</strong> "Where to stay [area]," "best vacation rentals [area]" (lower competition than "[area] vacation rental"), "cabin rental [specific lake/park/trail]." The most direct conversion keyword your site can target. Lower volume but high commercial intent.</li>
+    </ul>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You have a 15-topic content list specific to your property's local area, organized by cluster.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>15–20 winnable keyword targets identified — all with KD under 30 or confirmed by local SERP analysis</li>
+        <li><span class="cp-box"></span>Topics organized into 5 clusters: Things to Do, Itineraries, Local Food & Wine, Events, Where to Stay</li>
+        <li><span class="cp-box"></span>Top 12 topics mapped to specific calendar months (aligned with Module 07 campaign calendar)</li>
+        <li><span class="cp-box"></span>Hub topic identified — the single most authoritative, comprehensive piece your site will anchor on</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The Hub Content Piece — The Local Area Guide That Anchors Everything</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Write, publish, and structure your single most important content asset — the definitive local area guide that ranks for trip-planning keywords, earns inbound links from local tourism sites, and converts organic visitors into direct booking leads.
+    </div>
+
+    <p>Every content strategy has one piece that does more work than all the others combined. For an STR property, it is the local area travel guide: a comprehensive, specific, genuinely useful resource that anyone planning a trip to your area would bookmark, share, and return to. Not a promotional piece about your property. Not a listicle with ten generic recommendations. A real guide — the kind a local would write for a friend who was visiting for the first time.</p>
+
+    <p>This piece becomes the hub. Every other article on your site links to it. It earns links from local tourism boards, event sites, and travel bloggers because it is legitimately the best guide to your area that exists. Over time it ranks. And because it is on the same domain as your direct booking site, the authority it accumulates benefits every page on that domain — including your booking page.</p>
+
+    <h3>Hub-and-Spoke Content Architecture</h3>
+    <div class="hub-diagram">
+      <div class="hub-center">
+        <div class="hub-center-label">Hub</div>
+        <div class="hub-center-name">The Complete [Area] Travel Guide</div>
+      </div>
+      <div class="hub-arrow">↑ Internal links from all spokes → hub &nbsp;|&nbsp; hub → direct booking page ↓</div>
+      <div class="hub-spokes">
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">Spoke 1</div>
+          <div class="hub-spoke-text">Best Wineries on [Lake]</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">Spoke 2</div>
+          <div class="hub-spoke-text">[Area] 3-Day Fall Itinerary</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">Spoke 3</div>
+          <div class="hub-spoke-text">Where to Eat in [Nearest Town]</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">Spoke 4</div>
+          <div class="hub-spoke-text">[Local Event] Visitor Guide</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">Spoke 5</div>
+          <div class="hub-spoke-text">Best Hikes Near [Property Location]</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">Spoke 6</div>
+          <div class="hub-spoke-text">What to Do in [Area] in Winter</div>
+        </div>
+      </div>
+    </div>
+
+    <p>The architecture matters for two reasons. First, internal links from spoke pages to the hub concentrate the ranking authority in one place — Google reads this as "this domain's most important page is the hub." Second, the hub links directly to the direct booking page, which means every organic visitor who reads the hub has a clear path to booking without going through an OTA.</p>
+
+    <h3>What Makes the Hub Piece Rank</h3>
+    <ul>
+      <li><strong>Genuine local specificity.</strong> Name actual businesses. Include real addresses. List specific trails by their trail names. Mention the wine festival by its actual name and typical dates. Vague content ("there are many excellent wineries in the area") does not rank. Specific content ("Bloomer Creek Vineyard on Slaterville Road is worth the drive for the Gewürztraminer") earns inbound links and reader trust simultaneously.</li>
+      <li><strong>Word count: 1,500–2,500 words minimum.</strong> For competitive local guides, thinner content does not rank. This does not mean padding — every sentence should carry useful information. A real guide of this area genuinely needs 2,000 words to be comprehensive. Write to completeness, not to a word count.</li>
+      <li><strong>Clear heading structure.</strong> H1 for the article title. H2 for major sections (Things to Do, Where to Eat, Where to Stay, When to Visit). H3 for subsections within each major section. This structure is both a usability improvement and a search ranking signal — Google's featured snippets pull directly from well-structured heading hierarchies.</li>
+      <li><strong>A "When to Visit" section.</strong> Every good area guide has one. It is also the section that captures seasonal search queries ("Finger Lakes in October," "best time to visit Seneca Lake") and creates an internal link opportunity to your direct booking site with a call to action like "Heading to [Area] this [season]? Check availability at [Property Name]."</li>
+      <li><strong>Owned photography.</strong> Your photos of the area — not stock images — give the guide authenticity that travel bloggers cannot replicate. They also give you original visual assets for Pinterest distribution (Lesson 4).</li>
+    </ul>
+
+    <h3>The Seasonal Content Calendar (12 Spoke Topics)</h3>
+    <div class="month-grid">
+      <div class="month-card"><div class="month-name">January</div><div class="month-topic">What to Do in [Area] in Winter</div><div class="month-type">Seasonal guide · Low competition</div></div>
+      <div class="month-card"><div class="month-name">February</div><div class="month-topic">Romantic Weekend Getaways Near [City]</div><div class="month-type">Valentine's angle · Couples intent</div></div>
+      <div class="month-card"><div class="month-name">March</div><div class="month-topic">Best Things to Do in [Area] in Spring</div><div class="month-type">Seasonal · Early planner</div></div>
+      <div class="month-card"><div class="month-name">April</div><div class="month-topic">Complete [Area] Winery & Wine Trail Guide</div><div class="month-type">High volume · Evergreen</div></div>
+      <div class="month-card"><div class="month-name">May</div><div class="month-topic">Best Hikes Near [Your Property Location]</div><div class="month-type">Local intent · Links to booking</div></div>
+      <div class="month-card"><div class="month-name">June</div><div class="month-topic">Where to Eat in [Nearest Town]: A Local's Guide</div><div class="month-type">Local food · High engagement</div></div>
+      <div class="month-card"><div class="month-name">July</div><div class="month-topic">[Local Summer Event] Visitor Guide</div><div class="month-type">Event timing · Booking intent</div></div>
+      <div class="month-card"><div class="month-name">August</div><div class="month-topic">[Area] 3-Day Summer Itinerary</div><div class="month-type">Itinerary · Links to hub</div></div>
+      <div class="month-card"><div class="month-name">September</div><div class="month-topic">Best Fall Foliage Drives Near [Area]</div><div class="month-type">Peak seasonal volume</div></div>
+      <div class="month-card"><div class="month-name">October</div><div class="month-topic">[Area] Fall Itinerary: 3 Days of Foliage, Wine & Hiking</div><div class="month-type">Highest seasonal volume month</div></div>
+      <div class="month-card"><div class="month-name">November</div><div class="month-topic">Thanksgiving Getaways Near [City]: Where to Go</div><div class="month-type">Holiday intent · Booking</div></div>
+      <div class="month-card"><div class="month-name">December</div><div class="month-topic">New Year's Eve Getaways in [Area]</div><div class="month-type">Holiday intent · Last-minute</div></div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Where to Publish: Your Direct Booking Site vs. a Separate Blog</div>
+      <p><strong>Publish content on the same domain as your direct booking site.</strong> A separate blog at a different domain splits your authority between two sites — the content earns links that benefit the blog, not the booking page. OwnerRez direct booking sites support custom pages and can host a blog section. If your direct booking site is at [property].com, your hub guide should live at [property].com/blog/[area]-travel-guide — not at a separate domain. All the authority accumulates in one place, and the booking page benefits from all of it.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your Local Area Travel Guide — The Hub Content Piece</h4>
+      <div class="ai-prompt-box">You are a travel writer helping me create the anchor content piece for my vacation rental's website — a comprehensive local area guide that will rank in Google search and convert organic visitors into direct booking guests.
+
+Location: [SPECIFIC AREA NAME — e.g., "Seneca Lake, New York" not just "Finger Lakes"]
+Property name and direct booking URL: [PROPERTY NAME] at [URL]
+Property description: [e.g., "4-bedroom lakefront cabin 2 miles north of Watkins Glen"]
+Best season to visit and why: [YOUR ANSWER]
+3 things this area is best known for: [1. / 2. / 3.]
+3 restaurants worth the drive (name + one specific reason): [1. / 2. / 3.]
+3 wineries, breweries, or local attractions (name + what makes each one worth it): [1. / 2. / 3.]
+One outdoor activity most visitors never discover: [YOUR ANSWER]
+Nearest major city and approximate drive time: [CITY, X hours]
+One thing visitors consistently get wrong about timing or logistics: [YOUR ANSWER]
+
+Write a complete travel guide with these sections:
+1. Introduction — why this area is worth the trip (2 paragraphs, lead with what makes it genuinely distinct from similar destinations)
+2. Things to Do — 6–8 specific recommendations with enough detail to be useful, not just a list
+3. Where to Eat and Drink — your 3 restaurant + 3 winery/brewery recommendations, each with a specific reason to go
+4. Best Time to Visit — honest seasonal breakdown with trade-offs; include a soft CTA linking to [PROPERTY NAME] at [URL] for each season
+5. Getting There and Around — practical logistics (airports, driving distances, car rental notes)
+6. Where to Stay — recommend your property as the home base with a direct booking link
+
+Target: 1,800–2,200 words. Second person throughout. No clichés ("hidden gem," "charming," "bustling"). Specific and direct.</div>
+      <p class="ai-prompt-note"><strong>After generating, add at least 5 details only you could know</strong> — a specific trail marker, the best table at a restaurant, what time to arrive before crowds, a seasonal insider note. AI output gives you the architecture. Your local knowledge is what earns links from tourism boards and makes readers trust your property recommendation at the end.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your hub content piece is published and your 12-month content topic list is mapped.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Hub piece written: minimum 1,500 words, H1/H2/H3 structure, real local specificity, owned photos</li>
+        <li><span class="cp-box"></span>Hub piece published on the same domain as direct booking site — not a separate domain</li>
+        <li><span class="cp-box"></span>Hub piece includes a "When to Visit" section with a call-to-action linking to the direct booking page</li>
+        <li><span class="cp-box"></span>12 spoke topics mapped to months — aligned with Module 07 campaign calendar and seasonal revenue calendar</li>
+        <li><span class="cp-box"></span>Each spoke topic identified with its target keyword and a linking strategy back to the hub</li>
+        <li><span class="cp-box"></span>Outreach list started: 3–5 local tourism sites, event sites, or travel bloggers to contact for link partnerships</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>On-Page SEO — Making Your Direct Booking Site Readable by Google</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Audit and correct the technical SEO fundamentals on your direct booking site — title tags, meta descriptions, VacationRental schema markup, image optimization, and Google Search Console setup — so that the content you create in Lesson 2 is discoverable.
+    </div>
+
+    <p>Content strategy is worthless if Google cannot read the site that hosts it. On-page SEO is not complicated for an STR property site — but the basics are almost universally skipped by operators because OwnerRez's default site setup does not do any of this for you. Five to six hours of one-time configuration produces lasting ranking improvements that accumulate compounding benefit for years.</p>
+
+    <h3>The On-Page SEO Audit Checklist</h3>
+
+    <div class="seo-checklist">
+      <div class="seo-item">
+        <div class="seo-status">📝</div>
+        <div class="seo-content">
+          <div class="seo-title">Title Tag — Property Page</div>
+          <div class="seo-note">The title tag is what appears in the Google search result. Default OwnerRez title tags are generic or use the property name alone. Target format: <code>[Property Name] — [Location] Vacation Rental | Direct Booking</code>. Include the location keyword. Keep under 60 characters. Do not stuff keywords — write for the human reader scanning search results. Example: <code>Lakeside Landing FLX — Seneca Lake Vacation Rental | Book Direct</code></div>
+        </div>
+      </div>
+      <div class="seo-item">
+        <div class="seo-status">📋</div>
+        <div class="seo-content">
+          <div class="seo-title">Meta Description — Property Page</div>
+          <div class="seo-note">The meta description appears below the title in search results. It does not directly affect rankings, but it determines click-through rate — which does affect rankings indirectly. Write a 150–160 character description that answers: what is this property, where is it, and what makes it worth clicking? Include a mild call to action. Example: <code>4-bed lakefront retreat on Seneca Lake — book directly and skip platform fees. Fire pit, kayaks, vineyard views. Check availability.</code></div>
+        </div>
+      </div>
+      <div class="seo-item">
+        <div class="seo-status">🏷️</div>
+        <div class="seo-content">
+          <div class="seo-title">VacationRental Schema Markup</div>
+          <div class="seo-note">Schema markup is structured data that tells Google exactly what type of page this is. For an STR property, the correct schema type is <code>LodgingBusiness</code> with a <code>VacationRental</code> subtype. Correct schema can generate rich results in Google Search — a star rating, price range, and review count appear directly in the search result, increasing click-through rate significantly. Add this as a JSON-LD block in your site's <code>&lt;head&gt;</code>. OwnerRez custom sites allow custom code injection in the head tag — paste the block there.</div>
+        </div>
+      </div>
+      <div class="seo-item">
+        <div class="seo-status">🖼️</div>
+        <div class="seo-content">
+          <div class="seo-title">Image File Names and Alt Text</div>
+          <div class="seo-note">Every image on your site should have a descriptive file name and alt text. Default phone camera images (IMG_4532.jpg) send no ranking signal. Renamed images (<code>seneca-lake-vacation-rental-fire-pit.jpg</code>) tell Google what the image shows and reinforce the page's location keyword. Alt text should describe the image for accessibility and include the location keyword naturally: <code>alt="fire pit deck at Seneca Lake vacation rental at sunset"</code>. Never keyword-stuff alt text — write what a visually impaired reader would need to understand the image.</div>
+        </div>
+      </div>
+      <div class="seo-item">
+        <div class="seo-status">📊</div>
+        <div class="seo-content">
+          <div class="seo-title">Google Search Console — Connected</div>
+          <div class="seo-note">Search Console is Google's free tool for understanding how your site performs in search. It shows which queries bring visitors, which pages rank, and which pages have technical errors preventing ranking. Setup: go to search.google.com/search-console → add property → verify ownership via DNS record (add the TXT record to your domain registrar, same process as Kit domain authentication in Module 07) → submit your sitemap (OwnerRez generates one at <code>[yourproperty].com/sitemap.xml</code>). Check it monthly for new ranking queries and crawl errors.</div>
+        </div>
+      </div>
+      <div class="seo-item">
+        <div class="seo-status">📍</div>
+        <div class="seo-content">
+          <div class="seo-title">Google Business Profile — Claimed</div>
+          <div class="seo-note">A Google Business Profile puts your property on Google Maps and generates a knowledge panel in search results. Many STR operators don't know this is possible — GBP is not just for brick-and-mortar businesses. Search "Google Business Profile" → manage now → "vacation rental" as the business category → add your property address. This takes 1–2 weeks to verify by postcard. Once live: add all photos, set the booking link to your direct booking site (not Airbnb), and respond to all reviews. GBP reviews appear in search results and are separate from Airbnb reviews — both matter.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>VacationRental Schema Markup — Copy-Paste Template</h3>
+    <p>Paste this into your site's <code>&lt;head&gt;</code> tag via OwnerRez's custom code injection. Replace all bracketed fields with your property's actual data.</p>
+
+    <div class="code-block">
+      <div class="code-label">JSON-LD Schema — LodgingBusiness / VacationRental</div>
+      <pre>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": ["LodgingBusiness", "VacationRental"],
+  "name": "[Your Property Name]",
+  "description": "[2–3 sentence property description]",
+  "url": "https://[yourdomain].com",
+  "telephone": "[Your phone number]",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "[Street address or nearest town]",
+    "addressLocality": "[City/Town]",
+    "addressRegion": "[State abbreviation]",
+    "postalCode": "[ZIP]",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": [your latitude],
+    "longitude": [your longitude]
+  },
+  "numberOfRooms": [bedroom count],
+  "amenityFeature": [
+    {"@type": "LocationFeatureSpecification", "name": "WiFi", "value": true},
+    {"@type": "LocationFeatureSpecification", "name": "Kitchen", "value": true},
+    {"@type": "LocationFeatureSpecification", "name": "Parking", "value": true}
+  ],
+  "image": [
+    "https://[yourdomain].com/images/[photo1].jpg",
+    "https://[yourdomain].com/images/[photo2].jpg"
+  ],
+  "priceRange": "$$",
+  "starRating": {
+    "@type": "Rating",
+    "ratingValue": "5"
+  }
+}
+&lt;/script&gt;</pre>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The Compounding Effect of Technical SEO</div>
+      <p>Technical SEO is a one-time investment with compounding returns. A site with correct title tags, schema markup, and Search Console monitoring ranks incrementally better than one without — and that advantage compounds as the site ages and accumulates content. The operators who complete this lesson in Year 1 have a structural ranking advantage over operators who start in Year 3 that cannot be closed quickly. Every day this configuration is missing, a competitor who has it is capturing organic traffic your property is invisible to.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your Title Tag, Meta Description, and Google Business Profile Description</h4>
+      <div class="ai-prompt-box">You are helping me write the on-page SEO copy for my vacation rental's direct booking website. I need three specific pieces of copy.
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+Number of bedrooms: [#]
+Closest notable landmark or attraction: [e.g., "Watkins Glen State Park" / "Seneca Lake waterfront"]
+One standout amenity: [e.g., "private dock," "fire pit with lake views," "hot tub"]
+Direct booking URL: [URL]
+
+Write:
+
+1. Title tag (max 60 characters)
+   Format: [Property Name] — [Location] [Property Type] | Book Direct
+
+2. Meta description (max 155 characters)
+   Include the location keyword, one amenity, and a soft CTA. No superlatives. Should make someone scanning Google results want to click.
+
+3. Google Business Profile description (max 750 characters)
+   Third person. Describe the property, location relative to key attractions, and why guests book directly. End with the direct booking URL.
+
+All three must be factually accurate based only on information I provided — do not invent amenities or proximity claims I did not give you.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Run your title tag through a free SERP preview tool (search "Google SERP preview tool") to confirm it does not truncate awkwardly. Test your meta description at mobile width — it renders shorter on phones than on desktop previews.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>Your direct booking site's technical SEO foundation is in place.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Title tag updated on the main property page — includes property name, location keyword, and "direct booking"</li>
+        <li><span class="cp-box"></span>Meta description written — 150–160 characters, compelling, includes a soft CTA</li>
+        <li><span class="cp-box"></span>VacationRental schema markup added to site head — verified with Google's Rich Results Test tool</li>
+        <li><span class="cp-box"></span>All property photos renamed with descriptive, keyword-rich file names before uploading</li>
+        <li><span class="cp-box"></span>Alt text added to all images on the property page — descriptive, natural, no stuffing</li>
+        <li><span class="cp-box"></span>Google Search Console connected — ownership verified, sitemap submitted</li>
+        <li><span class="cp-box"></span>Google Business Profile claimed — business category set to "Vacation Rental," direct booking link set as the primary website link</li>
+        <li><span class="cp-box"></span>GBP verification postcard ordered (allow 1–2 weeks for delivery)</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Distribution & Visibility — Pinterest, Editorial Links, and AI Search</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Distribute each content piece through three channels (Pinterest, local editorial outreach, and AI search visibility practices) so that articles you write compound in reach well beyond their initial organic search ranking.
+    </div>
+
+    <p>Writing the content is half the work. A published article that sits unlinked and unpromoted ranks slowly, if at all. Every piece you publish deserves intentional distribution — not across every social platform simultaneously, but through two or three high-leverage channels where STR content specifically performs. The three channels below are not social media plays. They are discovery infrastructure with 2–5 year shelf lives. A pinned piece on Pinterest in Year 1 continues driving traffic in Year 4. An editorial mention on a local tourism site in Year 1 continues passing link authority in Year 4. Set them up once and they work indefinitely.</p>
+
+    <h3>Pinterest — The Discovery Channel for Travel Content</h3>
+    <p>Pinterest is not a social media platform in the conventional sense. It is a visual search engine with a user base actively planning future trips, home decor, and travel experiences. A pin does not disappear from feeds after 48 hours like an Instagram post — it lives in the search index for years and continues driving traffic. For vacation rental properties specifically, Pinterest is one of the highest-ROI distribution channels available.</p>
+
+    <div class="pin-grid">
+      <div class="pin-card">
+        <div class="pin-icon">📸</div>
+        <div class="pin-title">Property Interior Photos</div>
+        <div class="pin-note">Pin your best interior shots with titles like "Cozy Seneca Lake Cabin — Direct Booking Available." Each pin links to your direct booking site. Travel inspiration intent converts directly.</div>
+      </div>
+      <div class="pin-card">
+        <div class="pin-icon">🗺️</div>
+        <div class="pin-title">Area Guide Pins</div>
+        <div class="pin-note">Create a graphic for each article ("Best Wineries on Seneca Lake") and pin it linking to the article. Saves 2-3× longer than photos. Drives content traffic from planners in the research phase.</div>
+      </div>
+      <div class="pin-card">
+        <div class="pin-icon">📅</div>
+        <div class="pin-title">Seasonal Content Pins</div>
+        <div class="pin-note">Pin seasonal content 6–8 weeks before the season peaks. "Finger Lakes Fall Foliage Guide" pinned in August drives September/October traffic when the Pinterest algorithm surfaces seasonal content.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Create a Pinterest Business account</strong> at business.pinterest.com. Use your property or brand name. Connect it to your website domain — Pinterest will verify ownership and give your pins priority in search for your domain's URLs. This is the same domain verification as Search Console: add a TXT record at your registrar.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Create boards that reflect your content clusters:</strong> "[Area] Travel Guide," "[Area] Wineries," "[Area] Weekend Getaways," "Cozy [Property Type] Rentals," "[Season] at [Area]." Each board focuses a specific keyword cluster and makes your account useful beyond just your property — which increases follower count and reach.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Pin every content piece when it publishes,</strong> plus your best property photos monthly. Use Pinterest's native scheduling tool to queue pins 6–8 weeks before the season they're relevant to. Write keyword-rich pin descriptions — Pinterest's search algorithm reads the description the same way Google reads meta descriptions. Include your location keyword and a clear value statement in the first two sentences of every description.</p></div>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write 10 Pinterest Pin Descriptions for Your Property and Area Content</h4>
+      <div class="ai-prompt-box">You are helping me write Pinterest pin descriptions for my vacation rental and local area content. Pinterest surfaces pins using keyword-rich descriptions — write each as if a trip planner stumbled on this pin while searching.
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE — e.g., Seneca Lake, New York]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+Direct booking URL: [URL]
+Local area guide URL: [URL/blog/area-guide]
+3 nearby attractions to associate with the property: [1. / 2. / 3.]
+
+Write 10 pin descriptions (2–3 sentences each):
+
+Pin 1: Property interior photo → link: direct booking URL
+Pin 2: Property exterior or best amenity shot → link: direct booking URL
+Pin 3: Property view or outdoor feature → link: direct booking URL
+Pin 4: Local area guide graphic → link: area guide URL
+Pin 5: Local area guide graphic (alternate angle) → link: area guide URL
+Pin 6: Fall seasonal content → link: area guide URL
+Pin 7: Summer seasonal content → link: area guide URL
+Pin 8: Winery or wine trail content → link: area guide URL
+Pin 9: Outdoor activity near the property → link: area guide URL
+Pin 10: "Where to stay in [area]" pitch → link: direct booking URL
+
+Each description must: (1) start with the primary search keyword — not "Welcome to" or "Check out," (2) include the location name, (3) end with a natural prompt that implies there is more at the link — never just "click here."</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Open Google Search Console and check what queries already bring visitors to your site. Insert 1–2 of those exact phrases into pin descriptions where they fit naturally. Pinterest's algorithm weights location-specific keywords heavily — "Finger Lakes fall foliage cabin" outperforms "cozy fall getaway" for your geographic audience.</p>
+    </div>
+
+    <h3>Local Editorial Outreach — How Properties Get Mentioned</h3>
+    <p>An inbound link from a local tourism site, travel blog, or regional editorial publication does two things: it passes link authority to your domain (improving your search rankings), and it drives warm referral traffic from readers who are actively planning trips to your area. Both benefits compound over time. A link placed in Year 1 continues producing both effects indefinitely unless the linking page is removed.</p>
+
+    <p>The operators who earn the most editorial mentions are the ones who have content worth linking to. A property website with a comprehensive local area guide gives tourism boards a reason to link ("This visitor guide from [Property Name] is one of the best resources for planning your [Area] trip"). A property website that is just a booking page gives them nothing to link to. This is why the hub content piece from Lesson 2 exists — it is the asset you bring to every outreach conversation.</p>
+
+    <ul>
+      <li><strong>Local tourism boards and CVBs.</strong> Every county tourism office maintains a resource page for visitors. Email their content manager, introduce yourself as a local STR operator, offer your local area guide as a resource. Ask if they would consider adding a link from their resources page. This is a low-effort, high-authority link when it lands.</li>
+      <li><strong>Regional travel bloggers.</strong> Search "[Your area] travel blog" to find active bloggers who write about your destination. Most are open to partnerships — a hosted stay in exchange for a mention, or a simple outreach noting that you've referenced their content and asking them to consider linking to yours. Reciprocity is genuine in this space.</li>
+      <li><strong>Local event websites.</strong> Every major local event has a website that links to nearby accommodations and lodging resources. Email the event organizer (usually a small local staff) and ask to be listed as a recommended nearby rental. These links are low competition and are followed by guests who are already committed to the area for that event's dates.</li>
+      <li><strong>Roundup articles.</strong> Search "best vacation rentals [your area]" and find the articles that already rank. Email the author. If the article is from a legitimate travel site (not a competitor's website), ask if they would consider adding your property to their roundup — you can offer updated photos, a personal note about what makes the property distinctive, and a direct booking link for their readers.</li>
+    </ul>
+
+    <h3>AI Search Visibility — The Emerging Channel</h3>
+    <p>ChatGPT, Claude, Perplexity, and Google's AI Overviews are increasingly the first stop for travel planning queries. "What are the best Seneca Lake vacation rentals?" is a query being asked to AI assistants, not just Google. The properties that get recommended by AI tools are not the ones that "optimized for AI" through any specific technical tactic — they are the properties with the strongest overall web presence: high review counts across multiple platforms, editorial mentions on legitimate travel sites, a well-maintained Google Business Profile, and content that appears across the web in multiple contexts.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ What AI Visibility Actually Requires</div>
+      <p>There is no specific "optimize for ChatGPT" checklist that works. What AI language models use to describe and recommend local businesses is drawn from their training data — which consists of the web as it existed at training time, plus real-time search in tools that use live retrieval. What makes a property appear in AI travel recommendations:</p>
+      <ul>
+        <li><strong>Review volume and quality across multiple platforms</strong> — Airbnb, Google Business, VRBO, TripAdvisor. AI tools cite properties with consistent, high-volume positive reviews.</li>
+        <li><strong>Editorial mentions on authoritative travel sites</strong> — coverage on regional travel publications, travel blogs with domain authority, and tourism board resource pages. Module 09 (Reviews) covers how to generate the review volume that triggers this.</li>
+        <li><strong>A well-maintained GBP</strong> — for AI tools that use live Google search, a complete, active Google Business Profile is the primary local business data source.</li>
+        <li><strong>Content breadth</strong> — properties with a web presence that extends beyond a single booking page (local area guides, blog content, Pinterest presence) appear in more training data and live retrieval contexts.</li>
+      </ul>
+      <p>There is no shortcut here. The entirety of this course — the review system, the content strategy, the GBP, the editorial outreach — collectively produces AI visibility as a side effect of a strong overall web presence.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 08 Complete When:</div>
+      <h3>Your content is published, distributed, and technically optimized — the top of funnel is open.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Hub piece published and live on direct booking site domain</li>
+        <li><span class="cp-box"></span>Pinterest Business account created — domain verified, 4–5 boards created matching content clusters</li>
+        <li><span class="cp-box"></span>Hub piece pinned with keyword-rich description and link to the article</li>
+        <li><span class="cp-box"></span>Property interior photos pinned — at least 3 pins with direct booking site links</li>
+        <li><span class="cp-box"></span>Editorial outreach list compiled — 5 targets: local CVB, 2 travel bloggers, 1 local event site, 1 roundup article author</li>
+        <li><span class="cp-box"></span>At least 2 outreach emails sent — hub piece as the linked asset in each email</li>
+        <li><span class="cp-box"></span>Google Business Profile verified and fully completed — all photos uploaded, booking link set to direct booking site</li>
+        <li><span class="cp-box"></span>Search Console monitoring cadence set — monthly calendar reminder to review new queries and crawl errors</li>
+        <li><span class="cp-box"></span>Proceed to Module 09 — Reviews: content drives awareness; reviews convert that awareness. Module 09 is where the guest experience you have been building since Module 02 becomes the social proof that converts cold traffic — on Airbnb, on your direct booking site, and in AI search results.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>Content Acquires. Email Converts. The Machine Now Has Both Sides.</h3>
+    <p>Before this module, the direct booking machine processed one audience: past guests. The email campaigns in Module 07 convert that captured list into direct booking events. But a list of past guests is finite — it only grows when new guests pass through your OTA channels and connect to StayFi. That growth rate is determined by your occupancy, which is determined by your OTA visibility, which is determined by factors largely outside your control.</p>
+    <p><strong>Content & SEO is how the machine grows its intake independent of OTA platform dynamics.</strong> Every article that ranks brings organic traffic from people who have never heard of your property. Every Pinterest pin drives discovery from trip planners in the research phase. Every editorial mention sends referral traffic from readers who are actively planning a stay in your area. When these visitors arrive at your direct booking site, they have two paths:</p>
+    <ul>
+      <li><strong>Book directly</strong> — they arrive at the site, see the property, check availability, and book. Zero platform fee. Full conversion.</li>
+      <li><strong>Enter the list</strong> — they read the local area guide, find the property compelling but aren't ready to book. They encounter the email capture (a downloadable version of the area guide, or a "be notified when dates open" opt-in). They enter Kit. They receive the campaign calendar. They become a future direct booking event.</li>
+    </ul>
+    <p>This is the complete machine. OTA channels fill your calendar and generate past guests. Email converts past guests into direct bookings and referrals. Content acquires new top-of-funnel visitors and feeds them into both the direct booking site and the email list. <strong>Every module in this course contributed one component. This module closed the loop.</strong></p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 08: Content & SEO &nbsp;·&nbsp; Next: Module 09 — Reviews
+</footer>

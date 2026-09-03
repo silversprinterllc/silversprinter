@@ -16,7 +16,7 @@ const sections = [
   { id: 'how-to-request', label: 'How to Request a Refund' },
   { id: 'exclusions', label: 'When Refunds Will Not Be Issued' },
   { id: 'bundles', label: 'Bundle Refunds' },
-  { id: 'intensives', label: 'Intensive Cohort Refunds' },
+  { id: 'build', label: 'The Build (Website DFY) Refunds' },
   { id: 'dfy', label: 'Done-For-You (DFY) Refunds' },
   { id: 'addons', label: 'Add-Ons & Digital Products' },
   { id: 'chargebacks', label: 'Chargebacks' },
@@ -159,7 +159,7 @@ export default function RefundPolicyPage() {
                 <li>You purchased and immediately requested a refund without attempting implementation.</li>
                 <li>More than 14 days have passed since your purchase.</li>
                 <li>You have shared, distributed, downloaded in bulk, or published any course content.</li>
-                <li>You are requesting a refund for an Intensive cohort that has already begun.</li>
+                <li>You are requesting a refund for The Build after the intake questionnaire has been submitted and development has commenced.</li>
                 <li>You are requesting a refund for a Done-For-You (DFY) engagement where work has been initiated.</li>
                 <li>Your account has been terminated for violation of our Terms of Service.</li>
                 <li>You initiated a chargeback instead of contacting our support team first.</li>
@@ -171,8 +171,8 @@ export default function RefundPolicyPage() {
                 5. Bundle Refunds
               </h2>
               <p>
-                When you purchase a bundle (for example, course + intensive or
-                course + DFY), refund eligibility is calculated{' '}
+                When you purchase a bundle (for example, The System + The Build
+                bundle), refund eligibility is calculated{' '}
                 <strong>pro-rated</strong> based on the components you have
                 accessed or consumed. The fair-market value of any component
                 already delivered, attended, or substantially consumed will be
@@ -181,34 +181,42 @@ export default function RefundPolicyPage() {
               </p>
             </section>
 
-            <section id="intensives">
+            <section id="build">
               <h2 className="text-2xl font-bold text-[var(--sf-navy)] mb-4">
-                6. Intensive Cohort Refunds
+                6. The Build (Website DFY) Refunds
               </h2>
+              <p className="mb-4">
+                The Build is a Done-For-You website development engagement. Your
+                initial payment secures our team&apos;s time and begins the intake
+                process. Once you submit the intake questionnaire and work has
+                commenced, your payment is{' '}
+                <strong>non-refundable</strong>.
+              </p>
               <p>
-                Refunds for Intensive cohorts are available only before the
-                cohort&apos;s scheduled start date. Once the cohort begins, your
-                seat is secured, curriculum materials are released, and a coach
-                has been assigned &mdash; no refunds will be issued. You may
-                request to transfer your seat to a future cohort, subject to
-                availability and a transfer fee; transfers are not guaranteed.
+                If you cancel The Build before submitting the intake
+                questionnaire, a refund may be issued minus a $250 administrative
+                fee. Once intake is submitted and development has begun, no
+                refund is available. Milestone-specific concerns may be raised
+                in writing within 5 business days of a deliverable; we will cure
+                valid technical defects at no additional cost.
               </p>
             </section>
 
             <section id="dfy">
               <h2 className="text-2xl font-bold text-[var(--sf-navy)] mb-4">
-                7. Done-For-You (DFY) Refunds
+                7. Done-For-You Custom Engagements
               </h2>
               <p className="mb-4">
-                Done-For-You engagements operate on a milestones-based model.
-                Your initial deposit secures our team&apos;s time and is{' '}
+                Custom DFY engagements beyond The Build standard product operate
+                on a milestones-based model. Your initial deposit secures our
+                team&apos;s time and is{' '}
                 <strong>non-refundable</strong> once work has begun. Subsequent
                 payments correspond to delivered milestones and are refundable
                 only if we fail to deliver a scheduled milestone, subject to the
                 cure period described in your engagement letter.
               </p>
               <p>
-                If you cancel a DFY engagement mid-project, you remain
+                If you cancel a custom DFY engagement mid-project, you remain
                 responsible for the value of work completed to the cancellation
                 date, and we retain any deposit.
               </p>

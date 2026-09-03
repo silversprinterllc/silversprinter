@@ -1,0 +1,1175 @@
+<title>Module 02 — Get Listed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7; --checkpoint-bg: #09263A;
+    --tier1: #16a34a; --tier2: #0284c7; --tier3: #7c3aed; --tier4: #dc2626;
+    --affiliate-bg: #1a2f3f; --affiliate-border: rgba(212,160,23,0.4);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017; --cream: #1a2f3f;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232; --checkpoint-bg: #0d3550; --affiliate-bg: #0d1f2d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017; --cream: #1a2f3f;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232; --checkpoint-bg: #0d3550; --affiliate-bg: #0d1f2d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  /* Affiliate disclosure bar */
+  .affiliate-bar { background: var(--affiliate-bg); border-bottom: 1px solid var(--affiliate-border); padding: 12px 32px; }
+  .affiliate-bar-inner { max-width: 900px; margin: 0 auto; font-size: 12px; color: rgba(212,160,23,0.75); line-height: 1.6; }
+  .affiliate-bar-inner strong { color: var(--gold); }
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: all 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+  a { color: var(--gold); }
+  a:hover { text-decoration: underline; }
+
+  /* Tier badges */
+  .tier-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .tier1 { background: rgba(22,163,74,0.12); color: var(--tier1); border: 1px solid rgba(22,163,74,0.25); }
+  .tier2 { background: rgba(2,132,199,0.12); color: var(--tier2); border: 1px solid rgba(2,132,199,0.25); }
+  .tier3 { background: rgba(124,58,237,0.12); color: var(--tier3); border: 1px solid rgba(124,58,237,0.25); }
+  .tier4 { background: rgba(220,38,38,0.12); color: var(--tier4); border: 1px solid rgba(220,38,38,0.25); }
+
+  /* Tool sections */
+  .tool-section { margin: 32px 0; }
+  .tool-header { background: var(--navy); border-radius: 12px 12px 0 0; padding: 18px 24px; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .tool-header h3 { color: #fff; margin: 0; font-size: 1.05rem; }
+  .tool-header .cost { color: var(--gold); font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .tool-header .cost small { display: block; font-weight: 400; font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .tool-body { background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; padding: 24px; }
+  .tool-body p { font-size: 14.5px; }
+  .tool-why { background: var(--tip-bg); border-left: 3px solid var(--tier1); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 14px; color: var(--muted); }
+  .tool-why strong { color: var(--text); }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+
+  /* Comparison tables */
+  .compare-wrap { overflow-x: auto; margin: 24px 0; }
+  .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td strong { color: var(--text); display: block; margin-bottom: 2px; }
+  .compare td.rec { background: rgba(22,163,74,0.05); }
+  .rec-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--tier1); color: #fff; padding: 2px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+  .new-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: #7c3aed; color: #fff; padding: 2px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+
+  /* Callouts */
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p { color: #7c2d12; }
+  :root[data-theme="dark"] .mistake p { color: #fdba74; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p { color: #fdba74; } }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p { color: #0c4a6e; }
+  :root[data-theme="dark"] .math p { color: #7dd3fc; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p { color: #7dd3fc; } }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p { color: #14532d; }
+  :root[data-theme="dark"] .tip p { color: #86efac; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p { color: #86efac; } }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p { color: #713f12; }
+  :root[data-theme="dark"] .warn p { color: #fde68a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p { color: #fde68a; } }
+
+  /* Cost summary table */
+  .cost-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 24px 0; }
+  .cost-table th { background: var(--navy); color: var(--gold); padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .cost-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--muted); }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-table tfoot td { background: var(--template-bg); font-weight: 700; color: var(--text); }
+  .cost-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Template boxes */
+  .template-box { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+  .template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .field .line { border-bottom: 1px solid var(--border); min-height: 22px; font-size: 12px; color: var(--muted); font-style: italic; padding-bottom: 2px; }
+  .decision-grid { display: grid; gap: 10px; margin: 16px 0; }
+  .decision-row { display: grid; grid-template-columns: 180px 1fr 110px 130px 80px; gap: 12px; align-items: start; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .decision-row.header { background: var(--navy); border-color: var(--navy); border-radius: 8px; }
+  .decision-row.header span { color: var(--gold); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .decision-row span:first-child { font-weight: 600; color: var(--text); }
+  .decision-row span { color: var(--muted); font-size: 13px; line-height: 1.5; }
+  @media (max-width: 680px) { .decision-row { grid-template-columns: 1fr 1fr; } .decision-row.header { display: none; } }
+
+  /* Case study */
+  .case-study { background: var(--navy); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .case-study-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .case-study h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 12px; }
+  .case-study p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 10px; }
+  .case-study p:last-child { margin-bottom: 0; }
+  .case-study strong { color: rgba(255,255,255,0.9); }
+
+  /* Checkpoint */
+  .checkpoint { background: var(--checkpoint-bg); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .check-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .machine-feed .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .machine-feed .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+  .price-note { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 4px; }
+</style>
+
+<!-- MODULE HEADER -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 02</div>
+    <h1>Get Listed — Platform Setup from Day One</h1>
+    <p class="subtitle">The four-tier framework that tells you what to buy, when to buy it, and what to skip</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 1: Operate</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>3–4 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 01 — Acquisition</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 03 — Launch</div>
+    </div>
+  </div>
+</header>
+
+<!-- AFFILIATE DISCLOSURE -->
+<div class="affiliate-bar">
+  <div class="affiliate-bar-inner">
+    <strong>Affiliate Disclosure:</strong> Some tools in this module are recommended through affiliate or partner programs. If you purchase through a course link, SpokeBnB may earn a commission — at no additional cost to you. In many cases, course links provide a discounted trial or bonus not available through the vendor's homepage. Every tool in this module is one the instructor has personally evaluated or used in an active STR operation. Commission rates do not influence placement. See the full <a href="/course/legal/affiliate-disclosure" style="color:var(--gold)">Affiliate Disclosure</a> for the current partner list.
+  </div>
+</div>
+
+<!-- LESSON NAV -->
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Framework</a>
+    <a href="#lesson-2">02 — Tier 1: Day-1 Stack</a>
+    <a href="#lesson-3">03 — Tier 2: 90-Day Stack</a>
+    <a href="#lesson-4">04 — Tier 3 &amp; 4 + Decision Sheet</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🔧</div>
+    <div>
+      <div class="label">Module 02 Deliverable</div>
+      <p>A completed Tech Stack Decision Sheet for your property — every tool in the recommended stack with your current status, monthly cost, and the specific trigger that activates each one. You know what you have, what you're adding, when, and what you're intentionally skipping.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Framework — Three Questions Before Every Tool</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Apply the three-question decision framework to any tool before adding it, and understand why buying in the wrong order costs you more than the tool itself.
+    </div>
+
+    <p>The STR software industry is enormous. There are tools for everything: dynamic pricing, noise monitoring, messaging automation, review management, cleaning coordination, guest experience, upsells, lock management, market research, social scheduling, and dozens more. Every one has a polished website and, often, an affiliate program that earns someone a commission for recommending it to you.</p>
+
+    <p>This module is not a shopping list. It is a decision framework that tells you what to buy, in what order, and what to skip until you've earned the right to add complexity.</p>
+
+    <h3>Three Questions — Apply to Every Tool</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Does it reduce active management time or eliminate a failure point?</strong> Every tool adds complexity — another login, another monthly charge, another system that can break. It must give back more time or risk-reduction than it costs to manage. If the answer is "sort of" or "eventually," it is not ready yet.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Does it protect the guest experience or generate/preserve revenue?</strong> Tools that touch guests (communication, access, experience) earn their keep by preventing bad reviews. Tools that touch revenue (pricing, distribution, email marketing) earn their keep directly. Tools that do neither — dashboards you admire but don't act on, features you might use someday — are expensive distractions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Have you run out of things to improve without it?</strong> New operators buy tools to feel like operators before they've done the work of operating. If you haven't optimized your listing, responded to every guest personally, and run your pricing manually for at least 30 days — you are not ready for the automation layer. Build the process first. Automate the proven process second.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ The Tool-Buying Trap</div>
+      <p>The most common failure pattern: operators spend the first month buying, configuring, and learning software instead of hosting guests. They have PriceLabs running before they've taken a single booking. They have a PMS syncing three channels before they understand how Airbnb's algorithm works. <strong>You cannot automate a process you don't understand.</strong> Run the first 30 days with the minimum viable stack. Everything else comes after you have real data and real guests.</p>
+    </div>
+
+    <h3>The Four-Tier Model</h3>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead>
+          <tr><th>Tier</th><th>When to Add</th><th>What It Protects</th><th>Monthly Cost Range</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tier-badge tier1">Tier 1</span><br><strong>Day-1 Required</strong></td>
+            <td>Before your first guest checks in</td>
+            <td>Guest access, noise/permit liability, cleaner accountability</td>
+            <td>$5–30/mo + hardware</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier2">Tier 2</span><br><strong>90-Day Stack</strong></td>
+            <td>After 10+ reviews, operation stable</td>
+            <td>Multi-channel efficiency, revenue optimization, guest data capture</td>
+            <td>$40–80/mo</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier3">Tier 3</span><br><strong>6–12 Month Growth</strong></td>
+            <td>Direct booking site live, email list growing</td>
+            <td>Marketing automation, market intelligence, content production</td>
+            <td>$0–50/mo</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier4">Tier 4</span><br><strong>Year 2+ Scale</strong></td>
+            <td>2+ properties, SOPs documented, under 2 hrs/week</td>
+            <td>Portfolio management, revenue diversification, brand</td>
+            <td>Varies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study-label">Instructor Case Study</div>
+      <h3>What I Actually Ran My First Year</h3>
+      <p>I launched my properties without AirDNA, without PriceLabs, and without Hospitable. For property security and access monitoring, I used <strong>Ring cameras at the main egress points</strong> — not a dedicated noise monitor. For property management, I used <strong>OwnerRez</strong> — and even that wasn't fully operational in the early months. A smart lock, reliable cameras at the doors, and a cleaner with a photo checklist. That was it.</p>
+      <p>The result: properties that performed well and generated real revenue without the overhead of a full tech stack I didn't yet know how to use. What I wish I had added sooner: <strong>StayFi</strong> — I left more than a year of guest emails uncaptured, and those contacts don't come back. And a noise monitor in the interior common areas — cameras at egress tell you who came and went; they don't tell you there was a party at 1am.</p>
+      <p>The takeaway: <strong>the minimum viable stack is smaller than you think.</strong> Add tools in order. Don't buy your way to operational maturity before you've earned it through actual guest interactions.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Audit Your Current Tech Stack</span>
+      </div>
+      <p class="ai-prompt-instruction">Use this before spending another dollar on STR software. List every tool you're currently paying for or considering. The AI will run the three-question filter on each one and tell you what to keep, cancel, or defer.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">I'm auditing my STR tech stack using a three-question filter. For each tool I list, evaluate whether it passes or fails the filter and give me a Keep / Cancel / Defer decision.
+
+THE THREE-QUESTION FILTER:
+1. Does this tool solve a problem I currently have, or a problem I'm afraid I might have someday?
+2. Do I have enough volume and reviews to make this tool's output actionable?
+3. Am I buying this tool instead of doing the harder manual work it replaces?
+
+MY CURRENT OPERATIONAL STAGE:
+- Properties: [X properties]
+- Reviews: [X reviews on my primary listing]
+- Monthly reservations: approximately [X per month]
+- Time operating: [X months / years]
+
+TOOLS I AM CURRENTLY PAYING FOR OR EVALUATING (list each with monthly cost):
+1. [Tool name] — $[X]/mo — [what I think it does]
+2. [Tool name] — $[X]/mo — [what I think it does]
+3. [Tool name] — $[X]/mo — [what I think it does]
+4. [add more as needed]
+
+TOOLS I AM CONSIDERING ADDING:
+- [Tool name] — reason I'm considering it
+- [Tool name] — reason I'm considering it
+
+For each tool, return:
+- Pass / Fail on each of the three filter questions
+- Keep / Cancel / Defer decision with one sentence of reasoning
+- The total monthly spend I should eliminate immediately
+- The one tool not on my list that I'm likely missing at my current operational stage</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You can apply the three-question filter to any tool pitched to you and know which tier you're currently building.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Three-question framework memorized — can recite without looking</li>
+        <li><span class="check-box"></span>Current operational tier identified</li>
+        <li><span class="check-box"></span>Any existing subscriptions run through the three-question filter — cancel anything that doesn't pass</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Tier 1 — The Day-1 Stack</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Have all three Tier 1 systems selected, purchased, and installed before your first guest checks in. No exceptions.
+    </div>
+
+    <p>The Tier 1 stack has three components: a smart lock, a property monitoring solution, and a cleaning accountability system. Each protects a specific catastrophic failure mode that cannot be fixed after the fact. A guest locked out at midnight loses you your first review. A noise complaint that escalates to a police call risks your permit. A missed or incomplete turnover handed directly to a guest's bad review cannot be recovered in your listing's first ten reviews.</p>
+
+    <!-- SMART LOCK -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier1">Tier 1 — Day 1</div>
+          <h3>Smart Lock</h3>
+        </div>
+        <div class="cost">$180–$230 hardware (one-time) · $0/mo
+          <small>See SpokeBnB Amazon Storefront for current-priced hardware links</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> Keyless guest access with unique codes per reservation that auto-generate, deliver, and expire without you touching anything. Remote code management if something goes wrong.</p>
+
+        <div class="tool-why">
+          <strong>Why it's non-negotiable:</strong> A physical key requires a handoff or a lockbox. Handoffs create scheduling friction. Lockboxes have static codes — every former guest and anyone who watched a guest open the door has the combination. A smart lock generates a new code at booking confirmation, delivers it automatically in your pre-arrival message, and deactivates it the morning of checkout. You never touch it.
+        </div>
+
+        <h4>What to Look For</h4>
+        <ul>
+          <li><strong>Native WiFi (no hub required)</strong> — Z-Wave locks require a separate smart home hub (SmartThings, Hubitat) as middleware. WiFi-native locks connect to your PMS directly.</li>
+          <li><strong>Keypad + app access</strong> — keypad is the primary for guests; app is your management interface and backup.</li>
+          <li><strong>Keypad functions without WiFi</strong> — if your router goes offline, guests should still be able to enter. Avoid any lock where keypad entry depends on a live cloud connection.</li>
+          <li><strong>ANSI/BHMA Grade 2 deadbolt rating</strong> — standard residential security requirement.</li>
+          <li><strong>Low-battery alert at 20%</strong> — with enough lead time to replace batteries before it becomes a guest emergency.</li>
+        </ul>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th>Lock</th><th>Connection</th><th>Hub Required?</th><th>PMS Integration</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr class="rec">
+                <td><strong>Schlage Encode Plus</strong> <span class="rec-badge">Recommended</span></td>
+                <td>Built-in WiFi + Bluetooth</td>
+                <td>No</td>
+                <td>Native — OwnerRez, Hospitable, others</td>
+                <td class="rec">No hub. Connects directly via WiFi to your PMS. Strongest field reliability record of the three options. Replaces existing deadbolt. Requires 2.4GHz WiFi — confirm your router broadcasts it (most do; some mesh systems need it enabled).</td>
+              </tr>
+              <tr>
+                <td><strong>Yale Assure Lock 2</strong></td>
+                <td>WiFi module or Z-Wave module (choose at purchase)</td>
+                <td>WiFi version: No · Z-Wave version: Yes</td>
+                <td>Via WiFi module or hub</td>
+                <td>Solid option. Order the WiFi module version to avoid the hub requirement. Z-Wave version works but adds a failure point.</td>
+              </tr>
+              <tr>
+                <td><strong>August Smart Lock Pro</strong></td>
+                <td>Bluetooth + WiFi (via August Connect bridge)</td>
+                <td>August Connect bridge (~$80)</td>
+                <td>Via August integration</td>
+                <td>Installs over your existing deadbolt — useful when landlord approval is needed. Requires the separate WiFi bridge for remote access. Good option for rental properties where you can't replace hardware.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Installation — Step by Step</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Measure before ordering.</strong> Most residential deadbolts use a 2-3/8" or 2-3/4" backset (distance from door edge to center of the knob hole). Measure yours. Nearly all smart locks fit standard prep — but confirm before ordering. Tools required: Phillips screwdriver. Average install time: 20–30 minutes.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Install hardware and connect to WiFi.</strong> For Schlage Encode Plus: download the Schlage Home app, create an account, add the lock via Bluetooth during setup, then connect to your 2.4GHz WiFi. Test that keypad codes work before moving to PMS integration.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect to your PMS.</strong> In OwnerRez: <strong>Settings → Integrations → Smart Locks → Add Lock → Schlage</strong>. Authorize via OAuth — OwnerRez never sees your Schlage credentials. Map the lock to your property and set your check-in and check-out times. These times control when access codes activate and expire.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Test with a dummy reservation.</strong> Create a test reservation in your PMS dated for tomorrow. Confirm a unique access code was generated automatically. Test the code on the keypad. Verify the code appears in the automated check-in message your PMS will send. Do this before any live guest — not after the first complaint.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Set low-battery alert and stage spare batteries.</strong> Configure a battery alert at 20% in the lock's app. Install fresh batteries before launch. Keep a labeled spare set in the property's utility area where your cleaner can find them. A dead lock battery at midnight is an emergency — and it is entirely preventable.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPERTY MONITORING -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier1">Tier 1 — Day 1</div>
+          <h3>Property Monitoring</h3>
+        </div>
+        <div class="cost">Cameras: varies · Noise monitor: $5–15/mo + hardware
+          <small>Two separate tools — choose based on your property's specific risks</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> Early warning on guest behavior before it becomes a neighbor complaint, police call, or permit violation. Monitoring covers two distinct risks that require different tools:</p>
+
+        <ul>
+          <li><strong>Access and egress monitoring (who enters/leaves):</strong> Camera-based. Ring cameras at primary entry points are effective, widely used, and carry Amazon affiliate commission through the SpokeBnB storefront. Covers unauthorized visitors, party-size guests, and arrival/departure documentation.</li>
+          <li><strong>Interior noise level monitoring (decibel alerts):</strong> Sensor-based — Minut or NoiseAware. Cameras cannot be placed in interior living spaces or bedrooms. A dedicated noise sensor in the common area detects elevated sound levels and alerts you before the situation reaches neighbors.</li>
+        </ul>
+
+        <p>You can run cameras-only, noise-sensor-only, or both. Your market's risk profile determines what you need. A high-density urban market or a property that permits events warrants both. A rural property with no close neighbors may need only egress cameras. Choose based on your actual exposure — not on what the software companies' marketing tells you.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Disclosure Required in Your Listing</div>
+          <p>Airbnb requires disclosure of all monitoring devices — cameras and noise sensors — in your listing description. Undisclosed devices result in immediate suspension. For cameras: state the location (e.g., "Security camera at front door and back entrance, exterior only"). For noise monitors: "This home uses a noise-level monitor in the living room. No audio is recorded." Disclose before launch. This also sets expectations that reduce guest complaints about monitoring.</p>
+        </div>
+
+        <div class="callout mistake">
+          <div class="callout-label">⚠ What Cameras Cannot Do</div>
+          <p>A camera at the front door tells you when guests arrived and how many people came in. It does not tell you there was a 2am party in the living room at 85 decibels. If your market or property type has noise-complaint risk, cameras alone are insufficient. Both tools solve real but different problems.</p>
+        </div>
+
+        <h4>Noise Monitor Options — Minut vs. NoiseAware</h4>
+        <p>Minut (<a href="https://minut.com" target="_blank">minut.com</a>) is the most widely integrated noise monitor in STR. Pricing as of publication — verify current rates at minut.com/pricing:</p>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th>Minut Plan</th><th>Price</th><th>Properties</th><th>PMS Integration</th><th>Key Difference</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Starter</strong></td>
+                <td>$5/mo (billed annually)</td>
+                <td>Single property only</td>
+                <td>No — smart home integrations only</td>
+                <td>Entry point. Fine if you have one property and no PMS integration needed. No OTA or PMS sync.</td>
+              </tr>
+              <tr>
+                <td><strong>Standard</strong></td>
+                <td>$10/mo/home (billed annually)</td>
+                <td>Multi-property</td>
+                <td>OTA only (Airbnb) — not PMS</td>
+                <td>Syncs with Airbnb for guest and booking context when an alert fires. Required for portfolio operators.</td>
+              </tr>
+              <tr class="rec">
+                <td><strong>Pro</strong> <span class="rec-badge">Recommended</span></td>
+                <td>$15/mo/home (billed annually)</td>
+                <td>Multi-property</td>
+                <td>Yes — 30+ PMS platforms including OwnerRez</td>
+                <td class="rec">PMS integration means Minut knows which active booking triggered an alert — you see the guest's name, not just a noise event. Also includes advanced reports, unlimited data retention, and automated guest messaging from Minut. Required if you use OwnerRez.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="price-note">Hardware (Minut M3 sensor) is a separate one-time purchase. See minut.com for current device pricing. One sensor covers a standard open-plan living area. Add a second for large outdoor entertaining spaces. Never place in bedrooms — privacy laws prohibit it and Airbnb policy requires disclosure of any device in a sleeping space.</p>
+
+        <h4>Noise Monitor Setup</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Place the device.</strong> Plug into an outlet at 5–6 feet of height in the main living area — where noise from gatherings will originate. Avoid HVAC vents (ambient fan noise creates false alerts).</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Set thresholds.</strong> In the Minut app: <strong>Property Settings → Noise Thresholds</strong>. Daytime: 75–80 dB (normal conversation won't alert). Quiet hours (typically 10pm–8am or your local ordinance): 65 dB. These alert you early — before the sound reaches neighbor-complaint level.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect to PMS (Pro plan).</strong> Minut → Integrations → OwnerRez. Once connected, alerts identify the active booking so you know who to contact immediately.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Write your noise-alert message template now.</strong> When an alert fires you need a response in hand within minutes: <em>"Hi [Name] — we noticed elevated sound levels at the property. Just a friendly reminder about our quiet hours policy after 10pm — thanks for being great guests!"</em> Save this in your PMS templates so it sends in seconds, not minutes.</p></div>
+          </div>
+        </div>
+
+        <div class="callout math">
+          <div class="callout-label">📊 The Math — What a Permit Loss Costs</div>
+          <p>A single sustained noise complaint in most STR-regulated markets creates a paper trail at your address. Enough complaints — thresholds vary by municipality — can result in a nuisance designation and non-renewal or revocation of your STR permit. Losing a permit eliminates 100% of revenue from that property indefinitely. A $15/month noise monitor is not a convenience expense. It is permit insurance.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLEANING ACCOUNTABILITY -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier1">Tier 1 — Day 1</div>
+          <h3>Cleaning Accountability System</h3>
+        </div>
+        <div class="cost">Manual: $0 · Turno: ~$6–8/turnover (pay-per-use)</div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> Verification that the property is guest-ready after every turnover — without you driving there. A missed turnover or incomplete clean in your first ten reviews can permanently suppress your listing's ranking. You need documented confirmation the property is ready before guests arrive, not after they message you that it isn't.</p>
+
+        <h4>Start Manual, Upgrade to Turno</h4>
+
+        <p><strong>Stage A — Minimum Viable (First 30 Days):</strong> A photo checklist, sent from cleaner to you after every turnover. Define 8–10 required photos in a written SOP document: front door lock (confirming code works), kitchen counters, bathroom towels staged, beds made, outdoor area, trash removed. Cleaner sends the album; you review before the guest check-in window opens. Costs nothing. Takes five minutes. Build this standard before you automate it.</p>
+
+        <p><strong>Stage B — Turno (<a href="https://turno.com" target="_blank">turno.com</a>):</strong> Add this when you have 2+ properties or 2+ cleaners. Turno syncs with your PMS calendar, auto-notifies the cleaner of upcoming turnovers, provides an in-app photo-verified checklist with timestamps, and sends you a completion report before check-in. It also has a marketplace for finding vetted STR cleaners by zip code — useful if your primary cleaner needs coverage.</p>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th></th><th>Photo Checklist (Manual)</th><th>Turno</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Cost</strong></td><td>$0</td><td>~$6–8/turnover, pay-per-use</td></tr>
+              <tr><td><strong>Calendar sync</strong></td><td>You forward booking info manually</td><td>Automatic via PMS integration</td></tr>
+              <tr><td><strong>Photo verification</strong></td><td>Text thread to you</td><td>In-app, timestamped, archived</td></tr>
+              <tr><td><strong>Multiple cleaners</strong></td><td>Separate text threads — difficult</td><td>Centralized dashboard</td></tr>
+              <tr><td><strong>Cleaner marketplace</strong></td><td>No</td><td>Yes — find STR-experienced cleaners by area</td></tr>
+              <tr><td><strong>Right time to add</strong></td><td>Day 1 (start here)</td><td>When you have 2+ properties or need cleaner backup</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-label">✓ Write the Cleaner SOP Before You Automate It</div>
+          <p>Whether you use Turno or the manual photo system, your cleaner needs a written property-specific SOP: where clean linens are stored, what to replace vs. what to report (low soap vs. broken lamp), required staging standards for each room, contact number for problems, and the photo checklist. A good cleaner with a poor SOP produces inconsistent results. A mediocre cleaner with a clear SOP produces reliable ones. Write the SOP in Module 05 (Operations).</p>
+        </div>
+
+        <div class="checkpoint">
+          <div class="checkpoint-label">Lesson 02 Complete When:</div>
+          <h3>All three Tier 1 systems are active before your first guest checks in.</h3>
+          <ul class="checkpoint-items">
+            <li><span class="check-box"></span>Smart lock installed, tested with a dummy reservation code, integrated with PMS</li>
+            <li><span class="check-box"></span>Monitoring decision made: cameras at egress (Ring or equivalent), noise monitor, or both — based on your property's actual risk profile</li>
+            <li><span class="check-box"></span>All monitoring devices disclosed in your listing description before launch</li>
+            <li><span class="check-box"></span>Noise-alert message template written and saved in PMS (if noise monitor active)</li>
+            <li><span class="check-box"></span>Cleaning accountability system defined: photo checklist minimum, Turno when you have 2+ properties</li>
+            <li><span class="check-box"></span>Spare lock batteries staged at the property</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Tier 2 — The 90-Day Stack</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand what each Tier 2 tool does, identify the trigger that activates each one, and complete setup for whichever tools your operation is ready for.
+    </div>
+
+    <p>The Tier 2 stack has three tools: a Property Management System (PMS), a dynamic pricing engine, and a guest WiFi + email capture system. Together they automate your operations, optimize your revenue, and begin building the guest list that funds your owned marketing channels for years.</p>
+
+    <p><strong>The 90-day trigger:</strong> 10+ reviews, a rating of 4.8 or better, and no guest emergency in the past 30 days. If the operation isn't stable, adding automation creates the illusion of stability without fixing the underlying problems.</p>
+
+    <!-- PMS -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier2">Tier 2 — 90 Days</div>
+          <h3>Property Management System (PMS)</h3>
+        </div>
+        <div class="cost">OwnerRez: ~$40/mo (1 property, sliding scale) · Hospitable: Free–$29+/mo
+          <small>Verify current rates at ownerrez.com/pricing and hospitable.com/pricing</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> When you list on a second platform (VRBO, Booking.com, or your direct booking site), you need a central calendar that prevents double-bookings, syncs pricing across all channels, and manages all guest communication from one inbox. Without a PMS, you are managing three separate calendars by hand — and eventually they will conflict.</p>
+
+        <p><strong>When you need it:</strong> The moment you activate your second booking channel. Running Airbnb-only, their native tools are sufficient. The day you turn on VRBO or your direct booking site, you need a PMS.</p>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th>PMS</th><th>Pricing</th><th>Direct Booking</th><th>Messaging Automation</th><th>Verdict</th></tr>
+            </thead>
+            <tbody>
+              <tr class="rec">
+                <td><strong>OwnerRez</strong> <span class="rec-badge">Recommended</span><br><a href="https://ownerrez.com" target="_blank" style="font-size:12px">ownerrez.com</a></td>
+                <td>~$40/mo (1 property). Sliding scale — decreases per-property as portfolio grows. Premium add-ons: Hosted Sites, Property Management, QuickBooks, SMS, Rezzy AI. 14-day free trial.</td>
+                <td>Full-featured included: payment processing, signed rental agreements, damage protection, owner portals</td>
+                <td>Strong — multi-trigger templates, property-specific sequences, PMS-native</td>
+                <td class="rec">Most complete platform for operators who want control over direct booking, legal agreements, and financial management. Learning curve is real but pays back by consolidating tools that other operators buy separately. Instructor-verified.</td>
+              </tr>
+              <tr>
+                <td><strong>Hospitable</strong> <span class="new-badge">Free Tier — April 2026</span><br><a href="https://hospitable.com" target="_blank" style="font-size:12px">hospitable.com</a></td>
+                <td><strong>Free Essentials</strong>: $0, unlimited properties — multi-channel sync, unified inbox, automated messaging, guest portal, rental agreements, task management.<br><br>Host: $29/mo (1 property). Professional: $59/mo (2). Mogul: $99+/mo (3+).</td>
+                <td>Guest portal with check-in details and rental agreements on free tier. More advanced direct booking on paid plans.</td>
+                <td>Best-in-class — AI-assisted replies, multi-platform unified inbox, smart scheduling. Available on all tiers.</td>
+                <td>Hospitable became the first PMS in the STR industry to offer a genuine free tier in April 2026. The free Essentials plan includes legitimate multi-channel sync and automation — not a feature-stripped trial. Excellent starting point. OwnerRez pulls ahead at scale when direct booking site revenue and financial reporting matter more.</td>
+              </tr>
+              <tr>
+                <td><strong>Lodgify</strong><br><a href="https://lodgify.com" target="_blank" style="font-size:12px">lodgify.com</a></td>
+                <td>Plans from ~$17–50/mo. See lodgify.com/pricing for current rates.</td>
+                <td>Strongest website builder of the three options with channel manager included</td>
+                <td>Functional, not best-in-class</td>
+                <td>Best choice if your primary need is a polished direct booking website. Less robust for portfolio-scale operations or complex financial reporting.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>OwnerRez — First-Week Setup Priority Order</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect Airbnb.</strong> Settings → Channel Management → Airbnb → Connect. OAuth — OwnerRez never sees your Airbnb password. Existing Airbnb bookings import. After this, manage pricing in OwnerRez only — not in Airbnb directly.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect VRBO (if active).</strong> Settings → Channel Management → Vrbo. VRBO uses iCal for calendar blocking plus API for pricing push. Follow OwnerRez's VRBO-specific setup guide in their Help Center — VRBO handles pricing differently from Airbnb and has specific requirements around how rates are submitted.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Build your messaging templates.</strong> Settings → Templates. Create at minimum six triggers: booking confirmation, pre-arrival check-in instructions (48h before arrival), day-of arrival (12pm), mid-stay check-in (Day 2 or 3), checkout reminder (night before), post-checkout review request (1h after checkout). The specific copy for each message is written in Module 05 (Guest Experience).</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect your smart lock.</strong> Settings → Integrations → Smart Locks. Map the lock to the property. Confirm codes generate automatically on test reservations before any live guest.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Set up your rental agreement.</strong> OwnerRez allows guests to sign a rental agreement (your house rules in enforceable document form) before access codes are released. Start with OwnerRez's template in the Library. Customize with your specific rules, damage deposit amount, and local emergency contact. Non-negotiable for direct bookings — this is your protection document.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DYNAMIC PRICING -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier2">Tier 2 — 90 Days</div>
+          <h3>Dynamic Pricing Engine</h3>
+        </div>
+        <div class="cost">PriceLabs: $19.99/mo (1 listing) · $14.49/mo (2+ listings)
+          <small>Flat-fee model — verify at pricelabs.co</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> A flat nightly rate leaves money on the table during high-demand periods and blocks the calendar during soft demand periods. Dynamic pricing engines analyze your market's booking patterns, local events, seasonal curves, day-of-week variation, and your comp set's live availability — and adjust your nightly rates automatically, daily.</p>
+
+        <p><strong>When you need it:</strong> After your new-listing pricing period is complete. When you first launch on Airbnb, intentionally price 10–20% below your market to build early reviews quickly. Once you have 10–15 reviews, your social proof is established and it's time to let an algorithm optimize for revenue rather than review volume.</p>
+
+        <div class="callout math">
+          <div class="callout-label">📊 The Math — What Dynamic Pricing Is Worth</div>
+          <p>A property at a flat $200/night earns the same whether it's a Tuesday in February or the Friday before a major local festival. PriceLabs might set that same property at $145 on the February Tuesday (capturing a booking that would otherwise go to a competitor) and $320 on the festival Friday (capturing peak demand that a flat price would give away). Over 200 booked nights per year, the difference between flat and dynamic pricing is consistently 20–35% more annual revenue in well-studied markets. PriceLabs serves over 500,000 properties — it is the most widely deployed dynamic pricing tool in STR.</p>
+        </div>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th>Tool</th><th>Pricing Model</th><th>Algorithm</th><th>Market Intel</th><th>PMS Integration</th></tr>
+            </thead>
+            <tbody>
+              <tr class="rec">
+                <td><strong>PriceLabs</strong> <span class="rec-badge">Recommended</span><br><a href="https://pricelabs.co" target="_blank" style="font-size:12px">pricelabs.co</a></td>
+                <td>Flat fee: $19.99/mo (1 listing), $14.49/mo (2+)</td>
+                <td>Rule-based + ML. Hyper-local neighborhood-level data. Highly configurable — you set guardrails, algorithm optimizes within them. Most transparent of the three options.</td>
+                <td>Market Dashboard add-on: comp set pricing, occupancy, and booking pace in real time. Separate fee — see pricelabs.co for current rate.</td>
+                <td>Native — OwnerRez, Hospitable, Lodgify, Airbnb, VRBO, 160+ PMS</td>
+              </tr>
+              <tr>
+                <td><strong>Wheelhouse</strong><br><a href="https://usewheelhouse.com" target="_blank" style="font-size:12px">usewheelhouse.com</a></td>
+                <td>~$20/mo flat or 1% of revenue (your choice)</td>
+                <td>ML-based — more hands-off than PriceLabs, less configurability</td>
+                <td>Basic comp data included</td>
+                <td>Airbnb, VRBO, major PMS</td>
+              </tr>
+              <tr>
+                <td><strong>Beyond</strong><br><a href="https://beyondpricing.com" target="_blank" style="font-size:12px">beyondpricing.com</a></td>
+                <td>1% of revenue (no flat option)</td>
+                <td>ML-based — strong local event detection</td>
+                <td>Included</td>
+                <td>Strong integration ecosystem</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>PriceLabs — Day-1 Configuration</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect to your PMS or Airbnb direct.</strong> PriceLabs → Integrations → Connect OwnerRez (or Airbnb). Once connected, PriceLabs pushes pricing to your calendar daily. Your PMS is the authoritative source of bookings; PriceLabs is the authoritative source of pricing. Do not adjust rates in Airbnb manually after this connection is live — it creates conflicts.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Set your base price.</strong> The market-normal price for your property on a typical weeknight in your median demand period — not peak, not off-peak. PriceLabs adjusts from this base. Pull your last 90 days of booking data, calculate your actual ADR, and start there. A base price that is too high causes the algorithm to price you out of soft periods; too low and it anchors everything else downward.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Set your price floor.</strong> Your minimum acceptable nightly rate under any circumstances. Calculate your all-in nightly operating cost per booking (mortgage/rent prorated + cleaning fee + utilities + platform fees + supplies), then add 20% margin. Set this as your absolute floor. PriceLabs will never go below it regardless of soft demand.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Set your price ceiling.</strong> For most markets, 3–4× your base price. Review what your top comp-set competitors actually charged on their last three high-demand weekends and use their maximum as your ceiling anchor. A ceiling that is too low leaves peak-demand revenue on the table; too high creates unrealistic pricing that sits unbooked.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Enable last-minute discounts.</strong> PriceLabs → Customizations → Last-Minute Discounts. Set: 3 days out = 10% off, 2 days out = 15%, 1 day out = 20%. An empty night earns $0. A night booked at a 20% discount earns more than zero and keeps your occupancy rate from pulling your comp set benchmarks down.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Enable orphan-day discounts.</strong> An orphan day is a single open night between two bookings — too short for most guests to book (most want 2+ nights). PriceLabs identifies these automatically and can price them aggressively to fill the gap. Settings → Orphan Day Pricing → Enable → set 20–30% discount. Filling 8–10 orphan days per month at a 25% discount is still more revenue than those nights sitting empty at full price.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAYFI -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier2">Tier 2 — 90 Days (add earlier if possible)</div>
+          <h3>Guest WiFi + Email Capture (StayFi)</h3>
+        </div>
+        <div class="cost">Pricing: contact StayFi for current rates (quote-based for 1–3 properties)
+          <small>Hardware: StayFi Aginet devices (shipped plug-and-play) or compatible existing equipment</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> Every guest who stays at your property connects to your WiFi. Without StayFi, you know nothing about them except their Airbnb profile. StayFi intercepts the WiFi login with a branded splash page — the guest enters their name and email to connect, and that contact information goes directly to you and your email marketing list. Every guest, every stay, automatically.</p>
+
+        <p><strong>Why the 90-day tier placement is a minimum, not a recommendation:</strong> Every month you operate without StayFi is a month of guest emails permanently lost. A guest who stayed 14 months ago and would happily rebook at a 10% direct-booking discount cannot receive that offer if you don't have their email. Start this earlier than you think you need to.</p>
+
+        <div class="tool-why">
+          <strong>The compounding value:</strong> At 15 bookings per month, StayFi captures roughly 15 guest emails. At Month 12, that's ~180 contacts who have already paid to stay at your property. One email campaign to past guests offering a direct-booking discount converts at a far higher rate than any cold marketing because these people already know and trust the experience. Your guest list is an asset. Missing it is a permanent opportunity cost.
+        </div>
+
+        <h4>How StayFi Works — Hardware</h4>
+        <p>StayFi runs as a captive portal — it intercepts the guest's WiFi connection before granting internet access and shows your branded splash page. Standard consumer routers (ISP-provided equipment, basic Netgear/Linksys) do not support captive portals natively.</p>
+
+        <p>StayFi (<a href="https://stayfi.com" target="_blank">stayfi.com</a>) works two ways:</p>
+        <ul>
+          <li><strong>If you already have compatible hardware:</strong> Amazon eero, TP-Link Deco, TP-Link Omada, or Aruba systems can integrate with StayFi's platform directly using their "StayFi Express" setup — no new hardware required.</li>
+          <li><strong>If you have a standard consumer router:</strong> StayFi ships their own pre-programmed "Aginet" access points that plug in and work immediately. These can operate as wired APs or wireless repeaters in a mesh setup. You connect the Aginet AP to your existing router; guests use the StayFi SSID; you continue using your main network separately.</li>
+        </ul>
+        <p class="price-note">Hardware pricing is not listed publicly — request it directly at stayfi.com when you create an account. Monthly service pricing is also quote-based for small portfolios. StayFi includes free email marketing up to 200 contacts; beyond that, paid email tiers apply.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Create Your StayFi Account Before Ordering Hardware</div>
+          <p>StayFi's own pricing page notes to create an account before ordering access points. This ensures the hardware is registered to your account correctly and that pricing is applied from your account setup. Don't order the device and then try to add an account — do it in order.</p>
+        </div>
+
+        <h4>Setup</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Create your StayFi account at stayfi.com.</strong> Contact them for property pricing (use the "Get Started" flow on their site). If you have existing eero, TP-Link Deco/Omada, or Aruba hardware, tell them — you may not need their Aginet device.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Install the hardware.</strong> For Aginet APs: plug into your existing router with an ethernet cable and power it on. Create a new WiFi SSID (e.g., "[Property Name] WiFi") that routes through the Aginet AP. Your original router's WiFi continues as your operational network — guests connect to the StayFi SSID only.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Brand the splash page.</strong> In your StayFi dashboard: Properties → WiFi Portal → Customize. Add your property name (and logo if you have one). The portal should feel like your property's brand, not generic tech. After entering their name and email, guests receive the WiFi password and get online immediately.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Connect your email platform.</strong> StayFi → Integrations → Email Marketing. Connect Kit (or whatever email platform you're using) so captured guest emails route directly to your list. If you haven't set up an email platform yet, StayFi stores contacts internally for export later — but do not delay connecting the integration once your email platform is active.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content"><p><strong>Test before guests arrive.</strong> Connect your phone to the StayFi SSID. The splash page should appear before you get internet access. Enter a test name and email. Verify the record appears in your StayFi dashboard. Confirm you received the WiFi password on the confirmation screen. A guest who can't get online will contact you immediately — test this before every launch.</p></div>
+          </div>
+        </div>
+
+        <div class="checkpoint">
+          <div class="checkpoint-label">Lesson 03 Complete When:</div>
+          <h3>Your 90-day stack trigger is clear and, if you're ready, all three Tier 2 tools are active and tested.</h3>
+          <ul class="checkpoint-items">
+            <li><span class="check-box"></span>PMS selected — connected to Airbnb and any other active channels</li>
+            <li><span class="check-box"></span>6 messaging triggers created in PMS (copy written in Module 05)</li>
+            <li><span class="check-box"></span>Smart lock integrated with PMS — codes generating automatically on test reservations</li>
+            <li><span class="check-box"></span>Rental agreement template active in PMS for direct bookings</li>
+            <li><span class="check-box"></span>PriceLabs connected — base price, floor, ceiling, last-minute, and orphan-day settings configured</li>
+            <li><span class="check-box"></span>StayFi account created, hardware installed, splash page branded, portal tested</li>
+            <li><span class="check-box"></span>If not yet at the 10-review trigger: all tools selected, activation date set, not drifting</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Tiers 3 &amp; 4 — Growth, Scale, and Your Decision Sheet</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Know what each Tier 3 and 4 tool does, when to add it, and what specific trigger activates it. Complete your Tech Stack Decision Sheet with honest current-state assessments.
+    </div>
+
+    <h3>Tier 3 — Growth Tools (Months 6–12)</h3>
+    <p>The Tier 3 trigger: your direct booking site is live, StayFi is capturing guests, and you have at least 6 months of operational data to act on. These tools build the marketing and intelligence layer that makes your owned channels productive.</p>
+
+    <!-- EMAIL PLATFORM -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier3">Tier 3 — 6–12 Months</div>
+          <h3>Email Marketing Platform (Kit)</h3>
+        </div>
+        <div class="cost">Newsletter (free): up to 10,000 subscribers, 1 automation · Creator: $39/mo (1K subs) / $33/mo annual
+          <small>Formerly ConvertKit — verify current rates at kit.com</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> A growing database of past guests is a marketing asset — but only if you can reach them with triggered, automated sequences. Kit (<a href="https://kit.com" target="_blank">kit.com</a>, formerly ConvertKit) is where your StayFi-captured emails live and where your automated return-guest campaigns run.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Important: Free Tier Has a 1-Automation Limit</div>
+          <p>Kit's free Newsletter plan supports up to 10,000 subscribers and unlimited manual email sends — but is limited to <strong>a single automation sequence</strong>. For the three-automation system described below (return-guest, inventory campaign, anniversary), you need the Creator plan. Creator starts at $39/month for 1,000 subscribers or $33/month on annual billing. Kit increased Creator pricing by ~120% in September 2025 — do not assume the pricing you've seen quoted elsewhere is current. Verify at kit.com/pricing before subscribing.</p>
+        </div>
+
+        <h4>The Three Automations to Build First</h4>
+        <ul>
+          <li><strong>Return Guest Sequence (triggered 90 days after checkout):</strong> 2-email sequence. Email 1: "Hope your stay at [property] was a great start — we'd love to have you back." Includes direct booking link and a returning-guest discount (10% off, no OTA fee). Email 2 at Day 97: a "local update" — new winery opened, upcoming seasonal event — positioned as a reason to return, not a promotional pitch.</li>
+          <li><strong>Open Inventory Campaign (triggered manually when you have soft periods coming):</strong> A single email to your full list offering a direct-booking rate for specific open dates. Write one template. Customize the dates. Send it. Typically fills 1–3 nights that would otherwise sit empty.</li>
+          <li><strong>Anniversary Email (triggered on the one-year mark of a guest's first stay):</strong> Personalized, timely, and surprisingly effective. The guest has a positive memory associated with that stay date. Anniversary emails convert at a rate higher than most promotional sends because they are specific and personal.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AIRDNA -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier3">Tier 3 — Use When Needed, Not Monthly</div>
+          <h3>Market Intelligence (AirDNA)</h3>
+        </div>
+        <div class="cost">~$20–50/mo depending on market — monthly billing, cancel when not in use
+          <small>Verify at airdna.co/pricing</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> AirDNA (<a href="https://airdna.co" target="_blank">airdna.co</a>) aggregates public listing and booking data from Airbnb and VRBO to show you your market's supply, demand, occupancy rates, ADR, and booking pace — by neighborhood, property type, and bedroom count. It is a <strong>research and benchmarking tool, not a daily operations tool.</strong></p>
+
+        <div class="callout tip">
+          <div class="callout-label">✓ Subscribe Monthly, Not Perpetually</div>
+          <p>AirDNA bills monthly with no contract. Many operators subscribe once to underwrite a new acquisition, extract what they need, then cancel until the next evaluation cycle. There is no penalty for this approach. Subscribe when you have a specific question to answer — new market analysis, quarterly comp set review, pricing strategy audit — and cancel after you have your answer. Paying $50/month to occasionally open a dashboard is a tool that fails the three-question filter.</p>
+        </div>
+
+        <p><strong>When it's worth the cost:</strong> Evaluating a new market before acquisition (covered in Module 01). Investigating a RevPAR drop to determine whether it's your pricing or a market-wide demand shift. Running a quarterly comp set review against your specific bedroom count and property type. If none of these apply this month, cancel and come back when they do.</p>
+      </div>
+    </div>
+
+    <!-- CANVA -->
+    <div class="tool-section">
+      <div class="tool-header">
+        <div>
+          <div class="tier-badge tier3">Tier 3 — Add Before First Content</div>
+          <h3>Design &amp; Content (Canva)</h3>
+        </div>
+        <div class="cost">Free tier covers most STR needs · Pro: ~$15/mo
+          <small>canva.com</small>
+        </div>
+      </div>
+      <div class="tool-body">
+        <p><strong>What it solves:</strong> Every piece of guest-facing content — listing photos, digital guidebook, welcome card, social posts, seasonal email graphics — needs to look like it came from a professional hospitality brand. Canva (<a href="https://canva.com" target="_blank">canva.com</a>) gives you a template library and a brand kit (your colors, fonts, and logos saved once and applied consistently) that makes every asset look cohesive without a designer.</p>
+
+        <p><strong>Priority uses in STR:</strong> Digital guidebook (built in Module 05), welcome card guests find at check-in, social media templates for Instagram and Pinterest, seasonal graphics for Kit email campaigns. The free tier covers all of these. Upgrade to Pro only if you need the background remover or multi-user brand kit access for a team.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 48px;">Tier 4 — Scale Tools (Year 2+)</h3>
+    <p>These tools become relevant when you are managing 2+ properties with fully documented SOPs, active time under 2 hours/week per property, and operational systems that run reliably without your daily intervention.</p>
+
+    <ul>
+      <li><strong>Turno (full upgrade):</strong> If you started with the manual photo checklist, migrate to Turno when you add a second property or second cleaner. The marketplace feature earns its cost at that point.</li>
+      <li><strong>Viator (experience listings):</strong> List curated local experiences as bookable add-ons through Viator's marketplace. Covered fully in Module 11 — it is a Tier 4 revenue stream that requires operational stability first.</li>
+      <li><strong>Advanced email sequences (Kit Creator):</strong> Segmented campaigns by guest type (couples vs. families vs. groups), seasonal nurture sequences, referral programs. Meaningful when your list has 500+ contacts and you have historical data to segment against.</li>
+      <li><strong>SpokeBnB Amazon Storefront:</strong> Hardware recommendations — smart locks, cameras, WiFi equipment, staging items — available through the course's curated Amazon storefront. Purchases through these links support the course at no additional cost to you. Link added when storefront is live.</li>
+    </ul>
+
+    <hr style="margin: 48px 0 40px;">
+
+    <h3>Your Tech Stack Decision Sheet</h3>
+    <p>Fill in every row. Status is honest — Active means installed and generating value right now. Planned means you have a specific trigger date, not "someday."</p>
+
+    <div class="template-box">
+      <div class="template-label">Tech Stack Decision Sheet</div>
+
+      <div class="decision-grid">
+        <div class="decision-row header">
+          <span>Tool</span><span>What It Does for Me</span><span>Monthly Cost</span><span>Activation Trigger</span><span>Status</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier1" style="font-size:9px">T1</span> Smart Lock</span>
+          <span>Keyless access, auto-rotating codes, PMS-integrated — no handoffs</span>
+          <span>$0/mo (hardware one-time)</span>
+          <span>Before first guest</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier1" style="font-size:9px">T1</span> Cameras (Ring)</span>
+          <span>Egress monitoring — who enters/leaves, unauthorized visitor documentation</span>
+          <span>$3–10/mo</span>
+          <span>Before first guest</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier1" style="font-size:9px">T1</span> Noise Monitor (Minut)</span>
+          <span>Interior dB alerts — early warning on noise before neighbor complaints or police</span>
+          <span>$5–15/mo/home</span>
+          <span>Before first guest (if noise risk)</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier1" style="font-size:9px">T1</span> Cleaning System</span>
+          <span>Photo-verified turnover accountability without driving to property</span>
+          <span>$0 manual / ~$6–8/turn Turno</span>
+          <span>Before first guest</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier2" style="font-size:9px">T2</span> PMS (OwnerRez)</span>
+          <span>Multi-channel sync, messaging automation, direct booking, rental agreements</span>
+          <span>~$40/mo (1 property)</span>
+          <span>When adding 2nd channel</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier2" style="font-size:9px">T2</span> PriceLabs</span>
+          <span>Automated nightly rate optimization vs. comp set and local demand signals</span>
+          <span>$19.99/mo (1 listing)</span>
+          <span>After 10+ reviews, post new-listing period</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier2" style="font-size:9px">T2</span> StayFi</span>
+          <span>Guest email capture at WiFi login — builds owned marketing list passively</span>
+          <span>Quote-based — see stayfi.com</span>
+          <span>As early as possible — lost guest emails don't come back</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier3" style="font-size:9px">T3</span> Kit (Creator)</span>
+          <span>Automated return-guest sequences and open-inventory campaigns</span>
+          <span>$39/mo for 1K subs ($33 annual)</span>
+          <span>100+ emails captured, direct site live</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier3" style="font-size:9px">T3</span> AirDNA</span>
+          <span>Market comp set benchmarking, acquisition underwriting, demand analysis</span>
+          <span>$20–50/mo (subscribe when needed)</span>
+          <span>New market evaluation OR quarterly comp review</span>
+          <span>___</span>
+        </div>
+        <div class="decision-row">
+          <span><span class="tier-badge tier3" style="font-size:9px">T3</span> Canva</span>
+          <span>Guidebook, social templates, welcome card, email graphics — branded assets</span>
+          <span>Free / $15/mo Pro</span>
+          <span>Before first guidebook or social post</span>
+          <span>___</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <div class="field-row">
+          <div class="field"><label>Total Active Monthly Tech Cost</label><div class="line">$___ /mo</div></div>
+          <div class="field"><label>Tools Canceled After This Lesson</label><div class="line">&nbsp;</div></div>
+          <div class="field"><label>Next Tool to Add + Trigger Date</label><div class="line">&nbsp;</div></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Full-Stack Cost Reference</h3>
+    <p>These are verified current prices as of this module's publication. Prices change — always confirm at the vendor's pricing page before purchasing. Links provided above.</p>
+
+    <table class="cost-table">
+      <thead>
+        <tr><th>Tool</th><th>Tier</th><th>Monthly Cost (verified)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Smart Lock</td><td><span class="tier-badge tier1" style="font-size:9px">T1</span></td><td>$0/mo (hardware: $180–230 one-time)</td></tr>
+        <tr><td>Ring Camera (Basic Plan)</td><td><span class="tier-badge tier1" style="font-size:9px">T1</span></td><td>~$3–10/mo — see ring.com for current plan pricing</td></tr>
+        <tr><td>Minut Pro (noise monitor)</td><td><span class="tier-badge tier1" style="font-size:9px">T1</span></td><td>$15/mo/home (annual) — required for PMS integration</td></tr>
+        <tr><td>Turno (at 20 turns/month)</td><td><span class="tier-badge tier1" style="font-size:9px">T1→2</span></td><td>~$120–160/mo (pay-per-use)</td></tr>
+        <tr><td>OwnerRez (1 property)</td><td><span class="tier-badge tier2" style="font-size:9px">T2</span></td><td>~$40/mo — confirm at ownerrez.com/pricing</td></tr>
+        <tr><td>PriceLabs (1 listing)</td><td><span class="tier-badge tier2" style="font-size:9px">T2</span></td><td>$19.99/mo</td></tr>
+        <tr><td>StayFi</td><td><span class="tier-badge tier2" style="font-size:9px">T2</span></td><td>Quote-based — contact stayfi.com</td></tr>
+        <tr><td>Kit Creator (1K subscribers)</td><td><span class="tier-badge tier3" style="font-size:9px">T3</span></td><td>$39/mo ($33/mo annual) — confirm at kit.com/pricing</td></tr>
+        <tr><td>AirDNA (when active)</td><td><span class="tier-badge tier3" style="font-size:9px">T3</span></td><td>$20–50/mo — subscribe when needed, cancel after</td></tr>
+        <tr><td>Canva (free tier)</td><td><span class="tier-badge tier3" style="font-size:9px">T3</span></td><td>$0 (Pro: $15/mo if needed)</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2"><strong>Core stack (T1 + T2 only, excludes Turno variable)</strong></td><td><strong>~$75–115/mo + StayFi quote</strong></td></tr>
+        <tr><td colspan="2"><strong>Full stack (T1 + T2 + T3, excludes Turno + AirDNA variables)</strong></td><td><strong>~$115–165/mo + StayFi quote</strong></td></tr>
+      </tfoot>
+    </table>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Prices Change — Verify Before You Buy</div>
+      <p>Every price in this table was verified at the vendor's pricing page at the time of this module's publication. Software pricing changes frequently. Before purchasing any tool, click through to the vendor's current pricing page (linked in each tool section above) and confirm the rate. If a price here no longer matches what you see on the vendor's site, the vendor's site is correct.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Module 02</div>
+      <h4>Write your Airbnb listing — title, description, and house rules</h4>
+      <div class="ai-prompt-box">I need to write a high-converting Airbnb listing for my short-term rental. Here's everything you need to write it well:
+
+Property details:
+- Property name / nickname: [e.g., "The Lake House at Lakeside Landing"]
+- Type: [cabin / lakehouse / beach cottage / mountain retreat / etc.]
+- Bedrooms / baths / max guests: [e.g., 3BR/2BA, sleeps 8]
+- Location: [city + region or destination — e.g., "Watkins Glen, Finger Lakes NY"]
+- Standout features: [list the 5 most differentiating things — e.g., private dock, hot tub, fire pit, lake views from every room, 10-minute walk to downtown]
+- Guest profile I want to attract: [couples / families / friend groups / remote workers]
+- What I want guests to feel: [e.g., peaceful / adventurous / romantic / like locals]
+- My direct booking site URL (for the listing): [URL or "not yet built"]
+
+Write me:
+1. Five listing title options (50 chars each) — each targeting a different angle: features, location, guest type, emotion, season
+2. A 300-word listing description — opening hook, property highlights, guest experience angle, local area mention, CTA to book
+3. A 5-rule house rules section — firm but not hostile tone, the rules that actually matter for 5-star review consistency
+4. A 5-sentence "About the Space" summary for the Airbnb card preview</div>
+      <p class="ai-prompt-note"><strong>Before publishing</strong>, read each title option aloud. The best title is the one that answers "what does someone staying here get that they can't get anywhere else" in 50 characters. Your listing description's first sentence is the most important — it either earns the click or loses it. Spend 80% of your listing editing time on the first sentence and the title.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 02 Complete When:</div>
+      <h3>Every row on your Tech Stack Decision Sheet has a status, and you know your total monthly tech spend without looking it up.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Tech Stack Decision Sheet fully completed — no blank statuses</li>
+        <li><span class="check-box"></span>Tools that failed the 3-question filter: canceled or scheduled for cancellation</li>
+        <li><span class="check-box"></span>Total active monthly tech cost calculated and written down</li>
+        <li><span class="check-box"></span>Tier 1 stack active before first guest — no exceptions</li>
+        <li><span class="check-box"></span>Tier 2 tools: either active (if trigger is met) or named with a specific trigger milestone</li>
+        <li><span class="check-box"></span>Tier 3 tools: each has a named activation trigger — not "someday"</li>
+        <li><span class="check-box"></span>If your property has hosted guests and StayFi is not running: install it this week. Missed months are permanent.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<section class="machine-feed">
+  <div class="mf-label">Direct Booking Machine</div>
+  <h3>You Just Installed the Capture and Nurture Engine</h3>
+  <p>Every tool in this tech stack serves the operation. But two of them serve a second purpose that is more valuable than any operational function they perform: <strong>StayFi captures guests. Kit converts them.</strong></p>
+  <p><strong>StayFi is the primary capture mechanism of your direct booking machine.</strong> Every guest who connects to your WiFi enters your email list automatically — without manual effort, on every stay, on every channel, forever. The operator who waits a year to install StayFi does not just lose the convenience of automated email capture. They lose an irreplaceable year of contact data. Those guests are gone. The only guests you can market to directly are the ones already on your list.</p>
+  <p><strong>Kit is the nurture engine.</strong> The list StayFi builds is raw material. Kit is where that raw material becomes direct booking revenue — through seasonal campaigns, pre-sale windows, and the past-guest reactivation sequences you'll build in Module 07. The combined monthly cost of StayFi and Kit is recovered on a single direct booking that would otherwise have generated a 15.5% host fee.</p>
+  <p>Every other tool in this stack — the PMS, the dynamic pricing engine, the noise monitor — makes the operation work. <strong>These two make the business grow.</strong></p>
+</section>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 02: Tech Stack &nbsp;·&nbsp; Next: Module 03 — Launch
+  <br>Prices verified at vendor sites at time of publication. Confirm current rates before purchasing.
+</footer>

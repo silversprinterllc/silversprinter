@@ -379,9 +379,9 @@ export default function ApplyPage() {
 
           <p className="text-xs text-white/25 text-center leading-relaxed">
             By submitting, you agree to our{' '}
-            <Link href="/course/terms" className="underline hover:text-[var(--sf-gold)]">Terms of Service</Link>{' '}
+            <Link href="/course/legal/terms" className="underline hover:text-[var(--sf-gold)]">Terms of Service</Link>{' '}
             and{' '}
-            <Link href="/course/privacy" className="underline hover:text-[var(--sf-gold)]">Privacy Policy</Link>.
+            <Link href="/course/legal/privacy" className="underline hover:text-[var(--sf-gold)]">Privacy Policy</Link>.
             No payment is collected at this stage. Ben will reach out to discuss fit before any commitment.
           </p>
         </form>

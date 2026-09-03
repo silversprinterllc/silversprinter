@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 15: STR Insurance — SpokeBnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (light) ─────────────────────────────────── */
+:root {
+  --navy: #09263A; --navy-mid: #0d3550;
+  --gold: #D4A017; --cream: #F7F3EA;
+  --text: #1a2f3f; --muted: #4a6070;
+  --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+  --mistake-bg: #fff7ed; --mistake-border: #f97316;
+  --math-bg: #f0f9ff; --math-border: #0284c7;
+  --tip-bg: #f0fdf4; --tip-border: #16a34a;
+  --warn-bg: #fefce8; --warn-border: #ca8a04;
+  --danger-bg: #fff1f2; --danger-border: #dc2626;
+  --gold-bg: rgba(212,160,23,0.06);
+  --table-head-bg: var(--navy);
+  --table-head-text: #fff;
+  --table-row-alt: rgba(9,38,58,0.03);
+}
+
+/* ── Dark mode (system) ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1f2e; --card: #0f2639;
+    --text: #e8dfc8; --muted: #8ba5b8;
+    --border: rgba(255,255,255,0.08);
+    --cream: #0b1f2e;
+    --mistake-bg: #2a1200; --math-bg: #001624;
+    --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+    --gold-bg: rgba(212,160,23,0.1);
+    --table-head-bg: #0a1a26;
+    --table-row-alt: rgba(255,255,255,0.03);
+  }
+}
+/* ── Dark mode (explicit toggle) ───────────────────────────── */
+:root[data-theme="dark"] {
+  --bg: #0b1f2e; --card: #0f2639;
+  --text: #e8dfc8; --muted: #8ba5b8;
+  --border: rgba(255,255,255,0.08);
+  --cream: #0b1f2e;
+  --mistake-bg: #2a1200; --math-bg: #001624;
+  --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+  --gold-bg: rgba(212,160,23,0.1);
+  --table-head-bg: #0a1a26;
+  --table-row-alt: rgba(255,255,255,0.03);
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+img { max-width: 100%; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 20px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.05rem; margin-bottom: 8px; }
+p { margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
+strong { font-weight: 600; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Dark mode toggle ───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── Chain bar ──────────────────────────────────────────────── */
+.chain-bar {
+  background: var(--navy-mid);
+  padding: 10px 0;
+  overflow-x: auto;
+}
+.chain-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.chain-bar-inner .arrow { color: var(--gold); opacity: 0.6; }
+.chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+/* ── Module header ──────────────────────────────────────────── */
+.mod-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0 56px;
+}
+.mod-header-inner { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+.mod-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.18);
+  color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(212,160,23,0.3);
+}
+.mod-header h1 { color: #fff; margin-bottom: 16px; }
+.mod-header .subtitle {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 700px;
+}
+.mod-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mod-meta-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500;
+}
+.mod-meta-item strong { color: #fff; }
+
+/* ── Deliverable banner ─────────────────────────────────────── */
+.deliverable-banner {
+  background: var(--gold-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 40px 0 24px;
+}
+.deliverable-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.deliverable-banner h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 10px;
+}
+.deliverable-banner ul { margin: 0; }
+.deliverable-banner li { font-size: 14px; color: var(--muted); }
+
+/* ── Disclaimer ─────────────────────────────────────────────── */
+.disclaimer {
+  background: var(--card);
+  border-top: 3px solid #6b7280;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 0 0 32px;
+}
+.disclaimer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #6b7280;
+  margin-bottom: 8px;
+}
+.disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── Main content ───────────────────────────────────────────── */
+.content { padding: 48px 0 80px; }
+
+/* ── Lesson section ─────────────────────────────────────────── */
+.lesson { margin-bottom: 80px; }
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.lesson-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+}
+.lesson-title-wrap { flex: 1; }
+.lesson-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.lesson-title-wrap h2 { margin-bottom: 0; }
+.objective {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px; color: var(--muted);
+}
+.objective strong { color: var(--text); }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.callout p { font-size: 14.5px; line-height: 1.65; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul { font-size: 14.5px; }
+.callout.tip    { background: var(--tip-bg);     border-color: var(--tip-border); }
+.callout.tip    .callout-label { color: #16a34a; }
+.callout.math   { background: var(--math-bg);    border-color: var(--math-border); }
+.callout.math   .callout-label { color: #0284c7; }
+.callout.warn   { background: var(--warn-bg);    border-color: var(--warn-border); }
+.callout.warn   .callout-label { color: #ca8a04; }
+.callout.mistake { background: var(--mistake-bg); border-color: var(--mistake-border); }
+.callout.mistake .callout-label { color: #f97316; }
+.callout.danger { background: var(--danger-bg);  border-color: var(--danger-border); }
+.callout.danger .callout-label { color: #dc2626; }
+
+/* ── Coverage table ─────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 32px 0; border-radius: 10px; border: 1px solid var(--border); }
+.coverage-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px;
+}
+.coverage-table thead tr {
+  background: var(--table-head-bg);
+}
+.coverage-table thead th {
+  color: var(--table-head-text);
+  padding: 12px 14px;
+  text-align: left; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.coverage-table thead th:first-child { border-radius: 0; }
+.coverage-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+.coverage-table tbody tr:nth-child(even) td { background: var(--table-row-alt); }
+.coverage-table tbody tr:last-child td { border-bottom: none; }
+.td-yes  { color: #16a34a; font-weight: 600; }
+.td-no   { color: #dc2626; font-weight: 600; }
+.td-ltd  { color: #ca8a04; font-weight: 600; }
+
+/* ── Gap heading ────────────────────────────────────────────── */
+.gap-heading {
+  display: flex; align-items: flex-start; gap: 14px;
+  margin: 36px 0 16px;
+}
+.gap-num {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  background: var(--danger-bg);
+  border: 2px solid var(--danger-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--danger-border);
+}
+.gap-heading h3 { margin-bottom: 0; padding-top: 4px; }
+
+/* ── AI Prompt block ────────────────────────────────────────── */
+.ai-prompt {
+  background: #1a0533;
+  border: 2px solid #7c3aed;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.ai-prompt-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #a78bfa;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ai-prompt-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(124,58,237,0.3);
+}
+.ai-prompt h4 {
+  font-size: 14px; font-weight: 700; color: #e9d5ff;
+  margin-bottom: 12px; margin-top: 0;
+  font-family: 'Inter', sans-serif;
+}
+.ai-prompt-box {
+  background: #0a0117;
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12.5px; color: #c4b5fd;
+  line-height: 1.8; white-space: pre-wrap;
+  margin-bottom: 14px; overflow-x: auto;
+}
+.ai-prompt-note {
+  font-size: 12.5px; color: rgba(167,139,250,0.75);
+  line-height: 1.65;
+  border-top: 1px solid rgba(124,58,237,0.2);
+  padding-top: 12px; margin: 0;
+}
+
+/* ── Machine feed ───────────────────────────────────────────── */
+.machine-feed {
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 48px 0 80px;
+}
+.mf-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+.machine-feed h3 {
+  font-size: 1.25rem; color: #fff;
+  margin-bottom: 16px;
+}
+.machine-feed p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.75; }
+
+/* ── Checkpoint ─────────────────────────────────────────────── */
+.checkpoint {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 48px;
+}
+.checkpoint-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.checkpoint h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; margin-bottom: 16px;
+}
+.checkpoint-items { list-style: none; padding: 0; }
+.checkpoint-items li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75); font-size: 14px;
+}
+.checkpoint-items li:last-child { border-bottom: none; }
+.cp-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid rgba(212,160,23,0.5);
+  border-radius: 4px; margin-top: 2px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.lesson-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 64px 0;
+}
+
+/* ── Insurance product grid ─────────────────────────────────── */
+.product-grid { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+}
+.product-card-name {
+  font-size: 15px; font-weight: 700; color: var(--navy);
+  margin-bottom: 4px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .product-card-name { color: #e8dfc8; }
+}
+:root[data-theme="dark"] .product-card-name { color: #e8dfc8; }
+.product-card-url { font-size: 12px; color: var(--gold); margin-bottom: 10px; }
+.product-card p { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+.product-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.12);
+  color: var(--gold);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 50px;
+  margin-bottom: 8px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12.5px;
+}
+footer span { color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lesson-header { flex-direction: column; gap: 12px; }
+  .mod-meta { flex-direction: column; }
+  .chain-bar-inner { font-size: 11px; gap: 7px; }
+  .ai-prompt { padding: 18px 16px; }
+  .ai-prompt-box { font-size: 11.5px; }
+  .machine-feed { padding: 22px 20px; }
+  .checkpoint { padding: 22px 20px; }
+  .coverage-table { font-size: 12px; }
+  .coverage-table thead th,
+  .coverage-table tbody td { padding: 9px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme');if(!t){r.setAttribute('data-theme','dark');}else if(t==='dark'){r.setAttribute('data-theme','light');}else{r.removeAttribute('data-theme');}})()">
+  Toggle Dark
+</button>
+
+<!-- Chain bar -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 13: Local Guide</span>
+    <span class="arrow">→</span>
+    <span>Module 14: Exit</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 15: Insurance</span>
+    <span class="arrow">→</span>
+    <span>Module 16: Tax Strategy</span>
+  </div>
+</div>
+
+<!-- Module header -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 15 — Supplementary</div>
+    <h1>STR Insurance — The Coverage Gap Every Operator Has and Almost Nobody Knows About</h1>
+    <p class="subtitle">Why standard homeowner policies fail at the first claim, how to read an STR policy before you buy it, what the three-layer protection stack covers and where each layer ends, and what to do in the 72 hours after damage occurs</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase:</strong>&nbsp;Supplementary</div>
+      <div class="mod-meta-item"><strong>Lessons:</strong>&nbsp;4</div>
+      <div class="mod-meta-item"><strong>Time:</strong>&nbsp;3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Prerequisite:</strong>&nbsp;Module 03 (Launch)</div>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="content">
+<div class="container">
+
+  <!-- Deliverable banner -->
+  <div class="deliverable-banner">
+    <div class="deliverable-label">Module Deliverables</div>
+    <h3>By the end of this module you will have:</h3>
+    <ul>
+      <li>A written insurance coverage assessment comparing your current policy against STR-specific requirements</li>
+      <li>A shortlist of STR-specific insurance products evaluated against your property type, location, and price point</li>
+      <li>A decision made on security deposit vs. damage waiver</li>
+      <li>Your pre-arrival and post-departure documentation protocol established</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-label">Educational Content — Not Insurance or Legal Advice</div>
+    <p>This module is provided for educational purposes only. SpokeBnB and its instructors are not licensed insurance agents, brokers, or attorneys. Nothing in this module constitutes insurance advice or a recommendation to purchase any specific product. Coverage needs vary by property, jurisdiction, and operating model. Consult a licensed insurance professional before making any coverage decisions.</p>
+  </div>
+
+  <!-- ─── LESSON 1 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>Why Your Current Policy Won't Cover You</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand exactly how standard homeowner and landlord policies exclude STR activity — and why platform protections like AirCover are supplements, not replacements.
+    </div>
+
+    <p>Most STR operators launch without realizing their homeowner's or landlord's policy explicitly excludes short-term rental activity. The exclusion is written into the policy as "business activity" or "commercial activity." The first claim is how operators discover this — after the damage has already occurred, after the guest has already checked out, after the contractor has already been called.</p>
+
+    <p>This module exists so you learn that lesson before the claim, not during it.</p>
+
+    <h3>Standard Homeowner Policy (HO-3)</h3>
+    <p>An HO-3 is designed to cover owner-occupied residences. A short-term rental is not owner-occupied during guest stays — insurers classify it as a business operation. Most HO-3 policies include an explicit exclusion for claims arising from "business activity conducted on the premises." A guest slip-and-fall during their Airbnb stay is a business activity claim. Your HO-3 almost certainly will not pay that claim.</p>
+    <p>This is not a gray area. When you rent to a paying guest — even for one night — you are conducting a commercial transaction on the premises. The policy language was not written to cover that scenario. The exclusion was intentional.</p>
+
+    <h3>Landlord Policy (DP-3)</h3>
+    <p>A DP-3 landlord policy was designed for long-term tenant occupancy, not transient guest stays. It is built for 12-month leases, not weekend bookings. Most DP-3 policies also exclude commercial activity and transient occupancy. If your coverage strategy is "I have a landlord policy, I'm fine" — verify that in writing with your insurer before your next guest arrives.</p>
+
+    <h3>AirCover (Airbnb's Host Damage Protection)</h3>
+    <p>AirCover is the most commonly misunderstood piece of the STR insurance picture. Airbnb offers up to $3M in property damage protection and $1M in liability — and these numbers are real. But the conditions matter:</p>
+    <ul>
+      <li>AirCover covers only Airbnb bookings. VRBO bookings, direct bookings — not covered.</li>
+      <li>Normal wear and tear is excluded. A stained couch cushion, scuffed wall paint, a broken drawer pull — these are wear and tear, not covered damage.</li>
+      <li>All damage must be reported within 72 hours of checkout. Miss that window and you may forfeit the claim.</li>
+      <li>AirCover is a second-payer. If your own insurance policy would cover the damage, Airbnb pays the gap — not the full amount. If you have no other coverage, AirCover steps in more directly, but this also means Airbnb expects you to have primary coverage.</li>
+      <li>Some investment property interpretations have resulted in denied claims. If you do not personally occupy the property, the policy language has been applied inconsistently.</li>
+    </ul>
+    <p>AirCover is a supplement. It is not a replacement for a standalone STR insurance policy.</p>
+
+    <h3>VRBO's Coverage Approach</h3>
+    <p>VRBO offers $1M in liability coverage through a partner insurer for bookings made through the VRBO platform. Property damage is handled separately — through security deposits (collected directly) or through VRBO's optional damage protection product, which is paid by guests at booking. VRBO does not operate an AirCover-equivalent for property damage. If a guest destroys your kitchen on a VRBO booking, your recourse path is: security deposit, VRBO's damage protection if enabled, then your own STR policy.</p>
+
+    <!-- Coverage comparison table -->
+    <div class="table-wrap">
+      <table class="coverage-table">
+        <thead>
+          <tr>
+            <th>Coverage Category</th>
+            <th>HO-3 (Homeowner)</th>
+            <th>Landlord DP-3</th>
+            <th>AirCover (Airbnb)</th>
+            <th>STR-Specific Policy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Guest liability during stay</td>
+            <td class="td-no">Likely excluded</td>
+            <td class="td-no">Excluded</td>
+            <td class="td-yes">Yes (up to $1M)</td>
+            <td class="td-yes">Yes</td>
+          </tr>
+          <tr>
+            <td>Property damage by guests</td>
+            <td class="td-no">Likely excluded</td>
+            <td class="td-no">Excluded</td>
+            <td class="td-ltd">Yes (up to $3M, with limits)</td>
+            <td class="td-yes">Yes</td>
+          </tr>
+          <tr>
+            <td>Direct booking stays</td>
+            <td class="td-ltd">Yes (if not excluded)</td>
+            <td class="td-ltd">Usually excluded</td>
+            <td class="td-no">No</td>
+            <td class="td-yes">Yes</td>
+          </tr>
+          <tr>
+            <td>VRBO bookings</td>
+            <td class="td-no">Likely excluded</td>
+            <td class="td-no">Excluded</td>
+            <td class="td-no">No</td>
+            <td class="td-yes">Yes</td>
+          </tr>
+          <tr>
+            <td>Loss of income after damage</td>
+            <td class="td-no">No</td>
+            <td class="td-ltd">Sometimes</td>
+            <td class="td-no">No</td>
+            <td class="td-yes">Yes (most policies)</td>
+          </tr>
+          <tr>
+            <td>Structural damage (owner-caused)</td>
+            <td class="td-yes">Yes</td>
+            <td class="td-yes">Yes</td>
+            <td class="td-ltd">Limited</td>
+            <td class="td-yes">Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-label">Common Mistake — The $0 Insurance Trap</div>
+      <p><strong>Running uninsured between your current policy and your STR policy.</strong> Many operators call their existing insurer, get told "you're covered," and never get that in writing. The insurer's verbal reassurance is not a binding coverage commitment. Get the exclusions in writing, or get an STR-specific policy. The call costs nothing. The claim costs everything.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 2 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The STR Insurance Landscape</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Know the specific products available, what each covers, and what to look for when comparing policies for your property profile.
+    </div>
+
+    <p>The STR-specific insurance market has matured significantly since 2020. You have real options now. What follows is accurate as of 2024–2025 — pricing and availability change, so confirm current terms directly with each carrier before making a decision.</p>
+
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-tag">Most Comprehensive</div>
+        <div class="product-card-name">Proper Insurance</div>
+        <div class="product-card-url">properinsurance.com</div>
+        <p>The most comprehensive STR-specific carrier available. Covers Airbnb, VRBO, and direct bookings under a single policy. Includes property damage, liability, loss of income, and business personal property. Underwritten by Lloyd's of London. Typical annual cost: $1,500–$3,500 depending on property value, location, and occupancy rate. Proper is the baseline recommendation for operators running full-time STR at any meaningful revenue level.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-card-name">Foremost Insurance</div>
+        <div class="product-card-url">Farmers subsidiary — available through independent agents</div>
+        <p>Slightly less comprehensive than Proper but more widely available through existing agent relationships. Good option if you already have a Farmers agent relationship and want to consolidate policies. Coverage is competitive for most residential STR operations.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">Fastest to Bind</div>
+        <div class="product-card-name">Steadily</div>
+        <div class="product-card-url">steadily.com</div>
+        <p>Online-first STR insurance. Instant quote, fast bind — you can be covered in under an hour. Competitive pricing in most markets. Good option for operators who prefer a fully digital process and want coverage in place before a launch deadline.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-card-name">CBIZ / Marsh McLennan</div>
+        <div class="product-card-url">Commercial broker — requires an agent relationship</div>
+        <p>Commercial insurance broker with STR-specific programs. Better suited to multi-property operators or high-value properties ($1M+) that need customized commercial coverage structures. Requires a broker relationship and more lead time than direct carriers.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-card-name">Slice</div>
+        <div class="product-card-url">sliceinsurance.com</div>
+        <p>Per-night or annual options. Originally an on-demand insurer, now offering more traditional annual products as well. Good for operators with low annual occupancy who do not want to pay full-year premiums on a property that sits vacant for significant portions of the year.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-tag">Per-Stay Model</div>
+        <div class="product-card-name">OwnerRez Per-Stay Protection</div>
+        <div class="product-card-url">Available within OwnerRez — no separate policy required</div>
+        <p>A fundamentally different model: instead of an annual premium, you pay a per-stay fee (typically around $80/stay) that provides <strong>$1M in liability coverage and up to $25K in property damage protection</strong> for that specific booking. Available through OwnerRez's integrated protection product and applied automatically at booking. This is not a replacement for an annual STR policy — it is a per-transaction coverage layer that stacks on top of your general policy. For direct bookings where AirCover doesn't apply and no platform protection exists, the OwnerRez per-stay model is often the cleanest solution: the coverage activates with the booking and requires no underwriting conversation with a carrier.</p>
+        <p style="margin-top:10px; font-size:13px; color:var(--muted);">Claim hierarchy: file against the per-stay policy first. If the claim exceeds the per-stay limit or is denied, then escalate to your annual STR policy. The per-stay insurer — not you — then has the right to pursue the guest for recovery. See the subrogation note in Lesson 4.</p>
+      </div>
+
+    </div>
+
+    <h3>What to Compare When Evaluating Policies</h3>
+    <p>When you request quotes from two or three carriers, compare on these specific dimensions — not just the annual premium:</p>
+    <ul>
+      <li><strong>Liability limit:</strong> Minimum $1M. $2M preferred for properties with pools, hot tubs, docks, kayaks, or other water-adjacent amenities. Water-related injuries are the most common source of high-dollar STR liability claims.</li>
+      <li><strong>Property damage — replacement cost vs. actual cash value:</strong> Always choose replacement cost. More on this in Lesson 3.</li>
+      <li><strong>Loss of income coverage:</strong> What triggers it, what the waiting period is (some policies have a 72-hour gap), how long it pays, and how the daily rate is calculated.</li>
+      <li><strong>Business personal property:</strong> Your furniture, appliances, linens, and equipment are business assets when used in an STR — confirm they are covered as such.</li>
+      <li><strong>Medical payments coverage:</strong> Pays a guest's medical bills without requiring them to prove you were at fault. Keeps small injuries from becoming lawsuits.</li>
+      <li><strong>Booking channel coverage:</strong> Confirm explicitly that the policy covers Airbnb, VRBO, and direct bookings. Get this in writing, especially if you have a direct booking site.</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">The Hot Tub, Pool, and Dock Rider</div>
+      <p>If your property has a hot tub, pool, waterfront dock, kayaks, or other water amenities, confirm your liability coverage explicitly covers these features by name. Some policies require a separate rider. Some exclude them entirely. Water-adjacent injuries are the most common high-dollar liability claims in STR — make sure your policy names these features by name, not just "outdoor amenities."</p>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">The True Annual Cost of STR Insurance</div>
+      <p>A Proper Insurance policy at $2,200/year on a property generating $90,000 gross revenue represents <strong>2.4% of revenue</strong> in insurance cost. The same property that loses a liability claim because the HO-3 policy excluded commercial activity faces a lawsuit with no coverage — and a legal defense alone can cost $25,000–$75,000 before any judgment is entered. The 2.4% is not an expense. It is the price of the machine's downside protection.</p>
+    </div>
+
+    <!-- AI Prompt 1 -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Evaluate Your Current Policy Against STR Coverage Requirements</h4>
+      <div class="ai-prompt-box">Help me evaluate whether my current insurance policy adequately covers my STR operation, and identify the gaps that a STR-specific policy would need to fill.
+
+My current insurance situation:
+- Current policy type: [HOMEOWNER HO-3 / LANDLORD DP-3 / ALREADY HAVE STR-SPECIFIC POLICY / NONE / UNSURE]
+- Current insurer and policy name: [NAME or 'unknown']
+- Current annual premium: [$XXX]
+- Property type: [LAKE HOUSE / CABIN / COTTAGE / CONDO / etc.]
+- Property features with liability exposure: [HOT TUB / POOL / DOCK / KAYAKS / FIRE PIT / DECK / etc.]
+- Annual gross STR revenue: [$XX,XXX]
+- Booking channels: [AIRBNB ONLY / AIRBNB + VRBO / AIRBNB + VRBO + DIRECT]
+- Property state: [STATE]
+- Property value (purchase price or current estimate): [$XXX,XXX]
+
+Do four things:
+
+1. POLICY GAP ANALYSIS
+Based on what I've described, identify the most likely coverage gaps between my current policy and what an STR operator needs. Be specific: name the exclusion types I should look for in my policy documents.
+
+2. QUESTIONS TO ASK MY CURRENT INSURER
+Write 5 specific questions I should ask my current insurer to determine whether I'm actually covered for STR activity. Include a question about getting the answer in writing.
+
+3. STR INSURANCE PRODUCT SHORTLIST
+Recommend 2–3 specific STR insurance products I should get quotes from based on my property profile. Explain why each is appropriate for my situation.
+
+4. COVERAGE MINIMUMS CHECKLIST
+List the minimum coverage amounts I should require in any STR policy, given my property features and booking channels. Include liability limit, property damage, loss of income, and any feature-specific riders.</div>
+      <p class="ai-prompt-note">Fill in every bracketed field before running this prompt. The more specific your inputs — especially property features and booking channels — the more useful the gap analysis will be. After running it, bring the output to your insurance agent conversation as a prepared checklist.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 3 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The Three Gaps Most Operators Miss</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Close the coverage gaps that persist even after an operator has an STR-specific policy — the fine-print details that only surface at claim time.
+    </div>
+
+    <p>Getting an STR-specific policy solves the exclusion problem from Lesson 1. But there are three coverage gaps that even operators who have an STR policy often fail to close. Each of these gaps exists in the details — details that most operators never read until they are filing a claim.</p>
+
+    <!-- Gap 1 -->
+    <div class="gap-heading">
+      <div class="gap-num">1</div>
+      <h3>The Direct Booking Coverage Disconnect</h3>
+    </div>
+    <p>An operator who obtained their STR policy while running only Airbnb may have a policy that covers "bookings through vacation rental platforms." When they add a direct booking site — through OwnerRez, Hospitable, or a custom domain — those stays may not be covered if the policy language specifies platform bookings only.</p>
+    <p>This happens more often than you'd expect. The agent who wrote the policy was thinking about Airbnb. The policy form may have been designed around platform bookings. Direct bookings operate outside that framework.</p>
+    <p><strong>The fix:</strong> Call your insurer. Ask explicitly: "Does my policy cover stays booked directly through my own website, not through Airbnb or VRBO?" Document the answer in writing — email or a coverage endorsement. If the answer is no or uncertain, request an amendment or shop for a policy that explicitly covers direct bookings by name.</p>
+
+    <!-- Gap 2 -->
+    <div class="gap-heading">
+      <div class="gap-num">2</div>
+      <h3>Loss of Income — Triggers, Waiting Periods, and Peak Season Math</h3>
+    </div>
+    <p>Most STR-specific policies include loss of income coverage — rental income replacement if the property becomes uninhabitable due to a covered loss. But the details matter more than the headline benefit:</p>
+    <ul>
+      <li><strong>Waiting period:</strong> Some policies have a 72-hour waiting period before loss of income coverage activates. A repair that takes three days means you hit the edge of the trigger window without collecting a dollar. Know your policy's waiting period before you need to claim.</li>
+      <li><strong>Uninhabitable standard:</strong> Some policies require the property to be truly uninhabitable — structurally unsafe or legally condemned — before loss of income kicks in. A kitchen fire that renders the property unusable for guests but technically habitable for an owner may not meet the trigger standard. Read the definition carefully.</li>
+      <li><strong>Rate calculation:</strong> Loss of income coverage is typically calculated on your average daily rate, not your peak rate. A water heater failure that takes your lake house off the market for four weeks in July is a very different financial event than the same failure in February. Ask your insurer: does loss of income pay my actual booked revenue, my average daily rate, or some other calculation?</li>
+    </ul>
+
+    <!-- Gap 3 -->
+    <div class="gap-heading">
+      <div class="gap-num">3</div>
+      <h3>Contents Depreciation — The Actual Cash Value Trap</h3>
+    </div>
+    <p>Many STR policies default to actual cash value (ACV) for personal property and contents. ACV means the insurer pays what the item is worth today, accounting for depreciation — not what it costs to replace it. The difference is not small:</p>
+    <ul>
+      <li>A 3-year-old 65" TV: ACV approximately $180. Replacement cost: $650.</li>
+      <li>A 4-year-old queen mattress: ACV approximately $120. Replacement cost: $700.</li>
+      <li>A 5-year-old outdoor sectional: ACV approximately $200. Replacement cost: $1,800.</li>
+    </ul>
+    <p>On a significant damage claim — a guest party that destroys a living room, a kitchen fire, a burst pipe in winter — the ACV vs. replacement cost difference can easily exceed $10,000.</p>
+    <p><strong>Always confirm your policy uses replacement cost value (RCV) for contents.</strong> The premium difference between ACV and RCV is typically $100–$200 per year. The payout difference on a real damage event is not.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">The Umbrella Policy Question</div>
+      <p>Many operators have personal umbrella policies ($1M–$5M) that they assume provide a coverage backstop for STR liability. Most personal umbrella policies explicitly exclude commercial activity and business operations — which means the umbrella that protects you in a car accident may not protect you in a guest injury lawsuit at your STR.</p>
+      <p>Ask your umbrella carrier specifically whether STR-related liability claims are covered under your current umbrella. If not, ask about a commercial umbrella endorsement or a separate commercial umbrella policy. Do not assume — confirm in writing.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 4 ──────────────────────────────────────────── */-->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Documenting for Claims — The 72-Hour Rule</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Build a pre/post documentation protocol that protects every claim before it happens, and know the exact sequence of actions in the 72 hours after discovering damage.
+    </div>
+
+    <p>The most important number in STR insurance claims is <strong>72 hours</strong>. Airbnb's AirCover requires all damage to be reported within 72 hours of checkout. Many STR-specific insurance policies have similar reporting windows. The operator who discovers damage on Tuesday but waits until Friday to file — because they were waiting for a contractor estimate — may have forfeited their claim rights entirely.</p>
+
+    <p>Documentation is not bureaucracy. It is the mechanism by which a valid claim becomes a paid claim. The operators who win claims are the operators who photographed the undamaged property before the guest arrived and the damaged property within an hour of checkout.</p>
+
+    <h3>Before Every Guest Arrival</h3>
+    <p>Photograph every room, every surface, every appliance in operating condition. This is the baseline record that proves the damage was not pre-existing.</p>
+    <ul>
+      <li><strong>Kitchen:</strong> stovetop, oven interior, refrigerator (inside and out), dishwasher, sink, countertops</li>
+      <li><strong>Bathrooms:</strong> toilet, vanity, mirror, shower tiles, shower door or curtain</li>
+      <li><strong>Living areas:</strong> upholstery (no stains, no tears), coffee table, entertainment center, electronics including TV and remotes</li>
+      <li><strong>Bedrooms:</strong> mattresses (no stains), headboards, nightstands, any wall art or fixtures</li>
+      <li><strong>Outdoor spaces:</strong> deck furniture, grill, hot tub, dock, kayaks or watercraft, fire pit area</li>
+      <li><strong>High-value items:</strong> photograph with serial number visible where applicable</li>
+    </ul>
+    <p>Timestamp all photos through your phone's native camera — the metadata is part of your documentation. Store in a cloud folder named by reservation date and guest name. A folder per stay, retained for at least 12 months.</p>
+
+    <h3>Within One Hour of Checkout</h3>
+    <p>Walk the property before the cleaning team arrives. Document any damage before anything is moved, cleaned, or rearranged. A damaged item photographed after cleaning — with cleaning supplies visible, furniture already repositioned — is a weaker evidentiary record than one photographed in the guest's immediate aftermath.</p>
+    <p>Report to Airbnb or your insurer within 24 hours of checkout if you find anything significant. Do not wait for contractor estimates before filing. File the initial report immediately, note that estimates are pending, and follow up when you have them.</p>
+
+    <h3>Filing with Airbnb AirCover</h3>
+    <p>Navigate to the reservation in the Airbnb app → Resolution Center → Report damage. Include photos with timestamps, item descriptions, and your best dollar estimate. If contractor estimates are needed, state that in the report and follow up with estimates within the Airbnb claim window. Airbnb targets a 3-business-day response. If denied, escalate — provide additional documentation and request a supervisor review. Airbnb's Resolution Center process is a negotiation, not a one-shot decision.</p>
+
+    <h3>Filing with VRBO</h3>
+    <p>VRBO's process differs from Airbnb's. If you collected a security deposit through OwnerRez, file a damage claim against the deposit directly through OwnerRez's deposit management system. If the guest disputes the charge, it goes to VRBO mediation. VRBO's host damage protection (if you have it enabled on your listing) works separately — file through your VRBO dashboard under the specific reservation, not through a general claims process.</p>
+
+    <h3>The Claim Hierarchy — File in This Order</h3>
+    <p>Most operators don't know there is a hierarchy. Filing out of order means paying deductibles you shouldn't pay and touching your annual policy for losses a per-stay product would have covered. The correct sequence:</p>
+    <ol style="padding-left:1.4em; margin:12px 0 20px; color:var(--text); line-height:1.8;">
+      <li><strong>Platform protection first</strong> — AirCover for Airbnb bookings, VRBO damage protection if the guest purchased it. These are free to file and have no deductible. File within 72 hours of checkout.</li>
+      <li><strong>Per-stay policy second</strong> — If you used OwnerRez per-stay protection for the booking (especially for direct bookings or as a supplement), file with that policy if platform protection is denied or insufficient. The ~$80 you collected at booking funds this layer.</li>
+      <li><strong>Annual STR policy last</strong> — Your general STR policy (Proper, Steadily, Foremost) is the backstop. Reserve it for large claims or denials from the first two layers. Filing against your own policy activates your deductible and may affect your premium at renewal.</li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">Subrogation — Why Documentation Protects More Than Your Claim</div>
+      <p>When an insurer pays your claim — whether that is the OwnerRez per-stay product, your general STR policy, or AirCover — they acquire the right to pursue the responsible party (typically the guest) for reimbursement. This legal right is called <strong>subrogation</strong>. Your timestamped photo record, guest communication history, and reservation documentation are not just proof for your claim — they are the evidentiary foundation the insurer's subrogation team uses to recover from the guest. A well-documented claim does not just get you paid. It puts the financial consequence on the guest who caused the damage, not on your policy's loss history.</p>
+    </div>
+
+    <h3>Filing with Your STR Insurance Policy</h3>
+    <p>For damage above AirCover or VRBO limits, or for damage those platforms deny, file with your STR insurer. Have your documentation ready before you call:</p>
+    <ul>
+      <li>The pre-arrival photo record (timestamped, cloud-accessible)</li>
+      <li>The post-departure damage photos (timestamped, taken before cleaning)</li>
+      <li>The contractor estimate or itemized repair quote</li>
+      <li>The platform's denial notice (if applicable) — insurers often ask for this</li>
+      <li>The reservation details: guest name, check-in/check-out dates, platform, dollar amount of the booking</li>
+    </ul>
+    <p>Your insurer will assign an adjuster. Proper Insurance and Steadily have earned reputations for faster STR claim processing than general commercial carriers — one of the reasons an STR-specific carrier matters beyond just coverage breadth.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Your Cleaner Is Your First Line of Documentation</div>
+      <p>Train your cleaner to photograph any damage as they find it — before cleaning around it or moving anything. A timestamped photo from the cleaner's phone, taken 15 minutes after guest checkout, is excellent documentation. Include this instruction in your Cleaning and Turnover SOP from Module 12. A cleaner who knows to photograph first and clean second is a business asset, not just a housekeeping resource.</p>
+    </div>
+
+    <!-- AI Prompt 2 -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Build Your Pre/Post Stay Damage Documentation Protocol</h4>
+      <div class="ai-prompt-box">Help me create a comprehensive pre-arrival and post-departure damage documentation protocol for my STR property, organized as a checklist my cleaner or co-host can follow for every guest turn.
+
+Property details:
+- Property type: [LAKE HOUSE / CABIN / COTTAGE / etc.]
+- Number of bedrooms: [X]
+- Number of bathrooms: [X]
+- Special amenities: [HOT TUB / POOL / DOCK / OUTDOOR KITCHEN / FIRE PIT / etc.]
+- Highest-value items in the property (approximate replacement cost): [e.g., 'Smart TV $800, outdoor grill $1,200, kayaks $600 each']
+- Who does the post-checkout inspection: [ME / MY CLEANER / CO-HOST]
+
+Create:
+
+1. PRE-ARRIVAL DOCUMENTATION CHECKLIST (30–45 minutes before guest arrival)
+Room-by-room checklist of what to photograph. Organize by room. Include specific callouts for high-damage-risk items. Format as a checklist the cleaner can check off.
+
+2. POST-DEPARTURE DOCUMENTATION CHECKLIST (within 1 hour of checkout)
+The immediate walkthrough — what to check before anything is cleaned or moved. Include the sequence (outdoor first, then interior, then high-value items). Format as a checklist.
+
+3. DAMAGE THRESHOLD GUIDE
+A simple 3-tier guide: (1) Normal wear and tear — don't document, don't file; (2) Minor damage — document and consider filing; (3) Significant damage — document immediately and file within 24 hours. Give specific dollar thresholds and item examples for each tier.
+
+4. CLAIM FILING SEQUENCE
+The exact order of actions in the 72 hours after discovering significant damage: what to do first, second, third. Which platform to file with, in what order, and what to have ready before filing.</div>
+      <p class="ai-prompt-note">Run this prompt once and save the output as a standing SOP document for your operation. Share it with your cleaner, co-host, or property manager so the protocol exists outside your head. A documentation system that lives only in your memory breaks the first time you are unavailable at checkout.</p>
+    </div>
+
+    <!-- Module checkpoint -->
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 15 Checkpoint</div>
+      <h3>Before moving to Module 16, confirm the following:</h3>
+      <ul class="checkpoint-items">
+        <li>
+          <span class="cp-box"></span>
+          <span>I have reviewed my current policy and identified whether it covers STR activity — in writing, not just from a verbal conversation with my agent</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have requested quotes from at least two STR-specific carriers and compared them on liability limit, replacement cost vs. ACV, and direct booking coverage</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have confirmed my policy explicitly covers Airbnb, VRBO, and direct bookings — all three, if applicable to my operation</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have confirmed my contents coverage uses replacement cost value, not actual cash value</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I know my loss of income waiting period and how my daily rate is calculated for claims</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have a pre-arrival and post-departure documentation protocol and my cleaner knows to photograph before cleaning</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I understand the 72-hour reporting window for AirCover and my own policy, and know the claim filing sequence</span>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Machine feed -->
+  <div class="machine-feed">
+    <div class="mf-label">The Machine</div>
+    <h3>Insurance Is the Machine's Downside Protection</h3>
+    <p>The direct booking machine generates revenue. Insurance protects it from the events that stop it — a guest injury that becomes a lawsuit, a water heater failure that takes the property off the market for three weeks in peak season, a damage claim that a homeowner's policy denies because the guest was a commercial customer.</p>
+    <p>The operators who learn their coverage gaps at the point of claim learn an expensive lesson. The operators who read this module learn the same lesson for the cost of a policy review and a few phone calls.</p>
+    <p>Every dollar the machine generates is worth protecting. The insurance stack is how you protect it.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <span>SpokeBnB</span> · Module 15: Insurance · Supplementary Module
+</footer>
+
+</body>
+</html>

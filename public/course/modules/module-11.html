@@ -1,0 +1,957 @@
+<title>Module 11 — Curated Experiences & Revenue Layers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --danger-bg: #fff1f2; --danger-border: #dc2626;
+    --gold-bg: rgba(212,160,23,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --danger-bg: #2d0a0a; --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --danger-bg: #2d0a0a; --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+  .danger { background: var(--danger-bg); border-left-color: var(--danger-border); }
+  .danger .callout-label { color: var(--danger-border); }
+  .danger p, .danger li { color: #7f1d1d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .danger p, :root:not([data-theme="light"]) .danger li { color: #fca5a5; } }
+  :root[data-theme="dark"] .danger p, :root[data-theme="dark"] .danger li { color: #fca5a5; }
+
+  /* Risk signal grid */
+  .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+  .risk-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; border-top: 4px solid; }
+  .risk-card.green { border-top-color: #16a34a; }
+  .risk-card.yellow { border-top-color: #ca8a04; }
+  .risk-card.red { border-top-color: #dc2626; }
+  .risk-signal { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .risk-card.green .risk-signal { color: #16a34a; }
+  .risk-card.yellow .risk-signal { color: #ca8a04; }
+  .risk-card.red .risk-signal { color: #dc2626; }
+  .risk-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .risk-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  /* Tax table */
+  .tax-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 20px 0; overflow-x: auto; display: block; }
+  .tax-table thead tr { background: var(--navy); }
+  .tax-table thead th { padding: 10px 14px; text-align: left; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .tax-table tbody tr { border-bottom: 1px solid var(--border); }
+  .tax-table tbody tr:last-child { border-bottom: none; }
+  .tax-table td { padding: 11px 14px; vertical-align: top; color: var(--muted); line-height: 1.6; }
+  .tax-table td:first-child { font-weight: 600; color: var(--text); }
+  .tax-table td .who { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .who.airbnb { color: #e94f79; }
+  .who.operator { color: var(--gold); }
+  .who.both { color: #0284c7; }
+
+  /* Checklist */
+  .checklist-table { width: 100%; margin: 24px 0; }
+  .cl-row { display: grid; grid-template-columns: 32px 1fr auto; gap: 14px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .cl-row:last-child { border-bottom: none; }
+  .cl-num { width: 28px; height: 28px; background: var(--navy); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .cl-question { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .cl-detail { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .cl-flag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; align-self: flex-start; margin-top: 2px; }
+  .cl-flag.red { background: #fee2e2; color: #dc2626; }
+  .cl-flag.yellow { background: #fef9c3; color: #92400e; }
+  .cl-flag.green { background: #dcfce7; color: #15803d; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .cl-flag.red { background: rgba(220,38,38,0.2); color: #fca5a5; }
+    :root:not([data-theme="light"]) .cl-flag.yellow { background: rgba(202,138,4,0.2); color: #fde68a; }
+    :root:not([data-theme="light"]) .cl-flag.green { background: rgba(22,163,74,0.2); color: #86efac; }
+  }
+  :root[data-theme="dark"] .cl-flag.red { background: rgba(220,38,38,0.2); color: #fca5a5; }
+  :root[data-theme="dark"] .cl-flag.yellow { background: rgba(202,138,4,0.2); color: #fde68a; }
+  :root[data-theme="dark"] .cl-flag.green { background: rgba(22,163,74,0.2); color: #86efac; }
+
+  /* Compliance calendar */
+  .compliance-cal { display: grid; grid-template-columns: 100px 1fr; gap: 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 24px 0; }
+  .comp-header { background: var(--navy); padding: 12px 16px; display: flex; align-items: center; font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .comp-header:first-child { border-radius: 0; }
+  .comp-row-label { padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--text); background: var(--gold-bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .comp-row-label:last-of-type { border-bottom: none; }
+  .comp-cell { padding: 12px 16px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border); line-height: 1.6; }
+  .comp-cell:last-child { border-bottom: none; }
+
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  .disclaimer { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--muted); border-radius: 10px; padding: 18px 22px; margin: 0 0 40px; }
+  .disclaimer-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.65; margin: 0; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  @media (max-width: 640px) {
+    .risk-grid { grid-template-columns: 1fr; }
+    .cl-row { grid-template-columns: 32px 1fr; }
+    .cl-flag { display: none; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 11</div>
+    <h1>Curated Experiences & Revenue Layers</h1>
+    <p class="subtitle">Add revenue layers above the nightly rate that OTAs cannot touch — curated local experience partnerships, pre-arrival add-ons, in-stay referral commissions, and the post-stay re-booking flywheel</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 2: Own</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 10 — Creator Network</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 12 — Sponsors</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 09: Content & Social</span>
+    <span class="arrow">→</span>
+    <span>Module 10: Creator Network</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 11: Experiences</span>
+    <span class="arrow">→</span>
+    <span>Module 12: Sponsors</span>
+    <span class="arrow">→</span>
+    <span>Module 13: Acquisition</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Experience Layer</a>
+    <a href="#lesson-2">02 — Local Experience Partnerships</a>
+    <a href="#lesson-3">03 — Pre-Arrival & In-Stay Revenue</a>
+    <a href="#lesson-4">04 — Post-Stay Revenue Flywheel</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">💰</div>
+    <div>
+      <div class="label">Module Deliverable</div>
+      <p>Three local experience partnerships established with referral codes in your guidebook. Your first pre-arrival add-on offer active in OwnerRez Extras. The Day-21 re-booking email drafted and added to your Kit post-stay sequence. A revenue tracking row in your reporting that shows ancillary revenue per stay as a separate line from the nightly rate.</p>
+    </div>
+  </div>
+
+  <!-- ─── LESSON 1 ─── -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1</div>
+        <h2>The Experience Layer — Revenue OTAs Can't Touch</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Understand why the experience layer is the most durable competitive advantage in STR — and identify the five experience categories that generate commission revenue, boost reviews, and create guest loyalty simultaneously.</div>
+
+    <p>Airbnb can compete with your nightly rate. A competitor who lists next month can compete with your listing photos. Your Local Guide can be replicated by anyone willing to write a blog post. But the experience layer — the specific, personal network of local operators you've built around your property — cannot be copied overnight, cannot be commoditized by a platform, and compounds in value every year you maintain it.</p>
+
+    <p>A guest who takes your personal wine tour referral, stops at the breakfast spot you endorsed, and returns to find the local coffee brand you partnered with waiting on the counter is not having an Airbnb experience. They're having a <em>your property</em> experience. That distinction is what drives 5-star reviews, re-bookings, and referrals.</p>
+
+    <h3>The Five Experience Categories for STR Revenue Layers</h3>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="partner-icon">🍷</div>
+        <div class="partner-type">Food & Drink</div>
+        <p>Wineries, craft breweries, restaurants, farm stands, specialty food shops. Your personal endorsement in the guidebook, plus a referral code, converts 20–35% of guests who read it.</p>
+        <div class="partner-rate">Commission: $10–30 per booking</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🚣</div>
+        <div class="partner-type">Outdoor Adventure</div>
+        <p>Kayak/canoe rentals, guided hikes, fishing charters, boat tours. High per-booking value ($50–200+), guests actively seek these, operators love reliable referral sources.</p>
+        <div class="partner-rate">Commission: $15–40 per booking</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🧖</div>
+        <div class="partner-type">Wellness & Spa</div>
+        <p>Day spas, yoga studios, float tanks, massage therapists who do in-home visits. Particularly high conversion among couples and girls' trip guests. Premium commission rates.</p>
+        <div class="partner-rate">Commission: $20–50 per booking</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🎨</div>
+        <div class="partner-type">Arts & Culture</div>
+        <p>Gallery tours, cooking classes, pottery studios, music venues, local guides. These experiences become the memorable story of the trip — the thing guests tell their friends about.</p>
+        <div class="partner-rate">Commission: $10–25 per booking</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">📍</div>
+        <div class="partner-type">Local Insider Access</div>
+        <p>Hidden swimming holes, locals-only trails, private farm visits, off-menu restaurant experiences. These require relationships, not just referral codes — and that's exactly what makes them exclusive to your property.</p>
+        <div class="partner-rate">Commission: Varies / goodwill</div>
+      </div>
+    </div>
+
+    <h3>Why the Experience Layer Improves Reviews</h3>
+    <p>Guest satisfaction is not determined solely by the property. It's determined by the entire trip. A guest who has a mediocre Tuesday and an extraordinary wine tour on Wednesday writes about the wine tour in their review — and rates you higher because of it. Research across hospitality consistently shows that guests who engage in local experiences during their stay give significantly better ratings to the place they stayed, even when the property itself was identical.</p>
+    <p>You cannot control how good the winery is. But you can control whether your guest finds it, books the right tour, gets the insider table, and associates that memory with your property. That's the experience layer.</p>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 1</div>
+      <h4>Identify your best experience partnership opportunities</h4>
+      <div class="ai-prompt-box">I have a [property type] in [market/region]. My typical guests are [couples / families / friend groups / remote workers]. Help me:
+
+1. List the 8 most likely types of local experience partners for my property type and guest profile — rank them by estimated conversion likelihood (how likely my guest type is to book this)
+2. For each: suggest what the referral arrangement would look like (flat commission per booking, percentage, product exchange, or access arrangement)
+3. Identify the 3 I should approach first based on: (a) highest guest interest, (b) most accessible for me to approach as a small property owner, and (c) strongest impact on review quality
+4. Write one sentence I could say when approaching the top partner: what I'm offering, what I'm asking for</div>
+      <p class="ai-prompt-note"><strong>Use this output</strong> to build your first partnership outreach list. Start with the local operators you already have a relationship with — the places you personally recommend to guests already. The easiest partnership is formalizing something you're already doing for free.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2</div>
+        <h2>Building Local Experience Partnerships</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Approach local operators as a business partner (not a customer), establish referral arrangements with trackable codes, and integrate them into your guidebook in a way that converts.</div>
+
+    <h3>The Partnership Conversation — How to Frame It</h3>
+    <p>Most local operators have never been approached by an STR host offering to refer their guests. Your opening is simple and compelling: "My guests are already looking for experiences like yours — I want to be the reason they choose you. I'd like to feature your business personally in my guest guidebook and send guests directly to you. In return, I'd appreciate a referral code so we can track it and a small commission on bookings your business receives from my guests."</p>
+
+    <p>That's the entire pitch. You're not asking for money upfront. You're offering them a reliable referral pipeline — something most small local businesses desperately need.</p>
+
+    <h3>What to Offer, What to Ask For</h3>
+    <ul>
+      <li><strong>What you offer:</strong> A personal, written endorsement in your guidebook (not a generic list — "our favorite place to take guests is..." carries more weight than "popular local options include..."). Referral code distribution to all guests. Social media mention when relevant. Creator content that features their business when a creator stays.</li>
+      <li><strong>What to ask for:</strong> A unique referral code for your guests (so you both can track conversions). A small commission on bookings generated by your code (10–20% is industry standard for affiliate-style partnerships). Priority reservation access for your guests (especially for high-demand operators — this is worth more to guests than a discount).</li>
+      <li><strong>If they say no to commission:</strong> Some small operators aren't set up to track or pay commissions. That's fine — ask for a guest discount instead ("10% off for guests of [Property Name]"). The discount is a guest benefit, and the referral relationship still serves your review quality even without cash commission.</li>
+    </ul>
+
+    <h3>Tracking Referral Commissions Without Complexity</h3>
+    <ul>
+      <li><strong>Unique code per partner:</strong> "LAKEVIEW15" for your property at a partner winery, "LAKEVIEW-SPA" at the day spa. The partner tracks code usage and reports monthly.</li>
+      <li><strong>Viator for experience operators:</strong> If the operator is listed on Viator (which many outdoor and tour operators are), you can earn 8% commission on every Viator booking by sharing your affiliate link in your guidebook. No tracking conversation needed — it's automated.</li>
+      <li><strong>Monthly check-in:</strong> Once a quarter, email each partner: "How many referrals came through last month? I want to make sure we're still pointing guests to what's working best for them." This keeps the relationship warm and gives you data to decide which partners earn more guidebook space.</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Guidebook Integration That Converts</div>
+      <p>A generic list converts poorly. A personal story converts. In your guidebook: don't write "Wine Country Tours — contact@winecountrytours.com." Write "We've taken three of our favorite groups on the sunset tour at Wine Country Tours — the guide knows every vine personally and the sunset from the vineyard is genuinely one of the most beautiful things in the region. Use code LAKEHOUSE10 for 10% off. Reserve 2 weeks ahead in summer." That conversion rate is 3-4× higher than a generic listing.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3</div>
+        <h2>Pre-Arrival & In-Stay Revenue</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Activate pre-arrival add-ons through OwnerRez Extras, write the add-on offer that converts, and structure the in-stay guidebook to deliver referral commissions passively throughout every guest's stay.</div>
+
+    <h3>The Pre-Arrival Add-On — Capturing Revenue at the Moment of Anticipation</h3>
+    <p>The 72-hour window before check-in is when guests are most mentally engaged with their upcoming trip. They're thinking about what they'll need, what they forgot to plan, what would make the stay more special. This is the highest-conversion moment for add-on offers.</p>
+
+    <p>OwnerRez Extras allows you to offer add-ons at checkout (booking moment) or via a pre-arrival email (72 hours before check-in). The pre-arrival email timing converts 30–50% better than the booking moment — guests aren't thinking about extras when they're completing a booking. They are when they're packing for the trip.</p>
+
+    <h3>Add-Ons That Convert — Five Proven Options</h3>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="partner-icon">🍾</div>
+        <div class="partner-type">Welcome Package Upgrade</div>
+        <p>Wine/champagne + charcuterie board, delivered to the property before arrival. Your welcome basket becomes a premium purchase. Cost to deliver: $35–65. Charge: $75–120. Conversion: 25–40% for couples.</p>
+        <div class="partner-rate">Net margin: $40–55 per sale</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🪵</div>
+        <div class="partner-type">Firewood Bundle</div>
+        <p>Pre-staged firewood for outdoor fire pit or indoor fireplace. Cost: $15–25 delivered. Charge: $35–50. Highest conversion in fall/winter. Lowest effort to deliver. Works with virtually any property.</p>
+        <div class="partner-rate">Net margin: $20–35 per sale</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">⏰</div>
+        <div class="partner-type">Early Check-In / Late Check-Out</div>
+        <p>When your cleaning schedule allows. Charge $50–100 for an early check-in, same for late check-out. Conversion: 20–35% of guests who receive the offer during shoulder seasons. 0 additional cost if cleaning is already scheduled early.</p>
+        <div class="partner-rate">Net margin: $50–100 pure revenue</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🚲</div>
+        <div class="partner-type">Gear Rental Add-On</div>
+        <p>Kayaks, paddleboards, bikes, fishing gear. If you own the equipment: minimal cost per use, recurring revenue per stay. If partner-provided: split the fee. Converts 30–50% for outdoor properties.</p>
+        <div class="partner-rate">Net margin: $25–75 per rental</div>
+      </div>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Pre-Arrival Add-On Economics</div>
+      <p><strong>Property with 150 stays/year</strong></p>
+      <ul>
+        <li>Welcome package upgrade offered to all 150 stays → 35% convert → 52 purchases × $45 net margin = <strong>$2,340/year</strong></li>
+        <li>Firewood bundle offered in fall/winter (60 stays) → 40% convert → 24 purchases × $27 net margin = <strong>$648/year</strong></li>
+        <li>Early check-in/late check-out offered to all 150 → 25% convert → 37 purchases × $75 = <strong>$2,775/year</strong></li>
+      </ul>
+      <p><strong>Total add-on revenue: $5,763/year from one property</strong> — with no increase in bookings, no fee increase, and no additional marketing spend.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 3</div>
+      <h4>Write your pre-arrival add-on offer email</h4>
+      <div class="ai-prompt-box">I want to write a pre-arrival email that offers guests add-on upgrades before their stay. Here's the context:
+
+Property type: [lake house / cabin / beach house / etc.]
+Add-ons I'm offering: [list 2-3: e.g., welcome wine package, firewood bundle, early check-in]
+Price of each add-on: [e.g., Welcome Package $89, Firewood $40, Early check-in $65]
+When I send this email: [72 hours before check-in]
+Platform for ordering: [OwnerRez Extras link / direct reply to this email / other]
+
+Write a pre-arrival email under 250 words that:
+- Feels warm and personal, not like a upsell blast
+- Mentions 2-3 add-ons with their value framed as an enhancement ("have this waiting for you on arrival") not a product listing
+- Includes a low-friction CTA for each (a button or a reply-to-order instruction)
+- Ends with genuine excitement for their upcoming stay</div>
+      <p class="ai-prompt-note"><strong>Set this email up as a triggered message in OwnerRez</strong> — it fires automatically 72 hours before every check-in, no manual work required. Once live, this email generates add-on revenue every week without any additional effort from you. Test the headline: "A few things to make your stay exceptional" consistently outperforms "Pre-arrival add-ons available" in open rate.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4</div>
+        <h2>The Post-Stay Revenue Flywheel</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Write the Day-21 re-booking offer, install it in your Kit post-stay sequence, and build the referral incentive that turns past guests into a booking channel.</div>
+
+    <h3>The Day-21 Re-Booking Offer — Why 21 Days</h3>
+    <p>Twenty-one days after check-out is the peak nostalgia window. The vacation is recent enough to be vivid. Life has returned to routine, which makes the memory feel more precious. The pile of photos from the trip is sitting in their camera roll. And the next major holiday or anniversary — the natural booking trigger — is still weeks or months away, meaning they haven't committed to anything else yet.</p>
+
+    <p>The Day-21 offer converts at 8–12% of past guests who receive it. That's not a typo — 1 in 10 past guests who receive a timely, well-framed re-booking offer in the 21-day window becomes a future direct booking. At zero acquisition cost.</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">Day-21 Re-Booking Email — Template</div>
+      <p><strong>Subject:</strong> Still thinking about [Property Name]?</p>
+      <p>Hi <span class="pitch-placeholder">[First name]</span>,</p>
+      <p>It's been three weeks since you left [Property Name]. We hope the trip home was smooth and that life back home has been good to you.</p>
+      <p>We're already thinking about next year — [upcoming season: "fall foliage is only 8 months away" / "summer weekends on the lake are already filling up"]. We'd love to hold your dates before the calendar opens to the public.</p>
+      <p>For past guests: book your return stay by <span class="pitch-placeholder">[date 3 weeks from now]</span> and get [10% off your next stay / a complimentary welcome bottle of wine / priority on peak-season dates]. Just reply to this email with your preferred dates and we'll send you a direct booking link — no OTA, no fees, our best rate.</p>
+      <p>Thank you for being the kind of guests who make hosting genuinely rewarding.<br><span class="pitch-placeholder">[Your name]</span></p>
+    </div>
+
+    <h3>The Referral Incentive — Turning Guests Into a Booking Channel</h3>
+    <p>A past guest who had a 5-star experience is your most credible marketing asset. They will recommend your property to friends and family — the only question is whether you've given them a mechanism to do it that benefits both parties.</p>
+    <ul>
+      <li><strong>The referral offer:</strong> "Refer a friend to stay at [Property Name] and you both get 10% off your next stays. Send them to [your direct booking site] and ask them to mention your name at booking."</li>
+      <li><strong>When to send it:</strong> Add this as the last email in your post-stay Kit sequence — fires 30 days after checkout, after the review request and the Day-21 offer. Three touches in 30 days: review request → Day-21 re-booking offer → referral incentive.</li>
+      <li><strong>Tracking:</strong> Use a simple name-based system (the guest mentions their referring friend's name at booking) rather than a complex code system. The simplicity increases participation.</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The Full Revenue Layer Picture — What All Four Add Up To</div>
+      <p>At 150 stays/year on a $75,000 gross revenue property:</p>
+      <ul>
+        <li><strong>Pre-arrival add-ons:</strong> $5,763/year (see Lesson 3 math)</li>
+        <li><strong>Guidebook referral commissions</strong> (5 partners, 15% conversion, avg $22/booking): $1,650/year</li>
+        <li><strong>Day-21 re-bookings</strong> (10% conversion, 150 past guests, avg $750 stay value, direct = zero OTA fee): 15 re-bookings × $750 = $11,250 in direct booking revenue saved from Airbnb fees alone: $11,250 × 15.5% = <strong>$1,744/year</strong></li>
+        <li><strong>Referral bookings</strong> (estimated 3–5 per year at $750 avg): $2,250–$3,750/year</li>
+      </ul>
+      <p><strong>Total ancillary and re-booking revenue: $11,407–$12,907/year</strong> — added to the same property with no additional bookings, no property improvements, and no marketing spend.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 11 Complete When:</div>
+      <h3>Your revenue layers are live and your first ancillary revenue has been tracked.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Three local experience partners identified and approached — at least one referral code received and in guidebook</li>
+        <li><span class="cp-box"></span>Guidebook updated with personal endorsements (not generic lists) — each partner entry includes referral code and a personal recommendation sentence</li>
+        <li><span class="cp-box"></span>One pre-arrival add-on active in OwnerRez Extras — offer live and triggering automatically at 72 hours pre-check-in</li>
+        <li><span class="cp-box"></span>Day-21 re-booking email written and added to Kit post-stay sequence — fires automatically 21 days after checkout</li>
+        <li><span class="cp-box"></span>Referral incentive email added as final Kit post-stay email — fires 30 days after checkout</li>
+        <li><span class="cp-box"></span>Ancillary revenue tracking added to your OwnerRez or spreadsheet — separate line items for add-ons, commissions, and re-bookings</li>
+        <li><span class="cp-box"></span>Proceed to Module 12 — Sponsors & Brand Partnerships: now that you have a revenue layer above the nightly rate, learn how brand sponsors pay to be associated with the experience you're already delivering</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Experience Layer Is the Moat OTAs Cannot Cross</h3>
+    <p>Airbnb can match your nightly rate. A new competitor can copy your listing description. But the specific network of local relationships you've built — the winery that holds a table for your guests, the guide who knows your guests are coming, the spa that texts you first when a cancellation opens up — is yours alone. It cannot be scraped, replicated, or platform-managed.</p>
+    <p>Every revenue layer in this module serves two purposes simultaneously. Pre-arrival add-ons generate immediate cash. They also create a pre-arrival touchpoint that builds relationship before the guest arrives. Guidebook referral commissions generate passive income. They also make the guest's trip exceptional in a way your property alone could not. The Day-21 re-booking offer generates direct revenue. It also keeps the guest relationship alive 3 weeks after they left.</p>
+    <ul>
+      <li><strong>Add-ons (OwnerRez Extras)</strong> — captures pre-arrival revenue in the highest-intent window</li>
+      <li><strong>Guidebook (Module 05)</strong> — delivers the partner referral codes passively to every guest throughout their stay</li>
+      <li><strong>Kit email system (Module 07)</strong> — delivers the Day-21 offer and referral incentive automatically, zero manual sends</li>
+      <li><strong>StayFi (Module 06)</strong> — captures the guest's email so the post-stay sequence has someone to send to</li>
+    </ul>
+    <p>Module 12 adds another revenue layer above this one: brand partners who pay to be associated with the hospitality you're already delivering. The experience system you built here is what makes your property attractive to sponsors.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 11: Curated Experiences & Revenue Layers &nbsp;·&nbsp; Next: Module 12 — Sponsors & Brand Partnerships
+</footer>
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Regulatory Risk Map — What You Have and What You're Entering</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand the four categories of STR regulatory exposure, correctly classify your current operation on a risk scale, and learn the research framework for determining the regulatory status of any market before you enter it.
+    </div>
+
+    <p>Most STR operators think about regulations only when something goes wrong — a fine arrives, a neighbor complains to the city, or a news article announces that their municipality is "cracking down on Airbnb." By that point, the regulatory situation has moved past the point where proactive positioning helps. Module 11 is about knowing exactly where you stand before there is a problem, and knowing what to look for before you commit capital to a new market.</p>
+
+    <p>The regulatory landscape for STRs has changed significantly since 2019. More than 200 U.S. municipalities have passed new or revised STR restrictions in the past five years, with New York City's 2023 Local Law 18 being the most dramatic example — effectively ending most short-term rentals in the city. The operators who survived NYC's restrictions intact were not those who avoided the law. They were those who had already built a direct booking channel, an email list, and a multi-platform presence that allowed them to adapt when OTA access was restricted.</p>
+
+    <h3>The Four Regulatory Exposure Categories</h3>
+
+    <p>Every STR operation has exposure across four distinct categories. They are separate legal frameworks, enforced by separate authorities, with separate penalties. Understanding all four for your current property is the baseline — knowing them before you buy a second is the advantage.</p>
+
+    <ul>
+      <li><strong>Municipal STR permits and licenses</strong> — issued by the city, town, or county. May require a business license, a specific STR permit, a fire/safety inspection, or all three. Renewal is typically annual. Fines for operating without: $500–$5,000/day in regulated markets.</li>
+      <li><strong>Transient occupancy taxes (TOT) and state sales taxes</strong> — the tax obligation on short-term rental revenue. Separate from income tax. May be collected and remitted automatically by Airbnb/VRBO in your jurisdiction, or may require you to register, collect, and remit independently. Direct bookings always require operator-managed tax collection.</li>
+      <li><strong>HOA and condo association rules</strong> — private governing documents (CC&Rs, bylaws) that exist entirely outside municipal law. A property can be fully permitted by the city and still be in violation of its HOA rules. HOA enforcement is typically faster than municipal enforcement and the penalties — fines, loss of amenity access, forced rule compliance — are enforced through civil channels, not city agencies.</li>
+      <li><strong>State-level STR laws</strong> — a growing category. Several states (FL, TN, AZ, MT) have passed laws limiting municipalities' ability to restrict STRs. Others (NY, CA, MA) have passed laws enabling stricter local control. Knowing your state's position determines the ceiling and floor of what local municipalities can impose.</li>
+    </ul>
+
+    <h3>Current Regulatory Environment — The Three Market Types</h3>
+
+    <div class="risk-grid">
+      <div class="risk-card green">
+        <div class="risk-signal">Green — Permissive</div>
+        <div class="risk-title">Permit Available, Stable</div>
+        <p>STR permits are available, the market has a stable 3+ year regulatory history, and no significant restrictions are pending. Examples: most of rural Appalachia, Tennessee (state preemption law), most of rural New York State outside NYC. The permit process exists and must be completed, but the regulatory risk of forced closure is minimal.</p>
+      </div>
+      <div class="risk-card yellow">
+        <div class="risk-signal">Yellow — Monitoring Required</div>
+        <div class="risk-title">Changing or Uncertain</div>
+        <p>Permits exist but new restrictions are proposed, being debated, or recently passed with a phase-in period. Examples: many Florida coastal municipalities post-2022, western NC mountain markets, Catskills NY. Operating here is viable but requires active monitoring — a pending vote can change your status within 6 months.</p>
+      </div>
+      <div class="risk-card red">
+        <div class="risk-signal">Red — Structural Risk</div>
+        <div class="risk-title">Owner-Occupancy or Ban</div>
+        <p>Markets where STR investment properties are prohibited by owner-occupancy requirements (host must live in the property), where permit caps have been reached and no new permits are being issued, or where outright bans are in effect. Examples: NYC post-Local Law 18, many urban CA markets, some FL condo associations. Operating here is either illegal or unsustainable at scale.</p>
+      </div>
+    </div>
+
+    <h3>How to Research Regulatory Status in Any Market</h3>
+    <p>The research process for any market — current or prospective — follows the same sequence. Each step takes 15–30 minutes and the full picture can be assembled in an afternoon.</p>
+
+    <ol>
+      <li><strong>Search the municipal code online.</strong> Most U.S. municipalities publish their code at MuniCode.com. Search for "short-term rental," "vacation rental," "transient occupancy," and "homestay." The definitions section will tell you how the municipality defines a short-term rental (usually stays under 30 days or under 7 days) and whether that definition is regulated.</li>
+      <li><strong>Call the municipal planning or zoning office directly.</strong> A 5-minute phone call to the planning department produces more accurate current information than an hour of online research. Regulations are amended faster than websites are updated. Ask: "Do I need a permit to operate a short-term rental at [address]? Is that permit currently available? Is there a cap on permits?"</li>
+      <li><strong>Search pending legislation.</strong> City and county council meeting agendas are public. Search for "short-term rental" in the past 12 months of council minutes for any market you're evaluating. A pending ordinance is a market signal that changes the investment calculus.</li>
+      <li><strong>Check AirDNA's regulatory map.</strong> AirDNA maintains a current map of STR regulations by municipality. Not always up-to-date to the month, but useful as a first screen for identifying red-flag markets before spending time on deeper research.</li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The 30-Day Rule — A Definition That Matters</div>
+      <p>Different municipalities define "short-term rental" differently. The most common thresholds are stays under 30 days, under 28 days, or under 7 days. This definition matters for two reasons: (1) it determines what tax and permit rules apply, and (2) some operators in high-regulation markets structure their bookings to stay just above the definition threshold. Know the definition in your market. A booking minimum of 30 nights in a market with a "under 30 days" STR definition may completely exempt you from the STR regulatory framework — and place you under a different (typically much less restrictive) long-term rental framework instead.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You have classified your current market and know how to research any new one.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Current market classified: Green / Yellow / Red — with the specific permits and restrictions documented</li>
+        <li><span class="cp-box"></span>Municipal code reviewed for current property — STR definition and permit requirement confirmed</li>
+        <li><span class="cp-box"></span>Planning department contacted (or code confirmed online) — current permit availability and cap status known</li>
+        <li><span class="cp-box"></span>Pending legislation reviewed — no new restrictions within the next 6 months that affect current operation</li>
+        <li><span class="cp-box"></span>State-level STR law status known — whether your state enables or restricts local STR regulation</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Permits, Licenses, and the Tax Stack — Getting and Staying Compliant</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Identify every permit and license your operation requires, understand the full tax stack that applies to STR revenue (and what Airbnb handles vs. what you handle), and build a compliance calendar that ensures nothing lapses.
+    </div>
+
+    <p>Regulatory compliance has two failure modes: not knowing you need a permit, and knowing you need one but not renewing it. The first is a knowledge problem that Module 11 solves. The second is an operational problem — a compliance calendar solves it. Neither failure is acceptable when the penalty is a $2,000/day fine or a forced listing removal.</p>
+
+    <h3>The Permit Stack — What Most STR Operations Require</h3>
+    <p>In most regulated markets, a compliant STR operation requires multiple overlapping permits and registrations. They come from different agencies and renew on different schedules:</p>
+
+    <ul>
+      <li><strong>Municipal business license</strong> — required in most U.S. cities for any commercial activity. Annual. Typically $50–150. Often the starting point before an STR-specific permit can be issued.</li>
+      <li><strong>STR-specific permit</strong> — required in regulated markets. May require a safety inspection (smoke detectors, CO detectors, fire extinguisher, egress windows). Annual or biennial. May be tied to a specific property address and non-transferable at sale.</li>
+      <li><strong>Health and safety inspection</strong> — some municipalities require a passed inspection as a condition of permit issuance or renewal. Schedule immediately after applying — inspection backlogs can be 4–8 weeks in active markets.</li>
+      <li><strong>Transient occupancy tax (TOT) registration</strong> — separate from the permit, this registers your property as a tax-collecting entity with the municipality or county. Required even in markets where Airbnb remits the tax on your behalf — the registration establishes your identity as the responsible operator.</li>
+      <li><strong>State sales tax registration</strong> — required in states that treat STR revenue as subject to state sales tax (FL, TN, TX, CO, others). Separate from TOT. Must be renewed annually. Failure to register and remit = back taxes + penalties + interest, which can extend to personal liability.</li>
+    </ul>
+
+    <h3>The STR Tax Stack — Who Pays What</h3>
+
+    <table class="tax-table">
+      <thead>
+        <tr>
+          <th>Tax Type</th>
+          <th>Who Remits (OTA Bookings)</th>
+          <th>Who Remits (Direct Bookings)</th>
+          <th>Your Action Required</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Local / Municipal TOT</td>
+          <td><span class="who airbnb">Airbnb in most US markets</span></td>
+          <td><span class="who operator">You — via OwnerRez tax settings</span></td>
+          <td>Register with municipality. Verify Airbnb remits in your market. Configure OwnerRez to collect correct rate on direct bookings.</td>
+        </tr>
+        <tr>
+          <td>County TOT</td>
+          <td><span class="who both">Varies by county</span></td>
+          <td><span class="who operator">You — via OwnerRez</span></td>
+          <td>Confirm whether county and city have separate rates. Some counties require separate registration even when Airbnb remits.</td>
+        </tr>
+        <tr>
+          <td>State Sales Tax on STR</td>
+          <td><span class="who both">Varies by state</span></td>
+          <td><span class="who operator">You — always</span></td>
+          <td>Register with state tax authority. FL: Department of Revenue. TN: Department of Revenue. TX: Comptroller. File quarterly or monthly depending on revenue volume.</td>
+        </tr>
+        <tr>
+          <td>Federal Income Tax on STR Revenue</td>
+          <td>N/A — OTAs issue 1099-K over $600</td>
+          <td>N/A — you receive payment directly</td>
+          <td>Work with a CPA. STR revenue is Schedule C or Schedule E depending on your level of active participation. The "14-day rule" determines whether a property qualifies for rental property deductions.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ The Direct Booking Tax Gap — What Most Operators Miss</div>
+      <p>Airbnb and VRBO collect and remit applicable taxes automatically for OTA bookings in most markets. When a guest books through your direct booking site (Module 06), <strong>no platform is remitting those taxes on your behalf.</strong> You are now the merchant of record. OwnerRez calculates the correct tax rate and adds it to the direct booking invoice — but only if you have correctly configured the tax rates in OwnerRez's settings. An unconfigured direct booking site is collecting revenue without collecting tax. Every direct booking made in a taxable jurisdiction without proper tax collection is an under-reported tax obligation.</p>
+      <p>Fix: In OwnerRez → Settings → Taxes → Add Tax. Configure your local TOT rate, county rate (if separate), and state rate. Verify the rates against your municipal and state tax authority. Run a test booking through the direct booking site and confirm the tax line appears correctly on the invoice.</p>
+    </div>
+
+    <h3>The Annual Compliance Calendar</h3>
+
+    <div class="compliance-cal">
+      <div class="comp-header">When</div>
+      <div class="comp-header">Task</div>
+      <div class="comp-row-label">January</div>
+      <div class="comp-cell">File Q4 state sales tax return (if required). Collect all 1099-K forms from Airbnb, VRBO, and your merchant processor. Meet with CPA for STR tax planning.</div>
+      <div class="comp-row-label">30 days before permit expiry</div>
+      <div class="comp-cell">Begin permit renewal process. Do not wait until expiry — some municipalities require an inspection before renewal, and inspection backlogs can push you past the expiry date if you start late. Operating on an expired permit = operating without a permit.</div>
+      <div class="comp-row-label">Quarterly</div>
+      <div class="comp-cell">File state sales tax returns if required in your state. Review OwnerRez tax settings against current rates — municipalities occasionally adjust TOT rates mid-year. Cross-check direct booking revenue against tax amounts collected and remitted.</div>
+      <div class="comp-row-label">Annually</div>
+      <div class="comp-cell">Renew municipal business license. Renew STR-specific permit. Update safety inspection if required. Review any changes to local STR ordinances. Verify Airbnb's tax remittance list still includes your municipality at the correct rate.</div>
+      <div class="comp-row-label">When you add a property</div>
+      <div class="comp-cell">Complete Lesson 4's market entry checklist before committing capital. Register for all required permits and taxes before accepting the first booking. Configure OwnerRez tax settings for the new property's jurisdiction. Add all renewal dates to the compliance calendar.</div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Build Your Regulatory Status Summary Document</h4>
+      <div class="ai-prompt-box">You are helping me document the complete regulatory and tax compliance status of my short-term rental property. I want a structured summary I can share with my accountant and refer to for compliance tracking.
+
+Property address: [FULL ADDRESS]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / condo / etc.]
+Municipality: [CITY OR TOWN]
+County: [COUNTY NAME]
+State: [STATE]
+Primary booking platform: [AIRBNB / VRBO / BOTH]
+Direct booking site operating: [YES / NO]
+Average annual gross STR revenue: [APPROXIMATE — e.g., "$75,000"]
+
+Based on this property, create a structured compliance document with these sections:
+
+1. CURRENT PERMIT & LICENSE STATUS
+   — List what permits/licenses likely required in this municipality type
+   — Space for: permit number, issuing agency, expiry date, renewal cost, and renewal process notes
+
+2. TAX OBLIGATIONS SUMMARY
+   — Local TOT: rate, who remits (Airbnb or me), registration number, filing frequency
+   — County tax: same fields
+   — State sales tax: applicable or not, registration number, filing frequency
+   — Federal: 1099-K threshold, CPA notes section
+
+3. COMPLIANCE CALENDAR
+   — Monthly, quarterly, and annual tasks with placeholder dates I'll fill in
+
+4. DIRECT BOOKING TAX CONFIGURATION
+   — Checklist for OwnerRez tax settings: TOT rate entered, county rate entered, state rate entered, test booking confirmed
+
+5. OPEN ITEMS
+   — A list of items that need to be confirmed with the municipality, county, or state tax authority before this document is complete
+
+Format as a clear, professional document I can fill in and share with my CPA.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Fill in the actual numbers — permit numbers, expiry dates, registered tax rates. This document is only as useful as its accuracy. Share the completed version with your CPA before your first tax filing season with direct bookings operating. <strong>The single most important line in the document:</strong> the direct booking tax configuration section. An unchecked box there is real liability.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your compliance status is documented and your OwnerRez tax settings are verified for direct bookings.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>All current permits and licenses identified — numbers, expiry dates, and renewal processes documented</li>
+        <li><span class="cp-box"></span>TOT registration confirmed — municipality registration number on file</li>
+        <li><span class="cp-box"></span>State sales tax status confirmed — registered if required, exempt if confirmed exempt</li>
+        <li><span class="cp-box"></span>OwnerRez tax settings configured — local, county, and state rates entered and tested</li>
+        <li><span class="cp-box"></span>Direct booking test transaction completed — confirmed tax line appears correctly on invoice</li>
+        <li><span class="cp-box"></span>Compliance calendar built — all renewal dates and filing deadlines entered in calendar system</li>
+        <li><span class="cp-box"></span>CPA or tax professional notified of direct booking operation — STR-specific tax planning initiated</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>HOA & Condo Risk — The Governing Documents That Override the Municipal Permit</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand how HOA and condo association restrictions work independently of municipal law, how to research your current exposure, and what to do if your governing documents prohibit short-term rentals.
+    </div>
+
+    <p>An HOA restriction is not a municipal regulation. It is a private contractual obligation between you and the HOA — one that runs with the property and cannot be avoided by obtaining a municipal permit. A property that is fully licensed by the city and operating in full compliance with municipal law can simultaneously be in violation of its HOA's CC&Rs. Both are real, both have real consequences, and the HOA will typically enforce faster than the city will.</p>
+
+    <p>HOA enforcement timelines are often days or weeks, not months. A neighbor complaint to the HOA about your rental activity triggers a process that can escalate from a written warning to daily fines to legal action in 30–60 days. A municipal enforcement action takes longer — but both can happen simultaneously, and both require separate responses.</p>
+
+    <h3>Finding Your HOA's Rules on Short-Term Rentals</h3>
+    <p>The governing document you need is the <strong>CC&Rs (Covenants, Conditions & Restrictions)</strong> — the primary HOA document that establishes what owners can and cannot do with their property. Secondary documents (bylaws, rules and regulations, architectural review guidelines) may also contain restrictions, but the CC&Rs are the foundational authority.</p>
+
+    <ul>
+      <li><strong>If you already own:</strong> Request the full CC&Rs from your HOA management company. If you don't have the management company's contact, it's listed in your title documents or on the county recorder's website (HOAs are often recorded as a deed restriction).</li>
+      <li><strong>Before you buy:</strong> Request the CC&Rs, bylaws, and the most recent HOA minutes as part of your due diligence. Review the minutes for any discussions about short-term rentals — a vote on an STR restriction in the minutes is a red flag even if the CC&Rs haven't been formally amended yet.</li>
+      <li><strong>Search terms in the CC&Rs:</strong> "short-term," "vacation," "rental," "lease," "occupancy," "transient," "Airbnb," "VRBO." Any of these can signal relevant language. Pay attention to minimum lease terms — "no lease for less than 30 days" in a CC&R is an effective STR ban even if it doesn't name Airbnb.</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-label">⚠ If Your CC&Rs Prohibit Short-Term Rentals</div>
+      <p>Do not operate. The consequences of operating an STR in violation of your HOA's CC&Rs are not theoretical: daily fines, legal action in civil court, and — in extreme cases — a court order requiring you to stop renting or face contempt. The HOA does not need to prove you are causing harm. They only need to prove you violated the CC&Rs, which you will have done.</p>
+      <p><strong>If you are already operating:</strong> consult a real estate attorney immediately. Your options depend on the specific language of the CC&Rs, whether the restriction was added after you purchased, whether there is a grandfather clause, and whether the HOA has been uniformly enforcing the restriction. Uneven enforcement can occasionally be used as a defense — but this requires legal counsel, not a self-assessment.</p>
+      <p><strong>If you are buying:</strong> a property with an HOA that prohibits STRs is not an STR investment. The restriction runs with the property. Price the investment as a traditional rental or a personal-use property — not as an STR.</p>
+    </div>
+
+    <h3>The Grandfather Clause — When Timing Matters</h3>
+    <p>Many municipalities and some HOAs that have passed new STR restrictions include a grandfather clause: properties that were operating under a valid permit before the restriction's effective date are exempt from the new restriction for some period — typically 1–5 years, or until the property is sold. This is not automatic — you must register and document that you were operating before the cutoff date.</p>
+
+    <p>If your municipality or HOA has recently passed new STR restrictions, act immediately to confirm and document your grandfather status. Required documentation typically includes: the original permit date, evidence of rental activity before the cutoff (OTA booking history, tax filings, utility records), and a formal application for grandfather status with the municipality or HOA. Waiting until after the enforcement date risks losing the grandfather claim.</p>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>Your HOA status is known and documented. If restrictions exist, legal counsel has been engaged.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>CC&Rs obtained for current property — full document, not a summary</li>
+        <li><span class="cp-box"></span>CC&Rs searched for short-term rental language — result: permitted / restricted / silent (and if silent, bylaws reviewed)</li>
+        <li><span class="cp-box"></span>HOA meeting minutes from the past 2 years reviewed — any pending STR discussion flagged</li>
+        <li><span class="cp-box"></span>If restricted: real estate attorney consulted — no STR operation continues without legal guidance</li>
+        <li><span class="cp-box"></span>If new restrictions recently passed: grandfather status confirmed in writing with HOA or municipality</li>
+        <li><span class="cp-box"></span>HOA management company contact documented — for future regulatory changes or complaints</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The Market Entry Checklist — Regulatory Due Diligence Before You Commit Capital</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Complete a 7-question regulatory due diligence checklist for any market you are evaluating for your next property, and classify each market as Green (proceed), Yellow (monitor), or Red (avoid or restructure).
+    </div>
+
+    <p>The investment decision for a second or third STR property is not made the day you sign a purchase contract. It is made in the weeks before — during due diligence. Every hour you spend on regulatory research before committing capital saves you from discovering a permit cap, an HOA prohibition, or a pending ban after you've closed. Module 11's market entry checklist is the due diligence framework you run on every market, every time, before moving forward.</p>
+
+    <div class="checklist-table">
+      <div class="cl-row">
+        <div class="cl-num">1</div>
+        <div>
+          <div class="cl-question">Is a short-term rental permit available at this address today?</div>
+          <div class="cl-detail">Not "is STR permitted in this municipality" — but "can I get a permit at this specific address, right now?" Some markets have district-level restrictions that apply to specific zones. Confirm with the planning department, in writing if possible.</div>
+        </div>
+        <div class="cl-flag red">Disqualifier if No</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-num">2</div>
+        <div>
+          <div class="cl-question">Is there a permit cap, and has it been reached?</div>
+          <div class="cl-detail">Some municipalities limit the total number of STR permits issued city-wide or by neighborhood. If the cap is reached and there's a waitlist, you cannot legally operate until a permit becomes available. Waitlists in popular markets can be 12–36 months.</div>
+        </div>
+        <div class="cl-flag red">Disqualifier if Capped</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-num">3</div>
+        <div>
+          <div class="cl-question">Is an owner-occupancy requirement in effect?</div>
+          <div class="cl-detail">Owner-occupancy means the primary resident of the property must be the host — eliminating non-owner STR investment properties entirely. Some markets apply this only to whole-home rentals; others apply it universally. Confirm specifically for investment (non-owner-occupied) properties.</div>
+        </div>
+        <div class="cl-flag red">Disqualifier if Yes</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-num">4</div>
+        <div>
+          <div class="cl-question">Is there pending legislation to restrict, cap, or ban STRs in this market?</div>
+          <div class="cl-detail">Search the past 12 months of city/county council meeting agendas and minutes. A pending ordinance is a market signal. If a ban or cap is 60 days from a vote, the investment timeline changes entirely. Note: state-level preemption laws can override local restrictions in some states (FL, TN, AZ) — know your state's position.</div>
+        </div>
+        <div class="cl-flag yellow">Monitor if Pending</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-num">5</div>
+        <div>
+          <div class="cl-question">What is the complete tax stack and who remits what?</div>
+          <div class="cl-detail">Local TOT rate, county rate, state rate. Confirm whether Airbnb remits in this jurisdiction (Airbnb's tax collection page lists every market where they remit — verify for this specific municipality). Calculate the net tax burden for direct bookings and confirm OwnerRez can accommodate all applicable rates.</div>
+        </div>
+        <div class="cl-flag green">Operational — Must Complete</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-num">6</div>
+        <div>
+          <div class="cl-question">Does the property have an HOA, and do the CC&Rs permit STRs?</div>
+          <div class="cl-detail">Request the CC&Rs before making an offer. This is standard due diligence — any seller who refuses to provide governing documents is a red flag. Search for minimum lease terms and "short-term" language. Ask the listing agent directly: "Has the HOA taken any action or discussed any action regarding short-term rentals in the past 24 months?"</div>
+        </div>
+        <div class="cl-flag red">Disqualifier if Prohibited</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-num">7</div>
+        <div>
+          <div class="cl-question">What is the 3-year regulatory trajectory of this market?</div>
+          <div class="cl-detail">Markets that have been stable for 3+ years are lower risk than markets that have had new or revised regulations in the past 18 months. A market with one new restriction is more likely to have a second. Check AirDNA's regulatory history, local news archives, and STR host community forums for the market. You are not trying to predict the future — you are assessing the momentum of regulatory change.</div>
+        </div>
+        <div class="cl-flag yellow">Context — Informs Risk Classification</div>
+      </div>
+    </div>
+
+    <h3>After the Checklist — Market Classification</h3>
+    <p>Run every answer through the risk framework from Lesson 1: Green (proceed, complete the compliance steps), Yellow (proceed with active monitoring plan and a contingency if regulation tightens), or Red (do not proceed with STR investment model — price as traditional rental or personal property instead).</p>
+
+    <p>A market that answers Questions 1, 2, and 3 correctly (permit available, no cap, no owner-occupancy) but flags on Question 4 (pending legislation) is a Yellow market — proceed with a shorter investment horizon and a higher emphasis on building direct booking infrastructure that survives potential OTA restrictions. A market that fails Questions 1, 2, or 3 is a Red market regardless of how attractive the revenue projections look. The revenue projections assume legal operation. A Red answer on any of the first three questions is a structural disqualifier, not a risk to manage.</p>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Prospective Market</div>
+      <h4>Research and Summarize STR Regulatory Status for a Target Market</h4>
+      <div class="ai-prompt-box">I am evaluating a potential short-term rental investment and need to research the regulatory environment before committing capital. Help me build a research plan and draft an outreach message to the local planning department.
+
+Target city/municipality: [CITY NAME]
+Target state: [STATE]
+Property type I'm evaluating: [SINGLE FAMILY / CONDO / DUPLEX / etc.]
+Intended use: [NON-OWNER-OCCUPIED INVESTMENT PROPERTY / OWNER-OCCUPIED HOST]
+Approximate price range of property: [$XXXK]
+
+Do two things:
+
+1. REGULATORY RESEARCH SUMMARY
+Based on what you know about [city/state], summarize:
+— Whether this state has a preemption law that limits local STR restrictions (and what it says)
+— Whether [city] has a known STR ordinance — key provisions if known
+— Any notable recent regulatory activity in this market
+— Where I should look online to find the current municipal code (MuniCode.com or city website URL format)
+— Which specific city department to contact for permit questions
+
+Note: flag if your knowledge may be outdated and verification with the municipal planning office is essential before relying on this summary.
+
+2. PLANNING DEPARTMENT OUTREACH SCRIPT
+Write a 5-question phone script for calling the planning or zoning department:
+— Is a STR permit required for a non-owner-occupied property at [address type] in [zone]?
+— Is that permit currently available, or is there a cap or waitlist?
+— Is there an owner-occupancy requirement?
+— Are there any pending ordinance changes affecting STRs in the next 12 months?
+— What is the permit application process, timeline, and cost?
+
+Format the script so I can read it on the phone with space to fill in the answers.</div>
+      <p class="ai-prompt-note"><strong>Important:</strong> AI knowledge of specific local regulations has a cutoff date and may be outdated. Use this prompt to orient your research and generate the right questions — but verify every answer with the actual planning department before making an investment decision. A five-minute phone call to the planning office is worth more than any AI summary when real capital is at stake.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 11 Complete When:</div>
+      <h3>Your current operation is documented and compliant. Every new market evaluation starts with this checklist.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Regulatory status document for current property complete — permit numbers, expiry dates, tax registrations, HOA status</li>
+        <li><span class="cp-box"></span>Compliance calendar built and in active use — all deadlines entered with calendar reminders set 30 days in advance</li>
+        <li><span class="cp-box"></span>OwnerRez tax settings configured for all applicable jurisdictions — tested on direct booking invoice</li>
+        <li><span class="cp-box"></span>CPA or tax professional briefed on direct booking operation — STR-specific tax plan in place</li>
+        <li><span class="cp-box"></span>7-question checklist completed for any market currently under active evaluation</li>
+        <li><span class="cp-box"></span>Proceed to Module 12 — Scaling: with regulatory clarity on your existing operation and a due diligence framework for new markets, the scaling decision becomes a business analysis rather than a compliance gamble.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Direct Booking Machine Is Also a Regulatory Resilience Tool</h3>
+    <p>Operators who built their entire STR business on OTA platforms lost everything when New York City's Local Law 18 took effect in 2023. Operators who had a direct booking site, a Kit email list of past guests, a Google Business Profile, and a hub content piece ranking for local area searches had alternative channels when the platform access was restricted.</p>
+    <p>This is not a hypothetical risk. Platform access can be restricted by municipal law (NYC), by platform policy changes, or by account-level actions. The direct booking machine does not depend on any single platform remaining available or cooperative. <strong>Every module in this course that built a channel outside the OTA — the direct booking site, the email list, the content presence, the GBP — is simultaneously a piece of regulatory insurance.</strong></p>
+    <ul>
+      <li><strong>Email list (Module 07)</strong> — when an OTA restricts your listing, your list of 300 past guests is a direct channel to 300 people who already know and trust your property. They can book direct. They can refer others. The platform doesn't own that relationship.</li>
+      <li><strong>Direct booking site (Module 06)</strong> — a market where you can still operate legally but OTA access is restricted means 100% of your bookings shift to direct. The infrastructure is already built.</li>
+      <li><strong>Content and GBP presence (Module 08)</strong> — organic search rankings and Google Business Profile reviews do not disappear when an OTA changes its policy. The content that ranks in Google continues to drive traffic to the direct booking site regardless of what Airbnb does.</li>
+    </ul>
+    <p>Knowing the regulatory environment (Module 11) tells you when and where this resilience matters most. Building the machine (Modules 06–10) ensures it's there when it does.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 11: Regulations &nbsp;·&nbsp; Next: Module 12 — Scaling
+</footer>

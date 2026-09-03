@@ -1,0 +1,1072 @@
+<title>Module 01 — Acquisition — Buy the Right Property</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7; --checkpoint-bg: #09263A;
+    --layer1: #0f766e; --layer2: #0284c7; --layer3: #dc2626;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232; --checkpoint-bg: #0d3550;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232; --checkpoint-bg: #0d3550;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  :root[data-theme="dark"] .lesson-title-wrap h2,
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+  a { color: var(--gold); }
+
+  /* Layer badges */
+  .layer-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 6px; }
+  .layer1 { background: rgba(15,118,110,0.12); color: var(--layer1); border: 1px solid rgba(15,118,110,0.25); }
+  .layer2 { background: rgba(2,132,199,0.12); color: var(--layer2); border: 1px solid rgba(2,132,199,0.25); }
+  .layer3 { background: rgba(220,38,38,0.12); color: var(--layer3); border: 1px solid rgba(220,38,38,0.25); }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+
+  /* Callouts */
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake ul, .mistake li { color: #7c2d12; }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p { color: #0c4a6e; }
+  :root[data-theme="dark"] .math p { color: #7dd3fc; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p { color: #7dd3fc; } }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip ul, .tip li { color: #14532d; }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn ul, .warn li { color: #713f12; }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+
+  /* Compare tables */
+  .compare-wrap { overflow-x: auto; margin: 24px 0; }
+  .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td strong { color: var(--text); display: block; margin-bottom: 2px; }
+  .compare td.pos { background: rgba(22,163,74,0.04); }
+  .compare td.neg { background: rgba(220,38,38,0.04); }
+
+  /* Scorecard */
+  .scorecard { margin: 24px 0; }
+  .score-category { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .score-header { background: var(--navy); padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+  .score-header .s-label { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; flex: 1; }
+  .score-header .s-points { color: rgba(255,255,255,0.5); font-size: 12px; }
+  .score-items { padding: 0; }
+  .score-item { display: flex; align-items: flex-start; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+  .score-item:last-child { border-bottom: none; }
+  .score-item .criterion { flex: 1; }
+  .score-item .criterion strong { display: block; font-size: 14px; color: var(--text); margin-bottom: 3px; }
+  .score-item .criterion span { font-size: 13px; color: var(--muted); }
+  .score-item .pts { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 80px; }
+  .score-item .pts .p-row { display: flex; gap: 6px; }
+  .score-item .pts .p-val { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+  .p-high { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .p-mid { background: rgba(234,179,8,0.12); color: #a16207; }
+  .p-low { background: rgba(220,38,38,0.1); color: #dc2626; }
+
+  /* Templates */
+  .template-box { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+  .template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .field .line { border-bottom: 1px solid var(--border); min-height: 22px; font-size: 12px; color: var(--muted); font-style: italic; padding-bottom: 2px; }
+
+  /* Revenue grid */
+  .rev-grid { width: 100%; border-collapse: collapse; font-size: 13px; margin: 20px 0; }
+  .rev-grid th { background: var(--navy); color: var(--gold); padding: 9px 12px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .rev-grid th:first-child { text-align: left; }
+  .rev-grid td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; font-size: 12.5px; }
+  .rev-grid td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+  .rev-grid tr.total td { background: var(--template-bg); font-weight: 700; color: var(--text); border-top: 2px solid var(--gold); }
+  .rev-grid .season-peak { color: #16a34a; font-weight: 700; }
+  .rev-grid .season-shoulder { color: #a16207; }
+  .rev-grid .season-off { color: var(--muted); }
+
+  /* Expense model */
+  .expense-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .expense-row:last-child { border-bottom: none; }
+  .expense-row .e-name { color: var(--text); font-weight: 500; }
+  .expense-row .e-note { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .expense-row .e-amount { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--text); white-space: nowrap; }
+  .expense-total { display: flex; justify-content: space-between; padding: 14px 0 0; font-weight: 700; color: var(--text); font-size: 15px; border-top: 2px solid var(--gold); margin-top: 8px; }
+
+  /* Case study */
+  .case-study { background: var(--navy); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .case-study-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .case-study h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 12px; }
+  .case-study p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 10px; }
+  .case-study p:last-child { margin-bottom: 0; }
+  .case-study strong { color: rgba(255,255,255,0.9); }
+  .case-study ul { color: rgba(255,255,255,0.65); font-size: 14px; }
+  .case-study li { margin-bottom: 6px; }
+
+  /* Reg risk */
+  .reg-risk { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin: 20px 0; }
+  .risk-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .risk-card .r-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .risk-card .r-level { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 8px; }
+  .r-high { background: rgba(220,38,38,0.1); color: #dc2626; }
+  .r-medium { background: rgba(234,179,8,0.1); color: #a16207; }
+  .r-low { background: rgba(22,163,74,0.1); color: #16a34a; }
+  .risk-card p { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  /* Checkpoint */
+  .checkpoint { background: var(--checkpoint-bg); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .check-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .machine-feed .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .machine-feed .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+  .spoke-ref { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(212,160,23,0.12); color: var(--gold); border: 1px solid rgba(212,160,23,0.25); padding: 3px 10px; border-radius: 20px; }
+  code { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-family: 'Courier New', monospace; font-size: 13px; color: var(--text); }
+</style>
+
+<!-- MODULE HEADER -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 01</div>
+    <h1>Acquisition — Buy the Right Property Before You Buy</h1>
+    <p class="subtitle">The three-layer market framework, property analysis, revenue underwriting, and regulatory due diligence — before any money moves</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 1: Operate</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>4–6 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 00 — Foundation</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 02 — Tech Stack</div>
+    </div>
+  </div>
+</header>
+
+<!-- MODULE CHAIN -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 00: Framework</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 01: Acquisition</span>
+    <span class="arrow">→</span>
+    <span>Module 02: Tech Stack</span>
+    <span class="arrow">→</span>
+    <span>Module 03: Launch</span>
+  </div>
+</div>
+
+<!-- LESSON NAV -->
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — Market Framework</a>
+    <a href="#lesson-2">02 — Property Analysis</a>
+    <a href="#lesson-3">03 — Revenue Underwriting</a>
+    <a href="#lesson-4">04 — Regulatory Due Diligence</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">📋</div>
+    <div>
+      <div class="label">Module 01 Deliverable</div>
+      <p>A completed Acquisition Decision Sheet — your market scored against all three layers, your property evaluated against the STR-specific checklist, a 12-month revenue projection with operating expense model, and a documented go/no-go decision with your minimum revenue threshold written down before emotion enters the room.</p>
+    </div>
+  </div>
+
+  <!-- Who This Module Is For -->
+  <div class="callout tip" style="margin-top:0">
+    <div class="callout-label">✓ Two Audiences — One Module</div>
+    <p><strong>You don't have a property yet:</strong> This module walks you through selecting a market, evaluating a property before you make an offer, and underwriting the revenue before you sign anything. Do not skip the regulatory section — a permit issue discovered before you close costs you nothing but time. Discovered after you close, it can make the property unsellable as an STR.</p>
+    <p><strong>You already have a property:</strong> Work through this module as a retroactive audit. Did you underwrite the revenue before you committed? Do you know your actual operating cost per booking? Is the regulatory environment trending toward restriction or stability? Operators who skipped this step on the way in often repeat it on the way out — this module closes the gap now.</p>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Three-Layer Market Framework</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Score any STR market across all three layers — demand, supply, and regulatory risk — and know before looking at a single property whether this market is worth your capital.
+    </div>
+
+    <p>In Module 00, you mapped the Hub-and-Spoke model and built your Business Identity Statement. You identified your property type, your target guest, and your eight demand channels. Now the question is: does the market you're evaluating actually support that model?</p>
+
+    <p>Most STR operators pick a property before they pick a market — they fall in love with a cabin, a lakehouse, or a beach cottage and then look for data to justify the decision they've already made emotionally. The result is properties that underperform projections in soft demand periods, get squeezed when supply increases, or lose their permits when the regulatory environment tightens.</p>
+
+    <p>Market selection comes first. Property comes second. The market determines what a good property can earn. A mediocre property in a strong market consistently outperforms a great property in a weak one.</p>
+
+    <h3>The Three Layers — Evaluated in Order</h3>
+
+    <div class="scorecard">
+
+      <!-- Layer 1 -->
+      <div class="score-category">
+        <div class="score-header">
+          <div class="s-label"><span class="layer-badge layer1" style="margin:0;padding:2px 8px">Layer 1</span>&nbsp; Demand Profile</div>
+          <div class="s-points">Max 40 points</div>
+        </div>
+        <div class="score-items">
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Primary demand driver type</strong>
+              <span>What is the core reason guests come to this market? A single clear driver (a lake, a mountain, a theme park) creates more reliable year-round demand than a market with no clear identity. Multiple complementary drivers — a lake town with wine trails and a regional food scene — compound demand and extend the season.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">2+ drivers: 15</span></div>
+              <div class="p-row"><span class="p-val p-mid">1 clear driver: 10</span></div>
+              <div class="p-row"><span class="p-val p-low">No clear driver: 0</span></div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Seasonality profile</strong>
+              <span>How many months is the market at or above 60% occupancy? A 12-month market (beach with mild winters, urban market) funds itself across all four quarters. A 4-month seasonal market requires the same financial discipline as a fishing charter — you make the year in a few months and must plan for it.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">10+ months: 15</span></div>
+              <div class="p-row"><span class="p-val p-mid">6–9 months: 10</span></div>
+              <div class="p-row"><span class="p-val p-low">Under 6 months: 5</span></div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Drive-market vs. fly-to-market</strong>
+              <span>Drive markets (within 3–4 hours of a major metro area) respond faster to last-minute booking patterns, fill more shoulder-season weekends, and attract repeat visitors at higher rates. Fly-to markets have longer booking windows and typically higher ADRs, but are more sensitive to travel cost fluctuations and economic downturns.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">Drive market: 10</span></div>
+              <div class="p-row"><span class="p-val p-low">Fly-to only: 5</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="score-category">
+        <div class="score-header">
+          <div class="s-label"><span class="layer-badge layer2" style="margin:0;padding:2px 8px">Layer 2</span>&nbsp; Supply &amp; Competition</div>
+          <div class="s-points">Max 35 points</div>
+        </div>
+        <div class="score-items">
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Market-level occupancy rate</strong>
+              <span>Pull this from AirDNA's Market Overview for your target zip code or neighborhood. This is the average occupancy across all active listings in the market — not just the top performers. A market-wide rate above 65% tells you there is more demand than supply. Below 50% means you will need to out-compete a supply-heavy market from day one.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">&gt;65%: 15</span></div>
+              <div class="p-row"><span class="p-val p-mid">50–65%: 10</span></div>
+              <div class="p-row"><span class="p-val p-low">&lt;50%: 3</span></div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Comp set average rating</strong>
+              <span>In AirDNA's Rentalizer, filter to your property type, bedroom count, and neighborhood. Pull the average star rating of active comps. A comp set averaging below 4.5 means you can capture market share with operational excellence. A comp set averaging above 4.8 means you will need to differentiate on something other than being a better-run version of what's already there.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">&lt;4.6 avg: 10</span></div>
+              <div class="p-row"><span class="p-val p-mid">4.6–4.8 avg: 7</span></div>
+              <div class="p-row"><span class="p-val p-low">&gt;4.8 avg: 4</span></div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="criterion">
+              <strong>YoY supply growth rate</strong>
+              <span>How fast is new supply entering this market? AirDNA shows active listing count by month — pull the last 24 months. A market with 10%+ annual supply growth is being flooded with new listings, which compresses occupancy and ADR for existing operators. A market with flat or negative supply growth is either constrained by permit caps (good — supply is limited) or declining in appeal (investigate which).</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">&lt;5% YoY: 10</span></div>
+              <div class="p-row"><span class="p-val p-mid">5–10% YoY: 5</span></div>
+              <div class="p-row"><span class="p-val p-low">&gt;10% YoY: 0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="score-category">
+        <div class="score-header">
+          <div class="s-label"><span class="layer-badge layer3" style="margin:0;padding:2px 8px">Layer 3</span>&nbsp; Regulatory Risk</div>
+          <div class="s-points">Max 25 points — a score below 10 disqualifies the market regardless of Layers 1 and 2</div>
+        </div>
+        <div class="score-items">
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Current permit status</strong>
+              <span>Is a permit available? How many are currently active? Is there a cap? Is there a waitlist? Some municipalities issue permits on a first-come basis with no cap. Others have a hard cap on total permits issued. Others have enacted moratoriums — no new permits until further notice. Research this at the municipal or county level before scoring any other criteria. A moratorium in a Layer 1 and Layer 2 market you love does not make the market investable — it makes it uninvestable for new operators.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">No cap, permit available: 15</span></div>
+              <div class="p-row"><span class="p-val p-mid">Cap, permit available now: 10</span></div>
+              <div class="p-row"><span class="p-val p-low">Waitlist or moratorium: 0</span></div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="criterion">
+              <strong>Regulatory trend direction</strong>
+              <span>Is the municipality moving toward or away from STR? Search city council meeting minutes and local news from the past 24 months. A market that passed its first STR ordinance two years ago and has not revisited it is stable. A market where council members are actively proposing new restrictions is a market where your permit may be worth less in 3 years than it is today. Stable or improving trend: full points. Active restriction proposals: reduced score.</span>
+            </div>
+            <div class="pts">
+              <div class="p-row"><span class="p-val p-high">Stable/improving: 10</span></div>
+              <div class="p-row"><span class="p-val p-mid">Uncertain/early STR rules: 5</span></div>
+              <div class="p-row"><span class="p-val p-low">Active restriction proposals: 0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scoring guide -->
+    <div class="callout math">
+      <div class="callout-label">📊 Reading Your Score</div>
+      <p><strong>85–100:</strong> Strong market. Proceed to property analysis. The market supports your Hub-and-Spoke model on all three layers.</p>
+      <p><strong>65–84:</strong> Viable market with identifiable weaknesses. Know which layer scored low and what that means for your operating strategy before you proceed. A Layer 2 weakness means you need to out-compete on operations. A Layer 1 weakness means you need off-season revenue strategies from launch.</p>
+      <p><strong>Below 65:</strong> Proceed only if you have a specific, documented edge that compensates for the weakness — a unique property, a locked-in permit in a capped market, a demand-driver insight the data doesn't yet capture. Do not proceed on hope.</p>
+      <p><strong>Layer 3 score below 10:</strong> Stop. A regulatory environment that can revoke your permit erases all Layer 1 and Layer 2 upside. Markets with moratoriums, hard enforcement, or active restriction proposals are markets where you are operating on borrowed time.</p>
+    </div>
+
+    <h3>How to Pull Layer 1 &amp; 2 Data — AirDNA</h3>
+
+    <p>AirDNA (<a href="https://airdna.co" target="_blank">airdna.co</a>) is the primary source for Layer 1 and Layer 2 data. This is one of the specific contexts where subscribing for a single month — running your full market analysis — and then canceling makes sense. Do not pay for it monthly as an ongoing tool until you're at the Tier 3 growth stage described in Module 02.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Market Overview.</strong> In AirDNA, search your target city, zip code, or neighborhood. The Market Overview gives you the market-wide occupancy rate, ADR, RevPAR, and active listing count for the past 12 months. This is your Layer 2 supply/demand baseline. Download the chart to CSV so you have the data in a spreadsheet, not just a screenshot that disappears when your subscription lapses.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Filter to your comp set.</strong> In Rentalizer or the Market Explorer, filter by: property type (house, condo, cabin), bedroom count matching the property you're evaluating, and neighborhood if the market is large enough to have meaningful sub-areas. The filtered view gives you the realistic comp set for your specific property — not the market average, which blends studios and 8-bedroom estates.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Pull the seasonality curve.</strong> AirDNA's occupancy chart by month shows you the demand pattern across 12 months. Screenshot and note: when does occupancy peak, when does it trough, and how deep is the trough? This curve is the foundation of your revenue projection in Lesson 3. A trough below 40% for two or more consecutive months requires a specific plan — not a hope that your listing will perform differently from the market baseline.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Check top performer data.</strong> AirDNA shows individual listing performance for top earners in the market. Filter to the top 10–20% of listings in your comp set and note: what ADR are they achieving? What occupancy are they maintaining? What is their average star rating? These are the legitimate ceiling benchmarks for your own projections — not aspirational, but evidence-based.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content"><p><strong>Note the YoY supply trend.</strong> In the Market Overview, look at active listing count for the past 24 months. Calculate the annual growth rate: <code>(current listings − listings 12 months ago) ÷ listings 12 months ago = YoY growth %</code>. A market growing faster than 10% year-over-year is being flooded. Score it accordingly in Layer 2.</p></div>
+      </div>
+    </div>
+
+    <h3>Layer 3 Research — Regulatory Due Diligence</h3>
+    <p>AirDNA does not tell you anything about the regulatory environment. This layer is manual research and it cannot be skipped. The steps are in Lesson 4 of this module. For scoring purposes: do this before you score Layer 3, not after.</p>
+
+    <div class="case-study">
+      <div class="case-study-label">Instructor Case Study</div>
+      <h3>Finger Lakes, New York — Three-Layer Score</h3>
+      <p><strong>Layer 1 — Demand:</strong> Multiple complementary demand drivers — Seneca Lake wine trails (dozens of wineries), Watkins Glen State Park (gorge hiking), Watkins Glen International race track (events that drive weekend spikes), and direct proximity to both the Finger Lakes Trail system and regional food/restaurant scene. Seasonal profile is 8–9 strong months (spring through fall), with winter occupancy compressed but not dead — a shoulder season that well-positioned properties can monetize with "cozy lake cabin" positioning. Drive market from multiple major metros: New York City (4.5 hours), Philadelphia (4 hours), Pittsburgh (3.5 hours), Toronto (3 hours). Full 15 points on demand drivers, 10 on seasonality, 10 on drive-market. <strong>Layer 1: 35/40.</strong></p>
+      <p><strong>Layer 2 — Supply:</strong> A fragmented comp set — many owner-operated properties with inconsistent presentation, uneven guest communication, and below-average photography. This created an immediate competitive opportunity: operational excellence and professional hospitality in a market where the standard was low. Supply growth has been moderate, not explosive — existing STR operators in the area have not faced the saturation dynamics of Smoky Mountains or coastal Florida markets. <strong>Layer 2: scored well at evaluation time.</strong></p>
+      <p><strong>Layer 3 — Regulatory:</strong> New York has county-level STR regulation, not statewide. Schuyler County's regulatory environment at time of investment was stable with no active restriction proposals. The key due diligence: check the specific town or village within the county — some Finger Lakes municipalities have passed their own STR rules that differ from the county framework. Always research at the municipal level, not just the county level.</p>
+      <p><strong>What this revealed about the Hub-and-Spoke fit:</strong> The wine trail connection created a ready-made Local Guide spoke. The gorge hiking drove a specific guest profile (active couples and small groups, not large family groups) that informed the property staging and bedroom configuration choice. Market selection shaped every subsequent decision.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Market Validation Score</span>
+      </div>
+      <p class="ai-prompt-instruction">Open Claude, ChatGPT, or your preferred AI. Paste the following prompt and fill in the brackets with your actual research data. Use this after completing your AirDNA pull and your regulatory search for a given market.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">You are helping me evaluate a short-term rental target market using a three-layer scoring model. Score each layer and give me a total out of 100, then a Go / Conditional Go / No-Go recommendation with reasoning.
+
+MARKET: [City, County, State]
+PROPERTY TYPE I'M CONSIDERING: [cabin / lake house / condo / house / etc.]
+
+LAYER 1 — DEMAND (40 points max)
+- Primary demand driver type: [e.g., wine tourism, beach, ski, national park, events]
+- Secondary demand drivers: [list 1–3]
+- Drive-to market or fly-to market? [drive / fly / both]
+- Closest major metro(s) and drive time: [e.g., NYC 4.5 hrs, Philadelphia 4 hrs]
+- AirDNA seasonality data — peak months and occupancy: [e.g., Jun–Oct at 78–85%]
+- Shoulder months and occupancy: [e.g., Apr–May, Nov at 55–65%]
+- Off-season months: [e.g., Dec–Mar at 35–45%]
+
+LAYER 2 — SUPPLY ANALYSIS (35 points max)
+- Total active STR listings in market (AirDNA): [number]
+- Market ADR: $[X]
+- Market occupancy rate: [X%]
+- Market RevPAR: $[X]
+- YoY supply growth rate: [X%]
+- Comp set quality observation: [e.g., "mostly owner-operated, inconsistent photos and communication" or "highly professional, competitive"]
+
+LAYER 3 — REGULATORY (25 points max)
+- State-level STR law: [exists / none known]
+- County-level STR permit requirement: [yes / no / researching]
+- Municipal-level STR permit or restriction: [yes / no / researching]
+- Regulatory trend direction: [stable / tightening / loosening]
+- Any active STR ban proposals or recent restrictions: [yes / no / details]
+
+Score each layer with sub-scores. Give me:
+1. Total score out of 100
+2. A Go / Conditional Go / No-Go recommendation
+3. The single biggest risk in this market
+4. The single biggest opportunity
+5. Two specific questions I should answer before making a final decision</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>Your target market has a completed three-layer score and you have a decision on whether to proceed to property analysis.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>AirDNA subscription active for market analysis period (cancel after Lessons 1–3 are complete)</li>
+        <li><span class="check-box"></span>Layer 1 score completed — demand driver type, seasonality, drive vs. fly-to identified</li>
+        <li><span class="check-box"></span>Layer 2 score completed — market occupancy rate, comp set ratings, YoY supply growth pulled from AirDNA</li>
+        <li><span class="check-box"></span>Layer 3 score completed — permit status and regulatory trend direction researched at the municipal level (steps in Lesson 4)</li>
+        <li><span class="check-box"></span>Total market score calculated — proceed/stop decision documented</li>
+        <li><span class="check-box"></span>Seasonality curve downloaded — this feeds directly into Lesson 3's revenue projection</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Property Analysis — The STR-Specific Checklist</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Evaluate any property against the specific criteria that drive STR performance — criteria a residential buyer, a realtor, or a bank appraisal will not assess for you.
+    </div>
+
+    <p>A property that is excellent by residential standards can be mediocre as an STR. A property that seems odd or unfinished by residential standards can be exceptional as an STR. The difference comes down to criteria that are invisible to a market-rate appraisal.</p>
+
+    <p>The STR-specific checklist below evaluates six categories. For each property you evaluate, score every item. A property that fails more than two categories in the first three sections requires a documented reason to proceed — not momentum, a specific compensating factor.</p>
+
+    <h3>Category 1 — Location Within the Market</h3>
+    <p>Not all addresses in a market perform equally. A property 20 minutes from the lake in a "lake house" market earns materially less than one with water access or water views. Within a given market, location within the market is the highest-leverage factor in the property's ceiling.</p>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Location Factor</th><th>High-Value</th><th>Watch For</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Proximity to primary demand driver</strong></td>
+            <td class="pos">Walking distance or direct water/trail/slope access. The guest's primary reason for the trip starts at the property, not from the parking lot.</td>
+            <td class="neg">More than 20 minutes from the primary driver. "5 minutes from the lake" is true — for a car. For guests who came for the lake, it means a daily logistics hurdle.</td>
+          </tr>
+          <tr>
+            <td><strong>Street access and parking</strong></td>
+            <td class="pos">Off-street parking for the number of guests the property sleeps. In a 6-guest property, guests may arrive in 2–3 cars — all need to park.</td>
+            <td class="neg">Street-only parking in an area with overnight parking restrictions. Verify this before purchase — a parking complaint from a neighbor is a noise complaint with wheels.</td>
+          </tr>
+          <tr>
+            <td><strong>Walkability to amenities</strong></td>
+            <td class="pos">Restaurants, shops, or activity rental within walking distance. Adds guest convenience and reduces the "we can't do anything without driving" friction in reviews.</td>
+            <td class="neg">Complete car-dependence in markets where guests expect to be able to walk to dinner after checking in.</td>
+          </tr>
+          <tr>
+            <td><strong>Neighbor proximity</strong></td>
+            <td class="pos">Reasonable distance from neighbors — enough that a quiet gathering doesn't become a shared wall problem. Rural or semi-rural positioning creates natural buffer.</td>
+            <td class="neg">Zero-lot-line urban property or condo where sound travels through walls and floors. Noise complaints in dense buildings are common and very difficult to control. Verify HOA rules before proceeding.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Category 2 — Layout and Configuration</h3>
+    <p>Guest capacity is the primary revenue lever in STR. A property that sleeps 8 at an ADR of $300 earns more than a property that sleeps 4 at $250 — even when the per-guest cost is similar. But layout configuration matters as much as raw bedroom count.</p>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Configuration Factor</th><th>High-Value</th><th>Watch For</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Bedroom-to-bathroom ratio</strong></td>
+            <td class="pos">1 full bathroom per 2 bedrooms is the minimum. Properties with 1:1 ratios command premium ADRs and generate fewer negative review mentions of "everyone fighting for the bathroom."</td>
+            <td class="neg">3+ bedrooms sharing a single bathroom. At full occupancy, this becomes the friction point guests mention in reviews. Hard to fix without a renovation budget.</td>
+          </tr>
+          <tr>
+            <td><strong>Sleeping capacity vs. listed capacity</strong></td>
+            <td class="pos">Real beds (king, queen, twin) in properly sized rooms with closet or storage for a 2–4 night stay. Guests sleep better, review better, and return.</td>
+            <td class="neg">Sleeping capacity inflated by pull-out sofas and air mattresses. Guests know. They note it in reviews: "the kids slept on the air mattress" is not the experience that generates 5 stars.</td>
+          </tr>
+          <tr>
+            <td><strong>Common area square footage</strong></td>
+            <td class="pos">Kitchen, dining, and living area sized to accommodate the maximum guest count comfortably. A 10-guest property needs a table that seats 10 and a living room where all 10 can sit simultaneously.</td>
+            <td class="neg">Bedroom count added to hit a higher maximum but common areas not expanded. Guests at capacity feel cramped — and they write about it.</td>
+          </tr>
+          <tr>
+            <td><strong>Outdoor space</strong></td>
+            <td class="pos">A deck, patio, fire pit, or yard that extends the usable square footage in favorable weather. In STR, outdoor space with a fire pit, hot tub, or water access is often the primary differentiator in a comp set.</td>
+            <td class="neg">No outdoor space at all, or outdoor space that is shared with other units/tenants and cannot be marketed as private.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Category 3 — Hub-and-Spoke Fit</h3>
+    <p>In Module 00, you built your Hub-and-Spoke framework. Now apply it to this specific property. A property that enables all 8 spokes earns more and retains guests at higher rates than one that only supports 3.</p>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Spoke</th><th>Property Supports It?</th><th>What to Look For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Airbnb</strong></td><td>Always</td><td>Any property listed on Airbnb. No property factor limits this.</td></tr>
+          <tr><td><strong>VRBO</strong></td><td>Always</td><td>Any property listed on VRBO. Works best for properties that attract multi-family and group travelers.</td></tr>
+          <tr><td><strong>Direct Booking</strong></td><td>Depends on repeat-guest potential</td><td>Does the market attract repeat visitors? Finger Lakes and national park markets do. Vegas and pure-events markets less so. Properties in repeat-visitor markets build a direct-booking base faster.</td></tr>
+          <tr><td><strong>Email List</strong></td><td>Requires WiFi capture</td><td>Any property can support this once StayFi is installed (Module 02). The property factor: is it in a market where guests come back? If so, your email list becomes your most valuable spoke over time.</td></tr>
+          <tr><td><strong>Local Guide</strong></td><td>Depends on local network</td><td>Is there a local restaurant, winery, outfitter, guide service, or experience provider that serves your guest type? Can you build a referral relationship with them? A property near a wine trail has a ready-made Local Guide network. A property in a generic suburban market has a much thinner one.</td></tr>
+          <tr><td><strong>Content / SEO</strong></td><td>Depends on market interest</td><td>Does this market have searchable content potential? "Best Seneca Lake vacation rentals," "Finger Lakes weekend cabins," "where to stay near Watkins Glen" all have real search volume. A market without searchable identity is harder to build organic traffic around.</td></tr>
+          <tr><td><strong>Experiences / Upsells</strong></td><td>Depends on local experiences</td><td>Is there anything bookable near the property? Wine tasting, boat rental, kayak guided tours, cooking classes, hiking guides. The Viator integration (Module 11) works best when there is genuine local experience content to curate.</td></tr>
+          <tr><td><strong>Partnerships</strong></td><td>Depends on local business ecosystem</td><td>Wedding venues, corporate retreat planners, regional travel writers, local tourism boards. Properties near event venues have a natural partnership pipeline. Properties in isolated rural locations may need to build this from scratch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Hub-and-Spoke Minimum</div>
+      <p>A property that supports fewer than 5 spokes at launch is not disqualified — but you need to document which spokes are missing and why, and have a plan for how your owned demand strategy compensates. The Hub-and-Spoke model's power comes from having more than one channel generating demand. A property with only Airbnb and VRBO is a property where a platform algorithm change can cost you 30% of your bookings overnight.</p>
+    </div>
+
+    <h3>Category 4 — Operational Risk</h3>
+    <p>Before you commit to a property, identify the operational risks you'll be managing from day one. These are not reasons not to buy — they are things you need a plan for before the first guest arrives, not after.</p>
+
+    <ul>
+      <li><strong>Who does the cleaning?</strong> Is there a reliable STR-experienced cleaner within 20 minutes of the property? A property that is 45 minutes from any available cleaner creates a logistics problem on same-day turnovers. Call local STR operators in the market and ask who they use — this is the fastest research.</li>
+      <li><strong>What is the maintenance situation?</strong> Older properties, properties with unique systems (well and septic, wood stove, boat dock), or properties with known deferred maintenance create a higher operational surface area. The per-booking cost of a HVAC emergency, a septic pump-out, or a dock replacement belongs in your expense model — not as a surprise.</li>
+      <li><strong>What is the internet situation?</strong> Rural or remote properties often have limited broadband options. STR guests in 2025 expect at minimum 100 Mbps download. Check at the address: use the FCC broadband map at broadbandmap.fcc.gov or call the local ISP for availability before you close. A property with no broadband option above 25 Mbps will generate guest complaints regardless of how beautiful it is.</li>
+      <li><strong>Is there cell coverage at the property?</strong> Guests need to reach you. You need to reach guests. In remote markets, confirm that the major carriers have coverage at the property address — not at the nearest town, at the property. A guest who cannot reach you during their stay is a guest who writes a frustrating review about feeling disconnected and unsupported.</li>
+    </ul>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your target property is scored across all four categories and you know its specific STR strengths and weaknesses before you make an offer.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Location within market assessed against demand driver proximity, parking, walkability, neighbor proximity</li>
+        <li><span class="check-box"></span>Layout scored — bedroom/bath ratio, real sleeping capacity, common area fit, outdoor space</li>
+        <li><span class="check-box"></span>Hub-and-Spoke fit mapped — 8 spokes evaluated, number supported at launch identified</li>
+        <li><span class="check-box"></span>Operational risks listed — cleaner availability, maintenance profile, internet, cell coverage</li>
+        <li><span class="check-box"></span>Property-specific weaknesses documented with compensating factors or decision to proceed/pass</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Revenue Underwriting — The Numbers Before You Commit</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build a 12-month revenue projection and full operating expense model for any STR property — so you know the deal's actual economics before emotion enters the equation.
+    </div>
+
+    <p>Revenue underwriting is the step that most first-time STR operators skip. They look at an AirDNA "estimated annual revenue" number, apply a rough estimate for expenses, and build their investment thesis on a best-case projection without stress-testing it.</p>
+
+    <p>This lesson walks you through the math explicitly. Every number in your projection is sourced, not estimated. The 12-month grid below is not a template you fill in with hopes — it is a model that forces you to be specific about how many nights you are projecting, at what rate, in each month of the year.</p>
+
+    <h3>The Four Numbers That Define STR Performance</h3>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The Core Metrics — Memorize These</div>
+      <p><strong>ADR (Average Daily Rate):</strong> Total revenue ÷ total nights booked. The average nightly rate you actually achieved — not what you listed at, what you received. Pull your comp set's ADR from AirDNA's filtered Market Explorer. The top 20% of comps sets your realistic ceiling. The market average sets your baseline.</p>
+      <p><strong>Occupancy Rate:</strong> Nights booked ÷ nights available × 100. Your market's occupancy rate from AirDNA Layer 2 is the baseline. You should project 10–15% above market average in your first year only if you have a specific, documented reason — not because you plan to work hard.</p>
+      <p><strong>RevPAR (Revenue Per Available Room):</strong> ADR × Occupancy Rate. This is the single number that lets you compare two properties with different pricing and occupancy profiles. A property at $200 ADR and 70% occupancy has a RevPAR of $140 — the same as a property at $280 ADR and 50% occupancy. They look different; they earn the same.</p>
+      <p><strong>Gross Annual Revenue:</strong> ADR × Occupied Nights. The total before platform fees, operating expenses, and taxes. This is the top-line number. Everything below it reduces it.</p>
+    </div>
+
+    <h3>Building the 12-Month Projection</h3>
+    <p>Use the seasonality curve you pulled from AirDNA in Lesson 1. For each month, you need three data points: projected occupancy %, projected ADR, and projected nights booked. Use your comp set's historical data as the baseline. Do not use your own aspirational projections as a starting point — start with what the market's comparable listings actually achieved, then identify whether you have a specific competitive advantage that justifies projecting above that baseline.</p>
+
+    <div class="template-box">
+      <div class="template-label">12-Month Revenue Projection — Fill in Every Cell</div>
+
+      <div class="compare-wrap">
+        <table class="rev-grid">
+          <thead>
+            <tr>
+              <th style="text-align:left">Month</th>
+              <th>Season</th>
+              <th>Days Available</th>
+              <th>Projected Occ %</th>
+              <th>Nights Booked</th>
+              <th>Projected ADR</th>
+              <th>Gross Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>January</td><td class="season-off">Off</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>February</td><td class="season-off">Off</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>March</td><td class="season-shoulder">Shoulder</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>April</td><td class="season-shoulder">Shoulder</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>May</td><td class="season-shoulder">Shoulder</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>June</td><td class="season-peak">Peak</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>July</td><td class="season-peak">Peak</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>August</td><td class="season-peak">Peak</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>September</td><td class="season-shoulder">Shoulder</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>October</td><td class="season-shoulder">Shoulder</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>November</td><td class="season-off">Off</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr><td>December</td><td class="season-off">Off</td><td>___</td><td>___</td><td>___</td><td>$___</td><td>$___</td></tr>
+            <tr class="total"><td>Annual Total</td><td>—</td><td>365</td><td>—</td><td>___</td><td>—</td><td>$___</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:12px">Row calculation: Gross Revenue = Days Available × Projected Occ % × Projected ADR. Verify your occupancy and ADR figures against your AirDNA comp set data — not against the market-wide average unless your property type matches the blended market mix.</p>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ The Three Most Common Projection Errors</div>
+      <ul>
+        <li><strong>Projecting top-performer ADR at market-average occupancy.</strong> Top ADR and high occupancy are negatively correlated — when you price high, you fill fewer nights. If you use the top-20% comp's ADR, use their occupancy rate too, not the market average. They are a package.</li>
+        <li><strong>Ignoring the off-season trough entirely.</strong> Projecting only peak and shoulder months because the off-season numbers are "too depressing" produces a projection that is 30–40% above actual annual revenue. A deal that works at peak does not guarantee a deal that works across the full year.</li>
+        <li><strong>Forgetting the new-listing discount period.</strong> Airbnb's algorithm prioritizes new listings — briefly. To accelerate reviews in your first 60 days, you should price 10–15% below market to generate volume. This suppresses your actual ADR below projection for the first 2 months. Build it into the model, not into a footnote.</li>
+      </ul>
+    </div>
+
+    <h3>The Operating Expense Model</h3>
+    <p>Gross revenue is the top line. What you keep is what matters. The expense categories below are the standard STR operating cost structure. Fill in every line for your specific property — not as a percentage guess, as a real number sourced from a quote, a bill, or a comparable.</p>
+
+    <div class="template-box">
+      <div class="template-label">Annual Operating Expense Model</div>
+
+      <div>
+        <div class="expense-row"><div><div class="e-name">Platform fees (Airbnb, VRBO)</div><div class="e-note">Airbnb: 3% host fee on gross booking value. VRBO: ~5% commission + CC processing. Apply to gross revenue by channel mix.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Cleaning costs</div><div class="e-note">Per-turn cleaning cost × projected annual number of turnovers. Get an actual quote from your cleaner — not a national average. Finger Lakes lakehouse: estimate 130–160 turnovers/year at full bookings.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Consumables and supplies</div><div class="e-note">Toiletries, paper products, coffee, welcome snacks, cleaning products restocked after each stay. Budget $8–15 per turnover at the start; this stabilizes as you dial in par levels.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Utilities (electricity, gas, water, trash, internet)</div><div class="e-note">Pull 12-month history if you have it. If buying a new property: ask the seller for actual utility bills by month. Do not accept "approximately $X/month" — get the bills. HVAC-heavy properties in climate extremes (heating a lakehouse in January, cooling a beach house in August) have 3–5× cost swings between peak and off-peak months.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Insurance (short-term rental)</div><div class="e-note">Standard homeowner's insurance does not cover STR commercial use. Get a dedicated STR policy — Proper Insurance, Safely, and Steadily are STR-specific carriers. Budget $1,500–3,500/year depending on property value, location, and swimming/boating amenities. Get an actual quote before you project.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Mortgage / debt service</div><div class="e-note">Principal + interest from your actual loan terms. If purchasing, use your lender's pre-approval numbers — not a back-of-envelope estimate. If you own free and clear: document the opportunity cost of the capital.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Property taxes</div><div class="e-note">Annual property tax bill. In some markets, reclassification from residential to short-term rental triggers a reassessment — confirm with your accountant before projecting the same rate as the residential assessment.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Maintenance reserve</div><div class="e-note">STR properties operate at significantly higher utilization than owner-occupied homes — HVAC, appliances, plumbing, and furnishings all wear faster. A standard reserve is 5–8% of gross annual revenue. Do not underestimate this. The year you skip the HVAC service is the year the system fails during peak season.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Technology stack</div><div class="e-note">Monthly tech costs from Module 02. At the Tier 1+2 stack (smart lock, monitoring, PMS, PriceLabs, StayFi): budget $75–120/month. Annual: $900–1,440.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Permit and licensing fees</div><div class="e-note">Annual STR permit fee from your municipality. This varies enormously: from $0 to $2,500+ per year. Pull the exact current fee from your permit application, which you will research in Lesson 4.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-row"><div><div class="e-name">Local taxes (occupancy tax, hotel tax)</div><div class="e-note">Most STR markets require operators to collect and remit lodging taxes on top of platform fees. Airbnb collects and remits in most jurisdictions, but verify — some markets still require separate operator filing. Check with your state's revenue department and county tax assessor.</div></div><div class="e-amount">$___</div></div>
+        <div class="expense-total"><span>Total Annual Operating Expenses</span><span>$___</span></div>
+      </div>
+    </div>
+
+    <h3>The Deal Math</h3>
+
+    <div class="callout math">
+      <div class="callout-label">📊 From Gross Revenue to Net Operating Income</div>
+      <p><strong>Gross Annual Revenue</strong> (from your 12-month projection)<br>
+      <strong>minus</strong> Platform Fees<br>
+      <strong>= Net Revenue</strong></p>
+      <p><strong>Net Revenue</strong><br>
+      <strong>minus</strong> All Operating Expenses (cleaning, supplies, utilities, insurance, maintenance reserve, tech, permit, taxes)<br>
+      <strong>= Net Operating Income (NOI)</strong></p>
+      <p><strong>NOI</strong><br>
+      <strong>minus</strong> Debt Service (mortgage principal + interest)<br>
+      <strong>= Cash Flow Before Income Tax</strong></p>
+      <p>For acquisition underwriting: NOI ÷ Purchase Price = Cap Rate. In STR, a cap rate of 8–12% is a functioning investment. Below 6%, you need appreciation expectations to justify the deal. Above 12% in a stable market, double-check the projection — a number that looks too good usually is.</p>
+    </div>
+
+    <h3>Setting Your Minimum Revenue Threshold</h3>
+    <p>Before you look at the deal emotionally, define your minimum revenue threshold — the annual gross revenue below which you do not proceed regardless of how much you love the property. The formula:</p>
+    <p><strong>Minimum Revenue = Total Annual Operating Expenses + Debt Service + (Target Annual Cash Flow)</strong></p>
+    <p>Write this number down before you look at projections. Once you have an emotional investment in a property, your brain will find a way to make the numbers work. Setting the threshold before the analysis insulates the decision from post-hoc rationalization.</p>
+
+    <div class="template-box">
+      <div class="template-label">Go / No-Go Financial Threshold — Set This Before Running Projections</div>
+      <div class="field-row">
+        <div class="field"><label>Total Annual Expenses</label><div class="line">$___ /yr</div></div>
+        <div class="field"><label>Annual Debt Service</label><div class="line">$___ /yr</div></div>
+        <div class="field"><label>Target Annual Cash Flow</label><div class="line">$___ /yr</div></div>
+        <div class="field"><label>Minimum Gross Revenue Required</label><div class="line">$___ /yr (sum of above)</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted)">If your 12-month projection's Annual Total is below this number, the deal does not work. Document this decision and the reason. Do not talk yourself into it.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>Every cell in the 12-month grid is filled with a sourced number, the expense model is complete, and your minimum revenue threshold is written down before your total projection is calculated.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Minimum revenue threshold set and written down before projections are run</li>
+        <li><span class="check-box"></span>12-month projection complete — occupancy and ADR sourced from AirDNA comp set data, not market average</li>
+        <li><span class="check-box"></span>Off-season months fully accounted for — no months omitted</li>
+        <li><span class="check-box"></span>New-listing discount period reflected in months 1–2</li>
+        <li><span class="check-box"></span>All expense line items filled with real numbers — not estimates for insurance, utilities, or cleaning</li>
+        <li><span class="check-box"></span>Cap rate calculated from NOI ÷ Purchase Price</li>
+        <li><span class="check-box"></span>Projected gross revenue compared against minimum threshold — documented decision to proceed or pass</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Regulatory Due Diligence and the Acquisition Decision</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Complete your regulatory research, understand the four permit risk types, and document your final acquisition decision with every variable accounted for.
+    </div>
+
+    <p>Regulatory due diligence is where many STR investments quietly fail before they begin — not because the operator skipped it entirely, but because they did surface-level research and got a false sense of security. "I checked and there's no ban" is not due diligence. "I spoke to the municipal clerk, pulled the current active permit count, verified the zoning allows STR, confirmed the HOA has no restrictions, and read the last 12 months of council meeting minutes" is due diligence.</p>
+
+    <p>This lesson gives you the specific research steps. None of them are optional if you are committing capital to this market.</p>
+
+    <h3>The Four Regulatory Risk Types</h3>
+
+    <div class="reg-risk">
+      <div class="risk-card">
+        <div class="r-title">Permit Cap / Hard Limit</div>
+        <div class="r-level r-medium">Medium Risk</div>
+        <p>A finite number of permits issued per municipality. If you can get one now, operating inside a cap is actually protective — new supply is limited by design. The risk: if your permit is revoked, re-entry may require a waitlist. Verify the current cap, current active permits, and the waitlist depth before assuming you can simply reapply if something goes wrong.</p>
+      </div>
+      <div class="risk-card">
+        <div class="r-title">Moratorium / Freeze</div>
+        <div class="r-level r-high">High Risk</div>
+        <p>No new permits until further notice. Typically enacted after a community concerns period and before new legislation passes. If the property you're evaluating is in a moratorium area, it is not investable for new STR operators. Check if there are any "grandfathered" operating properties and whether that status transfers with sale — in most jurisdictions it does not.</p>
+      </div>
+      <div class="risk-card">
+        <div class="r-title">Owner-Occupancy Requirement</div>
+        <div class="r-level r-high">High Risk</div>
+        <p>Some municipalities require the STR operator to be the primary resident — you can rent the home while you travel but not as an investment property. If you are purchasing an investment STR in a market with an owner-occupancy rule, this is a disqualifying condition. Verify specifically, not generally.</p>
+      </div>
+      <div class="risk-card">
+        <div class="r-title">HOA Restriction</div>
+        <div class="r-level r-high">High Risk</div>
+        <p>HOA covenants, conditions, and restrictions (CC&Rs) can prohibit short-term rentals entirely — regardless of whether the municipality permits them. HOA rules are private contracts and they operate independently of municipal permit systems. Pull the CC&Rs and HOA meeting minutes before making an offer on any property in an HOA community.</p>
+      </div>
+    </div>
+
+    <h3>The Regulatory Research Process — Step by Step</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Identify the governing authority.</strong> In the U.S., STR regulation is typically handled at the city, town, or county level — sometimes by overlapping jurisdictions. For a rural lakehouse, you may need to check: the state (if NY or CA with statewide frameworks), the county, and the town or village. All three may have different rules. Start at the lowest municipal level and work up.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Search the municipality's website for "short-term rental" or "vacation rental."</strong> Most municipalities that regulate STR now have a dedicated page. Read the current ordinance — not a summary, the actual document. Look for: permit requirements, cap or no cap, owner-occupancy requirement, renewal frequency, grounds for revocation, and any inspection requirements. If the website is not clear, call the municipal clerk's office. This is a public record inquiry — they are required to answer.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Verify current permit availability.</strong> Ask the municipal clerk: How many STR permits are currently active? Is there a cap? Is there a waitlist? How long does it take to issue a permit after application? Some municipalities process in 2 weeks; others have a 6-month review process. If you are buying a property that is already operating as an STR, confirm the permit is current and transferable — not all are. Some permits are tied to the individual operator, not the property address.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Read the last 12 months of city/town council meeting minutes.</strong> Most municipalities post meeting minutes publicly. Search for "short-term rental" or "vacation rental" in those minutes. Look for: any agenda items proposing new restrictions, complaints from neighbors cited in public comment, enforcement actions discussed, or new studies commissioned. A market where STR is appearing on the council agenda with negative framing is a market where the regulatory environment is trending restrictive — regardless of what the current ordinance says.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Pull the zoning designation for the specific address.</strong> An STR permit may be available in the municipality but your specific property may be in a zoning district where it is not allowed. Commercial-adjacent or industrial-adjacent zones sometimes have different rules. Search the municipal GIS map or parcel viewer for the specific address and confirm the zoning classification explicitly permits short-term rentals.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Pull the HOA CC&Rs if applicable.</strong> If the property is in any type of planned development, community association, or condo association: request the full CC&Rs from the seller's agent or directly from the HOA management company. Search the document for "short-term rental," "vacation rental," "transient occupancy," and "minimum lease term." A "minimum 30-day lease term" clause in the CC&Rs prohibits Airbnb and VRBO-type rentals. This language is increasingly common and was often added without existing homeowners noticing it during an ordinance update vote.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Search for any open enforcement actions or complaints at the address.</strong> If you are buying a property that is already operating as an STR, check whether there are any open noise complaints, code violations, or pending enforcement actions attached to the address. Most municipalities maintain this as a public record through their code enforcement or building department. A property with an open complaint may have conditions attached to its permit renewal.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ The New York State STR Landscape — Finger Lakes Specific</div>
+      <p>New York State passed legislation in 2023 that authorizes (but does not require) municipalities to regulate STR. This means regulation varies significantly town-by-town within the same county. Within the Finger Lakes region, some towns have passed their own STR ordinances while neighboring towns have none. Before purchasing any property in the Finger Lakes, you must research at the <em>town</em> or <em>village</em> level — not at the county level. Schuyler County allows its constituent towns to set their own rules, and they differ. The town of Hector (on Seneca Lake's east side), the Town of Reading (west side), and the Town of Dix (Watkins Glen area) each have different ordinance histories. Research the specific parcel's governing municipality.</p>
+    </div>
+
+    <h3>The Acquisition Decision Sheet</h3>
+    <p>This is the deliverable for Module 01. Every row must be completed before you make an offer or commit capital. The goal of this document is not to produce a "go" — it is to make the decision conscious and documented, so that you can revisit it if the market changes and trace back what you knew at the time you committed.</p>
+
+    <div class="template-box">
+      <div class="template-label">Acquisition Decision Sheet</div>
+
+      <div class="field-row">
+        <div class="field"><label>Property Address</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Market / Municipality</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Decision Date</label><div class="line">&nbsp;</div></div>
+      </div>
+
+      <h4 style="margin-top:20px">Market Scoring</h4>
+      <div class="field-row">
+        <div class="field"><label>Layer 1 Score (demand)</label><div class="line">___ / 40</div></div>
+        <div class="field"><label>Layer 2 Score (supply)</label><div class="line">___ / 35</div></div>
+        <div class="field"><label>Layer 3 Score (regulatory)</label><div class="line">___ / 25</div></div>
+        <div class="field"><label>Total Market Score</label><div class="line">___ / 100</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Layer 3 Disqualifier?</label><div class="line">Yes / No — if yes, stop here</div></div>
+        <div class="field"><label>Market Decision</label><div class="line">Proceed / Pass</div></div>
+      </div>
+
+      <h4 style="margin-top:20px">Property Analysis</h4>
+      <div class="field-row">
+        <div class="field"><label>Proximity to Demand Driver</label><div class="line">___ minutes / direct access</div></div>
+        <div class="field"><label>Bedroom Count</label><div class="line">___</div></div>
+        <div class="field"><label>Bathroom Count</label><div class="line">___</div></div>
+        <div class="field"><label>Max Occupancy (real beds only)</label><div class="line">___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Spokes Supported at Launch</label><div class="line">___ of 8</div></div>
+        <div class="field"><label>Strongest Spoke</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Missing Spoke / Compensation Plan</label><div class="line">&nbsp;</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Internet Confirmed</label><div class="line">Yes / No — provider + speed</div></div>
+        <div class="field"><label>Cleaner Identified</label><div class="line">Yes / No — name + rate</div></div>
+        <div class="field"><label>Property-Specific Risk</label><div class="line">&nbsp;</div></div>
+      </div>
+
+      <h4 style="margin-top:20px">Revenue Underwriting</h4>
+      <div class="field-row">
+        <div class="field"><label>Projected Gross Annual Revenue</label><div class="line">$___</div></div>
+        <div class="field"><label>Total Annual Operating Expenses</label><div class="line">$___</div></div>
+        <div class="field"><label>Annual Debt Service</label><div class="line">$___</div></div>
+        <div class="field"><label>Net Operating Income</label><div class="line">$___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Cap Rate</label><div class="line">___% (NOI ÷ Purchase Price)</div></div>
+        <div class="field"><label>Minimum Revenue Threshold</label><div class="line">$___ (set before projections)</div></div>
+        <div class="field"><label>Projection Passes Threshold?</label><div class="line">Yes / No</div></div>
+      </div>
+
+      <h4 style="margin-top:20px">Regulatory Confirmation</h4>
+      <div class="field-row">
+        <div class="field"><label>Permit Available?</label><div class="line">Yes / No / Waitlist</div></div>
+        <div class="field"><label>Permit Type</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Annual Permit Fee</label><div class="line">$___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>HOA Restriction?</label><div class="line">Yes / No / N/A — CC&Rs reviewed</div></div>
+        <div class="field"><label>Regulatory Trend</label><div class="line">Stable / Tightening / Unknown</div></div>
+      </div>
+
+      <h4 style="margin-top:20px">Final Decision</h4>
+      <div class="field-row">
+        <div class="field"><label>Decision</label><div class="line">GO / NO-GO</div></div>
+        <div class="field"><label>Reason (one sentence)</label><div class="line">&nbsp;</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="grid-column:1/-1"><label>What would change this decision?</label><div class="line">&nbsp;</div></div>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Module 01</div>
+      <h4>Run your acquisition analysis</h4>
+      <div class="ai-prompt-box">I'm evaluating a short-term rental property and want to build a complete acquisition analysis. Here's the property data:
+
+Property details:
+- Address / market: [city, state, lake, or region]
+- Property type: [bedrooms, baths, key features — private pool, lake access, etc.]
+- Purchase price: $___
+- Estimated closing costs: $___
+- Renovation / furnishing budget: $___
+
+Market data (from AirDNA or comparable):
+- Market median ADR: $___
+- Market median occupancy: ___%
+- Comparable properties (list 2-3 Airbnb links if available): [links or descriptions]
+- My underwriting occupancy (conservative): ___%
+- My underwriting ADR (conservative): $___
+
+Operating cost estimates:
+- Property management / cleaning: $___/month
+- Mortgage / carrying costs: $___/month
+- Utilities + insurance: $___/month
+- Platform fees (15.5% Airbnb, 8% VRBO): [calculated from revenue]
+
+Please calculate:
+1. Annual gross revenue at my underwriting assumptions
+2. Annual net operating income after all expenses
+3. Cap rate
+4. Cash-on-cash return (if financing — down payment + closing/reno = total cash in)
+5. My break-even occupancy rate (the minimum I need to cover all operating costs)
+6. How this property compares to my Module 00 revenue goal
+7. Go / No-Go recommendation with the specific number that drove your answer</div>
+      <p class="ai-prompt-note"><strong>Use this output</strong> to fill in your Acquisition Decision Sheet. Run this analysis before making an offer — not after. The discipline is setting your minimum revenue threshold (the number below which you walk away) before you run the projections. Operators who fall in love with a property before running the math almost always overpay.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 01 Complete When:</div>
+      <h3>Your Acquisition Decision Sheet is fully completed, your minimum revenue threshold was set before projections ran, and your go/no-go decision is documented with a reason.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="check-box"></span>Three-layer market score complete with AirDNA data and municipal regulatory research</li>
+        <li><span class="check-box"></span>Property analysis complete across all four categories — no blank sections</li>
+        <li><span class="check-box"></span>12-month revenue projection complete — every month filled with sourced numbers</li>
+        <li><span class="check-box"></span>Full operating expense model complete — every line item with a real number, not an estimate</li>
+        <li><span class="check-box"></span>Minimum revenue threshold set before projections were calculated</li>
+        <li><span class="check-box"></span>Regulatory due diligence complete: permit availability confirmed, HOA CC&Rs reviewed if applicable, council minutes searched</li>
+        <li><span class="check-box"></span>Acquisition Decision Sheet signed off with a documented go/no-go and a one-sentence reason</li>
+        <li><span class="check-box"></span>If GO: proceed to Module 02 — Tech Stack. Your first tool purchases are made now, before the first guest arrives.</li>
+        <li><span class="check-box"></span>If NO-GO: document what would need to change for this market or property to become viable. This is the research that makes your next evaluation faster and more accurate.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<section class="machine-feed">
+  <div class="mf-label">Direct Booking Machine</div>
+  <h3>How Property Selection Affects Your Direct Booking Ceiling</h3>
+  <p>The property you acquire determines not just its OTA performance — it determines the ceiling on your direct booking channel. A property with a distinctive identity (a memorable name, a recognizable setting, a clear guest profile) builds word-of-mouth and repeat bookings faster than a generic listing. Guests who remember a property come back. Guests who remember a property tell their friends.</p>
+  <ul>
+    <li><strong>Repeat-visitor potential</strong> — properties near annual events, recurring seasonal draws, or with a strong emotional identity have naturally higher past-guest return rates. This is your direct booking machine's primary feed: guests who want to come back.</li>
+    <li><strong>Guest profile alignment</strong> — a property that attracts a consistent guest type (families, couples, extended-stay professionals) builds a targetable past-guest list faster than one with a scattered demographic. Consistency of guest type makes your Kit email campaigns dramatically more effective.</li>
+    <li><strong>Direct booking economics at underwriting</strong> — your underwriting projections should include a Year 3 scenario where 20–30% of bookings are direct, eliminating the 15.5% Airbnb host fee on those nights. That fee elimination should appear as revenue in your long-term IRR calculation.</li>
+  </ul>
+  <p>The acquisition decision you're making now is also a decision about <strong>the quality of the direct booking asset you'll own in three years.</strong> Choose accordingly.</p>
+</section>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 01: Acquisition &nbsp;·&nbsp; Next: Module 02 — Tech Stack
+</footer>

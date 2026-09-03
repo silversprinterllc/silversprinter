@@ -54,7 +54,7 @@ export default function BundleOffer() {
               &ldquo;where do guests book directly?&rdquo; Handed off and live in 3–4 weeks.
             </p>
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-3xl font-bold text-white">$4,997</span>
+              <span className="text-3xl font-bold text-white">$5,497</span>
               <span className="text-white/30 text-sm">one-time</span>
             </div>
             <Link
@@ -63,6 +63,28 @@ export default function BundleOffer() {
             >
               View Build Details
             </Link>
+          </div>
+
+          {/* Bundle */}
+          <div className="md:col-span-2 bg-white/5 border border-[var(--sf-gold)]/30 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+              <p className="text-[var(--sf-gold)] text-xs font-semibold tracking-widest uppercase mb-1">Best Value</p>
+              <h3 className="font-[var(--font-display)] text-xl font-bold text-white mb-1">The System + The Build</h3>
+              <p className="text-white/50 text-sm">Buy both together and save $500 — education and infrastructure, one investment.</p>
+            </div>
+            <div className="flex items-center gap-6 shrink-0">
+              <div className="text-right">
+                <div className="text-white/30 text-sm line-through">$7,494</div>
+                <div className="text-3xl font-bold text-white">$6,994</div>
+                <div className="text-[var(--sf-gold)] text-xs font-semibold mt-0.5">Save $500</div>
+              </div>
+              <Link
+                href="/course#pricing"
+                className="inline-flex items-center justify-center bg-[var(--sf-gold)] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-lg hover:shadow-[var(--sf-gold)]/20 whitespace-nowrap"
+              >
+                Buy Bundle
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 19: Paid Traffic & Social Advertising — SpokeBnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (light) ─────────────────────────────────── */
+:root {
+  --navy: #09263A; --navy-mid: #0d3550;
+  --gold: #D4A017; --cream: #F7F3EA;
+  --text: #1a2f3f; --muted: #4a6070;
+  --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+  --mistake-bg: #fff7ed; --mistake-border: #f97316;
+  --math-bg: #f0f9ff; --math-border: #0284c7;
+  --tip-bg: #f0fdf4; --tip-border: #16a34a;
+  --warn-bg: #fefce8; --warn-border: #ca8a04;
+  --danger-bg: #fff1f2; --danger-border: #dc2626;
+  --gold-bg: rgba(212,160,23,0.06);
+  --table-head-bg: var(--navy);
+  --table-head-text: #fff;
+  --table-row-alt: rgba(9,38,58,0.03);
+  --code-bg: #0a0117;
+}
+
+/* ── Dark mode (system) ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #091d2a; --card: #0d2738;
+    --text: #e8e0d0; --muted: #8ba0b0;
+    --border: rgba(255,255,255,0.08);
+    --cream: #091d2a;
+    --mistake-bg: #2a1200; --math-bg: #001624;
+    --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+    --gold-bg: rgba(212,160,23,0.1);
+    --table-head-bg: #0a1a26;
+    --table-row-alt: rgba(255,255,255,0.03);
+    --code-bg: #040010;
+  }
+}
+/* ── Dark mode (explicit toggle) ───────────────────────────── */
+:root[data-theme="dark"] {
+  --bg: #091d2a; --card: #0d2738;
+  --text: #e8e0d0; --muted: #8ba0b0;
+  --border: rgba(255,255,255,0.08);
+  --cream: #091d2a;
+  --mistake-bg: #2a1200; --math-bg: #001624;
+  --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+  --gold-bg: rgba(212,160,23,0.1);
+  --table-head-bg: #0a1a26;
+  --table-row-alt: rgba(255,255,255,0.03);
+  --code-bg: #040010;
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+img { max-width: 100%; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 20px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.05rem; margin-bottom: 8px; }
+p { margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
+strong { font-weight: 600; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Dark mode toggle ───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── Chain bar ──────────────────────────────────────────────── */
+.chain-bar {
+  background: var(--navy-mid);
+  padding: 10px 0;
+  overflow-x: auto;
+}
+.chain-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.chain-bar-inner .arrow { color: var(--gold); opacity: 0.6; }
+.chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+/* ── Module header ──────────────────────────────────────────── */
+.mod-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0 56px;
+}
+.mod-header-inner { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+.mod-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.18);
+  color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(212,160,23,0.3);
+}
+.mod-header h1 { color: #fff; margin-bottom: 16px; }
+.mod-header .subtitle {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 700px;
+}
+.mod-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mod-meta-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500;
+}
+.mod-meta-item strong { color: #fff; }
+
+/* ── Deliverable banner ─────────────────────────────────────── */
+.deliverable-banner {
+  background: var(--gold-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 40px 0 32px;
+}
+.deliverable-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.deliverable-banner h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 10px;
+}
+.deliverable-banner ul { margin: 0; }
+.deliverable-banner li { font-size: 14px; color: var(--muted); }
+
+/* ── Main content ───────────────────────────────────────────── */
+.content { padding: 48px 0 80px; }
+
+/* ── Lesson section ─────────────────────────────────────────── */
+.lesson { margin-bottom: 80px; }
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.lesson-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+}
+.lesson-title-wrap { flex: 1; }
+.lesson-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.lesson-title-wrap h2 { margin-bottom: 0; }
+.objective {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px; color: var(--muted);
+}
+.objective strong { color: var(--text); }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.callout p { font-size: 14.5px; line-height: 1.65; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul, .callout ol { font-size: 14.5px; }
+.callout.tip    { background: var(--tip-bg);     border-color: var(--tip-border); }
+.callout.tip    .callout-label { color: #16a34a; }
+.callout.math   { background: var(--math-bg);    border-color: var(--math-border); }
+.callout.math   .callout-label { color: #0284c7; }
+.callout.warn   { background: var(--warn-bg);    border-color: var(--warn-border); }
+.callout.warn   .callout-label { color: #ca8a04; }
+.callout.mistake { background: var(--mistake-bg); border-color: var(--mistake-border); }
+.callout.mistake .callout-label { color: #f97316; }
+.callout.danger { background: var(--danger-bg);  border-color: var(--danger-border); }
+.callout.danger .callout-label { color: #dc2626; }
+
+/* ── Audience / campaign cards ──────────────────────────────── */
+.layer-stack { display: flex; flex-direction: column; gap: 16px; margin: 28px 0; }
+.layer-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.layer-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: var(--gold);
+}
+.layer-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 6px;
+}
+.layer-card h4 {
+  font-size: 15px; font-weight: 700; color: var(--navy);
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .layer-card h4 { color: #e8e0d0; }
+}
+:root[data-theme="dark"] .layer-card h4 { color: #e8e0d0; }
+.layer-card p { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+.layer-card p:last-child { margin-bottom: 0; }
+.layer-card ul, .layer-card ol { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+
+/* ── Goal list ──────────────────────────────────────────────── */
+.goal-list { list-style: none; padding: 0; margin: 20px 0; }
+.goal-list li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px; color: var(--text);
+}
+.goal-list li:last-child { border-bottom: none; }
+.goal-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  margin-top: 2px;
+}
+
+/* ── Setup steps ────────────────────────────────────────────── */
+.setup-steps { list-style: none; padding: 0; margin: 20px 0; }
+.setup-steps li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.setup-steps li:last-child { border-bottom: none; }
+.step-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  margin-top: 2px;
+}
+.step-body { flex: 1; }
+.step-body strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 3px; }
+.step-body p { font-size: 13.5px; color: var(--muted); margin: 0; }
+
+/* ── Creative tiers ─────────────────────────────────────────── */
+.tier-stack { display: flex; flex-direction: column; gap: 20px; margin: 28px 0; }
+.tier-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+.tier-label {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--navy);
+  color: var(--gold);
+  padding: 3px 10px; border-radius: 4px;
+  margin-bottom: 10px;
+}
+.tier-card h4 {
+  font-size: 15px; font-weight: 700; color: var(--text);
+  margin-bottom: 10px; font-family: 'Inter', sans-serif;
+}
+.tier-card p { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+.tier-card p:last-child { margin-bottom: 0; }
+
+/* ── Copy framework code block ──────────────────────────────── */
+.copy-framework {
+  background: var(--code-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin: 24px 0;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 13px; color: #c4b5fd;
+  line-height: 1.85; white-space: pre-wrap;
+  overflow-x: auto;
+}
+.copy-framework-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Campaign calendar list ─────────────────────────────────── */
+.calendar-list { list-style: none; padding: 0; margin: 20px 0; }
+.calendar-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--text);
+}
+.calendar-list li:last-child { border-bottom: none; }
+.cal-arrow { color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+/* ── AI Prompt block ────────────────────────────────────────── */
+.ai-prompt {
+  background: #1a0533;
+  border: 2px solid #7c3aed;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.ai-prompt-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #a78bfa;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ai-prompt-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(124,58,237,0.3);
+}
+.ai-prompt h4 {
+  font-size: 14px; font-weight: 700; color: #e9d5ff;
+  margin-bottom: 12px; margin-top: 0;
+  font-family: 'Inter', sans-serif;
+}
+.ai-prompt-box {
+  background: #0a0117;
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12.5px; color: #c4b5fd;
+  line-height: 1.8; white-space: pre-wrap;
+  margin-bottom: 14px; overflow-x: auto;
+}
+.ai-prompt-note {
+  font-size: 12.5px; color: rgba(167,139,250,0.75);
+  line-height: 1.65;
+  border-top: 1px solid rgba(124,58,237,0.2);
+  padding-top: 12px; margin: 0;
+}
+
+/* ── Machine feed ───────────────────────────────────────────── */
+.machine-feed {
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 48px 0 80px;
+}
+.mf-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+.machine-feed h3 {
+  font-size: 1.25rem; color: #fff;
+  margin-bottom: 16px;
+}
+.machine-feed p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.75; }
+.machine-feed p + p { margin-top: 12px; }
+
+/* ── Checkpoint ─────────────────────────────────────────────── */
+.checkpoint {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 48px;
+}
+.checkpoint-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.checkpoint h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; margin-bottom: 16px;
+}
+.checkpoint-items { list-style: none; padding: 0; }
+.checkpoint-items li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75); font-size: 14px;
+}
+.checkpoint-items li:last-child { border-bottom: none; }
+.cp-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid rgba(212,160,23,0.5);
+  border-radius: 4px; margin-top: 2px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.lesson-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 64px 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12.5px;
+}
+footer span { color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lesson-header { flex-direction: column; gap: 12px; }
+  .mod-meta { flex-direction: column; }
+  .chain-bar-inner { font-size: 11px; gap: 7px; }
+  .ai-prompt { padding: 18px 16px; }
+  .ai-prompt-box { font-size: 11.5px; }
+  .machine-feed { padding: 22px 20px; }
+  .checkpoint { padding: 22px 20px; }
+  .copy-framework { font-size: 11.5px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme');if(!t){r.setAttribute('data-theme','dark');}else if(t==='dark'){r.setAttribute('data-theme','light');}else{r.removeAttribute('data-theme');}})()">
+  Toggle Dark
+</button>
+
+<!-- Chain bar -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 08: SEO</span>
+    <span class="arrow">→</span>
+    <span>Module 09: Reviews</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 19: Paid Traffic</span>
+    <span class="arrow">→</span>
+    <span>Module 20: Security &amp; Fraud</span>
+  </div>
+</div>
+
+<!-- Module header -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 19 — Grow</div>
+    <h1>Paid Traffic &amp; Social Advertising — How to Fill Your Calendar With Guests Who Have Never Heard of You</h1>
+    <p class="subtitle">Facebook and Instagram geographic radius targeting, retargeting direct booking site visitors, lookalike audiences built from your guest email list, a seasonal campaign structure, and the ad copy frameworks that convert for STR properties specifically</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase:</strong>&nbsp;Grow</div>
+      <div class="mod-meta-item"><strong>Lessons:</strong>&nbsp;4</div>
+      <div class="mod-meta-item"><strong>Time:</strong>&nbsp;3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Prerequisites:</strong>&nbsp;Module 06 (Direct Booking Site), Module 07 (Email List), Module 08 (SEO)</div>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="content">
+<div class="container">
+
+  <!-- Deliverable banner -->
+  <div class="deliverable-banner">
+    <div class="deliverable-label">Module Deliverables</div>
+    <h3>By the end of this module you will have:</h3>
+    <ul>
+      <li>A Meta Ads Manager account configured and connected to your direct booking site</li>
+      <li>Your first geographic radius campaign targeting the correct drive-market audience</li>
+      <li>A retargeting audience built from direct booking site visitors</li>
+      <li>A seasonal campaign calendar — three to four campaigns per year, timed to your peak booking windows</li>
+      <li>One ad set live with creative tested</li>
+    </ul>
+  </div>
+
+  <!-- ─── LESSON 1 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>Why STR Paid Social Is Different — and Why Most Operators Skip It</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand the mechanics of STR paid social, why most operators skip it, the three goals paid traffic accomplishes in priority order, and the break-even math that justifies a $300–$800/month ad budget for a single-property operator.
+    </div>
+
+    <p>Most STR operators skip paid advertising entirely because they think of it as "Facebook ads" — something for e-commerce stores and software companies. The operators who run paid social correctly in the STR context treat it as a <strong>geographic reach tool</strong>, not a conversion tool.</p>
+
+    <h3>The STR Paid Social Premise</h3>
+
+    <p>Your guest is different from an e-commerce customer in four specific ways that change how paid social should be used:</p>
+
+    <ul>
+      <li>Your guest is within 200–350 miles of your property — for most lake houses, cabins, and cottage properties, 80% of guests drive, not fly</li>
+      <li>Your guest is making a planning decision 4–8 weeks before arrival, not the day of</li>
+      <li>Your guest is not searching on Instagram — they are scrolling passively, in discovery mode</li>
+      <li>Paid social gets your property in front of the right person at the planning stage, <em>before</em> they have searched Airbnb</li>
+    </ul>
+
+    <p>This is not a replacement for Airbnb — it is a pipeline to your direct booking site for people who would have eventually found you on Airbnb anyway, but now book direct and save the host fee.</p>
+
+    <h3>The Three Paid Social Goals — In Priority Order</h3>
+
+    <ol class="goal-list">
+      <li>
+        <span class="goal-num">1</span>
+        <span><strong>Direct booking site traffic.</strong> People who don't know you, see an ad, click to your site, and either book or enter the retargeting audience. This is the primary goal — building an owned pipeline outside Airbnb.</span>
+      </li>
+      <li>
+        <span class="goal-num">2</span>
+        <span><strong>Retargeting.</strong> People who visited your direct booking site but didn't book get shown follow-up ads. This is a second touch to a warm audience — they already know your property exists.</span>
+      </li>
+      <li>
+        <span class="goal-num">3</span>
+        <span><strong>Email capture.</strong> Lead ads that collect email addresses from interested guests before they are ready to book. This feeds your email sequence (Module 07) from a paid source.</span>
+      </li>
+    </ol>
+
+    <h3>Spend Reality for a Single-Property Operator</h3>
+
+    <p>$300–$800/month in ad spend is a meaningful STR paid traffic budget. At that level, you are reaching 15,000–40,000 in-market adults per month in your drive corridor. One direct booking that would have gone through Airbnb at 15.5% fee recovers your ad spend on a $2,000–$5,000 booking.</p>
+
+    <div class="callout math">
+      <div class="callout-label">The Break-Even Calculation</div>
+      <p>If your average direct booking value is $1,800 and Airbnb's host fee is 15.5%, the fee saved on one direct booking is <strong>$279</strong>. A $400/month ad budget that produces two additional direct bookings per month returns $558 in saved fees — <strong>$158 positive after ad spend</strong>, before accounting for the lifetime value of repeat direct bookers.</p>
+      <p style="margin-top:10px">The calculation improves every month a retargeted visitor eventually converts. The first month's ad spend builds the retargeting audience. The second and third month's conversions from that audience carry no additional acquisition cost.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 2 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Building the Audience — Geographic Radius, Retargeting, and Lookalikes</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Build three Meta audiences in the correct sequence — geographic radius Saved Audience, site visitor retargeting Custom Audience, and lookalike from your guest email list. Understand when each audience is ready to use and how they compound over time.
+    </div>
+
+    <p>Meta Ads Manager (Facebook and Instagram in the same platform) gives STR operators three useful audience types. Build them in this order — the first funds the second, and the second funds the third.</p>
+
+    <div class="layer-stack">
+
+      <!-- Audience 1 -->
+      <div class="layer-card">
+        <div class="layer-badge">Audience 1 — Build First</div>
+        <h4>Drive-Market Geographic Radius</h4>
+        <p>The first and most important audience. Set it up in Meta Ads Manager:</p>
+        <ul>
+          <li>Go to <strong>Audiences → Create → Saved Audience</strong></li>
+          <li><strong>Location:</strong> set to a radius around your property — 200 miles for a weekend-drive market, 350 miles if your property is a regional destination</li>
+          <li><strong>Age:</strong> 28–55 (the core booking demographic for most STR properties; adjust based on your property's guest profile)</li>
+          <li><strong>Interests layer:</strong> add interest filters that narrow to in-market guests. For lake properties: "lake house," "fishing," "boating," "camping," "outdoor activities," "Airbnb." For mountain properties: "hiking," "skiing," "national parks," "cabin rental."</li>
+          <li><strong>Exclude:</strong> your existing email list (don't pay to reach people who are already in your owned channel)</li>
+        </ul>
+        <p style="margin-top:10px">This audience targets people who live within your drive corridor <em>and</em> have indicated interest in the type of travel your property offers. Estimated audience size for a 200-mile radius around a lake property: 500,000–2,000,000 people. Meta's algorithm optimizes within this pool based on engagement signals — you don't need to narrow it further manually.</p>
+      </div>
+
+      <!-- Audience 2 -->
+      <div class="layer-card">
+        <div class="layer-badge">Audience 2 — Build After Pixel Is Live</div>
+        <h4>Direct Booking Site Retargeting (the Pixel)</h4>
+        <p>Install the Meta Pixel on your direct booking site. In OwnerRez or your booking site, add the Meta Pixel ID to the site header. Once installed, create two Custom Audiences:</p>
+        <ul>
+          <li><strong>All website visitors, last 30 days</strong> — anyone who touched your site</li>
+          <li><strong>People who visited your booking/calendar page but did NOT complete a booking</strong> — exclude users who triggered the purchase event on your thank-you page</li>
+        </ul>
+        <p style="margin-top:10px">This retargeting audience is small (100–2,000 people depending on traffic volume) but extremely high-intent. These people already looked at your property. They need a second touch — a reminder ad with a clear call to action sends them back to complete the booking.</p>
+      </div>
+
+      <!-- Audience 3 -->
+      <div class="layer-card">
+        <div class="layer-badge">Audience 3 — Build When Email List Hits 200+</div>
+        <h4>Lookalike Audience from Your Guest Email List</h4>
+        <p>Export your guest email list from OwnerRez (or StayFi, or Kit) as a CSV. Upload it to Meta Audiences as a Customer List. Meta matches the emails to Facebook profiles, then creates a Lookalike Audience — Meta finds 1–3 million people who resemble your actual guests in the same geographic area.</p>
+        <p style="margin-top:10px">This is your most powerful prospecting audience because Meta is finding people who look like people who already booked with you. Build lookalike audiences after you have at least 200 email addresses in your list. Below 200, the signal is too thin for Meta to build a reliable model.</p>
+      </div>
+
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Exclude Your Email List From Prospecting Audiences</div>
+      <p>When running geographic radius ads, always exclude your email list as a Custom Audience exclusion. You are paying to find new people — not to run ads to past guests who are already in your email sequence. Your email sequence handles past guests. Paid social handles new acquisition. Failing to add this exclusion wastes a measurable percentage of your ad budget every month.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 3 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Ad Creative — What Works for STR Properties and What Doesn't</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand the three creative tiers that work for STR paid social, why STR creative behaves differently from e-commerce, how to source guest UGC without a production budget, and the ad copy framework — headline, primary text, and CTA button — that converts for property advertising specifically.
+    </div>
+
+    <p>STR ad creative falls into three tiers that correlate with production cost and conversion rate — but not in the way you'd expect. The highest-performing creative is often the lowest-production format. Scroll behavior on Instagram is tuned to skip anything that looks promotional.</p>
+
+    <div class="tier-stack">
+
+      <!-- Tier 1 -->
+      <div class="tier-card">
+        <div class="tier-label">Tier 1 — Highest Performing</div>
+        <h4>Guest UGC (User-Generated Content) Video</h4>
+        <p>A 15–45 second vertical video taken by a real guest — on their phone, natural lighting, not produced — showing the property from a guest perspective. The dock at sunset. Kids jumping in the lake. Coffee on the deck in the morning.</p>
+        <p><strong>Why it outperforms polished photography:</strong> it looks like a social post, not an ad. A video that looks like someone's vacation story gets watched. A professionally produced property ad gets scrolled past.</p>
+        <p><strong>How to source it:</strong> ask guests explicitly in the post-stay follow-up email. "If you took any videos during your stay, we'd love to use them in our social presence — reply with a clip and we'll give you $50 off your next stay." Most guests who had a great experience are delighted to share. The incentive cost is recovered on the first booking the video drives.</p>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="tier-card">
+        <div class="tier-label">Tier 2 — Consistent Performer</div>
+        <h4>Professional Photography Carousel</h4>
+        <p>A 4–6 image carousel of your best professional photos: exterior, main living space, the signature amenity (hot tub, dock, view), bedroom. The carousel format lets interested users scroll through images without leaving Instagram.</p>
+        <p><strong>Caption structure:</strong> lead with the guest's gain. Not "Lake house sleeps 8" — lead with what the guest feels. Then property details, then the call to action. The first line must stop the scroll before they can read the rest.</p>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="tier-card">
+        <div class="tier-label">Tier 3 — Shoulder Season Fill</div>
+        <h4>Seasonal Offer Ad</h4>
+        <p>A single image or video with a direct offer. "3 nights in July starting at $XXX — 2 weekends left." These work for shoulder season fill and last-minute availability. Lower brand-building value but high immediate conversion for time-sensitive inventory. Price anchoring is the key mechanic — the starting-at figure signals accessibility without undermining the property's positioning.</p>
+      </div>
+
+    </div>
+
+    <h3>Ad Copy Framework for STR</h3>
+
+    <div class="copy-framework-label">Copy Structure — 3 Fields, Specific Character Limits</div>
+    <div class="copy-framework">HEADLINE — 40 characters max
+Lead with the feeling, not the feature.
+
+  ✓  "The lake doesn't care about your inbox."
+  ✓  "Your family's summer memory starts here."
+  ✗  "Luxury 4-BR Lake House — Book Now!"
+
+───────────────────────────────────────────
+
+PRIMARY TEXT — 125 characters for mobile
+State the specific, visual experience. Concrete nouns, no adjectives.
+
+  ✓  "Lake George, front row. Hot tub, dock, kayaks, and 8 beds
+      for the whole crew. Book direct and skip the platform fees."
+
+───────────────────────────────────────────
+
+CTA BUTTON — two options, different use cases
+
+  "Learn More"  →  sends to site, lower click volume,
+                   higher retargeting audience growth
+
+  "Book Now"    →  sends to calendar, lower click volume,
+                   higher intent — use this for retargeting campaigns</div>
+
+    <div class="callout warn">
+      <div class="callout-label">Don't Run Ads to Your Airbnb Listing</div>
+      <p>Airbnb's terms of service prohibit driving paid external traffic directly to an Airbnb listing URL. More importantly: paid traffic to your Airbnb listing earns Airbnb the commission on every booking it generates. All paid traffic should go to your direct booking site — the machine's owned channel — not to a platform that charges 15.5% on every booking it processes.</p>
+      <p style="margin-top:10px">The entire point of paid social for STR operators is to route guests around the platform fee. Running ads to your Airbnb listing inverts that logic entirely. Direct booking site only.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 4 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The Seasonal Campaign Calendar — Four Campaigns, Timed to Your Market</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Build a four-campaign paid social calendar timed to your guest's 4–8 week planning window, configure Meta Ads Manager in the correct sequence, and run a 14-day learning period before scaling ad spend.
+    </div>
+
+    <p>STR paid social is not a set-it-and-forget-it program. It is a planned campaign calendar, timed to your guest's decision window — which is 4–8 weeks before arrival, not the day they want to book. Start advertising before your guest starts searching.</p>
+
+    <div class="layer-stack">
+
+      <!-- Campaign 1 -->
+      <div class="layer-card">
+        <div class="layer-badge">Campaign 1 — Run 6–8 Weeks Pre-Peak</div>
+        <h4>Peak Season Awareness</h4>
+        <p><strong>Objective:</strong> Reach / Brand Awareness. <strong>Goal:</strong> build the retargeting audience with people who engage with your property before they are ready to book.</p>
+        <p>For a Finger Lakes lake house with peak July–August, start this campaign in mid-May. For a ski cabin with peak December–February, start it in October.</p>
+        <p><strong>Budget:</strong> $15–25/day. Run for 3–4 weeks. Expect reach (15,000–30,000 people) over conversion. This campaign feeds Audience 2 (retargeting) — its primary value is the pool of warm traffic it creates for Campaign 2 to convert.</p>
+      </div>
+
+      <!-- Campaign 2 -->
+      <div class="layer-card">
+        <div class="layer-badge">Campaign 2 — Run 4 Weeks Pre-Peak</div>
+        <h4>Peak Season Conversion</h4>
+        <p><strong>Objective:</strong> Traffic / Conversions. <strong>Goal:</strong> drive direct booking site traffic and booking inquiries from people already in the awareness stage.</p>
+        <p><strong>Audiences:</strong> retarget site visitors from Campaign 1, plus lookalike audience from your email list. Tight geographic radius. Specific dates in the copy: "These weekends are going fast — 4 weeks left in July."</p>
+        <p><strong>Budget:</strong> $25–40/day. Run for 2–3 weeks alongside Campaign 1 until Campaign 1 pauses.</p>
+      </div>
+
+      <!-- Campaign 3 -->
+      <div class="layer-card">
+        <div class="layer-badge">Campaign 3 — Always-On, Low Budget</div>
+        <h4>Shoulder Season Fill</h4>
+        <p><strong>Objective:</strong> Conversions. <strong>Goal:</strong> fill gaps in the calendar during shoulder months at a lower ADR. Run year-round at a low spend during any non-peak period.</p>
+        <p><strong>Creative:</strong> simple carousel of the property with "Available this [month]" in the caption. Price anchor included. CTA: "Check availability."</p>
+        <p><strong>Budget:</strong> $8–12/day, always-on. This campaign is also the best starting point for a new advertiser — running it during non-peak months lets you learn Meta's algorithm and test creative before committing to a peak-season budget.</p>
+      </div>
+
+      <!-- Campaign 4 -->
+      <div class="layer-card">
+        <div class="layer-badge">Campaign 4 — Off-Season</div>
+        <h4>Off-Season Re-Engagement (Past Guest Lookalike)</h4>
+        <p><strong>Objective:</strong> Traffic. <strong>Goal:</strong> reach people who look like your past guests during the off-season when your competitors have stopped advertising.</p>
+        <p>CPMs (cost per 1,000 impressions) drop in Q1 for most markets as competitors reduce spend. Your ad budget goes further in January than in June. Build the retargeting pool for the following peak season at a fraction of the peak-season cost.</p>
+        <p><strong>Budget:</strong> $5–8/day. Low spend, high ROI if you convert even one shoulder-season booking.</p>
+      </div>
+
+    </div>
+
+    <h3>Campaign Calendar — Example for a Summer Lake Property</h3>
+
+    <ul class="calendar-list">
+      <li><span class="cal-arrow">→</span><span><strong>May 1:</strong> Campaign 1 launches (Peak Awareness) — $15–25/day</span></li>
+      <li><span class="cal-arrow">→</span><span><strong>May 20:</strong> Campaign 2 launches (Peak Conversion) alongside Campaign 1 — $25–40/day</span></li>
+      <li><span class="cal-arrow">→</span><span><strong>June 15:</strong> Campaigns 1 and 2 pause; Campaign 3 (Shoulder Fill) begins at $8–12/day</span></li>
+      <li><span class="cal-arrow">→</span><span><strong>September:</strong> Campaign 3 continues at reduced budget — $5–8/day</span></li>
+      <li><span class="cal-arrow">→</span><span><strong>November:</strong> Campaign 4 (Off-Season Re-Engagement) begins — $5/day, lookalike audience</span></li>
+      <li><span class="cal-arrow">→</span><span><strong>Following April:</strong> Campaign 1 restarts — repeat the cycle</span></li>
+    </ul>
+
+    <h3>Meta Ads Manager Setup — In Sequence</h3>
+
+    <p>Order matters. A blocker mid-setup (retargeting audience created before the Pixel is installed, conversion campaign launched before the domain is verified) wastes time and delays the learning period.</p>
+
+    <ol class="setup-steps">
+      <li>
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <strong>Create Business Manager account at business.facebook.com</strong>
+          <p>Separate from your personal Facebook profile — your ad account, Pixel, and audiences live here.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <strong>Create Ad Account linked to your direct booking site domain</strong>
+          <p>Verify your domain in Business Manager → Brand Safety → Domains before launching a conversion campaign. Domain verification is required for conversion objectives.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <strong>Install Meta Pixel on your direct booking site</strong>
+          <p>Add your Pixel ID to your site header (OwnerRez site settings, or your booking site's custom code block). Confirm tracking is firing with the Meta Pixel Helper browser extension before creating retargeting audiences.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <strong>Build the three audiences in Ads Manager → Audiences</strong>
+          <p>Geographic radius Saved Audience first. Retargeting Custom Audience after Pixel is confirmed live. Lookalike Audience after your email list reaches 200+.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <strong>Create your first campaign — Campaign 3 (Shoulder Fill) is the best starting point</strong>
+          <p>Year-round, low budget, low stakes — it lets you test creative and learn the algorithm before committing to peak-season spend.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <strong>Set up campaign, ad set, and ad levels in sequence — run the $5/day learning period</strong>
+          <p>Run for 14 days minimum before drawing conclusions or scaling. Meta's algorithm needs data — 7 days is not enough to optimize.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-label">The $5/Day Learning Period</div>
+      <p>Before committing $400/month, run a $5/day campaign for 14 days. Meta's algorithm will learn who engages with your property content within your geographic radius. After 14 days, you have real data on click-through rates, cost per link click, and retargeting audience size — before you scale spend.</p>
+      <p style="margin-top:10px">The $70 learning budget tells you whether your creative and audience targeting are working. If your cost per link click is above $3.00 after 14 days, test new creative before scaling. If it's under $1.50, you have a working ad — scale the daily budget by 20% per week until you reach your target spend. Never double a Meta budget in a single day — it resets the learning phase.</p>
+    </div>
+
+    <!-- AI Prompt -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Build Your STR Paid Social Campaign Strategy</h4>
+      <div class="ai-prompt-box">Help me build a paid social advertising strategy for my STR property, including audience targeting, ad creative direction, and a campaign calendar.
+
+My property:
+- Location (city/state): [LOCATION]
+- Property type: [LAKE HOUSE / CABIN / MOUNTAIN COTTAGE / etc.]
+- Signature amenity: [HOT TUB / DOCK / WATERFRONT / MOUNTAIN VIEW / etc.]
+- Sleeps: [X] guests
+- Average nightly rate (peak): [$XXX]
+- Average nightly rate (shoulder): [$XXX]
+- Peak booking months: [MONTHS]
+- Shoulder months: [MONTHS]
+- Drive-market cities within 200 miles: [CITIES — e.g., 'Pittsburgh, Cleveland, Columbus']
+- Do I have a direct booking site live: [YES / NO]
+- Is the Meta Pixel installed on my site: [YES / NO / DON'T KNOW]
+- Current email list size: [X addresses or 'none yet']
+- My approximate monthly paid social budget: [$XXX]
+
+Do four things:
+
+1. AUDIENCE TARGETING BRIEF
+Build the three Meta audiences I should create: (1) Geographic radius Saved Audience with location parameters, age range, and interest layers specific to my property type; (2) Retargeting Custom Audience configuration; (3) Lookalike Audience recommendation based on my current email list size. For each, tell me whether to build it now or after a milestone.
+
+2. AD CREATIVE DIRECTION
+Give me three ad concepts for my property — one UGC-style video brief I can send to a past guest, one photography carousel description (which 5 images and what order), and one seasonal offer ad. For each, write the headline (40 chars max), primary text (125 chars for mobile), and CTA button recommendation.
+
+3. CAMPAIGN CALENDAR
+Map my four campaigns to specific months based on my peak and shoulder seasons. For each campaign: objective, audience, creative recommendation, budget, and run duration. Include the start date for my NEXT campaign relative to today's month.
+
+4. FIRST CAMPAIGN SETUP CHECKLIST
+The exact steps to get my first campaign live in Meta Ads Manager — assuming I'm starting from a new account. Sequence them so I don't hit a blocker mid-setup (Pixel installed before creating retargeting audience, domain verified before launching conversion campaign, etc.).</div>
+      <p class="ai-prompt-note">Fill in every bracketed field before running this prompt. The drive-market cities field is especially important — list the actual metro areas within your radius, not just the nearest city. After running it, save the campaign calendar output as a recurring annual reference and set a calendar reminder for your next campaign launch date. The calendar works only if you launch each campaign on schedule — 6–8 weeks before peak, not 2 weeks before.</p>
+    </div>
+
+    <!-- Module checkpoint -->
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 19 Checkpoint</div>
+      <h3>Before leaving this module, confirm the following:</h3>
+      <ul class="checkpoint-items">
+        <li>
+          <span class="cp-box"></span>
+          <span>Meta Business Manager account created and Ad Account configured — linked to my direct booking site domain</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Meta Pixel installed on my direct booking site — confirmed tracking pageviews and purchase events via Meta Pixel Helper</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Three audiences built in sequence: geographic radius Saved Audience, site visitor retargeting Custom Audience, lookalike from email list (if list is 200+)</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Past guests contacted for UGC video content — or professional photography carousel prepared as the launch creative</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>First campaign live — Shoulder Fill or Peak Awareness depending on my current timing relative to my peak season</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>Campaign calendar documented — four campaigns mapped to my specific peak and shoulder months with launch dates set as calendar reminders</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>$5/day learning period running or completed — creative and audience validated before scaling to full monthly budget</span>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Machine feed -->
+  <div class="machine-feed">
+    <div class="mf-label">The Machine</div>
+    <h3>Paid Traffic Closes the Loop the Flywheel Starts</h3>
+    <p>The flywheel — OTA guest to direct booker to repeat booker — works at the scale of your existing guest base. Paid traffic extends the flywheel to people who have never heard of your property. A guest who clicks a Facebook ad, visits your direct booking site, and books direct is a guest who never went through Airbnb at all. No platform introduction, no Airbnb review dependency, no 15.5% host fee.</p>
+    <p>That guest enters your system at Tier 3 — owned from the first interaction. The email sequence starts. The retargeting audience grows. The loop runs.</p>
+    <p>The operators who run paid traffic alongside SEO, email, and direct booking are not spending more on marketing than competitors who run Airbnb-only. They are spending the same money in a different order — and building an audience that compounds instead of an algorithm dependence that doesn't.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <span>SpokeBnB</span> · Module 19: Paid Traffic &amp; Social Advertising · Phase: Grow
+</footer>
+
+</body>
+</html>

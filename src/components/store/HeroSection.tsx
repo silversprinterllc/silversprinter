@@ -44,14 +44,14 @@ export default function HeroSection() {
             <p className="text-base sm:text-lg lg:text-xl text-white/70 leading-relaxed mb-6 sm:mb-8 max-w-xl">
               The Hub-and-Spoke Revenue System that transforms short-term rentals
               from passive listings into scalable, revenue-generating businesses
-              with predictable demand from 8+ channels.
+              with predictable demand from 10 owned channels.
             </p>
 
             {/* Stats Row */}
             <div className="flex flex-wrap gap-6 sm:gap-8 mb-8 sm:mb-10">
               {[
-                { value: '14', label: 'Modules' },
-                { value: '8+', label: 'Demand Channels' },
+                { value: '15', label: 'Modules' },
+                { value: '10', label: 'Demand Channels' },
                 { value: '60+', label: 'Templates' },
               ].map((stat) => (
                 <div key={stat.label}>

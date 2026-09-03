@@ -25,7 +25,7 @@ const PRODUCTS: Record<string, ProductConfig> = {
   },
   build: {
     name: 'SpokeBnB — The Build',
-    price: 499700, // $4,997
+    price: 549700, // $5,497
     description: 'Productized direct-booking website build. Responsive property site, booking path, PMS integration, SEO foundation, analytics, and launch QA — handed off and live.',
   },
 }
