@@ -127,6 +127,35 @@ function ThankYouContent() {
           </div>
         )}
 
+        {/* Enter Course CTA — System and Bundle buyers get immediate access */}
+        {(tier === 'system' || tier === 'bundle' || tier === 'founding') && sessionId && (
+          <div className="mt-10 rounded-2xl border border-[var(--sf-gold)]/20 bg-[var(--sf-gold)]/5 p-8 text-center">
+            <p className="text-xs font-semibold tracking-widest uppercase text-[var(--sf-gold)] mb-3">
+              Your Course Is Ready
+            </p>
+            <h3 className="font-[var(--font-display)] text-xl font-bold text-white mb-2">
+              Start Module 0 right now.
+            </h3>
+            <p className="text-sm text-white/40 mb-6">
+              45 minutes. It reframes everything that follows.
+            </p>
+            <a
+              href={`/api/course/grant-access?session_id=${sessionId}`}
+              className="inline-flex items-center gap-2 font-bold text-sm px-8 py-4 rounded-xl transition-all"
+              style={{
+                background: 'linear-gradient(135deg, #D4A017 0%, #B8860B 100%)',
+                color: '#fff',
+                boxShadow: '0 4px 24px rgba(212, 160, 23, 0.3)',
+              }}
+            >
+              Enter Your Course
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+        )}
+
         {/* Support */}
         <div className="mt-10 text-center space-y-4">
           <p className="text-sm text-white/30">

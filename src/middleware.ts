@@ -18,12 +18,20 @@ export default withAuth(
       }
     }
 
+    // Course modules: verified purchase only — separate from next-auth
+    if (pathname.startsWith('/course/modules')) {
+      if (!req.cookies.has('sbnb_access')) {
+        return NextResponse.redirect(new URL('/course#pricing', req.url))
+      }
+    }
+
     return NextResponse.next()
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl
+        // These paths require a next-auth session
         if (
           pathname.startsWith('/portal') ||
           pathname.startsWith('/dispatcher') ||
@@ -32,6 +40,7 @@ export default withAuth(
         ) {
           return !!token
         }
+        // Course modules use purchase-cookie auth — let the inner middleware handle it
         return true
       },
     },
@@ -39,5 +48,11 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ['/portal/:path*', '/dispatcher/:path*', '/corporate/:path*', '/course/deal-analysis/:path*'],
+  matcher: [
+    '/portal/:path*',
+    '/dispatcher/:path*',
+    '/corporate/:path*',
+    '/course/deal-analysis/:path*',
+    '/course/modules/:path*',
+  ],
 }
