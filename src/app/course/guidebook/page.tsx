@@ -8,7 +8,7 @@ import GuidebookForm from './GuidebookForm'
 export const metadata: Metadata = {
   title: 'Free Local Area Guidebook Template | SpokeBnB',
   description:
-    'The Notion guidebook template that adds $2,400/year in passive affiliate revenue.',
+    'Free Notion guidebook template for STR hosts — 9 sections, Viator affiliate placements, and a Finger Lakes example. Set up in 90 minutes.',
   alternates: { canonical: '/course/guidebook' },
 }
 
@@ -83,32 +83,19 @@ const faqItems = [
   },
 ]
 
-const testimonials = [
+const whyItWorks = [
   {
-    quote:
-      'I was skeptical this was just another freebie. It\'s the single most useful thing I\'ve added to my rental in four years. Made $1,840 last year from Viator links alone.',
-    name: 'Megan R.',
-    meta: '3-property host · Hudson Valley, NY',
+    headline: 'Fewer guest messages',
+    body: 'Every "where should we eat?" message you prevent is a better guest experience and a 5-star review closer.',
   },
   {
-    quote:
-      'Guests stopped messaging me asking "where should we eat?" My 5-star review rate went from 81% to 96% in one season.',
-    name: 'David L.',
-    meta: 'Beachfront owner · Gulf Shores, AL',
+    headline: 'Passive Viator income',
+    body: 'Earn 8% on every experience your guests book through your affiliate links. No extra work after initial setup.',
   },
   {
-    quote:
-      'The template literally paid for itself in the first week. I sent the QR code to five recent guests and three booked a boat tour through my affiliate link.',
-    name: 'Jennifer K.',
-    meta: 'Lake cabin host · Finger Lakes, NY',
+    headline: 'Faster setup than you think',
+    body: 'Duplicate to Notion, swap in your property info and local picks. Most hosts are done in under 90 minutes.',
   },
-]
-
-const stats = [
-  { stat: '+22%', label: '5-star review rate' },
-  { stat: '+18%', label: 'Guest Favorite tag' },
-  { stat: '-41%', label: "'Where do we eat?' messages" },
-  { stat: '$2,400', label: 'Avg. affiliate revenue / yr' },
 ]
 
 export default function GuidebookPage() {
@@ -140,19 +127,19 @@ export default function GuidebookPage() {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <span className="inline-block bg-[var(--sf-gold)]/15 border border-[var(--sf-gold)]/30 rounded-full px-3 py-1 text-[var(--sf-gold)] text-xs font-semibold tracking-widest uppercase mb-5">
-                Free Notion Template · Usually $97
+                Free Notion Template
               </span>
               <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
-                The Local Guidebook Template That Adds{' '}
-                <span className="sf-gold-gradient">$2,400/Year</span> in Passive Affiliate Revenue
+                The Local Guidebook Template That{' '}
+                <span className="sf-gold-gradient">Earns Affiliate Revenue</span> While You Sleep
               </h1>
               <p className="mt-6 text-base sm:text-lg text-white/70 leading-relaxed max-w-xl">
-                Give your guests a 5-star experience. Earn 8% commission on every activity they
+                Give your guests a 5-star experience. Earn 8% commission on every Viator experience they
                 book. Never answer &quot;where should we eat tonight?&quot; in your guest messages
                 again.
               </p>
               <p className="mt-4 text-sm text-white/50">
-                90 minutes to set up. Works forever. Used by 1,200+ STR hosts.
+                90 minutes to set up. Duplicate to Notion in one click. Free.
               </p>
             </div>
 
@@ -205,18 +192,14 @@ export default function GuidebookPage() {
         </div>
       </section>
 
-      {/* Trust Bar / Stats */}
+      {/* Why it works */}
       <section className="bg-white border-y border-[var(--sf-navy)]/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <div className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--sf-gold)]">
-                  {s.stat}
-                </div>
-                <div className="text-xs text-[var(--sf-navy)]/60 uppercase tracking-wider mt-2">
-                  {s.label}
-                </div>
+          <div className="grid sm:grid-cols-3 gap-6 text-center">
+            {whyItWorks.map((w) => (
+              <div key={w.headline}>
+                <div className="font-semibold text-[var(--sf-navy)] mb-1">{w.headline}</div>
+                <div className="text-sm text-[var(--sf-navy)]/60 leading-relaxed">{w.body}</div>
               </div>
             ))}
           </div>
@@ -426,37 +409,6 @@ export default function GuidebookPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-[var(--sf-gold)] text-xs font-semibold tracking-widest uppercase">
-              Used by 1,200+ hosts
-            </span>
-            <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--sf-navy)] mt-3">
-              Results from real operators
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {testimonials.map((t, idx) => (
-              <div
-                key={idx}
-                className="bg-[var(--sf-cream)] rounded-2xl p-7 border border-[var(--sf-navy)]/10 sf-card-hover"
-              >
-                <svg className="w-8 h-8 text-[var(--sf-gold)]/40 mb-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
-                </svg>
-                <p className="text-[var(--sf-navy)] text-sm leading-relaxed mb-5">{t.quote}</p>
-                <div className="pt-4 border-t border-[var(--sf-navy)]/10">
-                  <div className="text-sm font-semibold text-[var(--sf-navy)]">{t.name}</div>
-                  <div className="text-xs text-[var(--sf-navy)]/50 mt-0.5">{t.meta}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* FAQ */}
       <ToolFAQ items={faqItems} />

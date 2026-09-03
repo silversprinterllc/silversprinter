@@ -1,6 +1,5 @@
 import Header from '@/components/store/Header'
 import HeroSection from '@/components/store/HeroSection'
-import FoundingMemberBanner from '@/components/store/FoundingMemberBanner'
 import TrustBar from '@/components/store/TrustBar'
 import HubAndSpoke from '@/components/store/HubAndSpoke'
 import QuizPromo from '@/components/store/QuizPromo'
@@ -23,9 +22,6 @@ export default function CoursePage() {
 
       {/* 1. Hero — headline, hub-and-spoke visual, dual CTAs */}
       <HeroSection />
-
-      {/* 1.5 Founding Member Pre-Sale — limited spots, 50% off */}
-      <FoundingMemberBanner />
 
       {/* 2. Trust Bar — 5 credibility icons */}
       <TrustBar />

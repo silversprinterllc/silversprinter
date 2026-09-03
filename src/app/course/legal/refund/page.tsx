@@ -1,6 +1,3 @@
-// LEGAL DISCLAIMER: This document is a template. It must be reviewed by a licensed attorney
-// before being published or used to take payments. Last updated: April 2026.
-
 import type { Metadata } from 'next'
 import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
@@ -126,7 +123,7 @@ export default function RefundPolicyPage() {
                     href="mailto:support@spokebnb.com"
                     className="text-[var(--sf-gold)] hover:underline"
                   >
-                    support@{`SpokeBnB`}.com
+                    support@spokebnb.com
                   </a>{' '}
                   with the subject line &quot;Refund Request.&quot;
                 </li>
@@ -240,7 +237,7 @@ export default function RefundPolicyPage() {
                   href="mailto:support@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@{`SpokeBnB`}.com
+                  support@spokebnb.com
                 </a>{' '}
                 first. We resolve legitimate issues quickly.
               </p>
@@ -280,7 +277,7 @@ export default function RefundPolicyPage() {
                   href="mailto:support@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@{`SpokeBnB`}.com
+                  support@spokebnb.com
                 </a>
                 . We typically respond within 2 business days.
               </p>

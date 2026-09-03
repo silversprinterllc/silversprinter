@@ -18,52 +18,30 @@ type TierContent = {
 
 const NEXT_STEPS: Record<string, TierContent> = {
   system: {
-    headline: "You're In. Let's Build Your Revenue Machine.",
-    sub: "The System is unlocked. Check your inbox for your Kajabi access link — it arrives within 5 minutes.",
+    headline: "You're In. The System is Unlocked.",
+    sub: "Check your inbox — your course access link arrives within 5 minutes. Don't see it? Check spam.",
     steps: [
-      { n: '01', title: 'Check your email', body: 'Look for an email from ben@spokebnb.com with your course login link. Check spam if you don\'t see it in 5 minutes.' },
-      { n: '02', title: 'Start Module 0 tonight', body: 'The Foundation module is 45 minutes. It rewires how you think about your property — don\'t skip it.' },
-      { n: '03', title: 'Join the community', body: 'Your Kajabi dashboard has a link to the private SpokeBnB community. Introduce yourself and share your property.' },
-      { n: '04', title: 'Block 2 hours this week', body: 'Module 1 is where revenue strategy starts. One focused session and you\'ll have your platform decision locked.' },
+      { n: '01', title: 'Check your email', body: 'Look for an email from ben@spokebnb.com with your access link. If it isn\'t there in 5 minutes, check spam or email ben@spokebnb.com.' },
+      { n: '02', title: 'Start Module 0 tonight', body: 'The Foundation module is 45 minutes. It reframes how you think about your property and where demand actually comes from. Don\'t skip it.' },
+      { n: '03', title: 'Join the community', body: 'Your dashboard includes access to the private SpokeBnB community. Introduce yourself and share your property.' },
+      { n: '04', title: 'Block 2 hours this week', body: 'Module 1 is where revenue strategy begins. One focused session and you\'ll have your platform decision locked.' },
     ],
     upgrade: {
       show: true,
-      headline: 'Want us in the room with you?',
-      body: 'Upgrade to The Intensive and get 5 personalized coaching calls, Loom critiques of your site and listings, and Slack access between calls. The difference between knowing what to do and having it done right the first time.',
-      cta: 'Upgrade to The Intensive →',
+      headline: 'Want SpokeBnB to build your site?',
+      body: 'The Build delivers your property-specific direct-booking website — responsive, PMS-connected, SEO-ready, and handed off in 3–4 weeks. Buy the infrastructure while you\'re learning the system.',
+      cta: 'Get The Build →',
       href: '/course#pricing',
     },
   },
-  intensive: {
-    headline: "Welcome to The Intensive.",
-    sub: "You picked the fastest path to a running system. Your onboarding call scheduling link is in your inbox.",
+  build: {
+    headline: "Build Confirmed. Intake Coming.",
+    sub: "Your site is on the schedule. Expect a message from ben@spokebnb.com within 1 business day with the intake questionnaire.",
     steps: [
-      { n: '01', title: 'Book your kickoff call', body: 'Check your email for a Calendly link. Pick a time in the next 48 hours. We\'ll choose your track on that call.' },
-      { n: '02', title: 'Choose your track', body: 'Direct Booking, Automation, or Content & Growth. Come to the kickoff call with a gut feeling — we\'ll confirm it together.' },
-      { n: '03', title: 'Access your course', body: 'Kajabi login is in the same email. Start Module 0 before your kickoff call so we can skip the basics.' },
-      { n: '04', title: 'Join the Slack channel', body: 'Your private Slack invite is in the email. Ping me there with your property URL and I\'ll take a first look.' },
-    ],
-    upgrade: { show: false },
-  },
-  concierge: {
-    headline: "Application Submitted.",
-    sub: "We review every Concierge application personally. You'll hear from Ben directly within 1 business day.",
-    steps: [
-      { n: '01', title: 'Watch your inbox', body: 'A personal reply from ben@spokebnb.com is coming within 24 hours. Add it to your contacts so it doesn\'t hit spam.' },
-      { n: '02', title: 'Prepare your property info', body: 'We\'ll ask for your current listing URLs, a rough sense of your revenue goals, and which track you\'re most interested in.' },
-      { n: '03', title: 'Strategy call', body: 'Once accepted, we schedule a 60-minute strategy session. That\'s where we scope the build, assign your team, and set milestones.' },
-      { n: '04', title: 'Build begins in Week 1', body: 'Our team starts within 7 days of strategy call completion. You approve milestones at each stage — no surprises.' },
-    ],
-    upgrade: { show: false },
-  },
-  founding: {
-    headline: "Founding Member. You're Early.",
-    sub: "This is the best thing you could have done for your STR business. You'll get everything first.",
-    steps: [
-      { n: '01', title: 'Founding badge unlocked', body: 'Your Founding Member status is permanent. You\'ll be credited in the course and get first access to every new module.' },
-      { n: '02', title: 'Direct Slack access', body: 'Your Slack invite is in your email. This is a direct line to Ben — not a general community channel.' },
-      { n: '03', title: 'Priority for intensives', body: 'When The Intensive opens, Founding Members get first pick of spots at the original rate.' },
-      { n: '04', title: 'Watch your inbox', body: 'Course access drops in the next 24 hours with a personal note from Ben on where to start.' },
+      { n: '01', title: 'Watch your inbox', body: 'You\'ll receive the intake questionnaire within 1 business day. The stronger your intake, the stronger your first build.' },
+      { n: '02', title: 'Complete the intake thoroughly', body: 'We build from your intake — property facts, photos, PMS access, and positioning. Incomplete intake delays the build.' },
+      { n: '03', title: 'Gather your assets', body: 'Professional photos, your logo (if you have one), your Airbnb/VRBO links, and any existing reviews you want to feature.' },
+      { n: '04', title: 'Domain and PMS access', body: 'You\'ll need to share domain login (or point DNS to us) and PMS API credentials. We\'ll walk you through both.' },
     ],
     upgrade: { show: false },
   },

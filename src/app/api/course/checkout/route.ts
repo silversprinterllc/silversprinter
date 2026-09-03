@@ -13,40 +13,20 @@ type ProductConfig = {
 }
 
 const PRODUCTS: Record<string, ProductConfig> = {
-  founding: {
-    name: 'SpokeBnB — Founding Member',
-    price: 99700,
-    description: 'Founding Member pre-sale: full course access, founding badge, direct Slack access to Ben, priority for future intensives.',
-  },
   system: {
     name: 'SpokeBnB — The System',
     price: 199700, // $1,997
-    description: 'Self-paced course: all 13 modules, 60+ templates, lifetime access.',
+    description: 'Self-paced course: all 14 modules, 60+ templates, lifetime access. Teaches operators how to generate and direct demand to their owned booking destination.',
     paymentPlan: {
       installments: 4,
       installmentAmount: 54900, // $549
-      label: 'Payment Plan 1 of 4 — The System',
+      label: 'Payment Plan 1 of 4 — SpokeBnB System',
     },
   },
-  intensive: {
-    name: 'SpokeBnB — The Intensive',
+  build: {
+    name: 'SpokeBnB — The Build',
     price: 499700, // $4,997
-    description: 'Done-with-you cohort: full course + 5 coaching calls + track-specific build + Slack support.',
-    paymentPlan: {
-      installments: 3,
-      installmentAmount: 174900, // $1,749
-      label: 'Payment Plan 1 of 3 — The Intensive',
-    },
-  },
-  concierge: {
-    name: 'SpokeBnB — The Concierge',
-    price: 750000, // $7,500
-    description: 'Done-for-you build: full system built by our team in 5 weeks.',
-    paymentPlan: {
-      installments: 2,
-      installmentAmount: 395000, // $3,950
-      label: 'Payment Plan 1 of 2 — The Concierge',
-    },
+    description: 'Productized direct-booking website build. Responsive property site, booking path, PMS integration, SEO foundation, analytics, and launch QA — handed off and live.',
   },
 }
 
@@ -54,14 +34,13 @@ export async function POST(req: NextRequest) {
   try {
     const { tier, email, planType = 'full' } = await req.json()
 
-    // 'tier' can be base tier key; 'planType' is 'full' | 'plan'
     const product = PRODUCTS[tier]
     if (!product) {
       return NextResponse.json({ error: 'Invalid tier' }, { status: 400 })
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    const isPlan = planType === 'plan' && product.paymentPlan
+    const isPlan = planType === 'plan' && !!product.paymentPlan
 
     const lineItemPrice = isPlan ? product.paymentPlan!.installmentAmount : product.price
     const lineItemName = isPlan ? product.paymentPlan!.label : product.name

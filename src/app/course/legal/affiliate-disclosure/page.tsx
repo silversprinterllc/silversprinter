@@ -1,6 +1,3 @@
-// LEGAL DISCLAIMER: This document is a template. It must be reviewed by a licensed attorney
-// before being published or used to take payments. Last updated: April 2026.
-
 import type { Metadata } from 'next'
 import Header from '@/components/store/Header'
 import Footer from '@/components/store/Footer'
@@ -166,12 +163,14 @@ export default function AffiliateDisclosurePage() {
                 partner programs with the following companies (non-exhaustive):
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>Hostaway</strong> &mdash; property management system</li>
+                <li><strong>Hospitable</strong> &mdash; property management and STR automation</li>
+                <li><strong>OwnerRez</strong> &mdash; property management system and direct booking</li>
                 <li><strong>PriceLabs</strong> &mdash; dynamic pricing</li>
                 <li><strong>StayFi</strong> &mdash; guest Wi-Fi and email capture</li>
+                <li><strong>Turno</strong> &mdash; cleaning and turnover management</li>
+                <li><strong>Minut</strong> &mdash; noise monitoring</li>
                 <li><strong>Kit</strong> (formerly ConvertKit) &mdash; email marketing</li>
-                <li><strong>Lodgify</strong> &mdash; vacation rental website software</li>
-                <li><strong>Hospitable</strong> &mdash; STR automation</li>
+                <li><strong>Canva</strong> &mdash; design and creative assets</li>
                 <li><strong>AirDNA</strong> &mdash; market data and analytics</li>
                 <li><strong>Viator</strong> &mdash; experiences and bookable activities</li>
                 <li>Additional vendors referenced in specific lessons and playbooks</li>
@@ -183,7 +182,7 @@ export default function AffiliateDisclosurePage() {
                   href="mailto:support@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@{`SpokeBnB`}.com
+                  support@spokebnb.com
                 </a>
                 .
               </p>

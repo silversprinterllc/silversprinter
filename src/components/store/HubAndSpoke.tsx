@@ -97,7 +97,7 @@ export default function HubAndSpoke() {
               With SpokeBnB
             </h3>
             <ul className="space-y-3 text-sm text-[var(--sf-navy)]/60">
-              <li className="flex gap-2"><span className="text-[var(--sf-gold)] mt-0.5">&#x2713;</span> 8 demand channels driving bookings simultaneously</li>
+              <li className="flex gap-2"><span className="text-[var(--sf-gold)] mt-0.5">&#x2713;</span> 10 spokes — distribution, direct, content, creators, guests, and more</li>
               <li className="flex gap-2"><span className="text-[var(--sf-gold)] mt-0.5">&#x2713;</span> Dynamic pricing capturing maximum revenue from every night</li>
               <li className="flex gap-2"><span className="text-[var(--sf-gold)] mt-0.5">&#x2713;</span> Operations automated — under 2 hours/property/week</li>
               <li className="flex gap-2"><span className="text-[var(--sf-gold)] mt-0.5">&#x2713;</span> 30-40% of bookings coming direct, commission-free</li>

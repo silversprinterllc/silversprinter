@@ -37,10 +37,10 @@ const whyItMatters = [
 ]
 
 const trustSignals = [
-  { num: '35+', label: 'US markets' },
+  { num: 'US', label: 'Key vacation markets' },
   { num: 'Monthly', label: 'Updates' },
-  { num: '12,000+', label: 'Investors served' },
-  { num: '100%', label: 'Free' },
+  { num: 'Free', label: 'No signup required' },
+  { num: '100%', label: 'Public sources' },
 ]
 
 const faqItems = [
@@ -54,7 +54,7 @@ const faqItems = [
   },
   {
     q: 'Which states do you cover?',
-    a: 'Florida (25 markets) is deepest. We also cover Tennessee, North Carolina, New York, California, South Carolina, and Utah — 35+ markets total, expanding based on subscriber requests.',
+    a: 'Florida is deepest. We also cover Tennessee, North Carolina, New York, California, South Carolina, and Utah — and we expand based on subscriber requests.',
   },
   {
     q: 'What if my city isn\'t in the database?',
@@ -101,9 +101,9 @@ export default function RegulationsPage() {
             <span className="sf-gold-gradient">Your City?</span>
           </h1>
           <p className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Every STR investor asks this first. We&apos;re the only tool that answers it —
+            Every STR investor asks this first. We answer it —
             licensing costs, tax burdens, minimum stays, zoning restrictions, and pending
-            legislation for 35+ US markets.
+            legislation for key US vacation markets, with more added based on subscriber requests.
           </p>
           <p className="mt-5 text-sm font-semibold tracking-wider uppercase text-[var(--sf-gold)]">
             Check before you buy.
@@ -238,10 +238,12 @@ export default function RegulationsPage() {
                   compliant, rentable, and underpriced.
                 </p>
                 <a
-                  href="#"
+                  href="https://barefootrealty.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block bg-[var(--sf-navy)] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[var(--sf-navy)]/90 transition-all hover:shadow-lg"
                 >
-                  Get a Property Consult →
+                  Learn More →
                 </a>
               </div>
             </div>
@@ -269,9 +271,9 @@ export default function RegulationsPage() {
             <span className="hidden md:inline text-[var(--sf-navy)]/20">|</span>
             <div className="flex items-center gap-2">
               <svg className="w-4 h-4 text-[var(--sf-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Used by 12,000+ investors
+              Not legal advice — verify with municipality
             </div>
           </div>
         </div>

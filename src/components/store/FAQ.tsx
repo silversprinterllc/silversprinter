@@ -4,44 +4,44 @@ import { useState } from 'react'
 
 const faqs = [
   {
-    q: 'Who is this program for?',
-    a: 'Experienced or aspiring STR hosts and operators running 1-30 units who want to stop relying on a single platform and build a diversified, high-revenue hospitality business. If you own or manage vacation rentals and want more bookings, higher nightly rates, and systems that run without you — this is for you.',
+    q: 'Who is this for?',
+    a: 'Independent STR and hospitality operators running 1–30 units, anywhere in the world, who want to stop depending on a single platform and build a direct-booking business they own and control. The hub-and-spoke model applies whether your property is in the Finger Lakes, the Scottish Highlands, or Bali. The System works from one property. The Build is available for any property ready for a direct-booking site.',
+  },
+  {
+    q: 'What is the difference between The System and The Build?',
+    a: 'The System is education — it teaches you how to generate and direct demand across 10 spokes, from distribution platforms and direct bookings to content, creators, and guest retention. The Build is infrastructure — we build your direct-booking website, connect it to your PMS, and hand it off ready to take bookings. You can buy one, the other, or both. They are independent.',
   },
   {
     q: 'I only have one property. Is this too advanced for me?',
-    a: 'No. The core program ($1,997) is designed for 1-10 unit owners. You will build every system from scratch — direct booking website, pricing engine, guest retention, content strategy. The modules scale with you. Start with one property. The system works the same way at 10.',
+    a: 'No. The System is designed for 1–10 unit owners. You will build every system from scratch — direct booking website, pricing engine, guest retention, content strategy. The modules scale with you. The Build is available for single properties as well as portfolios.',
   },
   {
-    q: 'How is this different from other STR courses?',
-    a: 'Most courses teach one thing — Airbnb arbitrage, co-hosting, or direct bookings. SpokeBnB teaches the entire ecosystem. The Hub-and-Spoke model builds 8 demand channels around your property simultaneously. No other program covers distribution, direct booking, dynamic pricing, automation, content, influencer marketing, guest retention, experiences, and property acquisition in one system.',
+    q: 'How is SpokeBnB different from other STR courses?',
+    a: 'Most courses teach one thing — Airbnb arbitrage, co-hosting, or direct bookings in isolation. SpokeBnB teaches the full operating model: 10 spokes covering distribution, direct booking, dynamic pricing, automation, content, creator marketing, guest retention, experiences, and property acquisition — in one system built from properties we actually operate.',
+  },
+  {
+    q: 'What does The Build actually deliver?',
+    a: 'A property-specific responsive website: custom domain, PMS integration (OwnerRez, Hostaway, Hospitable, and others), booking path, gallery, amenities, location, reviews, FAQ, SEO foundation, analytics, Search Console setup, and launch QA. We work from your intake, build the first version, and hand it off. Standard timeline is 3–4 weeks from completed intake.',
+  },
+  {
+    q: 'What does The Build not include?',
+    a: 'Ongoing marketing execution — paid ads, social media management, email campaigns, SEO writing, influencer outreach, OTA management, or revenue management. Those activities live in The System (which teaches you how to run them yourself) or with specialized providers. The Build is website infrastructure, not an ongoing retainer.',
   },
   {
     q: 'Do I need to buy additional tools?',
-    a: 'Yes — budget $100-200/month for your tech stack (PMS, pricing tool, email capture, cleaning automation). Every tool is recommended based on ROI, not affiliate deals. We show you the cheapest effective option and when to upgrade. Most hosts recoup tool costs within the first month of optimization.',
-  },
-  {
-    q: 'How long does it take to see results?',
-    a: 'Dynamic pricing improvements show within days. Your direct booking website can be live in 1-2 weeks. Most students see measurable revenue increases within 30-60 days. The full system — all 8 demand channels humming — takes 3-6 months to mature. The 8-week implementation roadmap gets you there systematically.',
-  },
-  {
-    q: 'What is the difference between the Intensive and DFY?',
-    a: 'The Intensive ($4,997) is done-with-you — you build it yourself with live coaching, expert review, and group accountability. The DFY ($7,500) is done-for-you — our team builds your system while you approve milestones. Choose Intensive if you want to learn the system deeply. Choose DFY if your time is worth more than the price difference.',
+    a: 'For The System — yes. The full tech stack is disclosed upfront in the curriculum so there are no surprises. Budget roughly $200–370/month at full build-out (excluding STR insurance). The Phase 1 essentials — PMS, PriceLabs, smart lock, noise monitor, and Turno — run $70–80/month plus insurance. Every tool is introduced when you need it, not all at once. For The Build — your PMS is the core integration requirement. We handle the setup.',
   },
   {
     q: 'What is the 14-day conditional money-back guarantee?',
-    a: 'Complete Modules 0 and 1 and submit your homework within 14 days. If you do not see the value, email us and we will refund every penny. No hard feelings. The guarantee exists because the system works — we want you to see that for yourself before committing fully.',
+    a: 'This applies to The System. Complete Modules 0 and 1 and submit your homework within 14 days. If you do not see the value, email us and we will refund every penny. The guarantee does not apply to The Build, which is a service engagement with defined deliverables.',
   },
   {
-    q: 'Can I take the Intensive for more than one track?',
-    a: 'Yes. Each Intensive track (Direct Booking, Automation, Content & Growth) is a separate 6-week cohort. You can take one now and another later, or purchase the Full Revenue Engine bundle ($25,000) which includes all DFY builds.',
+    q: 'What does the acquisition module cover?',
+    a: 'Module 12 covers Acquisition & Portfolio Growth — market data methodology, cap rate analysis, DSCR loan structures, off-market sourcing, and portfolio architecture for scaling from one property to many. It applies globally. For Florida-specific STR acquisition, SpokeBnB partners with Barefoot Realty & Investments, a licensed Florida brokerage.',
   },
   {
-    q: 'What is The Barefoot Advantage module?',
-    a: 'Module 10 teaches property acquisition strategy — how to identify, finance, and purchase high-performing STR properties in premium Florida markets. It is developed by Barefoot Realty & Investments, a licensed Florida brokerage. This module is included with all tiers and positions you to build long-term wealth through ownership, not just optimization.',
-  },
-  {
-    q: 'How do I access the course after purchasing?',
-    a: 'Immediately. You get lifetime access to all modules, templates, and future updates. New modules and tool guides are added regularly at no extra cost. Intensive cohort students also get access to the private Slack channel and call recordings.',
+    q: 'I have multiple properties. Which product applies?',
+    a: 'The System applies regardless of portfolio size. For The Build, the standard $4,997 product covers one property brand. If you have multiple properties, a portfolio brand, or complex booking architecture — apply through the Portfolio / Custom path and we will scope it correctly.',
   },
 ]
 

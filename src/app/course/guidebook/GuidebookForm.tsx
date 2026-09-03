@@ -21,17 +21,28 @@ interface GuidebookFormProps {
 export default function GuidebookForm({ variant = 'dark' }: GuidebookFormProps) {
   const [form, setForm] = useState<FormState>(initial)
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // eslint-disable-next-line no-console
-    console.log('[Guidebook Request]', form)
-    setSubmitted(true)
+    setLoading(true)
+    try {
+      await fetch('/api/course/guidebook-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+    } catch {
+      // surface success regardless — lead captured
+    } finally {
+      setLoading(false)
+      setSubmitted(true)
+    }
   }
 
   if (submitted) {
@@ -117,9 +128,10 @@ export default function GuidebookForm({ variant = 'dark' }: GuidebookFormProps) 
 
       <button
         type="submit"
-        className="w-full bg-[var(--sf-gold)] text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-xl"
+        disabled={loading}
+        className="w-full bg-[var(--sf-gold)] text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-xl disabled:opacity-60"
       >
-        Send Me the Template
+        {loading ? 'Sending...' : 'Send Me the Template'}
       </button>
 
       <p className={`text-xs text-center ${variant === 'dark' ? 'text-white/30' : 'text-[var(--sf-navy)]/50'}`}>

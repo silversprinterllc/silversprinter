@@ -130,7 +130,7 @@ export default function ApplyPage() {
             Back
           </Link>
           <span className="text-[var(--sf-gold)] text-sm font-semibold tracking-widest uppercase">
-            The Concierge — Application
+            Portfolio / Custom — Application
           </span>
           <div className="w-16" />
         </div>
@@ -140,24 +140,22 @@ export default function ApplyPage() {
         {/* Intro */}
         <div className="text-center mb-12">
           <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-white mb-4">
-            Apply for The Concierge
+            Apply for Portfolio / Custom
           </h1>
           <p className="text-white/50 leading-relaxed">
-            We build your direct booking system, automation stack, or content engine — and hand you the keys. We take on a limited number of Concierge clients each quarter. This application takes 4 minutes.
+            For operators with multiple properties, a portfolio brand, or a build scope that doesn't fit the standard product. Ben reviews every application personally and scopes each engagement individually. This application takes 4 minutes.
           </p>
         </div>
 
-        {/* What you get reminder */}
+        {/* Context reminder */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-[var(--sf-gold)] mb-4">What&apos;s included at $7,500</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-[var(--sf-gold)] mb-4">What happens after you apply</p>
           <ul className="space-y-2.5">
             {[
-              'Full system built by our team in 5 weeks',
-              'Strategy call + competitive analysis of your market',
-              'Custom website, email funnels, or automation stack — your choice of track',
-              'Tech stack configured and tested end-to-end',
-              '90-day post-launch support + priority Slack access',
-              'Everything in The System + The Intensive',
+              'Ben reviews your application personally — usually within 1 business day',
+              'You\'ll get a direct reply scoping what a build for your portfolio would look like',
+              'If it\'s a fit, we schedule a 30-minute call to align on deliverables, timeline, and price',
+              'No payment collected until scope is agreed upon — no pressure, no sales script',
             ].map((item) => (
               <li key={item} className="flex items-start gap-3 text-sm text-white/60">
                 <svg className="w-4 h-4 mt-0.5 shrink-0 text-[var(--sf-gold)]" fill="currentColor" viewBox="0 0 20 20">

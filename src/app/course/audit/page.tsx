@@ -8,7 +8,7 @@ import AuditForm from './AuditForm'
 export const metadata: Metadata = {
   title: 'Free Airbnb Listing Audit | SpokeBnB',
   description:
-    'Get a personalized 40-point audit of your Airbnb listing. 5 spots available per week.',
+    'Get a personalized 40-point audit of your Airbnb listing — 10-minute Loom walkthrough, scorecard PDF, and your top 5 priority fixes. No credit card required.',
   alternates: { canonical: '/course/audit' },
 }
 
@@ -141,9 +141,9 @@ const testimonials = [
 ]
 
 const trustItems = [
-  { label: '5 audits / week', sub: 'Hand-delivered' },
+  { label: 'Limited slots', sub: 'Hand-delivered' },
   { label: '72-hour turnaround', sub: 'Audit in your inbox' },
-  { label: '$82K → $147K', sub: 'Case study' },
+  { label: '$82K → $147K', sub: 'Lakeside Landing case study' },
   { label: 'Zero-obligation', sub: 'No sales call' },
 ]
 
@@ -173,24 +173,13 @@ export default function AuditPage() {
             ← Back to Course
           </Link>
 
-          {/* Scarcity badge */}
-          <div className="inline-flex items-center gap-2 bg-[var(--sf-gold)]/15 border border-[var(--sf-gold)]/40 rounded-full px-4 py-2 mb-6">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--sf-gold)] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--sf-gold)]" />
-            </span>
-            <span className="text-[var(--sf-gold)] text-xs font-semibold tracking-widest uppercase">
-              Spots remaining this week: 3
-            </span>
-          </div>
-
           <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
             Get a Free Personalized
             <br />
             <span className="sf-gold-gradient">Listing Audit</span>
           </h1>
           <p className="mt-5 text-xs sm:text-sm font-semibold tracking-widest uppercase text-[var(--sf-gold)]">
-            5 spots / week · No credit card · No sales call
+            Limited slots · No credit card · No sales call
           </p>
           <p className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
             I&apos;ll record a 10-minute Loom reviewing your Airbnb listing the same way I
@@ -204,7 +193,7 @@ export default function AuditPage() {
               href="#apply"
               className="bg-[var(--sf-gold)] text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-2xl"
             >
-              Claim Your Spot (3 of 5 Remaining)
+              Apply for the Audit
             </a>
           </div>
           <p className="mt-4 text-xs text-white/40 italic">
@@ -347,10 +336,10 @@ export default function AuditPage() {
       <section className="sf-navy-gradient py-16 sm:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-[var(--sf-gold)] text-xs font-semibold tracking-widest uppercase mb-3">
-            Only 5 audits per week
+            Limited availability
           </p>
           <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            No renewals. No bulk. No exceptions.
+            Each audit gets real attention.
           </h2>
           <a
             href="#apply"

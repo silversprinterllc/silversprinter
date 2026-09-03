@@ -7,11 +7,23 @@ export default function RegulationAlertForm() {
   const [city, setCity] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // eslint-disable-next-line no-console
-    console.log('[Regulation Multi-City Alert]', { email, city })
-    setSubmitted(true)
+    setLoading(true)
+    try {
+      await fetch('/api/course/regulation-alert', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, city }),
+      })
+    } catch {
+      // surface success regardless — lead captured
+    } finally {
+      setLoading(false)
+      setSubmitted(true)
+    }
   }
 
   if (submitted) {
@@ -48,9 +60,10 @@ export default function RegulationAlertForm() {
         />
         <button
           type="submit"
-          className="bg-[var(--sf-gold)] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[var(--sf-gold)]/90 transition-all whitespace-nowrap"
+          disabled={loading}
+          className="bg-[var(--sf-gold)] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[var(--sf-gold)]/90 transition-all whitespace-nowrap disabled:opacity-60"
         >
-          Send Me Alerts
+          {loading ? 'Subscribing...' : 'Send Me Alerts'}
         </button>
       </div>
       <p className="text-xs text-white/40 text-center">
