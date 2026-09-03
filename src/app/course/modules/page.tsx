@@ -2,8 +2,6 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 
-type AccessCookie = { tier: string; granted: number }
-
 const CORE_MODULES = [
   { id: 'module-00', num: '00', title: 'Foundation', sub: 'Hub-and-Spoke Model · Your Three Numbers', start: true },
   { id: 'module-01', num: '01', title: 'Market Analysis', sub: 'AirDNA · Demand Zones · Regulatory Risk' },
@@ -46,14 +44,8 @@ export default async function CourseDashboard() {
     redirect('/course#pricing')
   }
 
-  let access: AccessCookie = { tier: 'system', granted: 0 }
-  try {
-    access = JSON.parse(raw)
-  } catch {
-    redirect('/course#pricing')
-  }
-
-  const tierLabel = TIER_LABELS[access.tier] || 'The System'
+  const tier = raw.split(':')[0] || 'system'
+  const tierLabel = TIER_LABELS[tier] || 'The System'
 
   return (
     <div className="min-h-screen" style={{ background: '#09263A', fontFamily: 'var(--font-sans, system-ui, sans-serif)' }}>
