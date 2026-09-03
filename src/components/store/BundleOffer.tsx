@@ -28,7 +28,7 @@ export default function BundleOffer() {
             <p className="text-[var(--sf-gold)] text-xs font-semibold tracking-widest uppercase mb-3">Education</p>
             <h3 className="font-[var(--font-display)] text-2xl font-bold text-white mb-3">The System</h3>
             <p className="text-white/50 text-sm leading-relaxed mb-6">
-              14 modules covering distribution, direct bookings, dynamic pricing, automation, content,
+              15 modules covering distribution, direct bookings, dynamic pricing, automation, content,
               creators, guest retention, experiences, and property acquisition. The frameworks that run on
               our own properties, packaged for independent operators.
             </p>

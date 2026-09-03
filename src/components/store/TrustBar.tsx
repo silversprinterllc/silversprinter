@@ -23,7 +23,7 @@ const trustItems = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    label: '8 Demand Channels',
+    label: '10 Demand Channels',
     detail: 'Multi-Platform Revenue',
   },
   {
