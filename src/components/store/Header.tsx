@@ -30,32 +30,37 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <a href="/course" className="flex items-center gap-2.5 group">
-            {/* SpokeBnB wheel mark — official geometry */}
+          {/* Logo — wheel embedded as the 'o' in SpokeBnB, matching brand geometry */}
+          <a href="/course" className="flex items-center group" aria-label="SpokeBnB">
             <svg
-              className="w-8 h-8 text-[var(--sf-gold)] shrink-0"
-              viewBox="0 0 512 512"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="14"
-              strokeLinecap="round"
+              viewBox="105 65 755 165"
+              className="h-8 w-auto"
+              xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <circle cx="256" cy="256" r="150" />
-              <circle cx="256" cy="256" r="21" />
-              <line x1="278.50" y1="256.00" x2="394.00" y2="256.00" />
-              <line x1="271.91" y1="271.91" x2="353.58" y2="353.58" />
-              <line x1="256.00" y1="278.50" x2="256.00" y2="394.00" />
-              <line x1="240.09" y1="271.91" x2="158.42" y2="353.58" />
-              <line x1="233.50" y1="256.00" x2="118.00" y2="256.00" />
-              <line x1="240.09" y1="240.09" x2="158.42" y2="158.42" />
-              <line x1="256.00" y1="233.50" x2="256.00" y2="118.00" />
-              <line x1="271.91" y1="240.09" x2="353.58" y2="158.42" />
+              <text
+                x="112" y="165"
+                fill="white"
+                fontFamily="'Playfair Display', Didot, 'Bodoni MT', Georgia, serif"
+                fontSize="112"
+              >Sp</text>
+              <circle cx="330" cy="132" r="43" fill="none" stroke="#D4A017" strokeWidth="4" />
+              <circle cx="330" cy="132" r="6.02" fill="none" stroke="#D4A017" strokeWidth="4" />
+              <line x1="336.45" y1="132.00" x2="369.56" y2="132.00" stroke="#D4A017" strokeWidth="4" />
+              <line x1="334.56" y1="136.56" x2="357.97" y2="159.97" stroke="#D4A017" strokeWidth="4" />
+              <line x1="330.00" y1="138.45" x2="330.00" y2="171.56" stroke="#D4A017" strokeWidth="4" />
+              <line x1="325.44" y1="136.56" x2="302.03" y2="159.97" stroke="#D4A017" strokeWidth="4" />
+              <line x1="323.55" y1="132.00" x2="290.44" y2="132.00" stroke="#D4A017" strokeWidth="4" />
+              <line x1="325.44" y1="127.44" x2="302.03" y2="104.03" stroke="#D4A017" strokeWidth="4" />
+              <line x1="330.00" y1="125.55" x2="330.00" y2="92.44" stroke="#D4A017" strokeWidth="4" />
+              <line x1="334.56" y1="127.44" x2="357.97" y2="104.03" stroke="#D4A017" strokeWidth="4" />
+              <text
+                x="372" y="165"
+                fill="white"
+                fontFamily="'Playfair Display', Didot, 'Bodoni MT', Georgia, serif"
+                fontSize="112"
+              >keBnB</text>
             </svg>
-            <span className="font-[var(--font-display)] text-lg font-semibold tracking-tight text-white">
-              Spoke<span className="text-[var(--sf-gold)]">BnB</span>
-            </span>
           </a>
 
           {/* Desktop Nav */}
