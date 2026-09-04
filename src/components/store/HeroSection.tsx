@@ -1,7 +1,7 @@
 export default function HeroSection() {
   return (
     <section
-      aria-label="RevenuePerNight course overview"
+      aria-label="SpokeBnB course overview"
       className="relative overflow-hidden sf-navy-gradient min-h-[80vh] lg:min-h-[90vh] flex items-center pt-20 lg:pt-24"
     >
       {/* Background Pattern */}
@@ -23,6 +23,11 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left — Copy */}
           <div className="sf-section">
+            {/* Airbnb 15.5% Fee Hook */}
+            <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold px-4 py-1.5 rounded-full mb-3 sm:mb-4">
+              <span>⚡</span>
+              <span>Airbnb just moved 15.5% of your gross revenue onto your tab — here&apos;s how to take it back</span>
+            </div>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1.5 mb-4 sm:mb-6">
               <span className="w-2 h-2 rounded-full bg-[var(--sf-gold)] animate-pulse" />
               <span className="text-white/70 text-[10px] sm:text-xs font-medium tracking-wide uppercase">
@@ -39,14 +44,14 @@ export default function HeroSection() {
             <p className="text-base sm:text-lg lg:text-xl text-white/70 leading-relaxed mb-6 sm:mb-8 max-w-xl">
               The Hub-and-Spoke Revenue System that transforms short-term rentals
               from passive listings into scalable, revenue-generating businesses
-              with predictable demand from 8+ channels.
+              with predictable demand from 10 owned channels.
             </p>
 
             {/* Stats Row */}
             <div className="flex flex-wrap gap-6 sm:gap-8 mb-8 sm:mb-10">
               {[
-                { value: '10', label: 'Modules' },
-                { value: '8', label: 'Demand Channels' },
+                { value: '15', label: 'Modules' },
+                { value: '10', label: 'Demand Channels' },
                 { value: '60+', label: 'Templates' },
               ].map((stat) => (
                 <div key={stat.label}>
@@ -76,63 +81,46 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right — Visual (Desktop only) */}
-          <div className="relative hidden lg:block" aria-hidden="true">
-            <div className="relative w-full aspect-square max-w-[480px] mx-auto">
-              <div className="absolute inset-0 rounded-full border-2 border-[var(--sf-gold)]/20" />
-              <div className="absolute inset-8 rounded-full border border-[var(--sf-gold)]/10" />
+          {/* Right — Brand Mark (Desktop only) */}
+          <div className="relative hidden lg:flex flex-col items-center justify-center" aria-hidden="true">
+            {/* Radial glow behind wheel */}
+            <div className="absolute w-[380px] h-[380px] rounded-full bg-[var(--sf-gold)]/6 blur-[90px]" />
 
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-[var(--sf-gold)] flex items-center justify-center shadow-xl shadow-[var(--sf-gold)]/30">
-                <div className="text-center">
-                  <div className="text-white font-bold text-sm leading-tight">YOUR</div>
-                  <div className="text-white font-bold text-sm leading-tight">PROPERTY</div>
-                </div>
+            {/* Official eight-spoke wheel mark */}
+            <svg
+              viewBox="0 0 512 512"
+              className="relative w-[300px] h-[300px] text-[var(--sf-gold)] drop-shadow-[0_0_40px_rgba(212,160,23,0.25)]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="14"
+              strokeLinecap="round"
+              role="img"
+              aria-label="SpokeBnB eight-spoke wheel"
+            >
+              <circle cx="256" cy="256" r="150" />
+              <circle cx="256" cy="256" r="21" />
+              <line x1="278.50" y1="256.00" x2="394.00" y2="256.00" />
+              <line x1="271.91" y1="271.91" x2="353.58" y2="353.58" />
+              <line x1="256.00" y1="278.50" x2="256.00" y2="394.00" />
+              <line x1="240.09" y1="271.91" x2="158.42" y2="353.58" />
+              <line x1="233.50" y1="256.00" x2="118.00" y2="256.00" />
+              <line x1="240.09" y1="240.09" x2="158.42" y2="158.42" />
+              <line x1="256.00" y1="233.50" x2="256.00" y2="118.00" />
+              <line x1="271.91" y1="240.09" x2="353.58" y2="158.42" />
+            </svg>
+
+            {/* Wordmark + tagline */}
+            <div className="mt-8 text-center">
+              <p className="font-[var(--font-display)] text-5xl font-semibold tracking-tight text-white">
+                Spoke<span className="text-[var(--sf-gold)]">BnB</span>
+              </p>
+              <div className="flex items-center justify-center gap-3 mt-3">
+                <div className="h-px w-10 bg-[var(--sf-gold)]/40" />
+                <p className="text-white/45 text-[11px] font-semibold tracking-[0.25em] uppercase">
+                  Build Demand You Own.
+                </p>
+                <div className="h-px w-10 bg-[var(--sf-gold)]/40" />
               </div>
-
-              {[
-                { label: 'Airbnb', angle: 0 },
-                { label: 'Direct', angle: 45 },
-                { label: 'Pricing', angle: 90 },
-                { label: 'Systems', angle: 135 },
-                { label: 'Content', angle: 180 },
-                { label: 'Creators', angle: 225 },
-                { label: 'Guests', angle: 270 },
-                { label: 'Experiences', angle: 315 },
-              ].map((spoke) => {
-                const rad = (spoke.angle * Math.PI) / 180
-                const x = 50 + 38 * Math.cos(rad)
-                const y = 50 + 38 * Math.sin(rad)
-                return (
-                  <div
-                    key={spoke.label}
-                    className="absolute w-20 h-20 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white/10 backdrop-blur-sm border border-[var(--sf-gold)]/20 flex items-center justify-center"
-                    style={{ left: `${x}%`, top: `${y}%` }}
-                  >
-                    <span className="text-white text-xs font-semibold text-center leading-tight">
-                      {spoke.label}
-                    </span>
-                  </div>
-                )
-              })}
-
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" aria-hidden="true">
-                {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => {
-                  const rad = (angle * Math.PI) / 180
-                  const x = 50 + 38 * Math.cos(rad)
-                  const y = 50 + 38 * Math.sin(rad)
-                  return (
-                    <line
-                      key={angle}
-                      x1="50"
-                      y1="50"
-                      x2={x}
-                      y2={y}
-                      stroke="rgba(212,160,23,0.2)"
-                      strokeWidth="0.3"
-                    />
-                  )
-                })}
-              </svg>
             </div>
           </div>
         </div>

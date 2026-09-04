@@ -1,0 +1,1008 @@
+<title>Module 10 — Creator & Influencer Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --gold-bg: rgba(212,160,23,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Revenue tiers */
+  .revenue-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+  .tier-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; border-top: 3px solid var(--gold); }
+  .tier-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .tier-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .tier-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .tier-examples { margin-top: 12px; }
+  .tier-example { font-size: 12px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .tier-example:last-child { border-bottom: none; }
+  .tier-example .price { color: #16a34a; font-weight: 600; }
+
+  /* Partner grid */
+  .partner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 20px 0; }
+  .partner-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .partner-icon { font-size: 20px; margin-bottom: 8px; }
+  .partner-type { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .partner-card p { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0; }
+  .partner-rate { font-size: 11px; font-weight: 700; color: var(--gold); margin-top: 8px; }
+
+  /* Metrics */
+  .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+  .metric-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .metric-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* Pitch template */
+  .pitch-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin: 24px 0; }
+  .pitch-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--navy); margin-bottom: 14px; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pitch-label { color: var(--gold); } }
+  :root[data-theme="dark"] .pitch-label { color: var(--gold); }
+  .pitch-box p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 10px; }
+  .pitch-box p:last-child { margin-bottom: 0; }
+  .pitch-placeholder { color: var(--gold); font-weight: 600; font-style: italic; }
+
+  /* Flow arrows */
+  .upsell-flow { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+  .flow-item { display: flex; align-items: flex-start; gap: 14px; background: var(--card); border: 1px solid var(--border); padding: 16px 20px; border-radius: 0; }
+  .flow-item:first-child { border-radius: 12px 12px 0 0; }
+  .flow-item:last-child { border-radius: 0 0 12px 12px; border-top: none; }
+  .flow-item + .flow-item { border-top: none; }
+  .flow-dot { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; background: var(--gold); margin-top: 6px; }
+  .flow-content p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .flow-content p strong { color: var(--text); display: block; margin-bottom: 2px; }
+  .flow-connector { width: 2px; height: 0px; background: var(--gold); margin-left: 34px; }
+
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  @media (max-width: 640px) {
+    .revenue-tiers { grid-template-columns: 1fr; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+    .partner-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .metrics-row { grid-template-columns: 1fr; }
+    .partner-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 10</div>
+    <h1>Creator & Influencer Network</h1>
+    <p class="subtitle">Turn comped stays into content portfolios that fill your calendar — the acquisition channel OTAs can't compete with and algorithms compound indefinitely</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 2: Own</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>3 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 09 — Content & Social</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 11 — Curated Experiences</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 08: Local Guide & SEO</span>
+    <span class="arrow">→</span>
+    <span>Module 09: Content & Social</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 10: Creator Network</span>
+    <span class="arrow">→</span>
+    <span>Module 11: Experiences</span>
+    <span class="arrow">→</span>
+    <span>Module 12: Sponsors</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — Why This Channel Wins</a>
+    <a href="#lesson-2">02 — Find, Vet & Pitch</a>
+    <a href="#lesson-3">03 — Manage the Stay & Own the Content</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🎬</div>
+    <div>
+      <div class="label">Module Deliverable</div>
+      <p>Five creator outreach DMs sent. A content brief template ready to deploy. Your first creator stay scheduled and your Google Drive folder built for receiving content. By the end of this module you have a repeatable acquisition channel that compounds — every piece of creator content becomes a permanent asset in your marketing library.</p>
+    </div>
+  </div>
+
+  <!-- ─── LESSON 1 ─── -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1</div>
+        <h2>The Creator Economy for STR — Why This Channel Wins</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Understand why nano and micro creators outperform paid advertising for STR discovery, learn the ROI math of a comped stay, and choose the right platform mix for your property type and market.</div>
+
+    <p>There are 230 million creators worldwide. Travel is the top content category on every platform. And most of them — the ones with 2K to 50K followers — need somewhere to stay when they travel. That is the entire arbitrage this module is built on.</p>
+
+    <p>The creator channel is not influencer marketing the way a hotel chain does it. You are not paying $10,000 for a macro influencer with 2 million followers to post once and move on. You are building relationships with creators whose audiences are the exact size to be meaningful — small enough to trust the recommendation, large enough to generate real reach.</p>
+
+    <h3>Creator Tiers — Who to Work With and Why</h3>
+    <p>Creators are categorized by audience size, and the tier determines both cost and conversion behavior. For STR operators, the math consistently favors nano and micro:</p>
+
+    <div class="revenue-tiers">
+      <div class="tier-card">
+        <div class="tier-label">Nano</div>
+        <div class="tier-title">1K–10K Followers</div>
+        <p>Highest engagement rates, hyper-local trust, friends-of-friends dynamic. Their audience treats their recommendations like a friend's opinion. Cost: comped stay only.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Avg engagement rate</span><span class="price">5–9%</span></div>
+          <div class="tier-example"><span>Audience trust level</span><span class="price">Very high</span></div>
+          <div class="tier-example"><span>Cash ask</span><span class="price">Rarely</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Micro</div>
+        <div class="tier-title">10K–100K Followers</div>
+        <p>Best overall ROI. Enough reach to matter, trusted enough to convert. These creators are actively building their brand and motivated to produce excellent content. Cost: comped stay, occasionally a small cash add-on at 50K+.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Avg engagement rate</span><span class="price">3–5%</span></div>
+          <div class="tier-example"><span>Audience trust level</span><span class="price">High</span></div>
+          <div class="tier-example"><span>Cash ask</span><span class="price">Sometimes</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Mid-Tier</div>
+        <div class="tier-title">100K–500K Followers</div>
+        <p>Reach is significant but cost rises sharply. At this level most creators expect cash compensation on top of the comp. Only worth pursuing if your property has a strong visual hook and you have a marketing budget.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Avg engagement rate</span><span class="price">1.5–3%</span></div>
+          <div class="tier-example"><span>Audience trust level</span><span class="price">Moderate</span></div>
+          <div class="tier-example"><span>Cash ask</span><span class="price">Usually</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>The Comped Stay Economics — What a $500 Partnership Actually Returns</h3>
+    <div class="callout math">
+      <div class="callout-label">📊 ROI Model — Comped Stay vs. Paid Reach</div>
+      <p><strong>Your cost:</strong> 2-night comp at $200/night = $400 displaced revenue + $100 extras = <strong>$500 total investment</strong></p>
+      <p><strong>Creator delivers:</strong> 1 reel (avg 18,000 views) + 5 stories (avg 4,000 views each) + 1 collab post on your property account</p>
+      <p><strong>Equivalent paid media value:</strong> Instagram CPM for travel content runs $15–30 per 1,000 impressions. At 38,000 total impressions: <strong>$570–$1,140 in equivalent reach</strong></p>
+      <p><strong>Plus content production value:</strong> A professionally shot reel and 10+ photos you can use in paid ads, your Airbnb listing, and your direct booking site — independent production cost: <strong>$300–$800</strong></p>
+      <p><strong>Net position:</strong> $500 comp produces $870–$1,940 in equivalent value, before any direct bookings the content generates. Content assets compound indefinitely — a pinned reel from 18 months ago is still driving discovery today.</p>
+    </div>
+
+    <h3>Platform Breakdown — Where Creator Content Works Hardest for STR</h3>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="partner-icon">📸</div>
+        <div class="partner-type">Instagram</div>
+        <p>Highest booking intent. Collab posts appear on both accounts, doubling reach. Reels algorithm rewards travel content. Stories drive direct message inquiries. Best platform to start.</p>
+        <div class="partner-rate">Priority: Primary</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🎵</div>
+        <div class="partner-type">TikTok</div>
+        <p>Highest raw reach but lower booking intent. The "POV you're staying here" format is proven. Strong for brand awareness and Airbnb algorithm lift — people search Airbnb after seeing TikTok.</p>
+        <div class="partner-rate">Priority: Secondary</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">▶️</div>
+        <div class="partner-type">YouTube / Shorts</div>
+        <p>Evergreen. A "spending the weekend at [Property Name]" video indexes in Google search and drives direct booking site traffic for 2–4 years. Worth pursuing for mid-tier creators.</p>
+        <div class="partner-rate">Priority: Long-term</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">📌</div>
+        <div class="partner-type">Pinterest</div>
+        <p>Underrated for STR. Travel pins index in Google image search. A well-tagged pin of your property exterior can drive organic traffic for 18+ months with zero additional effort.</p>
+        <div class="partner-rate">Priority: Passive layer</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Algorithm Connection</div>
+      <p>When a creator tags your property in a collab post on Instagram, Airbnb's algorithm registers external traffic signals. Third-party links referencing your listing or property name contribute to your SEO across Airbnb search, Google, and direct booking visibility. Creator content is not just marketing — it is infrastructure that feeds the module chain you have already built.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 1</div>
+      <h4>Craft your creator channel strategy</h4>
+      <div class="ai-prompt-box">I have a [lake house / mountain cabin / beach cottage / urban loft] in [market / region]. My target guest is [describe your ideal guest — couples, families, remote workers, adventure travelers, etc.]. I want to build a creator marketing channel using nano and micro influencers (1K–100K followers).
+
+Help me:
+1. Identify the 3 best creator content niches to target for my property type (e.g. travel couples, outdoor adventure, remote work travel)
+2. Suggest the primary and secondary platform where I should focus first given my property's visual style
+3. Write a one-paragraph "creator channel thesis" I can use internally — explaining what kind of content I want associated with my property and why</div>
+      <p class="ai-prompt-note"><strong>Use this output</strong> as the foundation for your creator media kit and to filter which creators you reach out to. A creator whose niche doesn't match your thesis will produce beautiful content that reaches the wrong audience.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 2 ─── -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2</div>
+        <h2>Finding, Vetting & Pitching Creators</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Build a qualified creator pipeline, develop a non-cringe outreach system that gets replies, and know what to say when they ask "how much?"</div>
+
+    <h3>Where to Find Creators — Five Discovery Methods</h3>
+    <ul>
+      <li><strong>Market hashtag search</strong> — Search Instagram/TikTok for your destination's travel hashtags (#FingerLakesTravel, #SmokyMountainCabin, #PocondVacation). Creators posting there already have an audience interested in your market.</li>
+      <li><strong>Location geotag search</strong> — On Instagram, search the geotag of the 3–5 closest attractions (the lake, the state park, the downtown district). Creators who post from nearby are already in the neighborhood.</li>
+      <li><strong>Your own past guests</strong> — After checkout, check the Instagram of guests who used phrases like "content creator," "photographer," or "blogger" in their booking request or messages. They may already have an audience.</li>
+      <li><strong>Creator marketplaces</strong> — Aspire IQ, Grin, and Collabstr let you filter by location, category, and follower range. Collabstr is free to browse. Use these to supplement organic discovery.</li>
+      <li><strong>Your direct booking site visitors</strong> — Install Hotjar or Microsoft Clarity on your direct booking site. Creators who visit and don't book are prime outreach candidates — they're interested but didn't convert. Retarget via Instagram if you can identify their handle.</li>
+    </ul>
+
+    <h3>The 30-Second Vetting Audit</h3>
+    <p>Before spending time on an outreach DM, run this audit. It takes 30 seconds and will eliminate 80% of bad fits:</p>
+
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 1: Engagement rate check</strong> — Divide average post likes+comments by follower count. Nano should be 5%+, micro 3%+, mid-tier 1.5%+. Below these floors: skip. Use Phlanx.com for a free estimate.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 2: Audience location match</strong> — Look at their post geotags and comment geography. If 80% of their audience is in a different country or they never post domestic travel content, their audience won't book your property.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 3: Content quality read</strong> — Do their travel posts look like something your target guest would save? Authentic, aspirational, and in your property's aesthetic lane? If you wouldn't want this content associated with your brand, don't invite the creator.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 4: Follower authenticity check</strong> — Go to Social Blade and search their handle. A legitimate creator's follower growth is gradual. Sudden vertical spikes (gaining 10K in a week, then flat) signal bought followers. Skip anyone with this pattern.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 5: Past brand work</strong> — Are their sponsored posts disclosed? Do they pick their partners selectively, or do they promote everything from energy drinks to VPNs? Selective creators are trusted creators. Promiscuous brand partners signal an audience that ignores them.</p></div>
+      </div>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">✗ Common Mistake — Prioritizing Follower Count Over Engagement</div>
+      <p>A creator with 85K followers and 0.6% engagement rate has an audience that has stopped listening. A creator with 6K followers and 7.2% engagement rate has an audience that acts on recommendations. Every time you optimize for follower count, you get the wrong metric. The only number that predicts booking conversion is engagement rate — and even that's a proxy for trust. Read comments to gauge whether the audience actually does what the creator recommends.</p>
+    </div>
+
+    <h3>The Outreach DM — What Gets Replies</h3>
+    <p>Most creator outreach DMs fail because they read like a press release. Creators receive dozens of generic "collaboration" requests weekly. The ones that get replies feel personal, specific, and like they come from an actual human who looked at their work.</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">DM Template — The Personal Open</div>
+      <p>Hey <span class="pitch-placeholder">[First name]</span> — loved your <span class="pitch-placeholder">[specific reel/post title or subject]</span>. The <span class="pitch-placeholder">[specific detail you noticed — lighting, location, caption tone]</span> made it stand out.</p>
+      <p>I host a <span class="pitch-placeholder">[property description — lakefront cabin, mountain A-frame, etc.]</span> in <span class="pitch-placeholder">[market]</span> and I think our guests and your audience overlap heavily — mostly <span class="pitch-placeholder">[couple travelers / outdoor adventurers / remote workers]</span> looking for <span class="pitch-placeholder">[what your property delivers]</span>.</p>
+      <p>I'd love to host you for a complimentary 2-night stay in exchange for a reel, a few stories, and a collab tag. No rigid script — you'd have full creative control. Would that be something you'd want to explore?</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ What Makes This Work</div>
+      <p>Three things: (1) You referenced a specific piece of their content — they know you actually looked. (2) You explained why their audience and your guests overlap — you made the business case without being corporate. (3) You ended with a question, not a call-to-action. Questions get replies. CTAs get ignored.</p>
+    </div>
+
+    <h3>When They Ask "How Much?" — The Response Framework</h3>
+    <p>When a creator responds with "what's the budget?" before they've even asked about the property, that's a flag. Most nano and micro creators are genuinely interested in travel — they're asking because they want to know if cash is on the table, not because cash is their only motivator.</p>
+    <ul>
+      <li><strong>Response for nano/micro creators:</strong> "The compensation for this partnership is the stay itself — [number of nights], all amenities included. We're selective about who we work with and we want the content to feel genuine, not sponsored. Does a trade arrangement work for you?" — Most will say yes.</li>
+      <li><strong>Response for micro creators at 50K+:</strong> At this range, a small cash add-on ($100–300) alongside the comp is reasonable and often secures the partnership. Think of it as the difference between a partnership and a transaction — you're buying creative commitment, not just access to an audience.</li>
+      <li><strong>When to walk away:</strong> If the first response is a rate sheet with fees for posting, stories, and usage rights, the creator is running a media business. That's not wrong — it's just not the relationship you're building at this stage. Save mid-level creator cash budgets for when your annual revenue clears $200K and creator partnerships become a line item, not a negotiation.</li>
+    </ul>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 2</div>
+      <h4>Build your creator media kit</h4>
+      <div class="ai-prompt-box">Help me write a one-page creator media kit for my STR property. Here are the details:
+
+Property type: [lake house / cabin / beach house / etc.]
+Location: [city/region]
+Target guest: [couples / families / remote workers / adventure travelers]
+Visual strengths: [e.g. panoramic lake views, cedar A-frame interior, private dock, outdoor hot tub]
+My Instagram handle: [your handle]
+What I can offer creators: complimentary [X]-night stay, [any extras — wine on arrival, kayaks, etc.]
+What I'm asking for: [1 reel + 5 stories + collab tag / customize to your needs]
+
+Write: (1) a 3-sentence property description that makes a creator excited about the content potential, (2) a "content opportunities" section listing 5 specific photogenic moments at my property, and (3) a one-paragraph "what we're looking for in a creator partner" section that explains our ideal fit without sounding corporate.</div>
+      <p class="ai-prompt-note"><strong>Turn this into a PDF or one-pager</strong> and attach it after a creator expresses interest. Don't send it cold — earn the conversation first with your DM, then deliver the kit once they're engaged.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 3 ─── -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3</div>
+        <h2>Managing the Stay & Maximizing Content</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Deliver an exceptional creator stay without hovering, brief creators so they capture your property's best moments, lock down content rights without a lawyer, and build a content library that compounds every quarter.</div>
+
+    <h3>The Content Brief — What to Send, When, and Why It Matters</h3>
+    <p>Send your content brief 48 hours before check-in. Not at booking — that's too early and it reads as transactional. Not at check-in — that puts creative direction on someone who just arrived and wants to decompress. 48 hours before is the moment a creator starts mentally framing their trip.</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">Content Brief Template</div>
+      <p><strong>Hey <span class="pitch-placeholder">[Name]</span> — so excited for your stay.</strong> A few things to set you up for great content:</p>
+      <p><strong>The property's best moments:</strong></p>
+      <p>— <span class="pitch-placeholder">[Feature 1, e.g. "The dock at golden hour — roughly 6:45–7:30pm this time of year. The reflection on the water is something most guests say is the best shot of the trip."]</span></p>
+      <p>— <span class="pitch-placeholder">[Feature 2, e.g. "The outdoor shower. It sounds simple but it photographs beautifully against the cedar wall — especially in morning light."]</span></p>
+      <p>— <span class="pitch-placeholder">[Feature 3, e.g. "The arrival moment. The door opens to the full lake view — that first look is worth capturing before you put anything down."]</span></p>
+      <p><strong>Creative freedom:</strong> These are starting points. If you see something more interesting, follow it. This is your stay — the content should feel like yours.</p>
+      <p><strong>One small ask:</strong> After you post, please tag <span class="pitch-placeholder">[@yourhandle]</span> and use the collab feature on the reel if you're able. That's all we need. We'll handle any reposts on our end.</p>
+      <p><strong>Content usage:</strong> We'd love to use your content in our marketing — Instagram, our website, and potentially Airbnb listing photos. Nothing will be altered or used in paid advertising without a quick check-in with you first. Sound good?</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Don't Over-Direct</div>
+      <p>A rigid shot list ("please film the kitchen, the bedroom, the bathroom, the living room, the view, the dock, and a lifestyle clip by the fire") produces generic real-estate footage, not aspirational travel content. The more you prescribe, the less authentic the output. Creators build trust with their audience by choosing what to show — hand over creative control and you get content that converts. Hand over a checklist and you get a virtual tour.</p>
+    </div>
+
+    <h3>Setting Up for Content — The Arrival Staging Protocol</h3>
+    <p>You won't be there, but the property should look like you were. For a creator stay, elevate the standard welcome:</p>
+    <ul>
+      <li><strong>Lights on:</strong> warm light throughout, not just the overhead fixtures. Lamps, string lights if you have them, fireplace if it's appropriate to the season.</li>
+      <li><strong>Flowers or greenery:</strong> a simple arrangement on the kitchen island or dining table adds foreground interest to every wide shot. A $20 bouquet from the grocery store shows up in 40% of their content.</li>
+      <li><strong>Consumables staged:</strong> the wine/welcome basket visible on the counter, not tucked in the pantry. If it looks like a gift, it gets photographed.</li>
+      <li><strong>The hero shot set up:</strong> whatever your property's best visual is — the lake view, the mountain panorama, the pool — clear any cleaning supplies, personal items, or clutter from the sight line. This is the image they'll lead with.</li>
+    </ul>
+
+    <h3>Content Rights — What You Actually Need (No Lawyer Required)</h3>
+    <p>You need the right to use their content for your own property marketing. You do not need to own it outright, and asking for full transfer of ownership will end most negotiations immediately.</p>
+
+    <p><strong>The language that works:</strong> Include this in your booking confirmation message, not a separate contract:</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">Content Rights Language — Include in Booking Confirmation</div>
+      <p>As part of our creator partnership, <span class="pitch-placeholder">[Creator Name]</span> grants <span class="pitch-placeholder">[Property Name / Host Name]</span> a non-exclusive, royalty-free license to use photos and videos created during this stay for property marketing on any platform, including social media, website, and property listing photos. Content will not be used in paid advertising without the creator's prior written approval (a message reply is sufficient). The creator retains full ownership and may continue to use, license, or monetize their content as they choose.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Why This Wording Works</div>
+      <p>"Non-exclusive" means they keep the content. "Royalty-free" means no ongoing payments. "Prior written approval for paid ads" protects them from seeing their face in a Facebook ad they didn't approve. Most creators will agree to this without hesitation because it's fair — you get use rights, they keep ownership. A message reply counts as written approval, which keeps the process lightweight.</p>
+    </div>
+
+    <h3>After the Stay — Extraction, Amplification, and the Long Tail</h3>
+    <ul>
+      <li><strong>Request content via Google Drive:</strong> Ask creators to drop their raw files (not just the posted versions) into a shared folder. You want full-resolution originals. This is your asset library — every photo you upload to Airbnb is a listing quality improvement.</li>
+      <li><strong>Reshare within 48 hours:</strong> Use Instagram's collab feature or reshare their reel to your stories within 48 hours of their post. This is the highest-engagement window. Comment on their post from your property account.</li>
+      <li><strong>Pin top-performing content:</strong> Pin the reel or carousel that performs best to the top of your profile. First impressions on your account are driven by what's pinned — make it count.</li>
+      <li><strong>Upload to Airbnb listing photos:</strong> Airbnb allows you to upload lifestyle photography alongside interior shots. Creator content — especially lifestyle and golden-hour exteriors — outperforms standard real-estate photography for click-through rate.</li>
+      <li><strong>Pinterest:</strong> Create a board named after your property. Pin their content with keyword-rich descriptions. Travel pins indexed by Pinterest appear in Google Image search and generate passive traffic for 18+ months.</li>
+      <li><strong>Tag and file for ads:</strong> When you eventually run paid social, creator content dramatically outperforms property-only creative. Tag and organize everything in your Drive folder as: Creator Name / Date / Platform / Type (photo/reel/story). Three months from now, you'll thank yourself.</li>
+    </ul>
+
+    <h3>The Ambassador Program — When to Upgrade from One-Off to Ongoing</h3>
+    <p>After a creator produces quality content and their audience responds well, propose the ambassador relationship. This is not a formal contract — it's a standing partnership:</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-value">2×</div>
+        <div class="metric-label">Stays per year for ambassador partners — enough for seasonal content variety (summer + fall, or winter + spring)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">5–10</div>
+        <div class="metric-label">Active ambassadors in your network fills the content calendar consistently — different formats, niches, and audience profiles</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">$0</div>
+        <div class="metric-label">Cash cost once the relationship is established — comped stays remain the currency for most nano and micro ambassador partnerships</div>
+      </div>
+    </div>
+
+    <p>Ambassador pitch framing: "We loved what you created last time and the response from your audience was genuinely impressive. Would you be interested in coming back [next season] as part of an ongoing partnership? We'd give you priority booking access, a standing invitation for two stays per year, and you'd be the first person we call when we expand to our second property."</p>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Compounding Effect</div>
+      <p>A creator network of 8 active ambassadors — each delivering 2 stays per year — produces 16 content cycles annually. If each cycle generates 1 reel + 5 stories + 10 photos, you have 16 reels, 80 stories, and 160 photos entering your library every year. This is a content operation, not a marketing campaign. It scales without proportional labor and every asset lives permanently on your platforms, your listing, and in search indexes.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 3</div>
+      <h4>Write your first creator content brief</h4>
+      <div class="ai-prompt-box">I'm hosting a travel content creator at my [property type] in [market] arriving [timeframe]. Write a content brief I can send them 48 hours before check-in.
+
+Property details:
+- [List 3 strongest visual features of your property]
+- Best time of day for the hero shot: [e.g. golden hour around 7pm, morning mist on the lake around 6:30am]
+- Any access restrictions or off-limits areas: [e.g. neighbor property line, maintenance shed]
+- Welcome setup I'm doing: [wine on arrival, flowers, fireplace lit, etc.]
+
+Make the brief feel warm and collaborative, not like a job description. Mention the content rights in one sentence at the end — friendly, not legal. End with something that makes them excited to arrive.</div>
+      <p class="ai-prompt-note"><strong>Send this exact brief</strong> for your first creator stay. After you've hosted three creators, you'll know which moments consistently produce the best content and you can sharpen the brief accordingly. The first draft doesn't need to be perfect — it needs to be sent.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 10 Complete When:</div>
+      <h3>You have an active creator pipeline and your first content stay is scheduled.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Creator channel thesis written: your target niche, platform priority, and content aesthetic defined</li>
+        <li><span class="cp-box"></span>Five creator outreach DMs sent using the personal-open framework — minimum one reply received</li>
+        <li><span class="cp-box"></span>Creator media kit completed: property description, content opportunity guide, deliverables, and rights language</li>
+        <li><span class="cp-box"></span>Content brief template finalized and ready to send 48 hours before any creator arrival</li>
+        <li><span class="cp-box"></span>Google Drive folder structure built: Creator Name / Date / Raw + Posted / By Platform</li>
+        <li><span class="cp-box"></span>First creator stay scheduled — property staged, welcome brief date on calendar</li>
+        <li><span class="cp-box"></span>Proceed to Module 11 — Curated Experiences & Revenue Layers: now that you have a creator channel building top-of-funnel, learn how curated local experiences become both a guest differentiator and an additional revenue stream</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Creator Network Is the Acquisition Flywheel</h3>
+    <p>Every other spoke in the Hub-and-Spoke system depends on demand reaching the top of your funnel. Airbnb SEO, your direct booking site, your email list, your Local Guide — all of them convert demand, they don't create it. The creator network is one of three channels that creates demand where none existed before.</p>
+    <p>A creator with 18K engaged followers posts a reel from your property. Their audience discovers your destination. Some search Airbnb — your listing gets a visibility lift from the traffic signal. Some visit your direct booking site — your list grows. Some save the reel and book two months later through your Kit email after subscribing. The conversion happens through channels you built in earlier modules. The demand creation happened here.</p>
+    <ul>
+      <li><strong>Content assets</strong> — every piece of creator content is permanent marketing inventory, indexed on Instagram, TikTok, Pinterest, and YouTube simultaneously</li>
+      <li><strong>Airbnb algorithm signal</strong> — external links and traffic to your listing from creator content improve search ranking</li>
+      <li><strong>Email list growth</strong> — creator audiences who find your direct booking site and subscribe become owned-channel guests</li>
+      <li><strong>Listing photo quality</strong> — creator photography loaded into your Airbnb listing directly improves click-through rate</li>
+      <li><strong>Brand association</strong> — being consistently associated with quality creators positions your property as aspirational, not transactional</li>
+    </ul>
+    <p>Module 11 covers curated experiences — the layer that gives creators something worth featuring beyond the property itself, and gives guests a reason to book your property over the competition down the road.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 10: Creator & Influencer Network &nbsp;·&nbsp; Next: Module 11 — Curated Experiences & Revenue Layers
+</footer>
+    <div class="icon">🎯</div>
+    <div>
+      <div class="label">Module 10 Deliverable</div>
+      <p>A pre-arrival upsell email live in Kit or OwnerRez. At least two local experience partner agreements in place — each with a referral arrangement and a presence in your guidebook. Ancillary revenue tracking added to your OwnerRez reporting. A Day-21 re-booking offer built into your Module 07 post-stay automation.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Upsell Economics — What's Above the Nightly Rate</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand the three revenue categories above the nightly rate, calculate what systematic upsell capture is worth annually, and recognize why this revenue is structurally unavailable to OTA-only operators.
+    </div>
+
+    <p>The direct booking machine optimizes revenue at the <em>booking</em> level: more bookings, better pricing, fewer OTA fees. Module 10 adds a second revenue layer — what guests spend <em>during and around their stay</em>. This is revenue that does not exist in your OwnerRez report today, not because guests aren't spending it, but because no one has offered to capture it.</p>
+
+    <p>The average STR guest household spends $150–400 on local activities, food, and experiences during a typical 3–4 night stay. They will spend this money regardless of whether you participate. The question is whether the kayak rental company, the wine tour guide, or the local chef captures it — or whether you get a referral commission for introducing them. Module 10 is about positioning yourself in the middle of that spend, systematically, without building a single experience yourself.</p>
+
+    <div class="revenue-tiers">
+      <div class="tier-card">
+        <div class="tier-label">Tier 1</div>
+        <div class="tier-title">Pre-Arrival Add-Ons</div>
+        <p>Offered at booking confirmation or in the Kit welcome email. Guest purchases before arrival. You fulfill or partner to fulfill.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Early check-in</span><span class="price">$35–75</span></div>
+          <div class="tier-example"><span>Grocery pre-stock</span><span class="price">$75–150</span></div>
+          <div class="tier-example"><span>Welcome wine package</span><span class="price">$45–90</span></div>
+          <div class="tier-example"><span>Firewood delivery</span><span class="price">$20–40</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Tier 2</div>
+        <div class="tier-title">In-Stay Referrals</div>
+        <p>Experience partners whose services are recommended in your guidebook and welcome email. You earn a referral commission or affiliate code credit when guests book.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Kayak / boat rental</span><span class="price">10–20%</span></div>
+          <div class="tier-example"><span>Wine tour / tasting</span><span class="price">10–15%</span></div>
+          <div class="tier-example"><span>Private chef</span><span class="price">15–20%</span></div>
+          <div class="tier-example"><span>Fishing / adventure guide</span><span class="price">10–15%</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Tier 3</div>
+        <div class="tier-title">Post-Stay Revenue</div>
+        <p>Re-booking incentives, referral commissions from guests who recommend your property to others, and long-term loyalty offers through the Module 07 email system.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Day-21 re-book offer</span><span class="price">5–10% off</span></div>
+          <div class="tier-example"><span>Referral credit</span><span class="price">$50–75 off</span></div>
+          <div class="tier-example"><span>Off-season loyalty rate</span><span class="price">Custom</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Ancillary Revenue — What Systematic Capture Is Worth Annually</div>
+      <p>Assume 90 booked nights per year, averaging 2 stays per week during peak and shoulder season. A conservative 20% of guests purchase at least one Tier 1 add-on at an average of $60: <strong>18 add-on purchases × $60 = $1,080/year</strong>.</p>
+      <p>Tier 2 referral commissions: 30% of guests book at least one experience through your partner network, average commission $35: <strong>27 referrals × $35 = $945/year</strong>.</p>
+      <p>Tier 3 re-booking capture: 8% of guests return in Year 1 through the Day-21 offer, at $250 average nightly rate for 3 nights: <strong>2 re-bookings × $750 = $1,500/year</strong> (at zero acquisition cost).</p>
+      <p><strong>Conservative annual ancillary total: $3,525</strong> — on top of the nightly rate, without adding a single night of occupancy. At Year 3 with a growing partner network and refined offer, this number scales to $6,000–8,000/year on a single property.</p>
+    </div>
+
+    <h3>Why OTA-Only Operators Cannot Capture This Revenue</h3>
+    <p>Airbnb and VRBO prohibit post-booking upsells through their platforms. A host cannot message a booked Airbnb guest a wine package offer — it violates platform terms. A host cannot embed affiliate links in an Airbnb guidebook that earn the host commissions — Airbnb's platform controls what appears there. The entire Tier 1 and Tier 3 revenue categories require the direct booking infrastructure built in Modules 06 and 07: a direct booking site where add-ons are listed at checkout, and a Kit email system where the welcome sequence delivers the pre-arrival offer.</p>
+
+    <p>This is why the hub-and-spoke model was designed the way it was. OTAs fill the funnel. The direct booking machine — your site, your email list, your StayFi network — is where the revenue above the nightly rate lives. Module 10 activates it.</p>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You know what your ancillary revenue target is and which revenue tier to build first.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Annual ancillary revenue target calculated — based on current booking volume and conservative upsell conversion rates</li>
+        <li><span class="cp-box"></span>Starting tier selected — most operators should build Tier 1 (pre-arrival add-ons) first because it requires no third-party relationships and can be live within a week</li>
+        <li><span class="cp-box"></span>Ancillary revenue tracking column added to your OwnerRez or spreadsheet — so you can measure what Module 10 actually generates</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Experience Partnerships — Building Your Local Referral Network</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Identify, approach, and close referral arrangements with at least two local experience providers in your area — and place them correctly in your guidebook, Kit welcome email, and StayFi landing page so they generate consistent referral revenue without requiring any ongoing management.
+    </div>
+
+    <p>Experience partnerships are the highest-margin revenue in the entire course. Your cost is zero. Your time investment is one conversation per partner. Your ongoing maintenance is a quarterly check-in to make sure the arrangement is working. A single partner who sends guests to a wine tour at $120/person, at a 15% commission, generates $18 per referral — and a property doing 90 nights/year can realistically refer 15–20 of those guests to one experience partner. That is $270–360/year from one conversation.</p>
+
+    <h3>Who to Target</h3>
+
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="partner-icon">🚣</div>
+        <div class="partner-type">Outdoor Recreation</div>
+        <p>Kayak, paddleboard, boat, or bike rentals. Fishing guides. Hiking tour operators. Ziplining or adventure companies.</p>
+        <div class="partner-rate">Typical commission: 10–20%</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🍷</div>
+        <div class="partner-type">Food & Wine</div>
+        <p>Local wineries, breweries, distilleries. Wine tour operators. Private chefs. Cooking class studios.</p>
+        <div class="partner-rate">Typical commission: 10–15%</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">💆</div>
+        <div class="partner-type">Wellness</div>
+        <p>In-home massage therapists (deliver to your property). Yoga studios with drop-in classes. Spa packages at nearby properties.</p>
+        <div class="partner-rate">Typical commission: 15–20%</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🚗</div>
+        <div class="partner-type">Transportation</div>
+        <p>Local car rental (if your property is rural). Airport shuttle services. Private driver for wine country or event nights.</p>
+        <div class="partner-rate">Typical commission: 10–15%</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">📸</div>
+        <div class="partner-type">Photography</div>
+        <p>Vacation/family photographers who shoot at local scenic spots. A pre-booked photo session is a premium add-on that sells to the right guest profile.</p>
+        <div class="partner-rate">Typical commission: 15%</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🎭</div>
+        <div class="partner-type">Local Events</div>
+        <p>Concert venues. Theater companies. Seasonal events (harvest festivals, farm markets). Farm-to-table dinner series.</p>
+        <div class="partner-rate">Typical: affiliate link or discount code</div>
+      </div>
+    </div>
+
+    <h3>The Partnership Pitch</h3>
+    <p>Most local experience operators have never been systematically referred guests by a nearby STR host. They are not expecting the call, which makes this conversation easy — you are showing up with something valuable and asking for very little in return.</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">The Pitch Framework — What to Say</div>
+      <p>"Hi, I'm <span class="pitch-placeholder">[your name]</span> — I own <span class="pitch-placeholder">[property name]</span> in <span class="pitch-placeholder">[area]</span>. I have guests staying every week during <span class="pitch-placeholder">[peak season]</span>, and they always ask me what to do in the area. I already recommend <span class="pitch-placeholder">[your business]</span> because I know the area well — but I'd love to make it official and drive you actual bookings rather than just word-of-mouth recommendations."</p>
+      <p>"What I'm looking for is simple: a referral arrangement where I get a commission or a discount code tied to my property when my guests book with you. In exchange, you get a consistent, warm referral stream from guests who are already in the area and actively looking for things to do."</p>
+      <p>"Would a 15% commission on referred bookings work for you? Or if you'd prefer, a flat discount code that tracks referrals — either works on my end."</p>
+    </div>
+
+    <p>Most local operators will say yes immediately. They receive warm, pre-qualified leads (your guests are already in the area, already on vacation, already open to spending). There is no marketing cost, no cold acquisition, no competition for attention. A referral from a trusted host is worth 3x a Google ad click to a local experience operator.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Preferred-Rate Partnership — Better Than Commission for Some Partners</div>
+      <p>Some local operators — especially small family businesses, farms, or artists — are uncomfortable with a commission structure. For these partners, offer a different arrangement: <strong>a preferred rate for your guests in exchange for a feature in your guidebook.</strong> "I'll list you as the recommended [kayak rental / winery / chef] for all my guests, with your contact info and a personal endorsement. In exchange, can you offer my guests a 10% discount when they mention [property name]?" The partner gets free marketing. Your guests get a discount. You get the credibility of offering something your guests can't easily find on their own — and a stronger guidebook recommendation that converts better in your welcome email.</p>
+    </div>
+
+    <h3>Where to Place Each Partner</h3>
+    <p>Once a partnership is agreed, deploy it across all three guest-facing touchpoints:</p>
+    <ul>
+      <li><strong>Physical guidebook (Module 02)</strong> — the most-read in-property resource. Partners listed here receive the most referrals because the guest is physically present, phone in hand, deciding what to do tomorrow. Include the partner name, a one-sentence endorsement, their phone or booking link, and any discount code.</li>
+      <li><strong>Kit welcome email (Module 07)</strong> — sent before the guest arrives. One to two experience partners can be featured here as "what we recommend doing while you're here." Guests who plan ahead are more likely to pre-book, and a pre-booked kayak rental means one less thing they're figuring out on arrival.</li>
+      <li><strong>StayFi landing page (Module 02)</strong> — the WiFi login page that every guest sees upon connecting. A single featured partner with a "ask the host about this" CTA is appropriate here — this is not a marketplace, it is a light touch at a moment of high attention.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Two Things to Protect Against</div>
+      <p><strong>Partner quality is your reputation.</strong> A guest who takes your wine tour recommendation and has a bad experience will not write a negative review about the winery — they will write a negative review about you. Verify every partner before recommending. Use them yourself or know them personally. A "I hear good things" recommendation is not sufficient basis for a partnership that appears in your guidebook.</p>
+      <p><strong>Document the arrangement.</strong> Not a legal contract — a simple email confirming who, what commission rate, how payments are made, and what happens if a guest complains. This protects the relationship if the operator's staff changes and the new person doesn't know the arrangement exists.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your Local Experience Partner Outreach Message</h4>
+      <div class="ai-prompt-box">You are helping me write an outreach message to approach a local business about a referral partnership with my vacation rental. This should be warm, specific, and clearly explain the mutual benefit.
+
+My property name: [YOUR PROPERTY NAME]
+My location: [CITY/AREA, STATE]
+My guest profile: [e.g., "couples and families from NYC, usually staying 3–4 nights, visiting for wine trails / lake activities / hiking"]
+The business I'm approaching: [BUSINESS NAME]
+What they offer: [KAYAK RENTALS / WINE TOURS / PRIVATE CHEF SERVICES / etc.]
+What I want to offer: [COMMISSION — e.g., "15% on referred bookings" / DISCOUNT CODE — e.g., "10% off for guests who mention my property"]
+How I'll feature them: [GUIDEBOOK + KIT WELCOME EMAIL / GUIDEBOOK ONLY / etc.]
+
+Write:
+1. A subject line for an email outreach
+2. A short email (4–6 sentences) that introduces who I am, what I'm proposing, why it benefits them, and a clear call to action
+
+Voice: warm, professional, direct. Not a corporate pitch — this should sound like a neighbor in the community asking for a business arrangement that benefits both sides. Keep it under 150 words total.</div>
+      <p class="ai-prompt-note"><strong>Before sending:</strong> Call or visit the business in person first if possible. A local relationship built face-to-face converts at 3x the rate of a cold email. Use this email as a follow-up after the in-person conversation, or as the initial outreach if an in-person visit isn't practical. <strong>After the partnership is confirmed:</strong> Add them to the guidebook, the Kit welcome email, and your StayFi landing page within the same week — before you forget.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>At least two local experience partnerships are confirmed and deployed in your guest-facing assets.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>At least 5 local experience businesses identified and researched — personal knowledge or first-hand verification, not just a Google search</li>
+        <li><span class="cp-box"></span>Outreach completed to at least 3 businesses — email or in-person conversation</li>
+        <li><span class="cp-box"></span>At least 2 partnership arrangements confirmed — commission rate or discount code, payment method, and arrangement documented via email</li>
+        <li><span class="cp-box"></span>Both partners added to the physical guidebook — name, endorsement, contact, discount code</li>
+        <li><span class="cp-box"></span>At least one partner featured in the Kit welcome email sequence</li>
+        <li><span class="cp-box"></span>StayFi landing page updated to feature one experience partner</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The Pre-Arrival Upsell — Capturing Revenue Before the Guest Arrives</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build a pre-arrival upsell sequence that presents add-ons at the moment of maximum purchase intent — right after booking confirmation — and understand the OwnerRez-based and Kit-based delivery options for both direct bookings and OTA bookings.
+    </div>
+
+    <p>The highest moment of purchase intent in any guest's journey is in the 24 hours after they make their booking decision. They have just committed money to a vacation. They are already in a spending mindset. They are thinking about the trip. A pre-arrival add-on offer arriving in this window converts at 3–4x the rate of the same offer arriving 48 hours before check-in. The timing is the product.</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-value">20%</div>
+        <div class="metric-label">of guests will purchase a pre-arrival add-on when offered within 24 hours of booking</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">$60</div>
+        <div class="metric-label">average pre-arrival add-on purchase per buying guest</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">$12</div>
+        <div class="metric-label">average ancillary revenue per stay when a systematic pre-arrival offer is in place</div>
+      </div>
+    </div>
+
+    <h3>The Two Delivery Paths</h3>
+    <p>The delivery mechanism depends on how the booking arrived:</p>
+
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Direct booking via your website (OwnerRez Extras)</strong> OwnerRez has a native "extras" feature for direct bookings. You configure add-on items in the OwnerRez dashboard — early check-in, grocery pre-stock, welcome package. These appear at checkout on your direct booking site. The guest purchases them as part of the same booking transaction. No email needed. The guest opts in before they've even received a confirmation.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>OTA booking via Airbnb or VRBO (Kit welcome sequence)</strong> Airbnb prohibits off-platform transaction solicitation, which means you cannot directly offer add-ons to Airbnb guests in a way that transfers money outside the platform. However, you can offer services fulfilled through third parties where the guest pays the third party directly. The Kit welcome email (fired when StayFi captures the guest's email at WiFi login) can recommend pre-arrival grocery delivery services, local experience pre-booking, and partner discounts — none of which involve you receiving off-platform payment from a booked Airbnb guest. Structure the offer as a guest service recommendation, not a purchase request.</p></div>
+      </div>
+    </div>
+
+    <h3>What Converts — The Hierarchy of Pre-Arrival Offers</h3>
+    <p>Not all add-ons convert equally. The following is ordered by typical purchase rate when offered to STR guests:</p>
+
+    <ol>
+      <li><strong>Early check-in</strong> — converts at 25–35% when offered to guests arriving by noon. Priced at $35–75 depending on market. Easy to fulfill if your cleaner can complete by 11am. A "priority early check-in subject to cleaner availability" offer requires zero guaranteed commitment and still converts.</li>
+      <li><strong>Grocery pre-stock</strong> — converts at 10–20% for families and longer-stay guests. Source: Instacart, a local grocery concierge, or a personal shopping service. You add a markup of 20–30% over the grocery bill for the time and coordination. Or offer as a Tier 2 referral to a local service provider.</li>
+      <li><strong>Welcome package</strong> — wine, charcuterie, or a locally sourced gift basket. Converts at 15% for couples and anniversary/celebration stays. Coordinate with a local wine shop or specialty grocer. Charge $45–90. Your cost: $25–50. Your margin: $20–40. Your guest's perception: a host who thought about them before they arrived.</li>
+      <li><strong>Firewood delivery</strong> — seasonal (fall/winter). Converts at 20–30% when offered to guests who will have a fire pit or fireplace. Cost: trivial. Revenue: $20–40. Perceived value: high.</li>
+      <li><strong>Late checkout</strong> — converts at 10–15%. Priced at $25–50. Must be checked against next arrival timing. Only offer when your schedule permits.</li>
+    </ol>
+
+    <div class="callout mistake">
+      <div class="callout-label">✗ The Most Common Pre-Arrival Upsell Mistake</div>
+      <p>Offering too many add-ons in the same message. A guest presented with five purchase options will buy zero. This is the paradox of choice applied to hospitality — the decision overhead is higher than the desire to buy any single item. Offer a maximum of two add-ons per communication. Lead with the one most relevant to the guest profile. The grocery pre-stock converts better for a 6-night family stay. The welcome wine package converts better for a couples weekend. Use OwnerRez's booking data or the Kit segment tag (Module 07) to choose which offer to lead with.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your Pre-Arrival Upsell Email</h4>
+      <div class="ai-prompt-box">You are helping me write a pre-arrival upsell email for my vacation rental. This email goes out to guests immediately after they book — either through our Kit welcome sequence (for OTA guests who join our email list) or through OwnerRez booking confirmation (for direct booking guests).
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+Primary guest profile: [COUPLES / FAMILIES / MIXED — e.g., "mostly couples, anniversary and romantic getaways"]
+Peak season: [MONTHS — e.g., "June through October"]
+Add-on #1 I'm offering: [e.g., "Early check-in for $45 — subject to availability"]
+Add-on #2 I'm offering: [e.g., "Welcome wine and charcuterie board sourced from local wineries — $65"]
+How to request the add-on: [e.g., "Reply to this email" / "Add at checkout" / "Text [phone]"]
+
+Write one email that:
+— Opens with a warm, specific welcome (reference the area or season, not a generic "welcome to your upcoming stay")
+— Briefly introduces the 2 add-ons (one sentence each, focus on the guest benefit not the product description)
+— Gives a clear, single call to action (e.g., "Reply to this email with which you'd like and I'll confirm details")
+— Closes in a way that sets a warm, personal tone for the stay ahead
+
+Tone: host-to-guest, not e-commerce. Personal, warm, direct. No bullet points. 150 words maximum.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Read the email out loud. If it sounds like a hotel software system wrote it, rewrite the opening sentence in your own voice. The welcome should reference something true and specific — the season, what guests typically love about this time of year, or what you personally recommend for their type of stay. <strong>Then:</strong> Add it to OwnerRez under Extras (for direct bookings) or to your Kit welcome sequence as a second email firing 2 hours after booking confirmation (for OTA guests).</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>Your pre-arrival upsell offer is live and has been test-purchased end-to-end.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Add-on items configured in OwnerRez Extras for direct bookings — pricing, availability logic, and fulfillment process documented</li>
+        <li><span class="cp-box"></span>Pre-arrival upsell email written and added to Kit welcome sequence — fires within 2 hours of OTA booking confirmation (when StayFi captures guest email)</li>
+        <li><span class="cp-box"></span>Maximum 2 add-ons offered per message — hierarchy set based on primary guest profile</li>
+        <li><span class="cp-box"></span>Fulfillment process documented for each add-on — who does what, by when, how the guest is notified</li>
+        <li><span class="cp-box"></span>Test purchase completed — walked through the full add-on flow as a guest to confirm it works correctly</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>In-Stay & Post-Stay Revenue — The Long Tail of Every Booking</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand how the guidebook functions as an ongoing in-stay revenue engine, build the Day-21 re-booking offer into the Module 07 post-stay automation, and set up ancillary revenue tracking so you can see what Module 10 is actually generating.
+    </div>
+
+    <p>Pre-arrival upsells capture revenue before the guest arrives. In-stay referrals capture revenue while they're there. Post-stay offers capture the guest's momentum before it dissipates. Together, these three timing windows turn every booking into a revenue event that extends well beyond the nightly rate on the invoice.</p>
+
+    <h3>The Guidebook as an In-Stay Revenue Engine</h3>
+    <p>The Module 02 guidebook exists as a practical guest resource. Module 10 refines it into an in-stay referral vehicle. The distinction: a practical guidebook tells guests where to go. A revenue-optimized guidebook tells them where to go, why you personally recommend it, and how to book — with your referral code embedded at the point of decision.</p>
+
+    <p>The highest-converting placement in any guidebook is the restaurant or activity that the host describes in the first person: <em>"My favorite winery in the area is Sheldrake Point — ask for the seated tasting and tell them [property name] sent you for 15% off."</em> This converts 3–5x better than a generic "recommended places" list because it carries the host's personal endorsement and a concrete benefit the guest can claim.</p>
+
+    <ul>
+      <li>Every partner from Lesson 2 should have a first-person endorsement in the guidebook — one to two sentences, what you personally love about them, and the discount code or how to book</li>
+      <li>Group partner recommendations by experience type (Things to Do, Where to Eat, Wine & Beer, Adventures), not alphabetically — guests browse by intent, not by name</li>
+      <li>Add a QR code for each partner that links directly to their booking page — removing the search step increases conversion from guidebook mention to actual booking</li>
+    </ul>
+
+    <h3>The Day-21 Re-Booking Offer — Building It Into the Module 07 Automation</h3>
+    <p>Module 07 built a Day-21 post-stay automation that sends the referral flywheel email. Module 10 adds a re-booking offer to the same automation — or fires as a second email in the same sequence, 48 hours after the referral request.</p>
+
+    <p>The Day-21 re-booking offer works because the guest's memory of the stay is still vivid, they have not yet fully re-entered the routine of their regular life, and their emotional connection to the property is at its most recent. A time-limited offer that expires before the next peak season creates urgency without pressure:</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">Day-21 Re-Booking Offer — The Framework</div>
+      <p>"I wanted to reach out while the trip is still fresh — I'd love to welcome you back to <span class="pitch-placeholder">[property]</span> next year. I'm holding <span class="pitch-placeholder">[off-peak or early peak]</span> dates for returning guests before I open the calendar to new bookings. If you'd like to lock in your preferred dates at last year's rate, just reply here and I'll send you a private booking link."</p>
+      <p><strong>What this does:</strong> offers a perceived insider access (private booking window), a concrete benefit (last year's rate), and a low-friction CTA (just reply). Re-booking conversion on Day-21 offers to 5-star guests runs at 8–12% in most markets — that is 8–12% of your past guests becoming next year's direct bookings at zero acquisition cost.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Annual Revenue Picture — What This Module Changes</div>
+      <p>At the start of this course, your revenue model was: <em>occupancy × nightly rate − OTA fees</em>. At the end of Module 10, it looks like this:</p>
+      <ul>
+        <li><strong>Tier 1 nightly revenue</strong> — your nightly rate, after fees, via OTA and direct booking</li>
+        <li><strong>Tier 2 direct booking premium</strong> — the Module 06 savings from eliminating the 15.5% Airbnb fee on converted direct bookings</li>
+        <li><strong>Tier 3 pre-arrival add-ons</strong> — the Lesson 3 add-on revenue per stay, approximately $12/stay systematically</li>
+        <li><strong>Tier 4 in-stay referral commissions</strong> — the Lesson 2 partner network producing $30–50/stay on average, captured through partner codes</li>
+        <li><strong>Tier 5 post-stay re-bookings</strong> — direct, zero-cost bookings from past guests, eliminating the OTA entirely for returning guests</li>
+      </ul>
+      <p>The STR operator who builds all five tiers earns materially more from the same property than the OTA-only operator — not because of better pricing, but because of a system that monetizes every stage of the guest relationship.</p>
+    </div>
+
+    <h3>Tracking Ancillary Revenue — Making It Visible So You Can Optimize It</h3>
+    <p>Revenue you cannot see, you cannot improve. Add a simple tracking layer to your existing OwnerRez or spreadsheet reporting:</p>
+
+    <ul>
+      <li><strong>Pre-arrival add-on revenue</strong> — track each purchase, which add-on, guest segment, and stay length. Over time this tells you which add-on converts best with which guest profile.</li>
+      <li><strong>Partner referral commissions</strong> — request a monthly report from each partner on referrals received from your code or discount. Quarterly, compare which partners are generating the most activity and double the guidebook space for the top two.</li>
+      <li><strong>Re-booking conversion rate</strong> — track how many Day-21 emails were sent vs. how many converted to a booking. This is the number that tells you whether the offer language needs revision.</li>
+      <li><strong>Total ancillary revenue per stay</strong> — divide total ancillary revenue by total stays per quarter. This is the single number that shows you whether Module 10 is working and by how much.</li>
+    </ul>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 10 Complete When:</div>
+      <h3>All three upsell tiers are active and you have a tracking system that shows what they're generating.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Guidebook updated with first-person partner endorsements and referral codes — QR codes added for each partner</li>
+        <li><span class="cp-box"></span>Day-21 re-booking offer written and added to Module 07 Kit post-stay automation — fires as a second email in the sequence, 48 hours after the referral flywheel email</li>
+        <li><span class="cp-box"></span>Ancillary revenue tracking set up in OwnerRez or spreadsheet — separate line items for add-ons, referral commissions, and re-bookings</li>
+        <li><span class="cp-box"></span>First monthly partner report requested — so you know which experiences guests are actually booking through your referral codes</li>
+        <li><span class="cp-box"></span>Proceed to Module 11 — Regulations: before scaling this system to additional properties, you need to understand how local STR regulation can affect your operating model in each new market.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Upsell Is the Moat That OTAs Cannot Cross</h3>
+    <p>Airbnb can compete with your nightly rate. VRBO can compete with your listing photos. A new host in your market can compete on price to win bookings from price-sensitive guests. What no OTA and no competitor can replicate is the system you have spent ten modules building: a StayFi list, a Kit email sequence, a guidebook with personal partner endorsements, a direct booking site with add-ons at checkout, a Day-21 re-booking offer that converts past guests at zero acquisition cost.</p>
+    <p>The upsell revenue in Module 10 is not the most important thing Module 10 builds. <strong>The most important thing is the relationship infrastructure</strong> — the depth of the guest relationship that makes upsells possible. A guest who has received your welcome email, connected to your WiFi, read your personal guidebook recommendations, taken your wine tour referral, and received your Day-21 re-booking offer is not an Airbnb guest. They are your guest. The platform introduced you. You own the relationship.</p>
+    <ul>
+      <li><strong>StayFi</strong> — captures the guest relationship from the first moment on property</li>
+      <li><strong>Kit email system</strong> — delivers the pre-arrival offer and the post-stay re-booking ask</li>
+      <li><strong>Guidebook</strong> — the in-stay revenue channel that works while you sleep</li>
+      <li><strong>Partner network</strong> — turns your local knowledge into a recurring commission stream</li>
+      <li><strong>OwnerRez Extras</strong> — captures direct booking add-ons at point of sale</li>
+    </ul>
+    <p>Module 11 covers regulations — the operating context that determines whether you can scale this system to additional properties in the same or new markets. Understanding the regulatory environment is not the most exciting part of building an STR business. It is the part that determines whether your business is still operating in three years.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 10: Experiences & Upsells &nbsp;·&nbsp; Next: Module 11 — Regulations
+</footer>

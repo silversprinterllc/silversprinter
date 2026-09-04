@@ -31,7 +31,7 @@ export const BUCKETS: Record<Bucket, BucketMeta> = {
       "Your score puts you in the top 12% of STR hosts we've diagnosed. You're doing the hard things right: diversified distribution, direct bookings, dynamic pricing, and a real demand engine. The uncomfortable truth — your competitors are studying you. In 18 months, your moat narrows unless you keep building.",
     primaryCta: 'Get My Advanced Playbook',
     secondaryCta: 'Take the Free 7-Day Course',
-    tertiaryCta: 'Show Me the {{BRAND_NAME}} System',
+    tertiaryCta: 'Show Me the SpokeBnB System',
   },
   competitive: {
     id: 'competitive',
@@ -46,7 +46,7 @@ export const BUCKETS: Record<Bucket, BucketMeta> = {
       "Your score says you're doing a lot right. You're bringing in bookings, your ADR is defensible, and your operation runs. But we've flagged specific spokes where you're exposed — places where a sharper competitor would take your market share in the next 12-18 months. The gap between 'profitable' and 'dominant' is usually 3-4 specific moves.",
     primaryCta: 'Get My Full Personalized Report',
     secondaryCta: 'Take the Free 7-Day Course',
-    tertiaryCta: 'Show Me the {{BRAND_NAME}} System',
+    tertiaryCta: 'Show Me the SpokeBnB System',
   },
   'at-risk': {
     id: 'at-risk',
@@ -61,7 +61,7 @@ export const BUCKETS: Record<Bucket, BucketMeta> = {
       "Your score reveals what you already feel: something is off. Bookings aren't what they were. ADR is flat or slipping. You're working harder for the same revenue. This isn't your fault — your market is saturating and the operators who built systems 18-24 months ago are now absorbing the demand you used to get. The good news: the playbook exists.",
     primaryCta: 'Get My Full Report + 7-Day Action Plan',
     secondaryCta: 'Take the Free 7-Day Course',
-    tertiaryCta: 'Show Me the {{BRAND_NAME}} System',
+    tertiaryCta: 'Show Me the SpokeBnB System',
   },
   critical: {
     id: 'critical',
@@ -76,7 +76,7 @@ export const BUCKETS: Record<Bucket, BucketMeta> = {
       "We're going to be honest — this is the score we see right before a host decides to exit. Your bookings are down, your pricing is compressed, and the operational systems that would insulate you from the market shift haven't been built yet. We're not piling on. Every host we've worked with at this score has come back — but only if they actually run the system.",
     primaryCta: 'Get My Triage Report + 72-Hour Plan',
     secondaryCta: 'Book a Free 15-Min Diagnostic Call',
-    tertiaryCta: 'Start the {{BRAND_NAME}} System Now',
+    tertiaryCta: 'Start the SpokeBnB System Now',
   },
 }
 

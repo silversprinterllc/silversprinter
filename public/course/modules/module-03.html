@@ -1,0 +1,1073 @@
+<title>Module 03 — Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7; --checkpoint-bg: #09263A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232; --checkpoint-bg: #0d3550;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232; --checkpoint-bg: #0d3550;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+  a { color: var(--gold); }
+  code { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-family: 'Courier New', monospace; font-size: 13px; color: var(--text); }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+  .step-content ul { font-size: 14px; margin-top: 6px; }
+
+  /* Callouts */
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Tables */
+  .compare-wrap { overflow-x: auto; margin: 24px 0; }
+  .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  /* Shot list */
+  .shot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0; }
+  .shot-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .shot-card .s-order { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .shot-card .s-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .shot-card p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  /* Title formula */
+  .title-formula { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0 24px; }
+  .title-block { background: var(--navy); color: var(--gold); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+  .title-sep { color: var(--muted); font-size: 18px; font-weight: 300; }
+  .title-example { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 8px; padding: 12px 18px; font-size: 14px; font-weight: 600; color: var(--text); margin: 12px 0; font-family: 'Playfair Display', serif; }
+  .char-count { font-size: 11px; color: var(--muted); font-weight: 400; font-family: 'Inter', sans-serif; margin-left: 8px; }
+
+  /* Pricing timeline */
+  .timeline { margin: 28px 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: var(--gold); opacity: 0.3; }
+  .tl-item { display: flex; gap: 18px; margin-bottom: 20px; position: relative; }
+  .tl-dot { width: 38px; height: 38px; min-width: 38px; background: var(--navy); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--gold); flex-shrink: 0; z-index: 1; }
+  .tl-content { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; flex: 1; }
+  .tl-content .tl-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .tl-content p { font-size: 13.5px; margin-bottom: 6px; }
+
+  /* Amenity grid */
+  .amenity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin: 16px 0; }
+  .amenity-item { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13.5px; }
+  .amenity-item .a-icon { font-size: 16px; flex-shrink: 0; }
+  .amenity-item .a-text { flex: 1; }
+  .amenity-item .a-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); }
+  .amenity-item .a-text span { font-size: 11px; color: var(--muted); }
+  .amenity-item.critical { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.03); }
+  .amenity-item.critical .a-text strong { color: #dc2626; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .amenity-item.critical .a-text strong { color: #fca5a5; } }
+  :root[data-theme="dark"] .amenity-item.critical .a-text strong { color: #fca5a5; }
+
+  /* Checklist */
+  .checklist { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 20px 0; }
+  .checklist-section { margin-bottom: 20px; }
+  .checklist-section:last-child { margin-bottom: 0; }
+  .checklist-section h4 { color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px; font-size: 12px; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .checklist-section h4 { color: var(--gold); } }
+  :root[data-theme="dark"] .checklist-section h4 { color: var(--gold); }
+  .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-box { width: 16px; height: 16px; min-width: 16px; border: 2px solid rgba(9,38,58,0.2); border-radius: 3px; margin-top: 3px; flex-shrink: 0; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .check-box { border-color: rgba(212,160,23,0.3); } }
+  :root[data-theme="dark"] .check-box { border-color: rgba(212,160,23,0.3); }
+
+  /* Response templates */
+  .response-block { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+  .response-block .r-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .response-block .r-text { font-size: 14px; color: var(--text); line-height: 1.8; font-style: italic; }
+  .response-block .r-note { font-size: 12px; color: var(--muted); margin-top: 10px; font-style: normal; }
+
+  /* Templates */
+  .template-box { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+  .template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .field .line { border-bottom: 1px solid var(--border); min-height: 22px; font-size: 12px; color: var(--muted); font-style: italic; padding-bottom: 2px; }
+
+  /* Case study */
+  .case-study { background: var(--navy); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .case-study-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .case-study h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 12px; }
+  .case-study p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 10px; }
+  .case-study p:last-child { margin-bottom: 0; }
+  .case-study strong { color: rgba(255,255,255,0.9); }
+  .case-study ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; }
+  .case-study li { margin-bottom: 6px; }
+
+  /* Checkpoint */
+  .checkpoint { background: var(--checkpoint-bg); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .machine-feed .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .machine-feed .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+</style>
+
+<!-- MODULE HEADER -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 03</div>
+    <h1>Operations — From Purchase to Day-One Ready</h1>
+    <p class="subtitle">How to build a listing that earns the click, price it to build review velocity, prepare the property for the guest who is actually coming, and execute a launch that sets your ranking for the next 12 months</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 1: Operate</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>5–7 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 02 — Tech Stack</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 04 — Revenue</div>
+    </div>
+  </div>
+</header>
+
+<!-- CHAIN BAR -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 00: Framework</span>
+    <span class="arrow">→</span>
+    <span>Module 01: Acquisition</span>
+    <span class="arrow">→</span>
+    <span>Module 02: Tech Stack</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 03: Launch</span>
+    <span class="arrow">→</span>
+    <span>Module 04: Revenue</span>
+  </div>
+</div>
+
+<!-- LESSON NAV -->
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — Listing Optimization</a>
+    <a href="#lesson-2">02 — Launch Pricing</a>
+    <a href="#lesson-3">03 — Property Preparation</a>
+    <a href="#lesson-4">04 — The Launch Sequence</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🚀</div>
+    <div>
+      <div class="label">Module 03 Deliverable</div>
+      <p>A fully optimized listing live on Airbnb — professional photos uploaded, algorithm-optimized title and description written, all applicable amenities checked, launch pricing set — and a written 60-Day Performance Plan with your review velocity target, pricing transition trigger, and the specific actions you will take after each guest departs.</p>
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-top:0">
+    <div class="callout-label">⚠ The 60-Day Window — Read This Before Anything Else</div>
+    <p>Airbnb gives new listings elevated search placement when they first go live. This is called the new-listing window. Its duration is not published and it varies — broadly, it lasts until the algorithm has enough data on your listing to rank it by performance (reviews, acceptance rate, response time, conversion rate). That window is approximately 30–60 days for most markets.</p>
+    <p>How you perform in this window — your price relative to your comp set, your review volume, your response time, your acceptance rate — shapes your ranking position for months afterward. A listing that launches well continues to benefit. A listing that launches poorly tends to stay suppressed even after the operator improves every variable.</p>
+    <p><strong>You only get one launch.</strong> Do not go live until you have completed every step in this module. The cost of waiting an extra week to get the photography right is trivial. The cost of launching with mediocre photos, a thin listing, and wrong pricing, and spending the next six months trying to recover your algorithm position, is not.</p>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>Listing Optimization — What the Algorithm Scores, What the Guest Decides</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build a listing that ranks in Airbnb's algorithm and converts the guests who see it — understanding that these are two separate but linked problems, each with specific solutions.
+    </div>
+
+    <p>The Airbnb algorithm is a search engine. Like Google, it wants to show searchers results that are relevant, high-quality, and likely to convert. Your listing is competing with every other property in your market for the same guest. The algorithm's job is to predict which listing that guest will book — and serve it first.</p>
+
+    <p>Your listing has two jobs. First, rank — get in front of the guest in search results. Second, convert — earn the booking from the guest who saw it. Most operators focus entirely on conversion (making the listing look good) while ignoring the algorithmic factors that determine whether anyone sees it at all. Both matter, in sequence.</p>
+
+    <h3>Photography — The Single Highest-ROI Investment You Will Make</h3>
+
+    <p>The cover photo is the first thing every guest sees in search results. It competes against a dozen other cover photos on the same screen. If it doesn't earn the click, nothing else matters. A guest who doesn't click your listing never reads your title, your description, or your amenities.</p>
+
+    <p>Professional photography is not optional. It is the one thing that consistently separates top-earning properties from mediocre ones in every market. The cost — typically $200–600 for a professional real estate or interior photographer — is recovered in the additional revenue of a single well-photographed peak weekend. Operators who use their phone for listing photos are leaving significant money on the table every booking, permanently, until they fix it.</p>
+
+    <h4>Finding the Right Photographer</h4>
+    <ul>
+      <li><strong>Look for real estate or interior photography experience, not just "photography."</strong> A portrait photographer will take beautiful people photos. An interior photographer knows how to handle room geometry, window light, and wide-angle perspective without distortion.</li>
+      <li><strong>Search Airbnb listings in your market for the best-photographed properties</strong> and reach out to those hosts to ask who they used. This is the fastest path to a proven photographer in your specific area.</li>
+      <li><strong>Review their portfolio for compositions that feel spacious without being dishonest.</strong> An ultra-wide-angle lens can make a closet look like a living room. Guests who show up and find the space smaller than it appeared leave reviews about it. Good photos are compelling AND accurate.</li>
+      <li><strong>Ask specifically about HDR processing and window blending.</strong> The biggest technical challenge in interior photography is a bright window next to a shadowed room. A good photographer brackets exposures and blends them in post — rooms look bright, views are visible, nothing is blown out or crushed to black.</li>
+    </ul>
+
+    <h4>The Shot List — In Sequence</h4>
+    <p>Bring this list to the photographer before the shoot. The sequence matters: Airbnb hosts photos in a gallery, and guests scroll through them in order. Front-load your strongest selling features.</p>
+
+    <div class="shot-grid">
+      <div class="shot-card">
+        <div class="s-order">Shot 01 — Cover Photo</div>
+        <div class="s-name">Hero Exterior or Signature Feature</div>
+        <p>The property's most visually compelling angle — often the approach, the water view, the fire-lit deck at dusk, or the hot tub at golden hour. Taken at golden hour (first hour after sunrise or before sunset) whenever possible. This is the only shot that must be perfect on first delivery. If the photographer can't nail the cover, reschedule for better light.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 02</div>
+        <div class="s-name">Living Area — Primary</div>
+        <p>Full-room view from a corner or doorway showing the entirety of the main living space. Sofa, fireplace or TV, coffee table, any standout design element. Staging: all surfaces cleared, throw pillows plumped, one lit candle or a lamp warm (not overhead fluorescent). Natural light preferred.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 03</div>
+        <div class="s-name">Primary Bedroom</div>
+        <p>The main sleeping space that sells the stay to couples. Wide shot from the door showing the full bed, nightstands, and any view or architectural detail. Staging: crisp white or neutral bedding, symmetrical pillows, no visible cords, window treatments open to show the view.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 04</div>
+        <div class="s-name">Kitchen — Full View</div>
+        <p>Wide shot showing counter space, appliances, and any dining area visible. If you have a kitchen island, shoot from the far end showing counter stools and the full kitchen behind. Staging: counters clear except for a bowl of fruit or a cutting board with a few props. Coffee maker visible and staged.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 05</div>
+        <div class="s-name">Outdoor Space — Primary</div>
+        <p>Your best outdoor feature: deck with lake view, fire pit with Adirondack chairs, hot tub at dusk. If you have water access, this may be your strongest shot — shoot from the water looking back at the property if possible. Golden hour mandatory. Staging: fire lit, chairs positioned for conversation, no clutter visible.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 06</div>
+        <div class="s-name">Bathroom(s)</div>
+        <p>One shot per full bathroom. Tight compositions work here — full view from the doorway. Staging: fresh towels folded and hanging, toiletries arranged (not cluttered), shower glass spotless, no visible toilet paper rolls or cleaning supplies.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 07–09</div>
+        <div class="s-name">Additional Bedrooms</div>
+        <p>One full-room shot per additional bedroom. Consistent bedding staging (all rooms should match — different bedding per room reads as mismatched and unfinished to guests scanning the gallery). Natural light.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 10–12</div>
+        <div class="s-name">Detail and Lifestyle Shots</div>
+        <p>Details that communicate quality and care: a coffee bar setup, the fireplace close-up, a book on the dock, wine glasses staged against the lake view at dusk. These shots are not about information — they sell the feeling. A guest decides emotionally and justifies rationally. These are the emotional shots.</p>
+      </div>
+      <div class="shot-card">
+        <div class="s-order">Shot 13+</div>
+        <div class="s-name">Area and Context</div>
+        <p>A photo of the nearest demand driver — the winery sign, the trail entrance, the town main street, the beach access. Guests who can visualize what they'll do when they're not at the property make faster booking decisions. Airbnb allows community photos in the listing gallery.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Shoot in Golden Hour, Stage Before the Photographer Arrives</div>
+      <p>Book your shoot for the hour after sunrise or the hour before sunset. The difference between flat midday light and golden hour light in outdoor and window-adjacent shots is not subtle — it is the difference between "nice" and "book immediately." Stage the entire property before the photographer walks in. Do not stage room by room while they're waiting — you will rush, they will wait, and the shots will show it. Complete the property walkthrough, lighting check, and staging the day before. On shoot day, arrive early, open all window treatments, turn on every lamp, and have the fire lit if applicable.</p>
+    </div>
+
+    <h3>The Title — 50 Characters, One Job</h3>
+    <p>Airbnb's title field is 50 characters. That is not much room. Most operators use it to describe what the property is. The ones who earn more use it to communicate why the guest should care. These are different problems with different answers.</p>
+
+    <p>The title formula:</p>
+    <div class="title-formula">
+      <div class="title-block">STANDOUT FEATURE</div>
+      <div class="title-sep">|</div>
+      <div class="title-block">PROPERTY TYPE</div>
+      <div class="title-sep">|</div>
+      <div class="title-block">CONTEXT / BENEFIT</div>
+    </div>
+
+    <div class="title-example">"Lakefront Cabin | Private Dock + Fire Pit | Seneca Lake" <span class="char-count">53 chars — trim one element</span></div>
+    <div class="title-example">"Lakeview Retreat | Hot Tub · Wine Trail Steps Away" <span class="char-count">51 chars — trim one char</span></div>
+    <div class="title-example">"Gorge-View House | Private Hot Tub | Walk to Watkins" <span class="char-count">53 chars — trim</span></div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ What Not to Write in Your Title</div>
+      <ul>
+        <li><strong>"Cozy 3BR house near lake"</strong> — "cozy" is filler. "Near" is vague. Nothing in this title gives the guest a reason to click this result over the dozen adjacent ones.</li>
+        <li><strong>"Beautiful lakehouse with amazing views!!!"</strong> — Every host thinks their property is beautiful with amazing views. This communicates nothing specific and signals that the host didn't think carefully about the listing.</li>
+        <li><strong>Bedroom/bathroom counts in the title</strong> — Airbnb shows this information in the search result below the title. Using your 50 characters to repeat it wastes space that should sell the experience.</li>
+        <li><strong>Capitalized adjectives: "STUNNING," "LUXURY," "GORGEOUS"</strong> — All-caps reads as desperation in search results. Let the photos communicate quality. The title communicates specificity.</li>
+      </ul>
+    </div>
+
+    <h3>The Description — Three Sections That Do Three Different Jobs</h3>
+    <p>The Airbnb description is long-form real estate. Guests who open your listing have already clicked the cover photo and read the title — they are interested. The description's job is to convert that interest into a booking by giving them confidence that this property will deliver the experience they're imagining.</p>
+
+    <p>The description has a structure. Deviate from it and you waste the most important real estate in your listing.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>The Hook — First 2–3 lines.</strong> Airbnb shows the first 3 lines of the description before "Read more." This is the only part of the description that every guest reads. Start with the most compelling, specific thing about this property — not "Welcome to our home." The hook earns the read. Write it last, after you know everything else you want to say.</p>
+          <p>Example: <em>"You can see the whole lake from the bedroom window. Seneca Lake stretches 38 miles south from the dock at the bottom of the property — on clear mornings, you can see the far shore. The fire pit is 20 steps from the water."</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>The Space Walk — Property Experience.</strong> Walk the guest through the property as if they've just arrived. What do they see when they open the front door? What does the kitchen feel like? Where do people naturally gather? How does the outdoor space connect to the indoor space? Specific, sensory, present-tense. Not a feature list — an experience description.</p>
+          <p>Example: <em>"The main floor is open plan — the kitchen, dining table, and living room all face the lake. The primary bedroom is on the main floor with a king bed and the best views in the house. Two more bedrooms downstairs sleep the rest of the group, each with full-size beds and a shared bathroom."</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>The Location Section — Why This Specific Place.</strong> Name the demand drivers from Lesson 1 of Module 01. Tell the guest what they'll do when they're not at the property. Reference distance in minutes, not miles (guests think in time, not distance). Include one or two specific recommendations — a winery, a restaurant, a trail. This shows local knowledge and builds trust.</p>
+          <p>Example: <em>"The property is on Seneca Lake's west shore, five minutes from Watkins Glen State Park gorge entrance. Fourteen wineries are within a 20-minute drive. Ports of New York and Standing Stone are the two closest — both open daily Memorial Day through October, one with a restaurant."</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>The House Rules Summary.</strong> A brief paragraph that sets expectations without sounding like a legal document. Your full house rules are listed separately — this is the tone-setter. Mention: your noise policy and quiet hours, any pet policy, your check-in/check-out approach, and one thing that guests commonly ask about (parking, the dock, the fire pit rules). Clear expectations reduce guest complaints and increase positive reviews.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Amenities — What the Algorithm Scores as Search Filters</h3>
+    <p>Airbnb's amenity checklist has two categories: items that appear as guest search filters (guests can narrow results to "hot tub" or "lake access" or "pet friendly") and items that are informational but do not affect search filtering. Getting the filter-relevant amenities checked correctly is as important as the description — a guest filtering for a hot tub will never see your listing if you didn't check the hot tub box, regardless of how good your photos are.</p>
+
+    <p>Check every amenity your property actually has. Leaving checkboxes unchecked is not humility — it is invisibility in filtered searches.</p>
+
+    <div class="amenity-grid">
+      <div class="amenity-item critical">
+        <div class="a-icon">♨️</div>
+        <div class="a-text"><strong>Hot Tub</strong><span>Search filter — guests specifically look for this. If you have one, check it.</span></div>
+      </div>
+      <div class="amenity-item critical">
+        <div class="a-icon">🐾</div>
+        <div class="a-text"><strong>Pets Allowed</strong><span>Search filter — 40%+ of guests travel with pets. If allowed, checking this expands your eligible booking pool significantly.</span></div>
+      </div>
+      <div class="amenity-item critical">
+        <div class="a-icon">🌊</div>
+        <div class="a-text"><strong>Lake / Waterfront Access</strong><span>Search filter — in lake markets, this is the primary filter. Private dock or beach access warrants its own mention in the description too.</span></div>
+      </div>
+      <div class="amenity-item critical">
+        <div class="a-icon">🅿️</div>
+        <div class="a-text"><strong>Free Parking On Premises</strong><span>Search filter — important in markets where street parking is limited or charged.</span></div>
+      </div>
+      <div class="amenity-item critical">
+        <div class="a-icon">🔥</div>
+        <div class="a-text"><strong>Fireplace</strong><span>Search filter — especially important for shoulder and off-season bookings. "Cozy fireplace" drives a different booking profile than "hot tub."</span></div>
+      </div>
+      <div class="amenity-item critical">
+        <div class="a-icon">⚡</div>
+        <div class="a-text"><strong>EV Charger</strong><span>Search filter — niche but highly searched by guests with EVs. A Level 2 charger is a $500–800 installation that can generate bookings from guests who specifically seek it.</span></div>
+      </div>
+      <div class="amenity-item">
+        <div class="a-icon">💻</div>
+        <div class="a-text"><strong>Dedicated Workspace</strong><span>Not a search filter but prominently displayed. A dedicated desk (not just a kitchen counter) significantly expands your eligible guest pool for remote workers and shoulder-week bookings.</span></div>
+      </div>
+      <div class="amenity-item">
+        <div class="a-icon">📶</div>
+        <div class="a-text"><strong>Fast WiFi</strong><span>Guests can see your actual speed test result on the listing. Run a speed test at the property (speedtest.net) and upload the result. 200 Mbps+ shown publicly builds booking confidence for remote workers.</span></div>
+      </div>
+      <div class="amenity-item">
+        <div class="a-icon">🛁</div>
+        <div class="a-text"><strong>Bathtub</strong><span>Not a search filter, but many guests mention it specifically. List it if you have one in the primary bathroom — it's a differentiator in markets where most properties have showers only.</span></div>
+      </div>
+      <div class="amenity-item">
+        <div class="a-icon">🏊</div>
+        <div class="a-text"><strong>Pool</strong><span>Search filter — if you have any pool access, check it. Note in the description whether it is private or shared (guests assume private).</span></div>
+      </div>
+      <div class="amenity-item">
+        <div class="a-icon">🍳</div>
+        <div class="a-text"><strong>Fully Stocked Kitchen</strong><span>Not a single checkbox — Airbnb lists specific kitchen items. Check every item you actually have: coffee maker, espresso machine, blender, toaster, pots, pans, cooking basics (salt, pepper, oil). Missing items generate reviews mentioning "we had to buy ___."</span></div>
+      </div>
+      <div class="amenity-item">
+        <div class="a-icon">🧺</div>
+        <div class="a-text"><strong>Washer / Dryer</strong><span>Important for longer stays (3+ nights). Guests planning a week-long trip may filter for it without realizing — having it listed prevents "we had to pack too much" reviews.</span></div>
+      </div>
+    </div>
+
+    <h3>Listing Settings — The Algorithmic Variables Most Operators Get Wrong</h3>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Setting</th><th>Recommended for Launch</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Instant Book vs. Request-to-Book</strong></td>
+            <td>Request-to-book (SpokeBnB default)</td>
+            <td><strong>Request-to-book</strong> means guests send a reservation request and you approve or decline within 24 hours — giving you the ability to screen for fit before confirming. This is the SpokeBnB default because your goal is not maximum booking volume; it is the right guests, a clean experience, and minimal operational headaches. Airbnb does provide search-ranking lift to Instant Book listings, and that tradeoff is real. <strong>Instant Book</strong> is a valid choice if your priority is algorithm placement and booking velocity above guest screening. Choose one intentionally: Request-to-Book gives you control. Instant Book gives you volume. For operators focused on guest quality and long-term asset protection, Request-to-Book is the correct starting point. You can always move to Instant Book later; you cannot undo a problematic reservation that was confirmed without your review.</td>
+          </tr>
+          <tr>
+            <td><strong>Minimum Stay</strong></td>
+            <td>2 nights for launch. Revisit at 30 days.</td>
+            <td>A 1-night minimum maximizes booking volume and review velocity but compresses your ADR and increases cleaning cost per revenue dollar. A 3-night minimum reduces volume and slows review accumulation in the critical early window. Start at 2 nights — the balance between revenue per booking and review velocity. Adjust based on actual booking patterns after 30 days.</td>
+          </tr>
+          <tr>
+            <td><strong>Cancellation Policy</strong></td>
+            <td>Flexible or Moderate for launch</td>
+            <td>Strict cancellation policies suppress booking conversion rate during the new-listing window — guests aren't sure they're committing to an unreviewed property. Start with Flexible (full refund if canceled 24h before) or Moderate (full refund 5 days before). After 15–20 reviews, transition to Firm or Strict as your review base provides social proof that reduces cancellation risk for guests.</td>
+          </tr>
+          <tr>
+            <td><strong>Response Rate Setting</strong></td>
+            <td>Commit to 1-hour response within your active hours</td>
+            <td>Airbnb's algorithm tracks response rate and response time and uses both in ranking. A listing with 99% response rate within 1 hour ranks above an otherwise identical listing with 80% rate and 8-hour average time. Set messaging templates in your PMS for the most common guest inquiries so responses are fast even when you're not actively monitoring.</td>
+          </tr>
+          <tr>
+            <td><strong>Check-in / Check-out Windows</strong></td>
+            <td>3–4pm check-in, 10–11am check-out</td>
+            <td>This gives your cleaner a minimum 4-hour turnover window on same-day transitions. Tighter windows (check-out at noon, check-in at 2pm) create cleaner pressure, rushed turnovers, and an increased risk of sending guests to a property that isn't ready. Your cleaner's schedule determines your check-in time — not guest preference. Set realistic times and communicate them clearly in your listing.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Write Your Airbnb Listing</span>
+      </div>
+      <p class="ai-prompt-instruction">Use this prompt to generate your first-draft listing copy. Give the AI real details about your property — what makes it specific, not generic. Then refine the output by reading it aloud. If it sounds like marketing copy, it needs another pass.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">Write a complete, high-converting Airbnb listing for my short-term rental. I want five title options and a full description written to the structure below.
+
+MY PROPERTY:
+- Property name I'm considering: [e.g., "The Lakeview Cabin" — or leave blank for suggestions]
+- Location: [City, State — and the specific sub-area, e.g., "on Seneca Lake, Watkins Glen NY"]
+- Property type: [cabin / lake house / condo / farmhouse / house]
+- Bedrooms: [X] | Bathrooms: [X] | Max guests: [X]
+- Lot: [acreage / waterfront / wooded / etc.]
+
+MY STANDOUT FEATURES (list your top 3–5):
+1. [e.g., Private dock with kayaks and canoes]
+2. [e.g., Floor-to-ceiling windows with lake view from living room]
+3. [e.g., Outdoor fire pit and covered porch]
+4. [optional]
+5. [optional]
+
+MY KEY AMENITIES (check all that apply):
+[ ] Hot tub  [ ] Pool  [ ] Pet-friendly  [ ] EV charger  [ ] Fireplace (wood / gas)
+[ ] Washer/dryer  [ ] Full kitchen  [ ] BBQ grill  [ ] Game room  [ ] Waterfront access
+[ ] Mountain view  [ ] Ski-in / ski-out  [ ] Parking for [X] vehicles
+
+MY PRIMARY DEMAND DRIVERS (from Module 01 market research):
+- [e.g., Seneca Lake wine trail — dozens of wineries within 20 minutes]
+- [e.g., Watkins Glen State Park gorge hike — 15 min drive]
+- [e.g., Watkins Glen International race track — summer event weekends]
+
+ONE INSIDER LOCAL TIP I WANT IN THE DESCRIPTION:
+[e.g., "The Tuesday night tasting at Silver Thread Vineyard — $15, reserve in advance"]
+
+WRITE:
+1. Five title options — each under 50 characters. Format: [Standout Feature] + [Property Type] + [Context]. No punctuation gimmicks. No emoji.
+2. A full description structured as: (a) hook paragraph that opens mid-scene, not with "Welcome to", (b) space walk in present tense, (c) location section naming demand drivers and distances in minutes, (d) house rules summary in three sentences. Total length: 250–350 words.
+3. Flag any amenities I checked that Airbnb counts as a searchable filter — those should be listed prominently in the amenities section, not buried in description text.</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>Professional photos are uploaded, your title and description are written to the formula, every applicable amenity is checked, and listing settings are configured correctly.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Professional photographer booked and shoot completed — golden hour cover photo confirmed</li>
+        <li><span class="cp-box"></span>All photos uploaded in the sequence defined in the shot list — cover photo selected as strongest image</li>
+        <li><span class="cp-box"></span>Title written to formula — standout feature + property type + context. Character count confirmed under 50.</li>
+        <li><span class="cp-box"></span>Description complete — hook written last, space walk written in present tense, location section with specific recommendations, house rules summary</li>
+        <li><span class="cp-box"></span>Every applicable search-filter amenity checked — hot tub, pets, waterfront, parking, fireplace if applicable</li>
+        <li><span class="cp-box"></span>WiFi speed test result uploaded from the property address</li>
+        <li><span class="cp-box"></span>Instant Book vs. Request-to-Book decision made and configured — SpokeBnB default is Request-to-Book (manual approval)</li>
+        <li><span class="cp-box"></span>Minimum stay set to 2 nights for launch</li>
+        <li><span class="cp-box"></span>Cancellation policy set to Flexible or Moderate for launch</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Launch Pricing — Suppression, Velocity, and the Transition to Dynamic</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Set a deliberate launch-period pricing strategy that prioritizes review accumulation over short-term revenue — and know exactly when and how to transition to PriceLabs dynamic pricing once the foundation is built.
+    </div>
+
+    <p>In Module 01, you projected annual gross revenue using your comp set's ADR as the baseline. That projection assumed your listing is operating at full competitive capacity — a seasoned listing with a strong review base, an established algorithm rank, and repeat guests beginning to book direct.</p>
+
+    <p>You are not there yet. In the first 60 days, your only objective is to build the social proof that makes everything else possible. Reviews are the trust currency of the Airbnb marketplace. A listing with 0 reviews and a listing with 40 reviews — even at the same property, same photos, same price — are not competing for the same guest. The zero-review listing is competing for guests who have no other options or who are significantly more price-sensitive. Your job in the first 60 days is to move from zero reviews to a position of competitive social proof as fast as the calendar allows.</p>
+
+    <h3>The Launch-Period Pricing Strategy</h3>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">0</div>
+        <div class="tl-content">
+          <div class="tl-title">Launch — Deliberately Below Market (Days 1–45)</div>
+          <p><strong>Set your nightly rate 15–20% below your comp set's average ADR for the season.</strong> This is intentional suppression. You are not pricing low because the property isn't worth more — you are pricing low because the fastest path to review velocity is bookings, and bookings in the first 60 days require price sensitivity from guests who would otherwise choose a higher-reviewed competitor at the same price.</p>
+          <p>Calculate this number: pull your comp set's current average ADR from AirDNA (the data you pulled in Module 01). Multiply by 0.82. That is your launch rate. If your market's average 3BR lakehouse ADR is $280/night, your launch rate is approximately $230/night.</p>
+          <p>Accept the lower rate. Every booking in this window generates a potential 5-star review. Every 5-star review increases your position in the algorithm and your conversion rate for every future booking. The suppressed revenue in the launch window is an investment with a specific, measurable return.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">10</div>
+        <div class="tl-content">
+          <div class="tl-title">10 Reviews — Begin the Transition (Day ~45–60)</div>
+          <p><strong>When you reach 10 reviews at 4.8 stars or above, you have established the minimum social proof threshold.</strong> Your listing can now compete in the market on merit rather than price alone. This is the trigger to begin adjusting your pricing strategy.</p>
+          <p>The transition is gradual, not a single price jump. Week 1: raise by 5%. Week 2: raise another 5%. By the time you activate PriceLabs, you should be at or near your comp set's market average ADR — and your review base should begin converting at a rate that supports it.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">✓</div>
+        <div class="tl-content">
+          <div class="tl-title">PriceLabs Activation Trigger (Days 60–90)</div>
+          <p><strong>Activate PriceLabs from Module 02 when all three conditions are met:</strong></p>
+          <ul>
+            <li>10+ reviews (not 8, not 9 — ten is the minimum market credibility threshold)</li>
+            <li>Overall rating of 4.8 stars or above</li>
+            <li>No guest emergency or unresolved complaint in the past 30 days</li>
+          </ul>
+          <p>If you haven't hit 10 reviews yet, continue at the gradually increasing manual rate until you do. Do not activate dynamic pricing on an under-reviewed listing — PriceLabs will optimize for revenue, which may mean higher rates that a zero-review listing cannot convert at competitive occupancy.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">📊 What the Launch Suppression Period Costs and What It Buys</div>
+      <p><strong>The cost:</strong> At a $280 comp set ADR and your launch rate of $230, each booked night costs you $50 in suppressed revenue. Over 10 bookings (averaging 2.5 nights each = 25 nights), that is approximately $1,250 in foregone revenue versus what you would have earned at full market rate.</p>
+      <p><strong>What it buys:</strong> 10 reviews. A listing with 10 reviews at 4.8 stars converts at a materially higher rate than a listing with 3 reviews — potentially 2–3× higher conversion rate in Airbnb's search results. Higher conversion rate means Airbnb's algorithm serves your listing more frequently. More impressions at higher conversion means more bookings at whatever price you've set. The $1,250 investment in the launch window is returned in the first 2–3 peak weekends after you transition to market-rate pricing.</p>
+    </div>
+
+    <h3>Minimum Stay Strategy During Launch</h3>
+    <p>Your minimum stay setting during launch is a lever between review velocity and average booking value. Shorter minimums generate more bookings (more reviews) but each booking costs more in cleaning fees relative to revenue. Longer minimums protect margin but slow review accumulation.</p>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th>Minimum Stay</th><th>Review Velocity</th><th>Revenue Efficiency</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>1 Night</strong></td>
+            <td>Fastest — one booking = one review</td>
+            <td>Lowest — cleaning cost eats deep into 1-night revenue</td>
+            <td>Urban markets where 1-night trips are common and the cleaning fee gap is smaller</td>
+          </tr>
+          <tr>
+            <td><strong>2 Nights</strong> (recommended launch default)</td>
+            <td>Fast — fills weekends and generates steady review volume</td>
+            <td>Good — cleaning cost is absorbed across 2 nights</td>
+            <td>Most markets. The standard starting point that balances both goals.</td>
+          </tr>
+          <tr>
+            <td><strong>3 Nights</strong></td>
+            <td>Slower — fewer eligible bookings, particularly for weekend stays</td>
+            <td>Best — highest revenue-per-cleaning ratio</td>
+            <td>Markets with primarily 4–7 night stays (beach seasonal, national park). Appropriate after 15+ reviews when review velocity is less urgent.</td>
+          </tr>
+          <tr>
+            <td><strong>Weekend minimums (Fri–Sun = 3 nights)</strong></td>
+            <td>Mixed — fills off-peak nights but blocks short-stay weekenders</td>
+            <td>High for weekends, requires weekend bookings to pencil out</td>
+            <td>After you understand your booking pattern at 30–60 days. Not a launch strategy.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Setting Your Cleaning Fee</h3>
+    <p>Your cleaning fee is a separate guest-facing charge on top of your nightly rate. It is not profit — it covers your per-turnover cleaning cost. The strategic consideration: a cleaning fee that is too high relative to your nightly rate discourages short stays (guests see the effective nightly cost including cleaning and the math gets bad fast for a 1–2 night stay). A cleaning fee that is too low sets an expectation that your cleaning standard is lower than it is.</p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Cleaning Fee Formula</div>
+      <p><strong>Set your cleaning fee = your actual per-turn cleaning cost + 10–15% buffer for supplies and restocking.</strong></p>
+      <p>If your cleaner charges $175 per turn and your supplies run $12–15, your cleaning fee should be approximately $190–200. Do not undercharge on the cleaning fee to make your nightly rate look more competitive — underpriced cleaning fees either erode your margin or force you to reduce cleaning standards to fit the fee.</p>
+      <p>Check your comp set's cleaning fees in your market using AirDNA or by manually reviewing listings. A cleaning fee significantly above the market average will show up in your listing as a barrier to booking — guests see the total cost, not just the nightly rate, in search results. Match or be modestly above market — not dramatically above.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your launch pricing is set with a specific rate, a specific review velocity target, and a written trigger for transitioning to PriceLabs.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Launch nightly rate calculated: comp set average ADR × 0.82</li>
+        <li><span class="cp-box"></span>Launch rate set in Airbnb — not delegated to PriceLabs yet</li>
+        <li><span class="cp-box"></span>Minimum stay set to 2 nights for launch</li>
+        <li><span class="cp-box"></span>Cleaning fee calculated from actual cleaning cost + buffer. Set in Airbnb. Verified against comp set.</li>
+        <li><span class="cp-box"></span>PriceLabs activation trigger documented: 10 reviews + 4.8 stars + no open complaints = activate</li>
+        <li><span class="cp-box"></span>Transition plan written: rate increase schedule from launch price to market rate over 2 weeks at the 10-review milestone</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Preparing the Property — Guest-Ready Before the First Check-In</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Walk through the full property-preparation checklist, establish your par-level inventory system, and verify every system — lock, WiFi, appliances, safety — before a single guest arrives.
+    </div>
+
+    <p>The guest experience starts before they arrive. It starts the moment they book and begins forming expectations based on your listing, your automated messages, and the information you give them about what to expect. By the time they walk in, they have already built a mental picture of the experience. Your job in property preparation is to ensure the reality matches — and wherever possible, slightly exceeds — that picture.</p>
+
+    <p>The most common cause of a 4-star review from a guest who had an otherwise good stay: they found something that didn't match what they expected. A broken burner on the stove. WiFi slower than advertised. A hot tub that took an hour to heat up. A lock that didn't work on first try. These are preparation failures — problems that existed before the guest arrived and that a pre-launch walkthrough would have caught. The checklist below is that walkthrough.</p>
+
+    <h3>The Pre-Launch Property Walkthrough Checklist</h3>
+
+    <div class="checklist">
+      <div class="checklist-section">
+        <h4>Access &amp; Security</h4>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Smart lock tested with a dummy code</strong> — enter a test 4-digit code in the lock app, walk to the door, confirm it unlocks. Test the keypad specifically — not just the app. Check that existing codes are cleared and no old codes remain active.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Battery level verified above 80%</strong> — fresh batteries installed before launch. Spare set labeled and staged in utility area for cleaner.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>All external doors and windows lock properly</strong> — test every entry point. A sliding door that doesn't fully lock is a security issue and a review risk ("we didn't feel safe").</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Ring cameras or monitoring devices confirmed operational</strong> — check the live feed from your phone. Verify disclosure is posted in your listing description (exterior cameras: state location; noise monitor: state it is in the living area, dB monitoring only, no audio recording).</span></div>
+      </div>
+
+      <div class="checklist-section">
+        <h4>WiFi and Connectivity</h4>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>StayFi splash page tested from a guest device</strong> — connect your phone to the StayFi SSID. Confirm the captive portal loads, enter a test name and email, confirm you receive the WiFi password, confirm you have full internet access after login.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>WiFi speed tested at the property, not at the router</strong> — run speedtest.net from the living area and from the farthest bedroom. If either reads below 100 Mbps, address the coverage gap before launch (WiFi extender or mesh AP placement). Upload the speed test screenshot to your listing.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>WiFi name and password posted visibly in the property</strong> — even with StayFi, post the network name and password at the kitchen or entry area. Guests who can't connect immediately will call you. A visible card solves this before it happens.</span></div>
+      </div>
+
+      <div class="checklist-section">
+        <h4>Appliances and Systems</h4>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Every burner on the stove tested</strong> — turn each burner on and confirm it lights or heats. One dead burner in a 4-burner stove is a review mention.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Oven confirmed functional</strong> — preheat to 350°F and verify it reaches temperature. Note if there is a quirk (gas oven with a pilot, electric oven that runs hot) and document it in the digital guidebook.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Refrigerator and freezer temperature confirmed</strong> — fridge 35–38°F, freezer 0°F. A fridge running warm is not obvious until a guest's food spoils.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Dishwasher runs a complete cycle</strong> — run it empty, confirm it drains fully and doesn't leak.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Washer and dryer confirmed operational</strong> — run a small load. Confirm dryer lint trap is clean and the dryer vents properly.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>HVAC heating and cooling tested</strong> — set to heat, confirm warm air. Set to cool, confirm cool air. Change the filter if you haven't in the past 30 days.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Hot tub (if applicable) at temperature, jets tested</strong> — set to 100–104°F and confirm it reaches and holds temperature. Test all jet zones. Confirm water is clean and properly chemically balanced. Note: a hot tub that needs to heat from cold takes 8–12 hours. Your check-in instructions should tell guests the temperature is preset — not that they need to turn it on.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>TV and all streaming services accessible</strong> — confirm the TV works, connects to the WiFi (using the guest network), and that any streaming apps are logged in and functional. Guests will attempt to use Airbnb-listed streaming services within minutes of arrival. A TV that requires a complicated setup sequence or has an expired login generates calls.</span></div>
+      </div>
+
+      <div class="checklist-section">
+        <h4>Safety</h4>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Fire extinguisher — ABC rated, inspected within 12 months, mounted visibly in kitchen</strong> — not under the sink, mounted on the wall where a guest in an emergency can see it immediately.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Smoke detectors tested in every room and hallway</strong> — press the test button. Replace any that are dead or more than 10 years old.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Carbon monoxide detector operational</strong> — required by many municipalities for properties with gas appliances or attached garages. Test and confirm. Placement: sleeping areas and near any gas appliance.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>First aid kit stocked and visible</strong> — a basic kit (bandages, antiseptic, pain reliever, antacid, antihistamine) kept in a clearly labeled location guests can find. Note its location in your digital guidebook.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Emergency contact card posted</strong> — a single printed card in the kitchen listing: local non-emergency police line, poison control (800-222-1222), nearest urgent care address, your contact number, and the property's street address (guests under stress forget addresses when calling 911).</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Pool or dock safety equipment present (if applicable)</strong> — a life ring or throw rope within reach of any water feature. Required by code in most states for properties with dock or pool access.</span></div>
+      </div>
+
+      <div class="checklist-section">
+        <h4>Staging and Supplies</h4>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Bedding: clean, pressed, staged symmetrically in all bedrooms</strong> — if you cannot tell by looking at a photo whether the bedding is freshly laundered, your guests can tell in person. White or neutral bedding photographs best and communicates cleanliness unambiguously.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Towels: folded and staged in bathrooms</strong> — hotel fold or spa roll, not just stacked. Count: 2 bath towels + 1 hand towel + 1 washcloth per guest at maximum occupancy. Include beach towels separately if the property has water access.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Consumables stocked to par level</strong> — see par level list below. The goal is that guests never run out of a basic supply during their stay without needing to ask you or shop.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Welcome moment staged</strong> — a simple arrival detail that wasn't in the photos but communicates care: a locally sourced bottle of wine, a small welcome card with a handwritten note, fresh flowers from a local market. This is the detail that guests mention in their first review. Cost: $15–25 per booking. Return: frequently referenced in 5-star reviews.</span></div>
+        <div class="checklist-item"><span class="check-box"></span><span><strong>Keypad access code posted as backup</strong> — even with a smart lock, post the current guest code in a non-obvious location inside the property (inside a kitchen cabinet) in case a guest's phone dies and they need to confirm the code. Update this with each new guest's code.</span></div>
+      </div>
+    </div>
+
+    <h3>The Par Level Inventory System</h3>
+    <p>A par level is the minimum quantity of any consumable item that should be present when guests arrive. Your cleaner restocks to par after every turnover. This system eliminates the "we ran out of toilet paper on Day 2" review and the 11pm call asking where the dish soap is.</p>
+
+    <div class="template-box">
+      <div class="template-label">Property Par Level Sheet — Customize for Your Property</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div>
+          <h4 style="margin-top:0">Bathroom (per bathroom)</h4>
+          <div style="font-size:14px;color:var(--muted)">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Toilet paper rolls</span><span style="font-weight:600;color:var(--text)">___ rolls</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Bar soap (individually wrapped)</span><span style="font-weight:600;color:var(--text)">2 per sink</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Shampoo / conditioner</span><span style="font-weight:600;color:var(--text)">___</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Body wash</span><span style="font-weight:600;color:var(--text)">___</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Hair dryer (in drawer, working)</span><span style="font-weight:600;color:var(--text)">1</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0"><span>Tissue box</span><span style="font-weight:600;color:var(--text)">1</span></div>
+          </div>
+
+          <h4>Kitchen</h4>
+          <div style="font-size:14px;color:var(--muted)">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Dish soap</span><span style="font-weight:600;color:var(--text)">1 full bottle</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Dishwasher pods</span><span style="font-weight:600;color:var(--text)">___ pods</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Paper towels</span><span style="font-weight:600;color:var(--text)">2 rolls</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Trash bags (kitchen size)</span><span style="font-weight:600;color:var(--text)">___ bags</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Coffee (pods or grounds)</span><span style="font-weight:600;color:var(--text)">___ servings</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Cooking oil, salt, pepper</span><span style="font-weight:600;color:var(--text)">Stocked</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0"><span>Aluminum foil + plastic wrap</span><span style="font-weight:600;color:var(--text)">Stocked</span></div>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Laundry / Cleaning</h4>
+          <div style="font-size:14px;color:var(--muted)">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Laundry detergent pods</span><span style="font-weight:600;color:var(--text)">___ pods</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Dryer sheets</span><span style="font-weight:600;color:var(--text)">___ sheets</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0"><span>All-purpose cleaner (under sink)</span><span style="font-weight:600;color:var(--text)">Stocked</span></div>
+          </div>
+
+          <h4>Lock Batteries</h4>
+          <div style="font-size:14px;color:var(--muted)">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Spare AA or AAA batteries (lock type)</span><span style="font-weight:600;color:var(--text)">1 full set</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0"><span>Location known to cleaner</span><span style="font-weight:600;color:var(--text)">___</span></div>
+          </div>
+
+          <h4>Outdoor (if applicable)</h4>
+          <div style="font-size:14px;color:var(--muted)">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Firewood (if fire pit/fireplace)</span><span style="font-weight:600;color:var(--text)">___ pieces</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Lighter / fire starter</span><span style="font-weight:600;color:var(--text)">Staged at fire pit</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Hot tub chemicals (if applicable)</span><span style="font-weight:600;color:var(--text)">Stocked</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0"><span>Bug spray (seasonal)</span><span style="font-weight:600;color:var(--text)">Staged outdoors</span></div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:16px">Print this sheet and give it to your cleaner. The cleaner restocks to par after every turnover. You review par levels every 30 days and adjust quantities based on actual consumption. Blank fields are property-specific — fill them in before your first guest.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>The property is physically ready — every system tested, every supply stocked to par, every safety item in place.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Pre-launch property walkthrough checklist completed — every item checked and confirmed</li>
+        <li><span class="cp-box"></span>Smart lock tested with a dummy code at the door — not just in the app</li>
+        <li><span class="cp-box"></span>StayFi splash page tested from a guest device — connect, login, internet access confirmed</li>
+        <li><span class="cp-box"></span>All appliances tested and operational — stove burners, oven, refrigerator temp, hot tub</li>
+        <li><span class="cp-box"></span>Safety items in place: fire extinguisher, smoke detectors tested, CO detector, first aid kit, emergency card</li>
+        <li><span class="cp-box"></span>Par level sheet completed and given to your cleaner — quantities set, location of spare supplies documented</li>
+        <li><span class="cp-box"></span>Welcome moment staged for first guest</li>
+        <li><span class="cp-box"></span>WiFi speed test result uploaded to Airbnb listing</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The Launch Sequence and the First 60 Days</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Execute the launch in the correct order, communicate with every guest in a way that generates 5-star reviews, handle the first problem correctly, and complete your 60-day performance review to build the bridge to Module 04.
+    </div>
+
+    <p>This is where the work from every previous lesson in this module converges. Your listing is built. Your pricing is set. Your property is ready. Now you go live — in a specific order, for a specific reason, with a specific plan for the first 60 days.</p>
+
+    <h3>The Launch Sequence — Step by Step</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Build your PMS messaging templates before you list.</strong> In Module 02 you connected OwnerRez or Hospitable and were instructed to create six message trigger templates. If you haven't written the copy for those templates yet, do it now — before your first booking. The specific copy for each message is built in Module 05 (Guest Experience). For now, draft placeholder versions of each trigger so the system sends something on each trigger, even if you revise the copy later. A guest who books and receives a booking confirmation in seconds is a guest who already trusts the operator.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Activate your Airbnb listing.</strong> In Airbnb Host: Listings → [Your Property] → Status → Active. Your listing is now searchable. The new-listing window begins. Do not activate until your photos are uploaded, your title is set, your description is complete, your pricing is entered, and your property is physically ready. Do not list with placeholder information and plan to "fix it later" — the algorithm starts scoring your listing the moment it goes live.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Create a test reservation.</strong> In OwnerRez or Hospitable: create a manual reservation for 2 nights, starting tomorrow, using your personal email. This triggers your entire automated sequence — confirm that every message fires at the right time, that the smart lock generates and delivers an access code, and that the StayFi email capture is connected to your email platform. Fix any failures on this test reservation before a guest experiences them.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Confirm your booking approval setting and commit to your response time.</strong> If you are operating Request-to-Book (the SpokeBnB default), Airbnb requires you to respond to booking requests within 24 hours — after that window, the request expires. In practice, respond within 2–4 hours. Review the guest's profile and prior reviews before approving. If you approve: send a brief welcome message and confirm. If you decline: a short professional note is courteous — you do not owe an explanation. Airbnb tracks response rate regardless of booking mode. Your standing commitment: respond to all messages and requests within 1 hour during your active hours (8am–9pm), by morning for anything received overnight. Set this expectation in your listing. Guests who receive fast responses are less likely to cancel and more likely to leave a positive review about the host.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Leave a host review for every guest — first.</strong> Airbnb releases both the guest's review and the host's review simultaneously after both parties have reviewed, or after 14 days. Leaving your host review first does not release the guest's review early — but it signals to the guest that you took the time to acknowledge their stay. Hosts who review guests consistently have higher guest review rates. The review for a problem-free stay: <em>"[Name] were wonderful guests — respectful of the property, great communicators, and left the place in great shape. Would welcome them back anytime."</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Send a personal review request 1 hour after checkout.</strong> Your PMS should be sending an automated review request (Module 05). Supplement the automation with a brief personal message for your first 5–10 guests — not a form message, a brief genuine note. Guests who feel a human connection with the host are more likely to take the 2 minutes to leave a review. The review request timing: 1 hour after checkout is ideal — the guest is traveling home and has the experience freshly in mind. Too soon (while they're still packing) or too late (3 days later when the memory has faded) both perform worse.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Responding to Reviews — The Skill That Compounds Forever</h3>
+    <p>Every review response you write is public. Future guests read them before booking. Your response to a 5-star review tells future guests how you interact with guests. Your response to a 3-star review tells them whether you are defensive and dismissive or professional and accountable. Your responses are marketing material. Write them that way.</p>
+
+    <div class="response-block">
+      <div class="r-label">5-Star Review Response Template</div>
+      <div class="r-text">"Thank you, [Name] — it was genuinely a pleasure hosting you. [One specific reference to something from their stay or their review]. We're glad you chose [Property Name] and we hope Seneca Lake brings you back soon. You're welcome here anytime."</div>
+      <div class="r-note">The specific reference is critical — it shows you read the review and remember this guest, not that you're posting a form response. Guests who read this before booking see an operator who pays attention.</div>
+    </div>
+
+    <div class="response-block">
+      <div class="r-label">4-Star Review Response (Where the Guest Noted Something)</div>
+      <div class="r-text">"Thank you for staying, [Name], and for taking the time to write this. You're absolutely right about [the specific issue they mentioned] — we've [action you took or are taking to address it]. We appreciate you raising it, and we're glad the overall stay was positive. We hope to earn a return visit someday."</div>
+      <div class="r-note">Never be defensive. Never minimize. Never explain why the problem wasn't your fault. Acknowledge, state the action taken, and move forward. Future guests reading this see an operator who responds to feedback constructively — that is a booking signal, not a deterrent.</div>
+    </div>
+
+    <div class="response-block">
+      <div class="r-label">3-Star or Below (Use With Care)</div>
+      <div class="r-text">"Thank you for staying and for the feedback. I'm sorry [the specific issue] affected your experience — that's not the standard we hold ourselves to and I've [specific action]. I'd welcome the chance to host you again and do better. If there's anything I can address directly, please reach out."</div>
+      <div class="r-note">A 3-star or below warrants a private message first — before the review posts, if possible. Reach out through Airbnb messaging: "I saw your review and I want to address [the issue] directly. Can you tell me more about what happened?" You may not be able to resolve it, but the attempt shows up in your private message history with Airbnb if a dispute ever arises.</div>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ How Operators Destroy Their Reputation in One Response</div>
+      <ul>
+        <li><strong>Arguing with a review publicly</strong> — "The guest broke the hot tub cover and blamed us" tells future guests you will argue with them if something goes wrong. Even if you are right, the public rebuttal is the wrong tool.</li>
+        <li><strong>Using the response to list every positive thing the guest didn't mention</strong> — "We provide premium linens, a fully stocked kitchen, and a beautiful view" sounds defensive and self-promotional in the context of a lukewarm review.</li>
+        <li><strong>Copying and pasting the same response to every review</strong> — "Thank you for staying! We hope to see you again." repeated verbatim across 40 reviews signals that you don't actually read them. Future guests notice.</li>
+        <li><strong>Not responding at all</strong> — A listing with 30 unanswered reviews signals an absent host. Respond to every review, positive or negative, within 48 hours.</li>
+      </ul>
+    </div>
+
+    <h3>Handling the First Problem</h3>
+    <p>There will be a first problem. The only uncertainty is what it is — a guest locked out, a hot tub malfunction, a cleaning miss, a broken appliance, a noise complaint from a neighbor. The way you handle the first problem determines whether it becomes a 4-star review or a 5-star review with a comment about how responsive the host was.</p>
+
+    <p>The principle: <strong>respond in minutes, not hours. Solve in hours, not days. Follow up always.</strong></p>
+
+    <ul>
+      <li><strong>Guest is locked out:</strong> The code is in the PMS. Find it and send it immediately. If the lock itself is malfunctioning, call your locksmith (you already have one identified — you confirmed this in Module 02's pre-launch checklist). If no immediate resolution: call the guest, apologize, and tell them exactly what is happening and how long until it's resolved. Uncertainty is worse than the problem itself.</li>
+      <li><strong>Appliance malfunction during a stay:</strong> Assess over the phone whether it's user error (most of the time) or an actual failure. If user error: walk the guest through it patiently and without condescension. If actual failure: can you resolve it the same day? If not, what can you offer — a partial refund for the night, a restaurant recommendation to compensate for the kitchen being down? Offer something. Guests who feel compensated for an inconvenience review the host's response, not the appliance failure.</li>
+      <li><strong>Noise complaint from a neighbor:</strong> Contact the guest through Airbnb messaging immediately and follow your noise-alert message template (written in Module 02's Minut setup steps). Keep the tone professional and not accusatory: <em>"Hi [Name] — we received a noise concern at the property tonight. Just a quick reminder about quiet hours after 10pm — appreciate you keeping the neighbors happy."</em> Document the message and the time. This documentation matters if the issue escalates to a permit complaint.</li>
+    </ul>
+
+    <h3>The 60-Day Performance Review</h3>
+    <p>At Day 60, sit down with your actual data — not your projection from Module 01, your actual data — and assess what happened. This review is the bridge to Module 04 (Revenue) and determines whether you are ready to activate PriceLabs.</p>
+
+    <div class="template-box">
+      <div class="template-label">60-Day Performance Review</div>
+      <div class="field-row">
+        <div class="field"><label>Review Date</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Nights Available (60 days)</label><div class="line">___ nights</div></div>
+        <div class="field"><label>Nights Booked</label><div class="line">___ nights</div></div>
+        <div class="field"><label>Actual Occupancy Rate</label><div class="line">___% (booked ÷ available)</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Actual ADR Achieved</label><div class="line">$___ /night</div></div>
+        <div class="field"><label>Comp Set ADR (current)</label><div class="line">$___ /night</div></div>
+        <div class="field"><label>Actual RevPAR</label><div class="line">$___ (ADR × Occ%)</div></div>
+        <div class="field"><label>Gross Revenue — 60 Days</label><div class="line">$___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Reviews Received</label><div class="line">___</div></div>
+        <div class="field"><label>Overall Rating</label><div class="line">___ / 5.0</div></div>
+        <div class="field"><label>PriceLabs Trigger Met?</label><div class="line">Yes / No (10+ reviews, 4.8+, no open issues)</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="grid-column:1/-1"><label>Primary Strength This Period (what worked)</label><div class="line">&nbsp;</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="grid-column:1/-1"><label>Primary Weakness (what to address before Day 90)</label><div class="line">&nbsp;</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Next Action</label><div class="line">Activate PriceLabs / Continue manual pricing / Address [specific issue]</div></div>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study-label">Instructor Case Study</div>
+      <h3>What the First 60 Days Actually Looks Like</h3>
+      <p>The first problem you handle well is often the most valuable thing that happens in the launch period. Not because problems are good — they aren't — but because your response to a problem is visible in your review, in your response to that review, and in the confidence you develop in your own operations.</p>
+      <p>The things that are harder than they look from the outside:</p>
+      <ul>
+        <li><strong>Pricing your own property objectively.</strong> The instinct is to price what you think it's worth. The market prices what guests will pay. These are different numbers, especially in the first 60 days.</li>
+        <li><strong>Not checking your Airbnb inbox constantly.</strong> Build a system for response — a specific time block twice a day for non-urgent messages — rather than living in your phone.</li>
+        <li><strong>Letting the automated messages do their job.</strong> The temptation to add personal messages on top of every automated one creates noise for guests and work for you. Trust the templates.</li>
+        <li><strong>The first 4-star review.</strong> It feels like a failure. It is data. Read the subcategories — Cleanliness? Value? Location? Accuracy? — and identify which one slipped. Fix that one thing. Move on.</li>
+      </ul>
+      <p>The milestone that changes everything: your first guest who books specifically because of a review from a previous guest. When you can see the review-to-booking chain in your analytics, the investment in operational excellence starts to feel compounding rather than costly.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Module 03</div>
+      <h4>Write your complete guest communication sequence</h4>
+      <div class="ai-prompt-box">I need to write a full automated guest communication sequence for my short-term rental. I'll be using OwnerRez to send these automatically triggered by booking and check-in events.
+
+Property context:
+- Property name: [e.g., "Lakeview Lodge"]
+- Location: [city/region — what's special about the area?]
+- Check-in type: [self check-in via smart lock / lockbox / in-person]
+- Smart lock brand (if applicable): [Schlage / Yale / August / other]
+- Access instructions: [door code format, parking details, gate code if any]
+- WiFi name and password: [name + password]
+- Key house rules to mention: [e.g., no shoes inside, fire pit rules, parking limit]
+- My digital guidebook link: [URL or "I'll add this later"]
+- Review platform preference: [Airbnb only / also Google / also VRBO]
+
+Write the following 5 automated messages. For each: include the trigger timing, the subject line, and the full message body (max 200 words each):
+
+1. Booking Confirmation (fires immediately after booking) — warmth, what to expect, no info dump
+2. Pre-Arrival Reminder (fires 72 hours before check-in) — checklist, check-in instructions summary, arrival CTA
+3. Check-In Day Welcome (fires day of check-in, 9am) — access codes, WiFi, guidebook link, how to reach me
+4. Mid-Stay Check-In (fires Day 2, 10am) — brief, genuine, "anything you need?" — seeds the 5-star review
+5. Post-Checkout Thank-You + Review Request (fires 2 hours after checkout) — genuine thank you, one-click review link, future direct booking mention</div>
+      <p class="ai-prompt-note"><strong>Configure these in OwnerRez</strong> under Settings → Trigger Emails. The mid-stay check-in is the one most operators skip — and it's the one with the highest ROI. Guests who receive a genuine mid-stay check-in leave 5-star reviews at a measurably higher rate than those who don't hear from you between check-in and checkout. One sentence of authentic attention beats a paragraph of policy language.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 03 Complete When:</div>
+      <h3>Your listing is live, your first booking is confirmed, and you have a written 60-Day Performance Plan with a specific review velocity target and a documented PriceLabs activation trigger.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>All six PMS message templates drafted and active — booking confirmation, pre-arrival, day-of, mid-stay, checkout reminder, review request</li>
+        <li><span class="cp-box"></span>Test reservation completed — lock code generated, all messages fired, StayFi confirmed in guest flow</li>
+        <li><span class="cp-box"></span>Airbnb listing activated — Instant Book on, launch pricing set, minimum stay 2 nights</li>
+        <li><span class="cp-box"></span>First booking confirmed</li>
+        <li><span class="cp-box"></span>Review response protocol written — 5-star template, 4-star template, 3-star template all saved and ready</li>
+        <li><span class="cp-box"></span>First problem protocol understood — locked out, appliance, noise — response scripts ready</li>
+        <li><span class="cp-box"></span>60-Day Performance Review date set on calendar</li>
+        <li><span class="cp-box"></span>PriceLabs activation trigger documented: 10 reviews + 4.8 stars + 30 days clean = activate dynamic pricing</li>
+        <li><span class="cp-box"></span>Proceed to Module 04 when your 60-day review is complete and you are ready to transition from launch pricing to a full revenue optimization strategy</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<section class="machine-feed">
+  <div class="mf-label">Direct Booking Machine</div>
+  <h3>What You Actually Built in This Module</h3>
+  <p>The launch sequence is about getting your first Airbnb reviews. That's the short-term objective. The long-term purpose is different: <strong>you are loading the first cohort of guests into the direct booking pipeline.</strong></p>
+  <ul>
+    <li><strong>Reviews</strong> — every 5-star review is not just an OTA ranking signal. It is social proof that will appear on your direct booking site and close bookings from guests who find you through Google Vacation Rentals instead of Airbnb. The quality of your review base determines how well cold traffic converts on your direct booking site in Year 2 and Year 3.</li>
+    <li><strong>Automated messages</strong> — the 6-message sequence you configured isn't just operational communication. It is a relationship. Guests who receive thoughtful, well-timed messages are significantly more likely to remember the host, not just the property. When they want to rebook, they look for you — not for a listing.</li>
+    <li><strong>StayFi capture</strong> — every guest who connects to your WiFi during the launch window enters the direct booking pipeline. These are your first past-guest leads. Module 07 shows you exactly how to convert them into direct bookings.</li>
+  </ul>
+  <p>The launch window isn't just the most important 30–60 days for your OTA ranking. <strong>It is the first 30–60 days of building the guest relationship asset your direct booking machine will run on for the next decade.</strong></p>
+</section>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 03: Launch &nbsp;·&nbsp; Next: Module 04 — Revenue
+</footer>

@@ -1,0 +1,1120 @@
+<title>Module 09 — Content & Social</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --gold-bg: rgba(212,160,23,0.06);
+    --star-color: #f59e0b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Rating chart */
+  .rating-chart { margin: 28px 0; }
+  .rating-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .rating-row:last-child { border-bottom: none; }
+  .rating-score { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text); min-width: 38px; }
+  .rating-bar-wrap { flex: 1; height: 10px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .rating-bar { height: 100%; border-radius: 999px; }
+  .rating-bar.excellent { background: #16a34a; width: 92%; }
+  .rating-bar.good { background: var(--gold); width: 68%; }
+  .rating-bar.risk { background: #f97316; width: 42%; }
+  .rating-bar.danger { background: #dc2626; width: 20%; }
+  .rating-label { font-size: 12.5px; color: var(--muted); min-width: 220px; }
+  .rating-label strong { color: var(--text); }
+
+  /* Stars */
+  .stars { color: var(--star-color); letter-spacing: 1px; }
+
+  /* Review card */
+  .review-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+  .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .review-meta { flex: 1; }
+  .review-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .review-date { font-size: 11px; color: var(--muted); }
+  .review-rating { font-size: 13px; color: var(--star-color); }
+  .review-text { font-size: 14px; color: var(--muted); line-height: 1.7; font-style: italic; }
+  .review-response { background: var(--gold-bg); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-top: 12px; font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+  .review-response-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+
+  /* Message sequence */
+  .msg-sequence { margin: 24px 0; }
+  .msg-card { display: grid; grid-template-columns: 80px 1fr; gap: 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+  .msg-timing { background: var(--navy); padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .msg-when { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+  .msg-day { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #fff; }
+  .msg-body { padding: 14px 18px; }
+  .msg-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .msg-goal { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .msg-body p { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .msg-body p strong { color: var(--text); }
+
+  /* Velocity chart */
+  .velocity-chart { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0; overflow-x: auto; }
+  .vel-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .vel-grid { display: grid; grid-template-columns: 80px repeat(4, 1fr); gap: 4px; font-size: 12.5px; }
+  .vel-head { font-weight: 700; color: var(--text); padding: 6px 10px; background: var(--navy); }
+  .vel-head:first-child { border-radius: 8px 0 0 0; }
+  .vel-head:last-child { border-radius: 0 8px 0 0; }
+  .vel-cell { padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+  .vel-row-label { font-weight: 700; color: var(--text); padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .vel-highlight { color: #16a34a; font-weight: 700; }
+  .vel-dim { color: var(--muted); opacity: 0.6; }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+
+  /* Metrics */
+  .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+  .metric-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .metric-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* Response guide */
+  .resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin: 20px 0; }
+  .resp-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; border-top: 3px solid; }
+  .resp-card.five { border-top-color: #16a34a; }
+  .resp-card.four { border-top-color: var(--gold); }
+  .resp-card.three { border-top-color: #f97316; }
+  .resp-card.one-two { border-top-color: #dc2626; }
+  .resp-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .resp-card.five .resp-tag { color: #16a34a; }
+  .resp-card.four .resp-tag { color: var(--gold); }
+  .resp-card.three .resp-tag { color: #f97316; }
+  .resp-card.one-two .resp-tag { color: #dc2626; }
+  .resp-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .resp-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  @media (max-width: 640px) {
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+    .msg-card { grid-template-columns: 64px 1fr; }
+  }
+  @media (max-width: 480px) {
+    .metrics-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 09</div>
+    <h1>Content & Social — Build the Audience That Books</h1>
+    <p class="subtitle">Build a property social audience that converts to direct bookings — the platforms that matter, the content that works, and the system that makes consistency possible without burning out</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 2: Own</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 08 — Local Guide & SEO</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 10 — Creator Network</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 07: Direct Booking</span>
+    <span class="arrow">→</span>
+    <span>Module 08: Local Guide & SEO</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 09: Content & Social</span>
+    <span class="arrow">→</span>
+    <span>Module 10: Creator Network</span>
+    <span class="arrow">→</span>
+    <span>Module 11: Experiences</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — Build Your Property Account</a>
+    <a href="#lesson-2">02 — Content Strategy & Pillars</a>
+    <a href="#lesson-3">03 — Grow Without Paid Ads</a>
+    <a href="#lesson-4">04 — Convert Followers to Bookings</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">📱</div>
+    <div>
+      <div class="label">Module Deliverable</div>
+      <p>A property Instagram account fully optimized: bio with direct booking link, 9 initial posts scheduled, 5 Story Highlights set up. A content pillar map and a posting template that makes 3×/week sustainable. Pinterest boards live. A clear "followers to bookings" funnel connecting social to your email list and direct booking site.</p>
+    </div>
+  </div>
+
+  <!-- ─── LESSON 1 ─── -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1</div>
+        <h2>Build Your Property's Social Presence</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Set up a property social account that is optimized for discovery and conversion — not just presence. The account you build in this lesson is the top of your social booking funnel.</div>
+
+    <h3>The Property Account vs. Your Personal Account</h3>
+    <p>Your property needs its own Instagram account. Not your personal one. This distinction matters for three reasons: (1) guests who want to follow the property are not following you as a person — they're following the experience; (2) a dedicated account can be managed or delegated separately from your personal profile; (3) Instagram's algorithm treats business and creator accounts differently — analytics, ad capability, and search indexing all improve with a dedicated account.</p>
+
+    <p>Name the account after the property, not after yourself. <em>@LakehouseAtWatkins</em> will rank in local Instagram search. <em>@JohnSmithRentals</em> will not.</p>
+
+    <h3>Bio Optimization — The First 150 Characters That Do the Work</h3>
+    <p>Your bio is the only always-visible text on your profile. Most STR hosts write a bio that describes the property. That's fine but incomplete. The bio should describe the experience AND tell people what to do next:</p>
+
+    <div class="pitch-box">
+      <div class="pitch-label">Bio Formula</div>
+      <p><strong>Line 1:</strong> What kind of property, where. ("Lakefront cabin. Seneca Lake, NY.")</p>
+      <p><strong>Line 2:</strong> The primary experience. ("Hot tub. Private dock. 4 acres.")</p>
+      <p><strong>Line 3:</strong> Social proof or a specific hook. ("Booked 200+ nights. ★★★★★ on Airbnb.")</p>
+      <p><strong>Line 4:</strong> The CTA. ("Book direct ↓")</p>
+      <p><strong>Link in bio:</strong> Your direct booking site — not Airbnb. Every Airbnb visitor costs you 15.5%. Every direct booking visitor costs you nothing. This is where the bio funnel earns.</p>
+    </div>
+
+    <h3>Story Highlights — Your Permanent Property Brochure</h3>
+    <p>Stories disappear in 24 hours. Highlights are permanent. Every new profile visitor sees them before they scroll your feed. Structure your highlights as the chapters of a property brochure:</p>
+    <ul>
+      <li><strong>The Arrival</strong> — the exterior, the first-look view, the driveway reveal. This is what guests imagine when they think about arriving.</li>
+      <li><strong>The Property</strong> — interior rooms, outdoor spaces, amenities. The virtual tour.</li>
+      <li><strong>Guest Love</strong> — screenshots of guest messages and review quotes. Social proof pinned at eye level.</li>
+      <li><strong>Local Tips</strong> — your best destination content: restaurants, experiences, hidden spots. This is your Destination Authority from Module 08, condensed into Stories.</li>
+      <li><strong>How to Book</strong> — one or two slides with the direct booking site URL and a reason to book direct (no fees, better rate, guaranteed best price).</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ First 9 Posts — The Profile Grid Strategy</div>
+      <p>When a new follower lands on your profile, they see your bio and your grid (the first 9 posts). These 9 posts are a first impression. Before you post anything else: plan your first 9 as a curated set — one per content pillar, showing the range of what your property offers. Think of it as the cover of a brochure. Once that grid is set, ongoing posts can be more spontaneous.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 1</div>
+      <h4>Optimize your property's Instagram bio</h4>
+      <div class="ai-prompt-box">Help me write an optimized Instagram bio for my STR property account. Here are the details:
+
+Property type: [lake house / mountain cabin / beach cottage / urban loft]
+Location: [city, state]
+Key amenities: [list your top 3-5 — hot tub, private dock, mountain views, chef's kitchen, etc.]
+Your Airbnb rating: [e.g., 4.97 stars, 180+ reviews]
+What makes this property memorable: [one thing guests most frequently mention in reviews]
+Direct booking site URL: [your URL]
+
+Write: (1) a 4-line bio under 150 characters total, (2) five Story Highlight cover names and what each should include, (3) a 2-sentence caption for my first Instagram post — the property hero shot</div>
+      <p class="ai-prompt-note"><strong>After posting the bio:</strong> Switch your account to a Creator or Business account in Settings. This unlocks Instagram Insights (which tells you which posts get saved and shared — the algorithm metrics that matter) and allows you to add a contact button directly in your bio.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2</div>
+        <h2>Content Strategy & Pillars — What to Post and Why</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Build a content pillar system that gives you unlimited post ideas without requiring creativity every time — and understand which formats the algorithm rewards so your effort goes where it compounds.</div>
+
+    <h3>The Four Content Pillars for STR</h3>
+    <p>A content pillar is a category your posts will always come from. Four pillars give you structure without rigidity — rotate through them and you'll never stare at a blank content calendar again:</p>
+
+    <div class="revenue-tiers">
+      <div class="tier-card">
+        <div class="tier-label">Pillar 1</div>
+        <div class="tier-title">The Property</div>
+        <p>Exterior and interior photography, amenity highlights, seasonal changes, before-and-after improvements. The evergreen content that shows why people would want to stay here.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Best format</span><span class="price">Static + Carousel</span></div>
+          <div class="tier-example"><span>Post frequency</span><span class="price">1× per week</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Pillar 2</div>
+        <div class="tier-title">The Experience</div>
+        <p>Lifestyle moments that show the feeling of being there — morning coffee on the dock, the hot tub at dusk, fireside evenings. What guests actually remember. This is what gets saved and shared.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Best format</span><span class="price">Reels + Stories</span></div>
+          <div class="tier-example"><span>Post frequency</span><span class="price">1× per week</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Pillar 3</div>
+        <div class="tier-title">The Destination</div>
+        <p>Local content: restaurants, trails, wineries, events, seasonal activities. Your Destination Authority from Module 08 becomes recurring social content. This content serves your followers even when they're not booking — building trust for when they are.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Best format</span><span class="price">Carousel + Reels</span></div>
+          <div class="tier-example"><span>Post frequency</span><span class="price">1× per week</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p>A fourth pillar — <strong>Social Proof</strong> — is used periodically (not weekly): guest review screenshots, before/after guest photos, UGC from tagged stays. This is your trust pillar. Use it once a month or when a particularly compelling review arrives.</p>
+
+    <h3>Format Breakdown — What Each Platform Rewards</h3>
+    <ul>
+      <li><strong>Reels (Instagram):</strong> The highest organic reach format on Instagram. The algorithm distributes Reels to non-followers. A Reel about your property can reach 10,000 people who have never heard of you; a static post reaches mostly your existing followers. Every week should include at least one Reel.</li>
+      <li><strong>Carousels (Instagram):</strong> The highest save rate of any format. When someone saves a carousel ("5 hidden gems near [destination]"), the algorithm registers a meaningful engagement signal. Destination content and property feature content both work well as carousels.</li>
+      <li><strong>Static photos (Instagram):</strong> The foundation. Strong photography of the property still converts — especially from creators or professional photography sessions. Use for your hero shots.</li>
+      <li><strong>Stories:</strong> Ephemeral but valuable for relationship-building with existing followers. Use for real-time updates: "the lake this morning," "just planted new flowers on the deck," "we added a kayak to the property this week." Authentic, unpolished content that the feed doesn't accommodate.</li>
+    </ul>
+
+    <h3>The Posting Cadence — Consistency Over Volume</h3>
+    <p>Three posts per week is the right cadence for most STR property accounts. Here's why:</p>
+    <ul>
+      <li>Three posts per week keeps you in the algorithm's active creator pool without burning you out or forcing low-quality content</li>
+      <li>One of those three should always be a Reel — for organic reach to new audiences</li>
+      <li>Five posts per week produces better short-term metrics and worse long-term sustainability — most hosts who try it drop to one per week after 6 weeks, which hurts the algorithm's trust in the account</li>
+      <li>A template system (covered in the Lesson 3 AI prompt) makes 3×/week achievable in under 90 minutes per week</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ The Algorithm Signals That Actually Matter</div>
+      <p>Likes are a vanity metric. The Instagram algorithm prioritizes saves, shares, and watch time. A Reel that 200 people watched for 90% of its duration is algorithmically more valuable than a static post with 500 likes. A carousel that 80 people saved is more valuable than one with 2,000 impressions. Optimize for saves (by making destination content worth bookmarking) and watch time (by making Reels that people don't skip). Likes are fine. Saves are the signal.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 2</div>
+      <h4>Build your 30-day content calendar</h4>
+      <div class="ai-prompt-box">I need a 30-day Instagram content calendar for my STR property account. Here's the context:
+
+Property type: [lake house / cabin / beach house / etc.]
+Location and market: [city, region]
+My four content pillars: Property shots / Lifestyle/experience / Destination content / Social proof
+Posting cadence: 3× per week (Mon/Wed/Fri or similar)
+Upcoming seasonal moment or local event: [e.g., fall foliage season, summer wine festival, holiday weekend]
+
+Create: (1) 12 post concepts for 4 weeks (3 per week) with pillar label, format (Reel/carousel/static), topic, and a one-sentence caption idea, (2) one Reel concept per week — describe the visual sequence (what to film, what order), (3) one carousel concept for "best [local activity] near [market]" as a destination save-worthy post
+
+Format the calendar week by week, not as a flat list.</div>
+      <p class="ai-prompt-note"><strong>Batch your content creation.</strong> Most hosts who maintain consistent accounts spend 2–3 hours one day per week (Sunday evening works for many) capturing, editing, and scheduling the week's posts. The content calendar gives you the plan. Scheduling tools (Later, Buffer, or Instagram's native scheduler) do the posting automatically.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3</div>
+        <h2>Grow Without Paid Ads — Organic Audience Tactics That Work</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Build a follower base through organic tactics — hashtag strategy, Pinterest SEO, user-generated content, and the creator network you'll launch in Module 10 — without spending on advertising.</div>
+
+    <h3>Instagram Hashtag Strategy — Local Over Viral</h3>
+    <p>Hashtags are a discovery tool, not a reach amplifier. They tell the algorithm who this content is for. A well-chosen set of 10–15 hashtags puts your content in front of people already searching for what you offer — destination travelers, not random accounts.</p>
+
+    <ul>
+      <li><strong>Destination hashtags (3–4 tags):</strong> #FingerlakesVacation, #PoconosCabin, #TennesseeGetaway. These are the people actively planning a trip to your market. Use the most specific version — #SenecaLakeNY over #NewYorkLake.</li>
+      <li><strong>Property type hashtags (2–3 tags):</strong> #LakehouseRental, #CabinLife, #VacationRentalLife. People browsing these are in discovery mode for STR stays specifically.</li>
+      <li><strong>Experience hashtags (2–3 tags):</strong> #HotTubLife, #LakeLife, #MountainView. These reach the lifestyle audience who responds to aspirational content.</li>
+      <li><strong>Niche travel hashtags (2–3 tags):</strong> #CouplesTravelUSA, #FamilyVacationUSA, #RemoteWorkTravel. Target your specific guest demographic.</li>
+      <li><strong>Local discovery hashtags (1–2 tags):</strong> #VisitFingerlakes, #ExploreUpstateNY. These are often moderated by tourism boards and can get your content reshared to their audiences.</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Pinterest — The Underrated Passive Channel</div>
+      <p>Pinterest is not social media in the traditional sense — it's a visual search engine. Pins are indexed by Google. A well-titled pin of your lake house exterior with the description "Lakefront vacation rental in Finger Lakes, NY — sleeps 8, private dock, hot tub" will appear in Google Image Search results for "finger lakes vacation rental" for 18+ months with zero additional effort. Create one board for your property (named after the property), one board for the destination ("Best Things to Do in the Finger Lakes"), and pin 5–10 images with keyword-rich descriptions. Then let it compound.</p>
+    </div>
+
+    <h3>User-Generated Content — Your Guests Are Creating for You</h3>
+    <p>Every guest who posts a photo from your property and tags your account is creating free marketing content. The problem is that most STR hosts don't have a system to capture it. Four tactics that increase UGC volume:</p>
+    <ul>
+      <li><strong>Ask explicitly in your pre-arrival message:</strong> "If you share any photos during your stay, we'd love to be tagged — @[YourHandle]. We reshare our favorites." This single sentence doubles the volume of tagged posts from guests who were already planning to post.</li>
+      <li><strong>Include the tag reminder in your welcome guidebook:</strong> A small note at the end — "We'd love to see your photos. Tag us @[handle] and we'll feature our favorites." Guests who read the guidebook on arrival are primed to think about content.</li>
+      <li><strong>Make the property photogenic on arrival:</strong> Flowers on the counter, lights on, fireplace ready. The arrival moment — the first visual impression — is what guests photograph most often. Stage it deliberately.</li>
+      <li><strong>Save everything:</strong> Create a folder in Google Photos or iCloud for every piece of guest UGC. This becomes your social proof library and your Airbnb listing photo refresh source — free, authentic, and diverse.</li>
+    </ul>
+
+    <h3>The Creator Network — Your Fastest Growth Channel</h3>
+    <p>Module 10 covers this in full, but the connection to Module 09 is important to understand now: a single creator stay can produce 6 months of content for your property account and grow your follower count by 20–40% in 48 hours (from their audience visiting your profile via the collab tag). Social growth and creator partnerships are not separate strategies. They're the same system — the creator brings reach, you capture it with quality content and a followable profile.</p>
+
+    <p>Before you run Module 10's creator outreach: make sure your profile is ready to receive the traffic. A creator with 25,000 followers tagging your account is useless if your profile has 3 posts and no highlights. This module is the prerequisite.</p>
+  </section>
+
+  <hr>
+
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4</div>
+        <h2>Converting Followers to Bookings</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Build the funnel that moves a social follower from discovery to email subscriber to direct booking — and understand how social proof from your account feeds every other conversion point in the machine.</div>
+
+    <h3>The Social-to-Booking Funnel</h3>
+    <p>Social media does not book rooms directly. It builds awareness, generates desire, and directs the motivated prospect to the place where they book. Your funnel has three steps:</p>
+
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 1 — Discovery:</strong> A non-follower sees your Reel or Carousel in their feed (algorithm-distributed). They find it interesting enough to visit your profile. This is the only job of reach: to earn a profile visit.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 2 — Interest:</strong> They look at your bio, your highlights, your first 9 posts. If the content is strong and the bio has a clear CTA, they follow or click the link. This is where your bio setup from Lesson 1 pays off. The link goes to your direct booking site.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Step 3 — Capture or Book:</strong> At your direct booking site, the visitor either books directly or submits their email to receive the "10% off your first direct booking" offer (your lead magnet). Email subscribers enter your Kit sequence. Bookers become past guests who receive the Day-21 re-booking offer. Either way, they're in the machine.</p></div>
+      </div>
+    </div>
+
+    <h3>Captions That Drive Action</h3>
+    <p>Most STR property captions describe the photo. Better captions drive action. The difference:</p>
+    <ul>
+      <li><strong>Descriptive caption (weak):</strong> "Golden hour on the dock. There's nothing better. 🌅 #lakehouse"</li>
+      <li><strong>Action caption (strong):</strong> "This is what Tuesday evening looks like from our dock. Weekday rates are available — book direct for our best pricing. Link in bio. 🌅 #fingerlakesvacation #lakehouselife"</li>
+      <li>The action caption describes the same moment, adds a reason to click (weekday rates), a CTA (link in bio), and destination hashtags. Two extra sentences, significantly more commercial value.</li>
+    </ul>
+
+    <h3>Review Quotes as Social Content — The Social Proof Loop</h3>
+    <p>Your best reviews are marketing copy. Pull 5-star review quotes and turn them into posts:</p>
+    <ul>
+      <li>Create a simple graphic template (Canva is sufficient) with your property photo as background, the review quote in text overlay, and the guest's first name and star rating</li>
+      <li>Post one of these monthly as part of your Social Proof pillar rotation</li>
+      <li>Share these in your Story Highlights under "Guest Love" so every profile visitor sees them immediately</li>
+      <li>Use review quotes in your direct booking site's testimonial section — social proof that lives on every page, not just on Instagram</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Social Impact on the Machine — What 500 Followers Actually Produces</div>
+      <p>An Instagram account with 500 followers who follow a property account because they're interested in that destination has a measurable booking value — different from a generic account with 500 random followers.</p>
+      <ul>
+        <li><strong>500 engaged local-travel followers</strong> → 3–5% click the link in bio per month → 15–25 direct booking site visits/month</li>
+        <li><strong>Direct booking site converts at 2–4%</strong> → 0.3–1 bookings/month attributable to social traffic</li>
+        <li><strong>At $250 ADR and 3 nights/booking</strong> → $750–$3,000/month in social-attributed revenue at scale</li>
+        <li><strong>Plus email captures:</strong> 10–15% of link visitors submit email → 1.5–3.75 new email subscribers/month → future re-booking candidates in Kit</li>
+      </ul>
+      <p>Social media's highest value is not direct booking — it's email capture. The email is the relationship. The booking is the outcome of the relationship.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 4</div>
+      <h4>Write a month of conversion-focused captions</h4>
+      <div class="ai-prompt-box">Write 12 Instagram captions for my STR property account — 3 per week for 4 weeks. Each caption should match one of my four content pillars and include a clear call-to-action. Here are the details:
+
+Property type: [type + market]
+My direct booking link is in bio: [yes/no]
+Do I have a direct booking email lead magnet? [yes — "10% off your first direct stay" / no]
+My top amenity or hook: [the lake view / the outdoor shower / the wood-burning fireplace / etc.]
+Upcoming season or local event to reference: [fall foliage / ski season / wine harvest / etc.]
+
+For each caption:
+- One sentence describing the moment/photo (not describing the amenity)
+- One sentence with a value or booking reason
+- One sentence CTA ("Book direct — link in bio" or "DM us to check dates")
+- 3-5 relevant hashtags for each
+
+Vary the tone across the 12 captions: some casual and conversational, some aspirational, some practical/informational. All should sound like a host who loves this property, not a real estate listing.</div>
+      <p class="ai-prompt-note"><strong>Rotate these captions with your content calendar.</strong> Use the calendar from Lesson 2 to plan which photo/Reel goes with which caption. A caption that references "golden hour on the dock" doesn't work for a cozy interior shot — match the caption tone to the visual. The AI will give you a range; pick the ones that feel most natural and edit as needed.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 09 Complete When:</div>
+      <h3>Your property's social presence is live, optimized, and your first 9 posts are published.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Property Instagram account created as a Creator or Business account — separate from personal</li>
+        <li><span class="cp-box"></span>Bio optimized: property name, top amenities, social proof line, and "Book direct ↓" CTA with link in bio going to your direct booking site</li>
+        <li><span class="cp-box"></span>5 Story Highlights created: Arrival, The Property, Guest Love, Local Tips, How to Book</li>
+        <li><span class="cp-box"></span>First 9 posts published — at least one from each pillar</li>
+        <li><span class="cp-box"></span>30-day content calendar built — posts planned and scheduled through the next 4 weeks</li>
+        <li><span class="cp-box"></span>Pinterest account created — property board and destination board with 10+ keyword-rich pins each</li>
+        <li><span class="cp-box"></span>UGC system active: tag request in pre-arrival message and guidebook</li>
+        <li><span class="cp-box"></span>Proceed to Module 10 — Creator & Influencer Network: your social presence is the infrastructure creators land on when they tag your account. Now learn to drive that traffic intentionally.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>Social Is Where New Guests Discover You. Email Is Where They Book.</h3>
+    <p>The social channel's primary job in the Hub-and-Spoke model is top-of-funnel reach. OTA guests who find you on Airbnb follow a platform-controlled discovery path. Social guests follow a path you control — from content that reaches them organically, to a profile you've built to convert, to a direct booking site that captures their email or their reservation.</p>
+    <p>No platform converts social followers to bookings directly. What social does is build the relationship and the awareness that makes a future booking more likely. A traveler who follows your lake house account in February, watches your winter Stories through March, and re-engages with your spring content in April is primed to book for June when they start planning their trip. The content you're building now is working on a delay — six weeks to six months later.</p>
+    <ul>
+      <li><strong>Reels → Profile visits → Link clicks → Direct booking site → Email or booking</strong> — this is the full funnel every Reel you post is running</li>
+      <li><strong>Pinterest → Google Image Search → Direct booking site → Email or booking</strong> — the passive funnel that runs independently of any active posting effort</li>
+      <li><strong>UGC → Reshare → New followers → Top of funnel again</strong> — the organic amplification loop that costs nothing once the guest-tagging system is running</li>
+      <li><strong>Creator content → Collab reach → Follower growth → Email capture velocity increases</strong> — Module 10 is the accelerant to everything this module set up</li>
+    </ul>
+    <p>Module 10 — Creator & Influencer Network — is the activation layer for Module 09's infrastructure. A creator stay done well can do more for your follower count, content library, and Airbnb search visibility in one weekend than three months of regular posting. The system you built in this module is the foundation it lands on.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 09: Content & Social &nbsp;·&nbsp; Next: Module 10 — Creator & Influencer Network
+</footer>
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Review Economy — Why Reviews Are Worth More Than Any Ad</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand exactly where reviews appear in the Airbnb and VRBO ranking algorithms, what a 0.1 improvement in star rating is worth in additional bookings, and why review velocity compounds over time in a way that becomes impossible for passive competitors to catch.
+    </div>
+
+    <p>Reviews are not a vanity metric. They are the primary conversion mechanism for every channel in this course. Module 08's content piece drives organic traffic to your direct booking site — reviews embedded on that site are what convert the visitor into a booking. Module 07's email campaigns reactivate past guests — the reason those guests came back in the first place was a 5-star experience that your review score reflects. Module 04's pricing strategy works only when your review score keeps you on the first page of Airbnb results where the pricing is even visible.</p>
+
+    <p>The review system sits at the center of the direct booking machine. Not because reviews are where the money comes from — they aren't. Reviews are the trust layer that makes every other part of the machine work.</p>
+
+    <h3>Where Reviews Appear in the Airbnb Ranking Algorithm</h3>
+    <p>Airbnb does not publish its full ranking algorithm, but the platform has confirmed that search placement is influenced by: <strong>overall rating, number of reviews, response rate, acceptance rate, and booking frequency</strong>. Of these, rating and review count are the only ones you can directly engineer over time. The others are baseline operational hygiene.</p>
+
+    <div class="rating-chart">
+      <div class="rating-row">
+        <div class="rating-score">4.9+</div>
+        <div class="rating-bar-wrap"><div class="rating-bar excellent"></div></div>
+        <div class="rating-label"><span class="stars">★★★★★</span> <strong>Superhost eligibility</strong> — first-page placement, "Highly Rated" badge, higher search weighting</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-score">4.8</div>
+        <div class="rating-bar-wrap"><div class="rating-bar excellent" style="width:80%"></div></div>
+        <div class="rating-label"><span class="stars">★★★★★</span> <strong>Strong visibility</strong> — solid first-page result in most markets, Superhost-adjacent performance</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-score">4.7</div>
+        <div class="rating-bar-wrap"><div class="rating-bar good"></div></div>
+        <div class="rating-label"><span class="stars">★★★★½</span> <strong>Declining visibility</strong> — filtered out of "Highly Rated" search; second-page risk in competitive markets</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-score">4.5</div>
+        <div class="rating-bar-wrap"><div class="rating-bar risk"></div></div>
+        <div class="rating-label"><span class="stars">★★★★½</span> <strong>Visibility risk</strong> — Airbnb flags at-risk listings below 4.7 internally; guests can filter to 4.8+, excluding you</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-score">&lt;4.3</div>
+        <div class="rating-bar-wrap"><div class="rating-bar danger"></div></div>
+        <div class="rating-label"><span class="stars">★★★★</span> <strong>Suspension territory</strong> — Airbnb can delist for sustained sub-4.3 performance. Recovery is extremely difficult.</div>
+      </div>
+    </div>
+
+    <h3>The Review Velocity Math — Why Passive Operators Fall Behind and Never Recover</h3>
+    <p>Review volume matters as much as score in most algorithm conditions. A property with 200 reviews at 4.85 outranks a property with 50 reviews at 4.90 in most competitive markets. This is because Airbnb weights review volume as a signal of reliability — more data points = more trustworthy rating. The operators who build a review system in Year 1 accumulate a compounding velocity advantage that passive operators cannot close without years of effort.</p>
+
+    <div class="velocity-chart">
+      <div class="vel-label">Review Velocity Comparison — Year 1 Through Year 4</div>
+      <div class="vel-grid">
+        <div class="vel-head">Year</div>
+        <div class="vel-head">With System (60% conversion)</div>
+        <div class="vel-head">Passive (30% conversion)</div>
+        <div class="vel-head">Review Gap</div>
+        <div class="vel-head">Ranking Impact</div>
+        <div class="vel-row-label">Start</div>
+        <div class="vel-cell">0 reviews</div>
+        <div class="vel-cell">0 reviews</div>
+        <div class="vel-cell">—</div>
+        <div class="vel-cell">Even</div>
+        <div class="vel-row-label">Year 1</div>
+        <div class="vel-cell vel-highlight">60 reviews</div>
+        <div class="vel-cell">30 reviews</div>
+        <div class="vel-cell">30 ahead</div>
+        <div class="vel-cell">Moderate advantage</div>
+        <div class="vel-row-label">Year 2</div>
+        <div class="vel-cell vel-highlight">120 reviews</div>
+        <div class="vel-cell">60 reviews</div>
+        <div class="vel-cell">60 ahead</div>
+        <div class="vel-cell">Significant advantage</div>
+        <div class="vel-row-label">Year 3</div>
+        <div class="vel-cell vel-highlight">180 reviews</div>
+        <div class="vel-cell">90 reviews</div>
+        <div class="vel-cell">90 ahead</div>
+        <div class="vel-cell">Structural first-page</div>
+        <div class="vel-row-label">Year 4</div>
+        <div class="vel-cell vel-highlight">240 reviews</div>
+        <div class="vel-cell">120 reviews</div>
+        <div class="vel-cell">120 ahead</div>
+        <div class="vel-cell">Gap is uncloseable</div>
+      </div>
+    </div>
+
+    <p>Assumes 100 stays per year. The passive operator at Year 4 cannot close a 120-review gap without running for 4 more years at 60% conversion — by which point the systematic operator has added another 240 reviews. The compounding advantage of a review system is permanent once established.</p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 What a 0.1 Rating Improvement Is Worth</div>
+      <p>Airbnb doesn't publish its exact search-ranking weights, but operator experience across markets consistently shows that a 0.1 improvement in overall star rating — from 4.7 to 4.8, or 4.8 to 4.9 — produces a measurable increase in search placement. In competitive markets (30+ similar properties), first-page vs. second-page placement typically produces a 25–40% difference in booking inquiry rate. At 120 nights booked per year and $250 average nightly rate, a 25% booking rate improvement from better placement = <strong>30 additional nights × $250 = $7,500/year in additional revenue</strong> — from a 0.1 rating point that is entirely within an operator's control.</p>
+    </div>
+
+    <h3>Reviews on Multiple Platforms — The Compound Advantage</h3>
+    <p>Every review request should be aimed at building social proof across three channels simultaneously: Airbnb, Google Business Profile, and VRBO. These three platforms do not share reviews — a guest who leaves a review on all three generates three independent data points that together build an internet-wide reputation that no single-platform competitor can replicate.</p>
+
+    <ul>
+      <li><strong>Airbnb reviews</strong> — determine OTA search placement and Superhost status. The primary volume target.</li>
+      <li><strong>Google Business Profile reviews</strong> — appear in Google Maps, Google Search knowledge panels, and are the primary data source for AI travel tools recommending local properties. A property with 50 GBP reviews alongside its 200 Airbnb reviews appears in AI search recommendations at a significantly higher rate than a property that only has OTA reviews.</li>
+      <li><strong>VRBO reviews</strong> — separate system, separate guest profile. VRBO guests (typically families, longer stays) are a distinct audience whose reviews build credibility with the next VRBO guest. VRBO's algorithm is similarly review-weighted.</li>
+    </ul>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You understand the review economy and have audited your current review position.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Current Airbnb star rating recorded — and distance to the next threshold (4.8 or 4.9) calculated</li>
+        <li><span class="cp-box"></span>Current Airbnb review count recorded — and passive competitor comparison benchmarked</li>
+        <li><span class="cp-box"></span>Current VRBO star rating and review count recorded</li>
+        <li><span class="cp-box"></span>Google Business Profile review count noted — this is the baseline for Module 09's GBP review push</li>
+        <li><span class="cp-box"></span>Review velocity target set: X reviews needed per year to reach [target rating] by [target date]</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The Review Request System — 3 Touches That Double Your Conversion Rate</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build a 3-touch review request sequence that runs automatically for every checkout, understand the timing mechanics of Airbnb and VRBO's review windows, and add a Google Business Profile review request to your existing post-stay email system in Module 07.
+    </div>
+
+    <p>The single highest-leverage change any STR operator can make to their review rate costs zero dollars and takes two hours to set up: a systematic, timed review request sequence. Operators who ask consistently get reviews at 55–65% of eligible checkouts. Operators who wait for guests to review voluntarily get reviews at 25–35%. That gap — 30 percentage points — is the entire review velocity advantage quantified in Lesson 1. It is not about having better guests. It is about asking.</p>
+
+    <p>The 3-touch approach maximizes response rate without crossing into the territory that guests find aggressive. Each touch has a specific timing and a specific job. Together they cover the three moments when a guest is most likely to act: the end of the stay (peak memory), checkout day (closure moment), and 48 hours later (when the platform's own reminder has landed but the memory is still fresh).</p>
+
+    <div class="msg-sequence">
+
+      <div class="msg-card">
+        <div class="msg-timing">
+          <div class="msg-when">Touch</div>
+          <div class="msg-day">1</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-name">The Pre-Checkout Prime</div>
+          <div class="msg-goal">Timing: Day before or morning of checkout · Goal: Plant the expectation</div>
+          <p>Sent as part of the Module 05 checkout sequence — the day before or morning of departure. <strong>Not a review request yet.</strong> A warm send-off that mentions you'll be sending a review request. "I hope your stay was everything you hoped for. I'll be following up after checkout with a quick message — your feedback means a lot to me and genuinely helps other guests find us." The guest now expects the review request. When Touch 2 arrives, it is not a surprise.</p>
+        </div>
+      </div>
+
+      <div class="msg-card">
+        <div class="msg-timing">
+          <div class="msg-when">Touch</div>
+          <div class="msg-day">2</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-name">The Checkout Request</div>
+          <div class="msg-goal">Timing: Checkout day (fires at 11am checkout time) · Goal: The primary ask</div>
+          <p>The main review request. Short, personal, direct. Reference something specific about their stay (if you know it from messages — a hike they mentioned, a wine trail they planned). Include <strong>both the Airbnb review link and the Google Business Profile review link</strong> in the same message. "You can leave your Airbnb review here: [link]. If you also have a moment for a Google review, it helps new guests find us there too: [GBP link]." Most guests will do one. Some will do both. All of them needed to be asked to do either.</p>
+        </div>
+      </div>
+
+      <div class="msg-card">
+        <div class="msg-timing">
+          <div class="msg-when">Touch</div>
+          <div class="msg-day">3</div>
+        </div>
+        <div class="msg-body">
+          <div class="msg-name">The 48-Hour Follow-Up</div>
+          <div class="msg-goal">Timing: 48 hours after checkout · Goal: Catch the non-reviewers · Segment: Only guests who have not yet reviewed</div>
+          <p>This message only fires if the guest has not left a review in the 48 hours since checkout. OwnerRez can trigger this conditionally using Airbnb's review status webhook (check OwnerRez documentation for current implementation). If the conditional is not possible, send to all guests — the awkwardness of a double-send to the rare guest who already reviewed is minimal compared to the conversion benefit for the majority who haven't. Keep Touch 3 extremely brief: "Just a quick follow-up — if you have a moment for your Airbnb review, here's the direct link: [link]. No pressure either way — it just genuinely helps."</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The In-Person Prime — The Highest-Converting Moment</div>
+      <p>If you or a property manager ever interacts with guests during their stay, the highest-converting review request in existence costs nothing and takes 8 seconds. When a guest says "we had such an amazing time" before leaving — say this: <strong>"I'm really glad. If you have a moment, an Airbnb review genuinely helps other guests find us — I'll send you the link when you're settled home."</strong> You have now asked, primed them, and committed to following up. Touch 2 lands on a guest who has already said yes in spirit. Review conversion on in-person-primed guests runs at 75–85%.</p>
+    </div>
+
+    <h3>The Google Business Profile Review Link</h3>
+    <p>Your GBP review link is a direct URL that opens the Google review dialog for your property. Find it in: Google Business Profile Manager → Get more reviews → Share review form. The URL format is: <code style="background: var(--math-bg); color: var(--math-border); padding: 1px 5px; border-radius: 4px; font-size: 13px;">g.page/[your-business-name]/review</code></p>
+
+    <p>Add this link to three places: your Touch 2 checkout message, your Module 07 Kit welcome email (as the "leave us a Google review" CTA in the third paragraph), and a QR code in your physical guidebook (Module 02). A guest who connects to StayFi WiFi, receives the welcome email, sees the guidebook QR, and gets the checkout message has encountered the GBP review request four times across their stay — all without feeling pressured.</p>
+
+    <h3>VRBO Review Requests — A Different Mechanic</h3>
+    <p>VRBO sends its own automated review request emails directly to guests after checkout — you cannot replicate this with a shareable direct link the way you can with Airbnb or Google. What you can do is use OwnerRez's channel filtering to send a VRBO-specific checkout message that acknowledges the platform's review process and still captures the GBP request.</p>
+
+    <p>In OwnerRez under Messaging → Automation, your checkout message trigger can be filtered by booking channel. Set up two versions: one for Airbnb bookings (Airbnb review link + GBP link), and one for VRBO bookings. The VRBO version replaces the Airbnb link with: <em>"VRBO will send you a review request in the next day or two — I'd be grateful if you could share a few words about your stay when it arrives."</em> Then still include the GBP link as the second ask. The guest gets the Airbnb or VRBO review request from the right source, and both get the GBP ask regardless.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ VRBO Review Window</div>
+      <p>VRBO's review window is 14 days from checkout — the same as Airbnb. VRBO sends 2–3 automated reminder emails during that window. Your Touch 2 and Touch 3 messages supplement VRBO's reminders rather than replacing them. Because VRBO handles the primary review request, your Touch 3 (48-hour follow-up) for VRBO guests can be softer: a brief thank-you note that mentions the GBP link, with no direct VRBO review ask since VRBO's own system is still active.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ What You Cannot Do — Platform Terms of Service</div>
+      <p><strong>You cannot offer any incentive in exchange for a review</strong> on Airbnb or VRBO. A discount, a gift, a credit toward a future stay — all explicitly prohibited. Airbnb has removed listings for this practice. You can ask. You can make it easy. You can prime the request. You cannot pay for it.</p>
+      <p><strong>You cannot ask guests to leave only positive reviews,</strong> or review only if they had a positive experience. The request must be unconditional. Most guests who had a positive stay will leave a positive review — that is the natural behavior. You do not need to filter; you need to ask.</p>
+      <p><strong>Google reviews have no Airbnb/VRBO restriction</strong> — but Google's own terms prohibit incentivizing reviews. Ask freely; don't offer anything in exchange.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Your 3-Touch Review Request Message Sequence</h4>
+      <div class="ai-prompt-box">You are helping me write a 3-message review request sequence for my vacation rental. These messages send automatically via OwnerRez after every guest checkout.
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+Checkout time: [TIME — e.g., 10am or 11am]
+My Airbnb profile URL: [URL]
+My Google Business Profile review link: [g.page/[your-business]/review]
+One thing I genuinely try to provide for every guest: [e.g., "a clean property and a local insider tip" / "a peaceful space with everything they need"]
+
+Write all 3 messages:
+
+Touch 1 — Pre-Checkout Prime (day before or checkout morning):
+Warm, friendly, no booking ask. Reference their upcoming departure. Plant the expectation that a review request is coming. One paragraph maximum. Do not include a link yet.
+
+Booking channel for this guest: [AIRBNB or VRBO — this changes the message]
+
+Touch 2 — The Checkout Request (fires at checkout time):
+The main ask. Short, personal, direct. Reference something guests commonly enjoy at this type of property.
+- If AIRBNB: include the Airbnb review link and the Google Business Profile review link. Explain each in one sentence. Total: 3–4 sentences.
+- If VRBO: do NOT include a VRBO review link (VRBO emails it separately). Instead, say one warm sentence acknowledging VRBO will send a review request, then include the GBP link as a second ask. Total: 3–4 sentences.
+
+Touch 3 — The 48-Hour Follow-Up (fires 48 hours after checkout):
+- If AIRBNB: For guests who have not yet reviewed. Very brief — 2 sentences maximum. Just the Airbnb review link and a single "no pressure" closing.
+- If VRBO: A brief thank-you that includes only the GBP review link. VRBO is handling its own review reminders — this touch is for GBP only.
+
+Voice: personal host, not platform language. These should sound like texts from someone who cares, not automated messages from a system.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Read each message aloud. If any sentence sounds like it came from a hotel software platform, rewrite it. The goal is to sound like the human you are — a host who genuinely wants the guest to share their experience. Install all 3 messages in OwnerRez under Messaging → Automation → add a new automated trigger for each timing.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your 3-touch review request sequence is live in OwnerRez and your GBP review link is in your Kit welcome email.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Touch 1 (Pre-Checkout Prime) written and set as OwnerRez automation — fires day before or morning of checkout</li>
+        <li><span class="cp-box"></span>Touch 2 (Checkout Request) written in two channel variants — Airbnb version (Airbnb link + GBP link) and VRBO version (acknowledge VRBO's review email + GBP link), both set as OwnerRez automations filtered by booking channel</li>
+        <li><span class="cp-box"></span>Touch 3 (48-Hour Follow-Up) written in two variants — Airbnb version (Airbnb link only) and VRBO version (GBP link only, since VRBO handles its own review reminders)</li>
+        <li><span class="cp-box"></span>Google Business Profile review link confirmed — tested by opening on your own phone to verify it opens the review dialog</li>
+        <li><span class="cp-box"></span>GBP review link added to Kit welcome email — positioned as optional, light ask in the final paragraph</li>
+        <li><span class="cp-box"></span>GBP review QR code added to physical guidebook (if applicable from Module 02)</li>
+        <li><span class="cp-box"></span>End-to-end test completed — created a test reservation, confirmed all 3 messages fire correctly with working links</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The 5-Star Audit — Closing the Gaps That Cost You a Star</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Audit the four operational categories that determine review score — Accuracy, Cleanliness, Check-In, and Local Guidance — identify any gaps between your current standard and a 5-star standard, and close them before the next guest arrives.
+    </div>
+
+    <p>You cannot ask your way out of a 4-star experience. The review request system in Lesson 2 doubles conversion rate — but conversion rate on a 4.3 experience is still a 4.3 rating. The foundation of a 5-star review score is the operation behind it. Module 05 built most of that foundation. Module 09 is where you audit whether it's working.</p>
+
+    <p>Airbnb tracks review scores across six sub-categories: Overall, Cleanliness, Accuracy, Check-In, Communication, Location, and Value. Guests rate all six. Your overall score is the average, but your listing's algorithmic weighting is influenced by each sub-category score. The categories you control entirely through operations — Cleanliness, Accuracy, Check-In — are where 80% of sub-5-star reviews originate.</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-value">#1</div>
+        <div class="metric-label">Cleanliness — the most common reason for less-than-5-star reviews in STR data</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">#2</div>
+        <div class="metric-label">Check-In friction — access issues, unclear instructions, wrong codes</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">#3</div>
+        <div class="metric-label">Accuracy gaps — property does not match the listing's photos or description</div>
+      </div>
+    </div>
+
+    <h3>The 4-Category Operational Audit</h3>
+
+    <h3 style="color: var(--gold); font-size: 0.95rem; margin-top: 28px;">Category 1: Accuracy</h3>
+    <p>The accuracy gap is the most common source of "it wasn't quite what I expected" reviews. Walk through your listing as a first-time guest would: read every photo caption, every amenity listed, every sentence in the description. Then visit the property and verify each claim is still true. Furniture changes, amenities break, views are obscured by tree growth. A listing that was accurate 18 months ago may have drifted.</p>
+    <ul>
+      <li>Every photo on your listing should reflect the property's current state — not how it looked at launch</li>
+      <li>Every amenity checkbox must be currently available and functional — a broken kayak should be unchecked until repaired</li>
+      <li>If your listing says "sleeps 8 comfortably," verify there are 8 actual beds or quality sleeper sofas — not 6 beds and 2 air mattresses</li>
+      <li>Noise disclosures: if there is a nearby road, a neighbor with a dog, or any seasonal noise source, it belongs in the listing. Guests who are not surprised do not leave negative reviews about things they were told about.</li>
+    </ul>
+
+    <h3 style="color: var(--gold); font-size: 0.95rem; margin-top: 28px;">Category 2: Cleanliness</h3>
+    <p>A 5-star cleanliness rating is not about how clean the property is at its cleanest — it is about the consistency of the cleaning standard at its worst. A property that is usually spotless but occasionally misses the stovetop hood or the grout lines gets 4 stars from the guest who experienced the miss. Build your cleaning standard around what must be done every single time, not around what is typically done.</p>
+    <ul>
+      <li><strong>Use a written cleaning checklist</strong> — given to the cleaner and checked off after every turn. Non-negotiable items (baseboards, light switches, bathroom grout, inside microwave) should be explicitly listed.</li>
+      <li><strong>Conduct a surprise inspection quarterly</strong> — arrive unannounced 30 minutes after the cleaner's standard completion time. What you find is what the guest finds on a bad day. Fix the cleaning standard based on what you observe, not what you were told.</li>
+      <li><strong>Supply staging is part of cleanliness</strong> — a property that is clean but visually unstaged (pillows not fluffed, toilet paper roll nearly empty, half-used toiletries left out) reads as not clean to guests. Staging items should be on the cleaner's checklist.</li>
+      <li><strong>Smell is the first sensory impression</strong> — a property that smells like cleaning products, previous guests, or pets will generate a cleanliness concern before the guest has seen a single surface. Air it out between stays. Use a consistent, light scent (candles, diffusers, not synthetic sprays).</li>
+    </ul>
+
+    <h3 style="color: var(--gold); font-size: 0.95rem; margin-top: 28px;">Category 3: Check-In</h3>
+    <p>Check-in friction is the second most common source of sub-5-star reviews — and it is entirely preventable. The Module 05 automated message sequence sends check-in instructions 24 hours in advance and the morning of arrival. Walk through those instructions as a first-time guest who has never visited and has no prior context. Are any of the following unclear?</p>
+    <ul>
+      <li>Lockbox or smart lock code — is the code clearly stated? Is it the correct current code?</li>
+      <li>Gate or driveway access — is there a code, a pull-through, a clearance concern? Is it documented?</li>
+      <li>WiFi credentials — printed in the property AND in the pre-arrival message AND in the guidebook?</li>
+      <li>Parking instructions — where to park, how many vehicles, any restrictions?</li>
+      <li>After-hours contact — if a guest arrives at 11pm and the lockbox code doesn't work, what do they do?</li>
+    </ul>
+    <p>Test the check-in sequence yourself once a year: arrive at the property as if you are a first-time guest with no prior knowledge. Read only the pre-arrival message. Attempt to enter the property using only that information. If anything is unclear to you, it will be confusing to a guest arriving tired after a 4-hour drive.</p>
+
+    <h3 style="color: var(--gold); font-size: 0.95rem; margin-top: 28px;">Category 4: Local Guidance</h3>
+    <p>Guests who receive specific, personal local recommendations feel cared for. Guests who receive a generic area guide (or no guidance) feel abandoned. The Module 02 guidebook covers this — Module 09 ensures the guidebook is current and specific enough to actually elevate the experience. A restaurant recommendation that closed six months ago, or a wine trail that is no longer open on the day you recommend visiting, generates exactly the resentment that drives 4-star reviews.</p>
+
+    <ul>
+      <li>Review the guidebook annually — verify every business is still open and operating at the hours you specified</li>
+      <li>Add seasonal notes — what's open in winter vs. summer, when to visit to avoid crowds, what's new in the area this year</li>
+      <li>The Kit welcome email's local tip (from Module 07's AI prompt) should match the guidebook — they should feel like they came from the same host with the same knowledge</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The 5-Star Guest Experience Kit — Physical Products Behind Every Audit Category</div>
+      <p>The 4-category audit above tells you what to fix. The SpokeBnB Amazon store has a curated selection of products that implement the fix — organized by audit category so you can go from gap identified to gap closed in a single afternoon of purchasing.</p>
+      <ul>
+        <li><strong>Cleanliness category:</strong> laminated cleaning checklist frames, hotel-quality linen sets, premium diffusers and candles (consistent scent = consistent cleanliness perception), staging supply kits, microfiber towel sets for the cleaner's use</li>
+        <li><strong>Check-In category:</strong> Schlage Encode and Yale Assure smart locks (eliminate lockbox code issues entirely), property information display frames for WiFi credentials, QR code acrylic stands, keypad entry systems for gate access</li>
+        <li><strong>Accuracy / Wow Moment category:</strong> Fellow Stagg EKG kettle + locally-sourced coffee (the morning coffee station that guests photograph and mention in reviews), charcuterie board sets, wine bottle chillers, fire pit accessories and premium fire starters</li>
+        <li><strong>Local Guidance category:</strong> high-quality printed guidebook binder with custom tabs, tabletop display frames for the QR code that links to your digital guidebook, welcome card sets for handwritten notes</li>
+      </ul>
+      <p>The products behind your audit are not luxuries — they are investments in the operational standard that produces 5-star reviews. A $40 smart lock that eliminates check-in friction earns its cost back in the first review it saves. Visit the SpokeBnB Amazon store to browse the full curated kit organized by category.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>The 4-category operational audit is complete and any gaps are closed before the next guest.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Accuracy audit complete — listing photos and amenities verified against current property state</li>
+        <li><span class="cp-box"></span>Noise disclosures reviewed — any seasonal or neighbor noise sources documented in listing</li>
+        <li><span class="cp-box"></span>Written cleaning checklist exists and is in the cleaner's possession — surprise inspection scheduled</li>
+        <li><span class="cp-box"></span>Staging items added to cleaning checklist — pillows, supplies, scent management</li>
+        <li><span class="cp-box"></span>Check-in sequence tested end-to-end from a first-time guest perspective — any friction identified and corrected</li>
+        <li><span class="cp-box"></span>After-hours contact protocol documented and included in pre-arrival message</li>
+        <li><span class="cp-box"></span>Guidebook reviewed for accuracy — closed businesses removed, seasonal notes updated</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Responding to Reviews — How to Use Every Review to Win Future Bookings</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Write response templates for every review type — 5-star, 4-star, and negative — understanding that your responses are written for future guests who are reading the review thread as part of their booking decision, not for the reviewer who wrote it.
+    </div>
+
+    <p>Future guests read host responses. On Airbnb, approximately 40% of potential guests read at least some host responses before booking. What they are looking for is not a perfect record — they are looking for evidence of how you handle feedback. A host who responds thoughtfully to a 4-star review demonstrates professionalism that a host with only 5-star reviews cannot demonstrate, because there has been no friction to respond to.</p>
+
+    <p>Your audience for every response you write is the person who has not booked yet and is reading the thread to decide whether to trust you. Write for them, not for the reviewer. Never argue, never over-explain, and never make the guest feel publicly judged. The reviewer has already moved on. The next booking is watching.</p>
+
+    <div class="resp-grid">
+      <div class="resp-card five">
+        <div class="resp-tag">5-Star Response</div>
+        <div class="resp-title">Thank Specifically + Invite Return</div>
+        <p>Reference something specific from their review or from the stay (a hike they mentioned, a meal they loved). Do not use the same response template for every 5-star review — Airbnb and observant guests both notice templated responses. Close with an invitation to return or to share with a friend. Two to three sentences maximum. Respond within 48 hours while the stay is recent.</p>
+      </div>
+      <div class="resp-card four">
+        <div class="resp-tag">4-Star Response</div>
+        <div class="resp-title">Acknowledge + Context (If Relevant) + Thank</div>
+        <p>Acknowledge specifically what they mentioned. Provide context without defensiveness — if the construction next door is seasonal and currently complete, say so. If a supply was unexpectedly depleted, note that it has been restocked. Close with genuine thanks for the feedback. Never minimize a 4-star review publicly — the next guest is watching to see if you dismiss feedback.</p>
+      </div>
+      <div class="resp-card three">
+        <div class="resp-tag">3-Star Response</div>
+        <div class="resp-title">Acknowledge + Fix Statement + Professional Close</div>
+        <p>Take the feedback seriously and say so. State what has been changed or corrected as a result — specifically. A 3-star review with a host response that says "we've corrected the cleanliness issue and retrained our cleaning team" tells future guests this host responds to problems. That is more persuasive than a property with no 3-star reviews because it demonstrates accountability.</p>
+      </div>
+      <div class="resp-card one-two">
+        <div class="resp-tag">1–2 Star Response</div>
+        <div class="resp-title">Brief + Factual + Professional. Never Argue.</div>
+        <p>State one or two factual points without attacking the guest, then close professionally. Never reveal personal details about the guest. Never accuse. Never explain more than two sentences. The next guest is reading both the review and your response — a defensive wall of text reads as guilt. A brief, professional acknowledgment reads as confidence. End with something like: "We take all feedback seriously and continue to improve."</p>
+      </div>
+    </div>
+
+    <h3>The Review Examples — Read These and Notice What Works</h3>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">S</div>
+        <div class="review-meta">
+          <div class="review-name">Sarah M.</div>
+          <div class="review-date">September 2026</div>
+          <div class="review-rating">★★★★★</div>
+        </div>
+      </div>
+      <div class="review-text">"The fire pit at sunset was something we'll never forget. Host was incredibly responsive and the local restaurant tip was spot on — Montezuma at sunset exactly as described. We'll be back."</div>
+      <div class="review-response">
+        <div class="review-response-label">Host Response</div>
+        The fire pit at sunset is my favorite part of the property — I'm really glad you got to experience it in good weather. Montezuma has been a staple recommendation for years; I'm glad the timing worked out for you. Looking forward to welcoming you back.
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">T</div>
+        <div class="review-meta">
+          <div class="review-name">Tom R.</div>
+          <div class="review-date">August 2026</div>
+          <div class="review-rating">★★★★</div>
+        </div>
+      </div>
+      <div class="review-text">"Beautiful property and great location. The hot tub took a little longer to heat up than expected, which cut into our first evening. Overall a wonderful stay."</div>
+      <div class="review-response">
+        <div class="review-response-label">Host Response</div>
+        Thank you for the kind words and honest feedback. The hot tub does take 4–5 hours to reach temperature after a cool-down — I've updated the pre-arrival instructions to include a reminder to request early heating if guests plan to use it the first evening. Appreciate you flagging it; that's a meaningful improvement for future guests.
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">L</div>
+        <div class="review-meta">
+          <div class="review-name">Lisa K.</div>
+          <div class="review-date">July 2026</div>
+          <div class="review-rating">★★★</div>
+        </div>
+      </div>
+      <div class="review-text">"The property has great bones but was not as clean as I expected. Some areas looked like they had been missed. The location and view were excellent."</div>
+      <div class="review-response">
+        <div class="review-response-label">Host Response</div>
+        Thank you for the honest feedback, Lisa. Cleanliness is something we take seriously and this fell short of our standard. I've reviewed the cleaning protocol with the team and added a final inspection step to every turnover going forward. I appreciate you noting the location and view — and I'm sorry the cleanliness didn't match.
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Mining Reviews for Marketing Copy</div>
+      <p>Your best reviews contain natural-language descriptions of your property's most compelling features — written by real guests in their own words. These phrases are more powerful in your marketing than anything you could write yourself. Pull the most vivid phrases from 5-star reviews and use them:</p>
+      <ul>
+        <li>In your Airbnb listing headline and description (as direct quotes, attributed to "past guests")</li>
+        <li>In your direct booking site testimonials section (embed or display the full review)</li>
+        <li>In your Kit email campaigns ("Here's what a recent guest said: [quote]")</li>
+        <li>In your Module 08 hub content piece ("According to guests, [specific detail]")</li>
+      </ul>
+      <p>A guest who says "the fire pit at sunset is something we'll never forget" has written your marketing headline. Use it.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Write Host Response Templates for Every Review Type</h4>
+      <div class="ai-prompt-box">You are helping me write host response templates for my vacation rental reviews on Airbnb and VRBO. I need 4 template types: 5-star, 4-star, 3-star, and 1–2 star responses.
+
+Property name: [YOUR PROPERTY NAME]
+Location: [CITY/AREA, STATE]
+Property type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+My host name (what guests call me): [YOUR NAME]
+One thing guests consistently love (from real reviews): [SPECIFIC DETAIL — e.g., "the fire pit views" / "the proximity to the wine trail"]
+One area I've recently improved based on feedback (if applicable): [e.g., "added clearer check-in instructions" / "upgraded the kitchen supplies"]
+
+Write 4 response templates:
+
+Template 1 — 5-Star Response:
+Warm, specific (reference the thing guests consistently love), brief (2–3 sentences), closes with an invitation to return or share. Uses my name naturally. Not templated-sounding.
+
+Template 2 — 4-Star Response:
+Acknowledges the feedback, provides brief context for anything fixable, thanks them genuinely. No defensiveness. 3–4 sentences. Closes with appreciation.
+
+Template 3 — 3-Star Response:
+Acknowledges the shortfall directly. States one specific corrective action taken. Thanks them for honest feedback. Professional, not apologetic beyond one sentence. 3–4 sentences.
+
+Template 4 — 1–2 Star Response:
+Brief. 2 sentences maximum. One factual point without arguing. Closes with "we take all feedback seriously and continue to improve." No personal details about the guest. No emotional language.
+
+Voice: professional host, not corporate PR. Each template should feel like a response from a real person who read the review carefully.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Customize each template with a specific property detail before saving. "The [fire pit / lake view / wine trail proximity] guests consistently love" should be your actual property's signature feature. Use the 5-star template as a starting point only — your best 5-star responses will reference something specific to that particular guest's review, not just the generic template. Treat the templates as defaults; personalize every response before publishing.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 09 Complete When:</div>
+      <h3>Your review system is fully operational — the request sequence is live, the audit is complete, and your response templates are written.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>3-touch review request sequence live in OwnerRez — tested end-to-end with working review links</li>
+        <li><span class="cp-box"></span>Google Business Profile review link added to Kit welcome email and checkout message</li>
+        <li><span class="cp-box"></span>Accuracy audit complete — listing reflects current property state</li>
+        <li><span class="cp-box"></span>Cleaning checklist written and in cleaner's hands — quarterly inspection scheduled</li>
+        <li><span class="cp-box"></span>Check-in sequence tested from a first-time guest perspective — any friction corrected</li>
+        <li><span class="cp-box"></span>Guidebook verified accurate — closed businesses removed, seasonal notes current</li>
+        <li><span class="cp-box"></span>4 host response templates written — 5-star, 4-star, 3-star, and 1–2 star</li>
+        <li><span class="cp-box"></span>Best review quotes identified and pulled for use in listing copy, direct booking site, and email campaigns</li>
+        <li><span class="cp-box"></span>Proceed to Module 10 — Experiences & Upsells: your review system creates the trust that makes guests open to an upsell before they've even arrived. Module 10 builds the revenue layer above the base nightly rate.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>Reviews Are the Conversion Mechanism at Every Stage of the Machine</h3>
+    <p>The direct booking machine has many moving parts. Reviews are the trust infrastructure that makes all of them work. Without reviews, the machine still runs — but it runs at a fraction of its potential, because trust is what converts at every stage.</p>
+    <ul>
+      <li><strong>OTA search placement</strong> — your Airbnb and VRBO ranking is review-weighted. Higher rating and review volume means more first-page impressions, which means more bookings, which means more past guests entering the StayFi list. The machine's intake volume is controlled by your review score.</li>
+      <li><strong>Direct booking site conversion</strong> — Module 08's content brings organic traffic to your direct booking site. Reviews embedded on that site are what convert the visitor into a guest. A site with no social proof converts at 1%. A site with 20+ reviews displayed converts at 4–6%.</li>
+      <li><strong>Email campaign conversion</strong> — Module 07's past-guest campaigns succeed because the guest's memory of their stay is positive. That positive memory is a 5-star experience reflected in a 5-star review. A guest who left a 3-star review is not a warm email marketing lead.</li>
+      <li><strong>AI search visibility</strong> — Module 08 identified AI travel tools as an emerging discovery channel. Review volume across Airbnb, VRBO, and Google Business Profile is the primary signal those tools use to recommend specific properties. The review system in this module is also an AI visibility system.</li>
+    </ul>
+    <p><strong>Every other module in this course delivers maximum value only when the review foundation is in place.</strong> Module 09 is not the most exciting module — it is the one that makes every other module's work worth doing.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 09: Reviews &nbsp;·&nbsp; Next: Module 10 — Experiences & Upsells
+</footer>

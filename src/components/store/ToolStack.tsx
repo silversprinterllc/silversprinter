@@ -18,7 +18,7 @@ const toolCategories = [
     category: 'Direct Booking',
     tools: [
       { name: 'Lodgify', use: 'Website + booking engine', cost: '$12-59/mo', affiliate: true },
-      { name: 'StayFi', use: 'WiFi guest email capture', cost: '$15/mo', affiliate: true },
+      { name: 'StayFi', use: 'Guest identity platform — convert OTA guests to direct relationships', cost: '$19/mo', affiliate: true },
       { name: 'Stripe', use: 'Payment processing', cost: '2.9% + $0.30', affiliate: false },
     ],
   },

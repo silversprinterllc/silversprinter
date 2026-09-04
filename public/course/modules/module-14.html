@@ -1,0 +1,1337 @@
+<title>Module 14 — Build It for Others</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --danger-bg: #fff1f2; --danger-border: #dc2626;
+    --gold-bg: rgba(212,160,23,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --danger-bg: #2d0a0a; --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --danger-bg: #2d0a0a; --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 40px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .tip { background: var(--tip-bg); border-left-color: #16a34a; }
+  .tip .callout-label { color: #16a34a; }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .math { background: var(--math-bg); border-left-color: #0284c7; }
+  .math .callout-label { color: #0284c7; }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .warn { background: var(--warn-bg); border-left-color: #ca8a04; }
+  .warn .callout-label { color: #ca8a04; }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+
+  /* Valuation comparison */
+  .val-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+  .val-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .val-card-head { padding: 14px 20px; }
+  .val-card.comp .val-card-head { background: #374151; }
+  .val-card.income .val-card-head { background: var(--navy); border: 2px solid var(--gold); border-bottom: none; }
+  .val-head-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .val-head-title { font-size: 1rem; font-weight: 700; color: #fff; }
+  .val-card-body { padding: 18px 20px; }
+  .val-card.income .val-card-body { border: 2px solid var(--gold); border-top: none; border-radius: 0 0 12px 12px; }
+  .val-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+  .val-row:last-child { border-bottom: none; }
+  .val-row-label { color: var(--muted); }
+  .val-row-val { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--text); }
+  .val-row.total .val-row-label { font-weight: 700; color: var(--text); }
+  .val-row.total .val-row-val { font-size: 1.15rem; color: var(--gold); }
+  .val-row.highlight .val-row-val { color: #16a34a; }
+
+  /* NOI table */
+  .noi-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 20px 0; display: block; overflow-x: auto; }
+  .noi-table thead tr { background: var(--navy); }
+  .noi-table thead th { padding: 10px 14px; text-align: left; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .noi-table tbody tr { border-bottom: 1px solid var(--border); }
+  .noi-table tbody tr.subtotal { background: var(--gold-bg); }
+  .noi-table td { padding: 10px 14px; vertical-align: top; color: var(--muted); }
+  .noi-table td:first-child { color: var(--text); }
+  .noi-table td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  .noi-table td.neg { color: #dc2626; font-weight: 600; }
+  .noi-table td.pos { color: #16a34a; font-weight: 700; }
+  .noi-table td.bold { font-weight: 700; color: var(--text); }
+  .noi-table td.gold { font-weight: 700; color: var(--gold); font-size: 1.05rem; }
+
+  /* Buyer type cards */
+  .buyer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+  .buyer-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; border-top: 4px solid; }
+  .buyer-card.retail { border-top-color: #6b7280; }
+  .buyer-card.investor { border-top-color: #0284c7; }
+  .buyer-card.operator { border-top-color: var(--gold); }
+  .buyer-type { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+  .buyer-card.retail .buyer-type { color: #6b7280; }
+  .buyer-card.investor .buyer-type { color: #0284c7; }
+  .buyer-card.operator .buyer-type { color: var(--gold); }
+  .buyer-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .buyer-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0 0 8px; }
+  .buyer-premium { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; display: inline-block; margin-top: 6px; }
+  .buyer-card.retail .buyer-premium { background: #f3f4f6; color: #374151; }
+  .buyer-card.investor .buyer-premium { background: var(--math-bg); color: #0c4a6e; }
+  .buyer-card.operator .buyer-premium { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .buyer-card.retail .buyer-premium { background: rgba(107,114,128,0.2); color: #d1d5db; }
+    :root:not([data-theme="light"]) .buyer-card.investor .buyer-premium { background: rgba(2,132,199,0.2); color: #7dd3fc; }
+  }
+  :root[data-theme="dark"] .buyer-card.retail .buyer-premium { background: rgba(107,114,128,0.2); color: #d1d5db; }
+  :root[data-theme="dark"] .buyer-card.investor .buyer-premium { background: rgba(2,132,199,0.2); color: #7dd3fc; }
+
+  /* Transferability inventory */
+  .transfer-table { width: 100%; margin: 24px 0; border-collapse: collapse; font-size: 13.5px; }
+  .transfer-table thead tr { background: var(--navy); }
+  .transfer-table thead th { padding: 10px 16px; text-align: left; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .transfer-table tbody tr { border-bottom: 1px solid var(--border); }
+  .transfer-table td { padding: 12px 16px; vertical-align: top; color: var(--muted); line-height: 1.6; }
+  .transfer-table td:first-child { font-weight: 600; color: var(--text); }
+  .transfer-pill { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; display: inline-block; }
+  .transfer-pill.yes { background: #dcfce7; color: #15803d; }
+  .transfer-pill.partial { background: #fef9c3; color: #92400e; }
+  .transfer-pill.no { background: #fee2e2; color: #dc2626; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .transfer-pill.yes { background: rgba(22,163,74,0.2); color: #86efac; }
+    :root:not([data-theme="light"]) .transfer-pill.partial { background: rgba(202,138,4,0.2); color: #fde68a; }
+    :root:not([data-theme="light"]) .transfer-pill.no { background: rgba(220,38,38,0.2); color: #fca5a5; }
+  }
+  :root[data-theme="dark"] .transfer-pill.yes { background: rgba(22,163,74,0.2); color: #86efac; }
+  :root[data-theme="dark"] .transfer-pill.partial { background: rgba(202,138,4,0.2); color: #fde68a; }
+  :root[data-theme="dark"] .transfer-pill.no { background: rgba(220,38,38,0.2); color: #fca5a5; }
+
+  /* Exit package docs */
+  .package-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .pkg-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .pkg-num { font-size: 28px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 6px; font-family: 'Playfair Display', Georgia, serif; }
+  .pkg-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .pkg-items { list-style: none; padding: 0; }
+  .pkg-items li { font-size: 12.5px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; line-height: 1.55; }
+  .pkg-items li:last-child { border-bottom: none; }
+  .pkg-items li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+  /* Sale playbook timeline */
+  .playbook { margin: 24px 0; }
+  .pb-step { display: grid; grid-template-columns: 100px 1fr; gap: 20px; padding-bottom: 28px; position: relative; }
+  .pb-step:not(:last-child)::before { content: ''; position: absolute; left: 49px; top: 36px; bottom: 0; width: 2px; background: var(--border); }
+  .pb-when { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding-top: 10px; text-align: right; line-height: 1.4; }
+  .pb-content { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .pb-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .pb-detail { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .pb-detail strong { color: var(--text); }
+
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  /* Final banner */
+  .course-complete { background: var(--navy); border: 2px solid var(--gold); border-radius: 16px; padding: 36px 40px; margin: 48px 0 0; text-align: center; }
+  .course-complete .cc-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .course-complete h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 16px; line-height: 1.2; }
+  .course-complete p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; max-width: 580px; margin: 0 auto; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  /* Listing submission callout */
+  .listing-callout { background: var(--navy); border: 2px solid var(--gold); border-radius: 16px; padding: 36px 40px; margin: 56px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .lc-left {}
+  .lc-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .lc-heading { font-family: 'Playfair Display', Georgia, serif; font-size: 1.25rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 12px; }
+  .lc-body { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.75; max-width: 540px; }
+  .lc-body strong { color: rgba(255,255,255,0.9); }
+  .lc-right { flex-shrink: 0; }
+  .lc-cta { display: inline-block; background: var(--gold); color: var(--navy); font-size: 13px; font-weight: 700; padding: 14px 24px; border-radius: 8px; text-decoration: none; white-space: nowrap; letter-spacing: 0.03em; }
+  .lc-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; text-align: center; line-height: 1.5; }
+  @media (max-width: 640px) {
+    .listing-callout { grid-template-columns: 1fr; }
+    .lc-right { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .val-compare { grid-template-columns: 1fr; }
+    .buyer-grid { grid-template-columns: 1fr; }
+    .package-grid { grid-template-columns: 1fr; }
+    .pb-step { grid-template-columns: 1fr; }
+    .pb-when { text-align: left; padding-top: 0; }
+    .pb-step:not(:last-child)::before { display: none; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 14 — Final Module</div>
+    <h1>Build It for Others — The Service Track</h1>
+    <p class="subtitle">You've built a direct booking machine for your own property. Now learn to build it for other property owners — as a consultant, a setup specialist, or a full management partner. This is the second business hiding inside the first.</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 3: Scale</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>7 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>6–9 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 13 — Acquisition at Scale</div>
+      <div class="mod-meta-item"><strong>Course</strong>SpokeBnB — Complete</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 11: Experiences</span>
+    <span class="arrow">→</span>
+    <span>Module 12: Sponsors</span>
+    <span class="arrow">→</span>
+    <span>Module 13: Acquisition at Scale</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 14: Service Track</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Opportunity</a>
+    <a href="#lesson-2">02 — Three Service Models</a>
+    <a href="#lesson-3">03 — Finding Clients</a>
+    <a href="#lesson-4">04 — Pricing the Service</a>
+    <a href="#lesson-5">05 — Client Intake</a>
+    <a href="#lesson-6">06 — Delivery</a>
+    <a href="#lesson-7">07 — Retainers & Scale</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🏗️</div>
+    <div>
+      <div class="label">Module Deliverable</div>
+      <p>Your service model defined, your pricing sheet drafted, and your first prospect identified. By the end of this module you have enough clarity to have a client conversation — and enough framework to deliver the engagement if they say yes. The second business you didn't know you were building starts here.</p>
+    </div>
+  </div>
+
+  <!-- ─── LESSON 1 ─── -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1</div>
+        <h2>The Service Opportunity — Why STR Owners Need This Help Now</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Understand the state of the STR market from the perspective of someone you can help — an overwhelmed Airbnb-dependent host — and why the system you've built in this course is exactly what they need and cannot find anywhere else.</div>
+
+    <p>When a residential real estate agent lists your STR, they will open Zillow, find three comparable sales in your area, average the price per square foot, and give you a number. This is how residential real estate has been valued for a hundred years and it is precisely the wrong framework for an income-producing business that happens to be housed in a property.</p>
+
+    <p>The neighbor who has the identical floor plan but runs a 100% OTA operation with inconsistent occupancy, no direct booking channel, no guest database, and no documented income history is not a comparable sale for your property. You are selling different assets. Treating them as comparable guarantees you leave money on the table — potentially six figures of it.</p>
+
+    <h3>The Gap in the Market You're Now Qualified to Fill</h3>
+    <p>There are approximately 660,000 active Airbnb hosts in the United States. The vast majority list on one platform, have no email list, have no direct booking infrastructure, and are completely dependent on Airbnb's algorithm for their occupancy. They lose 15–20% of every booking to OTA fees. They don't have a StayFi setup. They don't have a guest sequence. Most of them don't know what OwnerRez is.</p>
+
+    <p>You do. And you've just spent 13 modules building the system that changes everything for them. The question Module 14 asks is: do you want to charge for that knowledge?</p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The Market Opportunity</div>
+      <p>If the average OTA-only host generates $65,000/year in gross revenue and loses $10,000 to Airbnb fees, the addressable problem is real. A SpokeBnB graduate who helps one host establish a direct booking infrastructure generating an additional $15,000/year in direct revenue — in year one — has delivered 10× the value of a $1,500 consulting fee.</p>
+      <p>The service business case is not "I know things." It is "I can deliver a specific, measurable outcome that pays for itself in 90 days." Price from the outcome, not the hours.</p>
+    </div>
+
+    <h3>Who Your First Client Is</h3>
+    <p>Your first client is not a stranger. They are someone already in your world who owns an STR and is not operating it well. They might be:</p>
+    <ul>
+      <li>A neighbor who mentions their Airbnb listing whenever you see them and always sounds frustrated</li>
+      <li>A real estate agent in your network who has investor clients that just purchased short-term rentals</li>
+      <li>A member of your local STR Facebook group asking "how do I get more bookings without Airbnb?"</li>
+      <li>A past guest who mentioned they own a vacation property and would love to do what you've done</li>
+      <li>Someone who attended the same vacation rental meetup you attended</li>
+    </ul>
+
+    <p>The service track starts with warm outreach, not cold prospecting. You have a system that works. You have results to point to. And the person you're helping is your neighbor, not a corporation.</p>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 2 ─── -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2</div>
+        <h2>What You're Selling — The Three Service Models</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Define the three service models available to a SpokeBnB graduate, understand the risk and revenue profile of each, and choose the right entry point for where you are in your practice.</div>
+
+    <div class="revenue-tiers">
+      <div class="tier-card">
+        <div class="tier-label">Model 1</div>
+        <div class="tier-title">One-Time Setup</div>
+        <p>You build the full direct booking infrastructure for a client's property: OwnerRez setup, StayFi installation, Kit account and sequences, direct booking site, Local Guide article. Deliverable-based. You build it, they run it.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Typical fee range</span><span class="price">$1,500–$5,000</span></div>
+          <div class="tier-example"><span>Timeline</span><span class="price">3–6 weeks</span></div>
+          <div class="tier-example"><span>Ongoing responsibility</span><span class="price">None</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Model 2</div>
+        <div class="tier-title">Ongoing Management</div>
+        <p>You run the digital marketing and booking optimization for a client's property monthly. Pricing updates, email campaigns, review requests, creator outreach, monthly reporting. Revenue-based retainer — you participate in their success.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Typical monthly fee</span><span class="price">$750–$2,500</span></div>
+          <div class="tier-example"><span>% of revenue model</span><span class="price">8–15%</span></div>
+          <div class="tier-example"><span>Ongoing responsibility</span><span class="price">Significant</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Model 3</div>
+        <div class="tier-title">Consulting / Coaching</div>
+        <p>You advise property owners on their setup without doing the implementation. Hourly or package-based. Lower commitment for both parties. Best for early-stage clients who want to understand the system before committing to a full setup engagement.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Typical hourly rate</span><span class="price">$150–$400/hr</span></div>
+          <div class="tier-example"><span>Package (5 sessions)</span><span class="price">$500–$1,500</span></div>
+          <div class="tier-example"><span>Ongoing responsibility</span><span class="price">Minimal</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Which Model to Start With</h3>
+    <p>The right starting point depends on your time and risk tolerance, not on which model generates the most revenue in theory:</p>
+    <ul>
+      <li><strong>If you want low commitment while you test the market:</strong> Start with consulting/coaching. A $500 package that delivers 5 hours of structured advice creates no deliverable obligation and teaches you what clients actually need help with — which makes you better at everything else.</li>
+      <li><strong>If you want a clean deliverable and a clear end date:</strong> Start with one-time setup. You know exactly what you're building (you built it for yourself), the project has a defined end, and the fee is paid upfront or in milestones.</li>
+      <li><strong>If you want recurring revenue and you're willing to be accountable to monthly results:</strong> Move into management after completing at least one setup engagement. You need to know the property before you manage it — never take an ongoing management relationship without first running intake and setup.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Don't Offer All Three at Once</div>
+      <p>Start with one model. Know exactly what you deliver, how long it takes, and what it costs before adding scope. The most common mistake in service businesses is offering every possible engagement type from day one — you end up custom-scoping every project, never systemizing the delivery, and burning time that should go toward the client work itself. Pick one entry point, close three clients with it, refine it, then expand.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 3 ─── -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3</div>
+        <h2>Finding Your First Client</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Identify your five most likely first clients, develop the warm outreach message that converts a conversation into an engagement, and understand how to qualify a prospect before investing time in a proposal.</div>
+
+    <h3>Five Sources of Your First Client</h3>
+    <ul>
+      <li><strong>Your peer STR network:</strong> Every host you've met through Airbnb host groups, local meetups, or STR Facebook communities is a potential client. They're already thinking about the same problems. You don't need to pitch — you just need to answer the question "how are you getting direct bookings?" honestly, and let the conversation develop.</li>
+      <li><strong>Real estate agents who sell investment properties:</strong> A real estate agent who closes 5 STR investment purchases per year has 5 new clients per year who need exactly what you offer. One conversation with an agent who gets the value creates a referral pipeline that pays indefinitely. Find agents at your local real estate investment association (REIA) or through LinkedIn.</li>
+      <li><strong>Property managers transitioning to ownership:</strong> Property managers who decide to start their own STR properties are among the most motivated clients — they understand the business and want to build something for themselves, but they lack the direct booking infrastructure.</li>
+      <li><strong>Your direct booking site's contact form:</strong> If your direct booking site ranks for local search terms, you will eventually receive messages from people asking how you built it. That's an inbound lead. Respond with a 15-minute offer — not a proposal.</li>
+      <li><strong>Past guests who mentioned they own property:</strong> Review your guest messages from the past 12 months. Any guest who mentioned owning a cabin, lake house, or second home is a prospect. A follow-up message 6 months after their stay — checking in and mentioning that you offer setup services for property owners — is warm outreach, not cold.</li>
+    </ul>
+
+    <h3>The Qualifying Conversation — Before You Propose Anything</h3>
+    <p>Before you write a proposal, you need to know three things about a prospective client:</p>
+
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>What's working and what's broken?</strong> Ask them to describe their current setup: what platforms they're on, what software they use, how they handle guest communication, and what their biggest frustration is. Listen for "we're entirely on Airbnb" — that's the signal the entire SpokeBnB system is available to them.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>What's their gross revenue and occupancy?</strong> This tells you the size of the engagement and the scope of the opportunity. A $30K/year property has different ROI math for a $2,000 setup fee than a $120K/year property does. You need to know this before you price anything.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>How hands-on are they willing to be after setup?</strong> Some clients want to be handed a finished system and run it themselves. Others have no interest in managing anything — they want you to handle ongoing marketing. Knowing this shapes which model you propose and how you price it.</p></div>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 3</div>
+      <h4>Write your first outreach message</h4>
+      <div class="ai-prompt-box">Help me write a short outreach message to a potential STR consulting client. Here are the details:
+
+Who they are: [neighbor with a lake house on Airbnb / real estate agent who sells STR properties / STR host from a Facebook group / past guest who mentioned owning property]
+What I know about their situation: [e.g., they've mentioned being frustrated with Airbnb occupancy / they just bought their first vacation rental / they're asking their Facebook group how to get direct bookings]
+My relationship to them: [we've met in person / mutual connection online / they posted in a group I'm in]
+What I'm offering initially: a free 15-minute call to understand their current setup
+
+Write a message under 150 words that:
+- References something specific about their situation (not a generic pitch)
+- Mentions that I've built a direct booking system for my own property and it's working
+- Offers a 15-minute conversation — no commitment, no proposal, just a quick call
+- Sounds like it came from a person, not a marketing email</div>
+      <p class="ai-prompt-note"><strong>The goal of this message is a 15-minute call, not a sale.</strong> You will know within 15 minutes whether they're a fit. Most won't be — wrong stage, wrong motivation, wrong property type. The ones who are a fit will have told you everything you need to write a proposal before the call ends.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 4 ─── -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4</div>
+        <h2>Pricing the Service — Anchor to Revenue Outcome</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Build a pricing model anchored to client revenue outcomes, not your hours — and learn to present the fee in a way that makes the ROI obvious before the prospect needs to think about it.</div>
+
+    <h3>The Revenue-Anchored Pricing Framework</h3>
+    <p>Hourly pricing creates negotiation on time. Outcome-based pricing creates negotiation on value — and your position in that conversation is much stronger when the outcome is measurable.</p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Pricing Math — The One-Time Setup Model</div>
+      <p><strong>Client's current situation:</strong> $75,000 gross revenue, 100% OTA, paying $12,750/year in Airbnb fees</p>
+      <p><strong>What your setup delivers in year one:</strong></p>
+      <ul>
+        <li>Direct booking site + email capture + guest sequence → target 15% direct booking rate</li>
+        <li>15% × $75,000 = $11,250 in direct bookings → saves ~$1,737 in OTA fees in year one</li>
+        <li>StayFi + upsell layer → adds estimated $800–1,500 in ancillary revenue</li>
+        <li>Review velocity + listing optimization → estimated 5–10% occupancy improvement → $3,750–$7,500 additional revenue</li>
+      </ul>
+      <p><strong>Conservative year-one revenue gain:</strong> $6,287–$10,737</p>
+      <p><strong>Your one-time fee:</strong> $2,500 → <strong>paid back in full within 4 months</strong> at the conservative scenario</p>
+      <p>Present the math. Most clients don't argue with a self-funding investment.</p>
+    </div>
+
+    <h3>The Rate Card — Starting Points by Model</h3>
+    <ul>
+      <li><strong>Consulting session (60 min):</strong> $150–$300. Start at $150 as you build confidence; raise to $300 after your first three clients provide results you can reference.</li>
+      <li><strong>One-time setup (full SpokeBnB system):</strong> $1,500–$5,000 based on property revenue. Under $50K revenue: $1,500–2,000. $50K–$100K: $2,000–3,500. Over $100K: $3,500–$5,000+.</li>
+      <li><strong>Ongoing management (monthly retainer):</strong> Start at $750/month for a single property. Scale to $1,500–$2,500 as you add clients and your process becomes faster.</li>
+      <li><strong>Percentage model (advanced):</strong> 10–15% of gross booking revenue. Only appropriate once you have a track record and the client is in a high-revenue ($100K+) property — otherwise the base is too small for the effort.</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Anchoring Sequence</div>
+      <p>When presenting your fee, always present the outcome first, then the fee. "Based on your current revenue and where I see the gaps, I'd expect this system to generate $8,000–$12,000 in additional revenue in year one. My fee for the full setup is $2,500, paid in two milestones." The prospect evaluates $2,500 against $8,000–$12,000, not against their hourly rate estimate of your time. That's the conversation you want.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 5 ─── -->
+  <section class="lesson" id="lesson-5">
+    <div class="lesson-header">
+      <div class="lesson-num">05</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 5</div>
+        <h2>The Client Intake & Property Assessment</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Run a structured intake process that scopes the engagement, surfaces blockers, and gives you everything you need to deliver before you start.</div>
+
+    <h3>The Pre-Engagement Intake Form</h3>
+    <p>Before any paid work begins, run a structured intake. This is a 30-minute process that saves 10 hours of mid-project scope discovery. You can deliver this as a Typeform, a Google Form, or a structured call — the medium matters less than the questions:</p>
+
+    <ul>
+      <li><strong>Current platforms:</strong> Airbnb, VRBO, Booking.com, direct website (if any) — with their login credentials (request securely via 1Password link or equivalent)</li>
+      <li><strong>Property management software:</strong> Are they using OwnerRez, Hostaway, Guesty, or nothing? This determines whether you're setting up from scratch or migrating</li>
+      <li><strong>Guest communication:</strong> How do they currently communicate pre-arrival and during the stay? Airbnb message templates, manual messages, or something automated?</li>
+      <li><strong>Current performance data:</strong> Last 12 months gross revenue, total bookings, average nightly rate, approximate occupancy rate — pull from their platform analytics</li>
+      <li><strong>Social media:</strong> Do they have a property Instagram or Facebook account? Any existing following? Any past creator stays?</li>
+      <li><strong>Domain:</strong> Do they own a domain for their property? If not, this is step one of setup.</li>
+      <li><strong>Owner involvement level:</strong> On a scale of 1 (want to be hands-off, pay me to run it) to 5 (want to understand every step and own the execution), where are they?</li>
+      <li><strong>Timeline and constraints:</strong> Any upcoming peak season, ownership changes, or existing bookings that affect setup timing?</li>
+    </ul>
+
+    <h3>The Red Flags That Change Scope</h3>
+    <div class="callout mistake">
+      <div class="callout-label">✗ Three Client Situations That Require a Difficult Conversation Before Starting</div>
+      <ul>
+        <li><strong>Property is in a heavily regulated market:</strong> If the property's municipality has permit caps, primary-residency requirements, or pending legislation that could make STR illegal — the entire setup investment is at risk. Surface this in intake. It doesn't necessarily kill the engagement, but it changes the risk conversation.</li>
+        <li><strong>Property hasn't established quality reviews:</strong> If the property has fewer than 5 reviews or a sub-4.5 rating, the direct booking and email system can't do its job until the Airbnb foundation is fixed first. Sequence matters — you may need to add a "listing quality" phase before the standard setup.</li>
+        <li><strong>Owner is emotionally attached to current OTA approach and resistant to change:</strong> A client who says "I just want more Airbnb bookings" is not yet ready for the full SpokeBnB system. You can help them — but only if they're open to the model. An hour into your first deliverable conversation, you'll know which kind of client you have.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 6 ─── -->
+  <section class="lesson" id="lesson-6">
+    <div class="lesson-header">
+      <div class="lesson-num">06</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 6</div>
+        <h2>Delivery — The Implementation Timeline</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Know how to sequence the SpokeBnB setup for a client property efficiently — what to build first, what depends on what, and how to hand off in a way that the client can sustain the system independently.</div>
+
+    <h3>The 4-Week Implementation Sequence</h3>
+
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Week 1 — Infrastructure foundation:</strong> OwnerRez account setup and channel connection. StayFi access point ordered and shipping. Kit account created, property tagged, initial sequences drafted. Domain purchased if not already owned. Photography assessment: is the current listing photography usable, or does the client need new photos before the direct booking site goes live?</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Week 2 — Listing optimization and pricing:</strong> Airbnb and VRBO listing copy rewritten to match your guest-first framework. Title tested against search volume. Pricing strategy established: base rate, weekend premium, peak event premiums, minimum stay rules per season. Competitor analysis run. OwnerRez pricing rules configured.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Week 3 — Direct booking site and email system live:</strong> Direct booking site published (OwnerRez hosted or custom domain). Kit pre-arrival, in-stay, and post-stay sequences finalized and activated. StayFi live and tested on-property. Review request sequence added as the last automated email. Guidebook drafted (the client provides local recommendations — you format and publish).</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Week 4 — Content and Local Guide launch:</strong> Property Instagram profile optimized (or created). First 3 posts published. Local Guide article drafted and submitted (using the Module 08 framework). First creator outreach sent — minimum 5 DMs in the pipeline. Google Business Profile claimed and populated. Handoff document delivered.</p></div>
+      </div>
+    </div>
+
+    <h3>The Handoff Document</h3>
+    <p>Every engagement ends with a handoff document. This is not a user manual — it's a one-page operations guide that tells the client exactly what runs automatically, what they need to do monthly, and who to call when something breaks:</p>
+    <ul>
+      <li><strong>What runs automatically:</strong> OwnerRez trigger messages, Kit email sequences, StayFi guest WiFi and capture, scheduled social posts (if any)</li>
+      <li><strong>What they do monthly:</strong> Update pricing for the next 90-day window, send the Kit monthly newsletter, review referral code commissions, send creator follow-ups</li>
+      <li><strong>Support contacts:</strong> OwnerRez support email, Kit support, StayFi support, your contact info for the 30-day post-handoff period</li>
+      <li><strong>30-day check-in:</strong> You will schedule one 30-minute call 30 days after handoff to review first-month performance and answer questions. This is included in the setup fee and closes the engagement cleanly.</li>
+    </ul>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 6</div>
+      <h4>Write your client handoff document</h4>
+      <div class="ai-prompt-box">I just completed a SpokeBnB system setup for a client's STR property. Help me write a one-page handoff document that gives them everything they need to run the system going forward.
+
+Property details:
+- Property type and market: [e.g., 3BR lake house in Finger Lakes, NY]
+- Software stack installed: [OwnerRez / StayFi / Kit / direct booking site / other]
+- Email sequences live: [pre-arrival / in-stay check-in / post-stay review request / re-booking offer]
+- What runs automatically: [list the key automation]
+- What they need to do monthly: [pricing updates, newsletter, creator outreach, etc.]
+
+Write the handoff document in three sections:
+1. "What runs automatically" — clear, specific, reassuring
+2. "Your monthly checklist" — 5-8 actionable tasks with brief explanations
+3. "If something breaks" — key support contacts and a note about the 30-day check-in call
+
+Keep it to one page (under 400 words). It should feel like something a capable adult can pick up and follow without calling you.</div>
+      <p class="ai-prompt-note"><strong>The handoff document is also a retention tool.</strong> A client who has a clear, organized reference for their system is less likely to feel overwhelmed and more likely to refer you to their network. The cleanest handoff generates the best reviews and the most referrals — both of which are your primary lead source in this business.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 7 ─── -->
+  <section class="lesson" id="lesson-7">
+    <div class="lesson-header">
+      <div class="lesson-num">07</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 7</div>
+        <h2>Retainers & Building a Practice</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Convert one-time clients into ongoing retainers, build a referral engine from your client base, and understand what a sustainable service practice looks like at 3, 5, and 10 clients.</div>
+
+    <h3>The Retainer Conversation — When to Have It</h3>
+    <p>The retainer conversation happens naturally 4–6 weeks after setup completion, during or after the 30-day check-in call. By then, the client has seen first results, they've hit their first question they can't answer, and they're starting to understand that running this system well requires ongoing attention.</p>
+
+    <p>The retainer pitch is not a pitch — it's an observation: "You've got everything set up and the fundamentals are working. The next layer is ongoing optimization: updating pricing for the next 90 days, running the monthly newsletter, pushing creator outreach, and adjusting the email sequences as you see what converts. I can handle that for [monthly fee] — or I can coach you through it monthly for [coaching fee]. Which makes more sense for where you want to be?"</p>
+
+    <h3>What You Manage in an Ongoing Retainer</h3>
+    <ul>
+      <li><strong>Monthly pricing review:</strong> Pull the next 90-day window in OwnerRez. Assess competitor pricing. Adjust base rates, weekend premiums, and event pricing. This alone is worth the retainer for most clients who struggle to stay current on their market.</li>
+      <li><strong>Monthly newsletter:</strong> Draft and send the Kit monthly email — typically a destination content piece plus a soft re-booking offer for past guests. Takes you 45–60 minutes with your template; takes an untrained client 3 hours and often doesn't happen.</li>
+      <li><strong>Creator pipeline:</strong> Send 3–5 new creator outreach DMs per month. Follow up on open conversations. Schedule any confirmed stays. Review and save content as it posts.</li>
+      <li><strong>Monthly performance report:</strong> Pull metrics from OwnerRez and Kit: occupancy rate vs. prior month, direct booking percentage, email open/click rates, referral code activity. Deliver a 1-page summary with one or two recommended actions.</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Practice Economics — What 5 Clients Looks Like</div>
+      <ul>
+        <li>2 setup clients @ $2,500 each = $5,000 (one-time, 2× per quarter)</li>
+        <li>3 ongoing retainer clients @ $1,000/mo = $3,000/month recurring</li>
+        <li>Annual run rate: $5,000 × 2 quarters (realistic setup volume) + $36,000 retainer = <strong>$46,000/year</strong></li>
+        <li>Retainer time commitment: ~8 hours/month across 3 clients</li>
+        <li>Setup time commitment: ~40 hours per engagement across 4 weeks</li>
+        <li>Total monthly time: 8 retainer hours + ~10 hours for each active setup = manageable alongside your own property operations</li>
+      </ul>
+      <p>The service business doesn't need to replace your STR income. It's designed to run alongside it, compound your expertise, and create a second income stream from knowledge you've already built.</p>
+    </div>
+
+    <h3>Building a Referral Network — Your Growth Engine</h3>
+    <p>The most efficient new client source is a satisfied existing client. After each setup engagement, make two asks:</p>
+    <ul>
+      <li><strong>Testimonial:</strong> "Would you be willing to write two or three sentences about what changed for your property after we worked together? I'd love to use it on my website." Results-specific testimonials ("We went from 0% direct bookings to 18% in 60 days") convert far better than generic ones.</li>
+      <li><strong>Referral introduction:</strong> "If you know any other property owners who are frustrated with Airbnb dependency, I'd welcome a warm introduction. I typically offer a [free 30-minute audit / 10% discount on setup] for referred clients."</li>
+    </ul>
+    <p>A real estate agent referral relationship is worth developing independently. One agent who sends you 3 new investor clients per year is worth more than running your own marketing — and building that relationship takes one conversation at a local REIA meeting.</p>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Write Your First STR Operator Outreach Message</span>
+      </div>
+      <p class="ai-prompt-instruction">Your first client is most likely someone in your market or network — a property owner who's frustrated with Airbnb, a new investor who doesn't know where to start, or someone who heard about your results. Use this prompt to write the outreach messages that start those conversations. Don't send mass messages. Send personal ones to 5 specific people first.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">I've been operating a short-term rental and I'm starting to offer services to other STR owners. Help me write outreach messages I can send to my first 5 prospects. These should sound personal and specific — not like a pitch email from a consultant.
+
+MY BACKGROUND AS AN OPERATOR:
+- Property location: [City, State]
+- Time operating: [X months/years]
+- Properties operated: [X]
+- My biggest measurable result: [e.g., "went from 0% direct bookings to 22% in 90 days" / "ADR up 31% after switching to PriceLabs and rebuilding listing" / "consistently 4.9-star rating with fully automated guest communication"]
+
+THE SERVICE I'M OFFERING:
+- Primary service: [e.g., "complete Hub-and-Spoke system setup — direct booking site, pricing engine, automation stack, guest retention system"]
+- Delivery time: [e.g., "4–6 weeks for full setup"]
+- Ongoing retainer option: [yes / no — if yes, describe in 1 sentence]
+- Price range I'm charging: [$X setup / $X/month retainer — or "TBD for now"]
+
+MY FIRST 5 PROSPECTS (describe each one briefly):
+1. [e.g., "Neighbor in my community who just listed on Airbnb — frustrated it's not getting bookings after 2 months"]
+2. [e.g., "Investor I know from a local REIA meetup who owns 2 Airbnb properties and wants more direct bookings"]
+3. [e.g., "Local agent who mentioned she has investor clients asking about STR optimization"]
+4. [e.g., "Former guest who mentioned they own a property in [X market]"]
+5. [e.g., "Facebook group member who posted asking for help with PriceLabs"]
+
+WRITE:
+1. A cold outreach message for Prospect 1 (specific to their situation — reference their specific frustration or goal)
+2. A warm intro message for Prospect 2 (we've met — open with the connection)
+3. A referral partnership email for Prospect 3 (the agent — frame it as a value-add for her investor clients, not a pitch for yourself)
+4. A re-engagement message for Prospect 4 (former guest who knows the property — frame the conversation differently)
+5. A community response for Prospect 5 (helpful, not salesy — answer their question first, offer to talk more if they want)
+
+For each: under 120 words. Conversational. Lead with their problem or goal, not your service. One specific CTA (a 20-minute call, not "let me know if you're interested").</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 14 Complete When:</div>
+      <h3>Your service model is defined, your first prospect identified, and your pricing framework built.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Service model selected: one-time setup, consulting, or ongoing management — one entry point, not all three</li>
+        <li><span class="cp-box"></span>Rate card drafted: fee amounts by engagement type, anchored to client revenue outcomes</li>
+        <li><span class="cp-box"></span>Five warm prospect names identified from your existing network — not strangers</li>
+        <li><span class="cp-box"></span>First outreach message written and sent to at least one prospect using the 15-minute call framework</li>
+        <li><span class="cp-box"></span>Intake form drafted: the 8-question assessment you'll run before scoping any engagement</li>
+        <li><span class="cp-box"></span>4-week implementation timeline documented: your sequenced delivery plan, ready to deploy</li>
+        <li><span class="cp-box"></span>Handoff document template built: what runs automatically, monthly checklist, support contacts</li>
+        <li><span class="cp-box"></span>You have completed SpokeBnB — The Hub-and-Spoke STR System. The machine is built. Run it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Credential Is the Property. The Business Is the System.</h3>
+    <p>Every module in this course was building two things simultaneously: a direct booking machine for your property, and a service credential you can use to help others do the same. The direct booking site you built in Module 06 is your portfolio. The email system you built in Module 07 is your proof of concept. The creator network you launched in Module 10 is your case study. You didn't just learn this — you built it. And built things are worth more than learned things.</p>
+    <p>The service track is available to you because you did the work. Not because you completed a course — because you have results. A property with 18% direct booking rate. A guest list that re-books at 10%. A creator network generating permanent content. These are the outcomes a client is paying for when they hire you.</p>
+    <ul>
+      <li><strong>Your own property</strong> — is the proof of concept and the ongoing case study for every client conversation</li>
+      <li><strong>The course system</strong> — is the delivery framework. You're not inventing it for each client; you're deploying a proven sequence</li>
+      <li><strong>Your results</strong> — are the marketing. Specifics close clients: "I went from 0 to 22% direct bookings in 90 days" is a better pitch than any brochure</li>
+      <li><strong>Referrals</strong> — are the growth engine. The service business scales from satisfied clients, not from advertising</li>
+    </ul>
+    <p>You now have everything you need. The modules are complete. The spokes are built. The machine is running. What you do with it next is entirely yours.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 14: Build It for Others &nbsp;·&nbsp; Course Complete
+</footer>
+
+    <h3>The Full NOI Calculation for Your STR</h3>
+    <p>NOI is not gross revenue. It is gross revenue minus every operating expense — excluding debt service (mortgage). An accurate NOI calculation is the most important number you will ever produce about this property. It determines your income-based value. It is the first thing a sophisticated buyer's advisor will audit.</p>
+
+    <table class="noi-table">
+      <thead>
+        <tr><th>Line Item</th><th class="num">Example Property</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Gross Revenue — OTA Bookings</td><td class="num">$85,500</td><td>Airbnb + VRBO gross collected</td></tr>
+        <tr><td>Gross Revenue — Direct Bookings</td><td class="num">$15,000</td><td>15% of nights, no OTA fee on this revenue</td></tr>
+        <tr><td class="bold">Total Gross Revenue</td><td class="num bold">$100,500</td><td></td></tr>
+        <tr><td>OTA Host Fees (15.5% on OTA only)</td><td class="num neg">($13,253)</td><td>Airbnb/VRBO host fees on $85,500</td></tr>
+        <tr><td class="bold">Effective Gross Income</td><td class="num bold">$87,247</td><td>What you actually receive in bank</td></tr>
+        <tr><td>Cleaning / Turnover Labor</td><td class="num neg">($7,200)</td><td>$120/turn × 60 turns/year</td></tr>
+        <tr><td>Property Management or Co-Host</td><td class="num neg">($0)</td><td>Self-managed; adjust if applicable</td></tr>
+        <tr><td>Maintenance and Repairs</td><td class="num neg">($3,500)</td><td>Typical for established property</td></tr>
+        <tr><td>Insurance (STR-specific policy)</td><td class="num neg">($2,400)</td><td>Annual STR coverage</td></tr>
+        <tr><td>Permits, Licenses, TOT Filing Costs</td><td class="num neg">($800)</td><td>Municipal permit + CPA/filing fees</td></tr>
+        <tr><td>Platform Subscriptions (OwnerRez, Kit, StayFi, PriceLabs)</td><td class="num neg">($1,800)</td><td>SpokeBnB system tooling</td></tr>
+        <tr><td>Utilities (if owner-paid)</td><td class="num neg">($3,600)</td><td>If guests pay utilities, $0</td></tr>
+        <tr><td>Capital Expenditure Reserve (5% of gross)</td><td class="num neg">($5,025)</td><td>Appliances, HVAC, roof — annualized</td></tr>
+        <tr><td>Marketing / Content / Direct Booking Site Costs</td><td class="num neg">($600)</td><td>Domain, hosting, Google Ads if any</td></tr>
+        <tr class="subtotal"><td class="bold">Net Operating Income (NOI)</td><td class="num gold">$62,322</td><td>Before mortgage; income-based value driver</td></tr>
+        <tr><td>At 6% Cap Rate → Income-Based Value</td><td class="num pos">$1,038,700</td><td>$62,322 ÷ 0.06</td></tr>
+        <tr><td>At 7% Cap Rate → Income-Based Value</td><td class="num pos">$890,314</td><td>Same NOI, lower buyer confidence</td></tr>
+        <tr><td>Residential Comp Value (same sqft)</td><td class="num">$725,000</td><td>What the comp-based approach would produce</td></tr>
+      </tbody>
+    </table>
+
+    <p>In this example the income-based gap over comps is <strong>$165,000 to $313,000</strong> — depending on cap rate negotiation. That gap is not found money. It is the value of the documented income, the direct booking system, and the reduced buyer risk. It has to be built and then argued for. This module teaches you how to do both.</p>
+
+    <h3>What Determines the Cap Rate You Negotiate</h3>
+    <p>Cap rate is not fixed — it is negotiated. A buyer will pay a lower cap rate (higher price) for a property that presents lower acquisition risk. The SpokeBnB system reduces buyer risk in ways that a pure OTA operation cannot:</p>
+    <ul>
+      <li><strong>Documented, verified income history:</strong> Three years of OwnerRez reports showing consistent gross revenue, occupancy, and ADR trajectory. Not tax returns alone — booking-level data that shows the income is real and reproducible.</li>
+      <li><strong>Direct booking percentage and trajectory:</strong> 15% direct booking rate trending upward tells the buyer that the revenue base is diversifying away from OTA platform risk. Each percentage point of direct booking reduces the buyer's exposure to Airbnb algorithm changes.</li>
+      <li><strong>Regulatory clarity:</strong> The Module 11 compliance documentation — current permit, no HOA violations, clean tax filing history — eliminates the buyer's largest uncertainty after income: "will this property still be able to operate legally?"</li>
+      <li><strong>Transferable systems:</strong> The SpokeBnB stack (OwnerRez, Kit, direct booking site, StayFi) transfers to a new owner. The income doesn't depend on the seller being a great host — it depends on systems that a new operator can run.</li>
+    </ul>
+
+    <h3>The Three Buyer Types — Who Pays the Most and Why</h3>
+    <div class="buyer-grid">
+      <div class="buyer-card retail">
+        <div class="buyer-type">Buyer Type 1</div>
+        <div class="buyer-title">The Lifestyle / Retail Buyer</div>
+        <p>Buying for personal use plus income. Often financing with a vacation home loan (second home rates). Typically doesn't understand cap rate methodology — will anchor to comps and lender appraisal. May undervalue the business assets entirely.</p>
+        <p>Will pay a premium for emotional appeal (the view, the dock, the fireplace) but is constrained by appraisal and lender requirements. The appraisal — which uses comps — is the ceiling for a financed retail buyer.</p>
+        <div class="buyer-premium">Pays: comp-based + lifestyle premium</div>
+      </div>
+      <div class="buyer-card investor">
+        <div class="buyer-type">Buyer Type 2</div>
+        <div class="buyer-title">The STR Investor</div>
+        <p>Evaluating on income multiples and cap rate. Understands the NOI calculation. Will conduct thorough due diligence on revenue history, permit status, and system transferability. May use a DSCR loan (debt service coverage ratio — the loan is underwritten on the property's income, not the buyer's personal income).</p>
+        <p>Will pay more than the retail buyer for documented income but will negotiate hard on cap rate. The quality of your documentation determines whether you negotiate at 6% or 7% — a full percentage point that on a $1M property is $100,000 in price.</p>
+        <div class="buyer-premium">Pays: income-based, negotiated cap rate</div>
+      </div>
+      <div class="buyer-card operator">
+        <div class="buyer-type">Buyer Type 3</div>
+        <div class="buyer-title">The Adjacent Operator</div>
+        <p>Already runs STRs in your market or region. Acquiring your property means adding a spoke to their hub without building from scratch — they inherit your permit, your review history on Airbnb, your local vendor relationships, and your direct booking infrastructure. For them, this is not just a property purchase; it's a business acquisition with synergies they can immediately exploit.</p>
+        <p>The adjacent operator is the highest-value buyer. They pay full income-based value for the real property, can negotiate additional value for the business assets (email list, brand, content), and close faster because they already know the market, the regulations, and the operating model.</p>
+        <div class="buyer-premium">Pays: income-based + strategic premium</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Direct Booking Multiplier Effect — Every Dollar You Saved on OTA Fees Is Worth $15–17 at Exit</div>
+      <p>Here is the math that most operators never run. If your property generates $15,000 in direct bookings per year at zero OTA commission vs. paying 15.5% on that same revenue through Airbnb, the annual savings is approximately $2,325.</p>
+      <p>At a 6% cap rate: $2,325 ÷ 0.06 = <strong>$38,750 in exit value</strong> from that single $2,325 annual improvement. Every system you built to drive direct bookings — the site, the email list, the StayFi capture — is not just saving you $2,325 per year. It is adding $38,750 to the income-based value of your property. Scale that over five years of growing from 5% direct to 25% direct on a $100K gross property, and the direct-booking work in this course adds an estimated $65,000 to your income-based exit value — before accounting for the GBP presence, content rankings, and email list that also transfer to the buyer at sale.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Use Your Actual Numbers</div>
+      <h4>Calculate Your Property's Income-Based Valuation</h4>
+      <div class="ai-prompt-box">Help me calculate the income-based value of my STR property using cap rate methodology, and compare it to what a residential comp approach would produce.
+
+My property details:
+- Location: [CITY, STATE]
+- Property type: [LAKE HOUSE / CABIN / COTTAGE / etc.]
+- Bedrooms / Bathrooms: [X bed / X bath]
+- Approximate residential comp value (Zillow estimate or recent comps): [$XXX,XXX]
+
+My financials (last 12 months):
+- Gross revenue from Airbnb/VRBO: [$XX,XXX]
+- Gross revenue from direct bookings: [$XX,XXX]
+- OTA host fee rate: [15.5%]
+- Cleaning costs (total annual): [$X,XXX]
+- Property management or co-host fee: [$X,XXX or "self-managed"]
+- Maintenance and repairs: [$X,XXX]
+- Insurance: [$X,XXX]
+- Permits and licenses: [$XXX]
+- Platform subscriptions (OwnerRez, Kit, StayFi, etc.): [$X,XXX]
+- Utilities (owner-paid): [$X,XXX or "guest-paid"]
+- Capital expenditure reserve I set aside: [$X,XXX or "none set aside — use 5% of gross"]
+- Other operating expenses: [$X,XXX — describe]
+
+Do four things:
+
+1. NOI CALCULATION
+Build the complete NOI statement. Show every line item. Arrive at the final NOI figure.
+
+2. INCOME-BASED VALUATION TABLE
+Show my property's income-based value at 5.5%, 6%, 6.5%, 7%, and 7.5% cap rates. Format as a table. Show the gap vs. residential comp value at each cap rate.
+
+3. DIRECT BOOKING MULTIPLIER ANALYSIS
+Calculate: how much do my direct bookings save annually in OTA fees? What does that savings translate to in exit value at a 6% cap rate? What would it be worth if I grew my direct booking rate to 25% of total nights?
+
+4. NEGOTIATING POSITION SUMMARY
+Based on my numbers, which cap rate range should I be negotiating toward and why? What is the strongest argument for the lower end of that range (higher price) that I can make to a sophisticated buyer or their advisor?</div>
+      <p class="ai-prompt-note"><strong>Use real numbers.</strong> The valuation exercise is only useful if it reflects your actual financials. Pull from OwnerRez reports, bank statements, and your compliance calendar. This prompt produces the foundation for your exit package's financial section — the document a buyer's attorney will review line by line. It has to be accurate before it is presented.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You know your property's income-based value and the negotiating argument for getting there.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>NOI calculated from actual financials — every operating expense identified and documented</li>
+        <li><span class="cp-box"></span>Income-based value range established — at 5.5%, 6%, and 7% cap rates</li>
+        <li><span class="cp-box"></span>Gap vs. residential comp value quantified — the number you are going into the negotiation to close</li>
+        <li><span class="cp-box"></span>Direct booking multiplier calculated — annual savings converted to exit value at the target cap rate</li>
+        <li><span class="cp-box"></span>Target buyer type identified — adjacent operator, STR investor, or retail — and the presentation strategy adjusted accordingly</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The Transferability Inventory — What the Buyer Is Actually Buying</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Conduct a complete asset-by-asset inventory of your SpokeBnB system, distinguish what transfers to a new owner from what doesn't, and understand how to price the transferable business assets — separately from the real property — to capture the full value of what you've built.
+    </div>
+
+    <p>Every sophisticated STR buyer asks one question before they decide what to pay: <em>Can I replicate this income without the current owner?</em> Your Airbnb review score — 4.9 with 200 reviews — is partly the answer to that question, and partly a red flag. Reviews on Airbnb are tied to the host profile. When you sell the property, the new owner starts from zero reviews on their own account. The income built on those reviews is at risk during the transition.</p>
+
+    <p>The SpokeBnB system was designed around a different answer to that question. The domain, the email list, the content, the direct booking site, the OwnerRez configuration — these assets are not tied to your identity as a host. They transfer. And what transfers is what commands the premium.</p>
+
+    <h3>The Transferability Inventory — Asset by Asset</h3>
+
+    <table class="transfer-table">
+      <thead>
+        <tr><th>Asset</th><th>Transfers?</th><th>Notes — What the Buyer Actually Gets</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Direct Booking Website &amp; Domain</td>
+          <td><span class="transfer-pill yes">Fully Transfers</span></td>
+          <td>Domain registration transferred. All content, SEO authority, Google Search Console history, and inbound links convey to the new owner. The Google ranking the domain has built continues to generate traffic regardless of who operates the property. Negotiate this explicitly as a business asset with dollar value attached.</td>
+        </tr>
+        <tr>
+          <td>Past-Guest Email List</td>
+          <td><span class="transfer-pill partial">Conditional Transfer</span></td>
+          <td>The list transfers as a contact database. However: subscribers consented to hear from the original host/brand. Best practice is a "new ownership" email from the new operator introducing themselves and giving subscribers the option to stay on the list. A warm, well-maintained list of 200 opted-in past guests has real value to a new operator — it is the same list that drives the Day-21 re-booking offer (Module 07). Consult your CPA or attorney on the asset structure for this transfer.</td>
+        </tr>
+        <tr>
+          <td>OwnerRez Account &amp; Configuration</td>
+          <td><span class="transfer-pill partial">Negotiated Transfer</span></td>
+          <td>OwnerRez accounts are tied to the account holder but can be transferred to a new owner under the same subscription or as a new account with configuration migration. All trigger messages, rate rules, tax configurations, and booking history export with the account. The buyer inherits the full guest messaging system — not just the data, but the working system. Clarify transfer terms with OwnerRez before listing.</td>
+        </tr>
+        <tr>
+          <td>Google Business Profile</td>
+          <td><span class="transfer-pill yes">Fully Transfers</span></td>
+          <td>GBP ownership is transferred at the business level. All reviews, photos, and ranking signals convey to the new owner. A GBP with 80 reviews and a 4.8 rating that ranks for the destination keyword is a genuine business asset — it drives organic traffic and bookings independent of the OTA platforms.</td>
+        </tr>
+        <tr>
+          <td>Published Content &amp; Blog Posts</td>
+          <td><span class="transfer-pill yes">Fully Transfers</span></td>
+          <td>All content on the direct booking site transfers with the domain. Google's ranking of that content — built over 1–3 years of indexing — is a durable asset. A buyer who inherits a domain with 12 ranking posts targeting destination keywords is not starting a content strategy from scratch. They are continuing one that is already producing organic traffic.</td>
+        </tr>
+        <tr>
+          <td>Kit Email Account</td>
+          <td><span class="transfer-pill partial">Negotiated Transfer</span></td>
+          <td>Kit accounts are transferred by changing account ownership. The automation sequences, tags, and subscriber list transfer. The new owner inherits not just the list but the working email system — the welcome sequence, the Day-21 re-booking offer, the seasonal emails — all configured and ready to run. Value this as system goodwill, not just a contact list.</td>
+        </tr>
+        <tr>
+          <td>StayFi Account &amp; WiFi Network</td>
+          <td><span class="transfer-pill yes">Fully Transfers</span></td>
+          <td>StayFi account is transferred. The WiFi capture continues running for the new owner immediately. The guest data collected under the previous operator's account is included in the Kit list transfer.</td>
+        </tr>
+        <tr>
+          <td>Airbnb Host Profile &amp; Review History</td>
+          <td><span class="transfer-pill no">Does Not Transfer</span></td>
+          <td>Airbnb explicitly prohibits account transfers. The new owner creates their own host account and starts with zero reviews. This is the most significant transition risk for buyers who are 100% OTA-dependent — and the strongest argument for why the SpokeBnB direct booking infrastructure is worth a premium. The new owner's OTA income depends on building their own review score; their direct booking income inherits the system immediately.</td>
+        </tr>
+        <tr>
+          <td>STR Permit &amp; Municipal License</td>
+          <td><span class="transfer-pill partial">Jurisdiction-Dependent</span></td>
+          <td>Some municipalities allow STR permits to transfer with property sale; others require the new owner to re-apply. In markets with permit caps, a transferable permit is extraordinarily valuable — it means the buyer inherits the right to operate that couldn't be purchased independently. Confirm permit transferability with the issuing municipality before listing. A transferable permit in a capped market should be explicitly priced into the exit.</td>
+        </tr>
+        <tr>
+          <td>Local Operator Referral Relationships</td>
+          <td><span class="transfer-pill partial">Warm Introduction</span></td>
+          <td>The relationships themselves don't transfer automatically — they are between people. What you can transfer is a formal introduction: a personal email to each referral partner introducing the new owner as the operator and endorsing the continuity. This warm handoff is worth more than a cold start for the new operator and is a genuine piece of goodwill you can offer as part of a premium sale. Document the referral network in the exit package (Lesson 3).</td>
+        </tr>
+        <tr>
+          <td>Amazon Associates Storefront &amp; Affiliate Income</td>
+          <td><span class="transfer-pill partial">Negotiated Transfer</span></td>
+          <td>Amazon Associates accounts are transferable if the new owner qualifies. Affiliate income from the storefront is a recurring revenue stream — small, but documented. Include it in the NOI calculation if material and in the business asset schedule for the purchase agreement.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The Business + Real Estate Split — The Transaction Structure Nobody Explains</h3>
+    <p>Most STR sales are structured as a simple real property transfer: you sell the property, the buyer gets the house and whatever's in it. The entire purchase price is treated as real estate for tax purposes. This is fine for a 100% OTA operation with no transferable business assets — there's nothing to structure separately.</p>
+
+    <p>The SpokeBnB operator is selling something different. The email list, the content, the brand, the operating systems — these are business assets. In a properly structured transaction, the purchase price can be <strong>allocated between real property and business goodwill/intangibles</strong>. This allocation has tax consequences for both parties and should be negotiated with both a real estate attorney and a CPA who has experience with online business transactions.</p>
+
+    <ul>
+      <li><strong>For the seller:</strong> Real property held for more than one year qualifies for long-term capital gains treatment. Business goodwill (the email list, the brand, the content) may be taxed as ordinary income or capital gain depending on how the allocation is structured and how long the assets were held. A tax-efficient allocation negotiated up front — before the purchase agreement is signed — can meaningfully change your net proceeds.</li>
+      <li><strong>For the 1031 exchange:</strong> The real property component of a sale is eligible for a 1031 like-kind exchange — deferring capital gains tax by rolling proceeds into a replacement property. The business asset component is not 1031-eligible. A clean allocation between real property and business assets allows the seller to 1031 the real estate portion while handling the business asset component separately. Work with a Qualified Intermediary (QI) who understands this structure before the sale closes.</li>
+      <li><strong>For the buyer:</strong> Business assets (intangibles) are amortized over 15 years under Section 197 of the tax code. A buyer who allocates purchase price to business intangibles gets a tax deduction over 15 years that they wouldn't get from real property. A sophisticated buyer may actually prefer a higher allocation to business assets — which is a negotiating variable that serves both parties if structured correctly.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ The Advisors You Need for This Transaction Are Not the Default Choices</div>
+      <p>A residential real estate agent has no framework for valuing your email list. A standard real estate attorney has never negotiated a purchase price allocation for business goodwill on an STR. A general CPA may not be familiar with Section 197 amortization or 1031 exchange mechanics.</p>
+      <p>The right team for an STR exit of this complexity: <strong>(1) a CPA with both STR and online business transaction experience</strong>, who can advise on the allocation, the 1031 structure, and the tax consequences of each; <strong>(2) a real estate attorney or business transaction attorney</strong> who has closed business asset transfers alongside real property; and <strong>(3) a Qualified Intermediary</strong> if you are pursuing a 1031 exchange on the real property component. Assemble this team 60–90 days before you intend to go to market — not after you've accepted an offer.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Every asset in your system is inventoried, its transfer status confirmed, and its value documented.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Transferability inventory completed for all assets in the SpokeBnB stack</li>
+        <li><span class="cp-box"></span>STR permit transferability confirmed with the issuing municipality — in writing</li>
+        <li><span class="cp-box"></span>OwnerRez transfer terms confirmed with OwnerRez support</li>
+        <li><span class="cp-box"></span>Business asset list drafted — the intangibles (email list, brand, domain, content) that will be separately allocated in the purchase agreement</li>
+        <li><span class="cp-box"></span>CPA and real estate/business attorney identified — professionals with STR and online business transaction experience</li>
+        <li><span class="cp-box"></span>1031 exchange decision made — rolling into another property or taking proceeds</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The STR Exit Package — Seven Documents That Command a Premium Price</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Assemble the complete seven-document exit package that eliminates buyer uncertainty, accelerates due diligence, and positions your property as a premium asset rather than a speculative one. Understand when each document should be built — most of them are already half-complete from operating the SpokeBnB system.
+    </div>
+
+    <p>The largest reason STR sales fall through — or renegotiate after inspection — is buyer uncertainty about income reproducibility. The buyer's attorney requests documents, the seller scrambles to assemble them, something is missing or inconsistent, and the buyer's confidence erodes. The solution is not to scramble at the point of sale. The solution is to build the package as a byproduct of operating the business — so that when a buyer appears, the package is already assembled.</p>
+
+    <p>Every SpokeBnB operator who has completed Modules 01 through 13 already has 80% of this package. The compliance calendar from Module 11, the NOI calculation from Lesson 1 of this module, the OwnerRez booking export, the Kit account summary — these documents exist because the system was run correctly. The exit package is what happens when you organize them.</p>
+
+    <div class="package-grid">
+      <div class="pkg-card">
+        <div class="pkg-num">01</div>
+        <div class="pkg-title">Performance Summary — The Executive Overview</div>
+        <ul class="pkg-items">
+          <li>2-page narrative summary of the property and its operating history</li>
+          <li>Annual gross revenue for the past 3 years, by platform</li>
+          <li>Occupancy rate and ADR trend — showing improvement trajectory</li>
+          <li>Direct booking percentage and growth year-over-year</li>
+          <li>Review score history on all platforms</li>
+          <li>One-paragraph description of the SpokeBnB system and what transfers</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">02</div>
+        <div class="pkg-title">Financial Package — Three Years of Verified Income</div>
+        <ul class="pkg-items">
+          <li>OwnerRez booking history export — all reservations, gross, platform, dates</li>
+          <li>Platform earnings statements (Airbnb, VRBO monthly CSV exports)</li>
+          <li>Direct booking revenue receipts (Stripe or OwnerRez direct reports)</li>
+          <li>Complete NOI calculation — every expense line with receipts or estimates</li>
+          <li>Tax returns Schedule E or Schedule C for the property (past 3 years)</li>
+          <li>Bank statements showing income deposits (3 months minimum)</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">03</div>
+        <div class="pkg-title">Regulatory &amp; Compliance Package</div>
+        <ul class="pkg-items">
+          <li>Current STR permit — number, expiry date, issuing authority</li>
+          <li>Written confirmation of permit transferability from the municipality</li>
+          <li>Municipal business license</li>
+          <li>TOT registration and 3 years of filed remittance records</li>
+          <li>State sales tax registration and filing history (if applicable)</li>
+          <li>CC&amp;Rs confirming HOA status — no STR prohibition</li>
+          <li>No outstanding violations — written confirmation if obtainable</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">04</div>
+        <div class="pkg-title">System &amp; Asset Package</div>
+        <ul class="pkg-items">
+          <li>Direct booking site: domain registration, hosting account, Google Search Console 12-month traffic report</li>
+          <li>Email list: Kit subscriber count, open rate, and last 6 months of send history</li>
+          <li>OwnerRez: account summary, property configuration, transfer terms</li>
+          <li>GBP: profile URL, review count, rating history, search appearance data</li>
+          <li>StayFi: account summary, guests captured total</li>
+          <li>Amazon Associates: affiliate account summary and 12-month income</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">05</div>
+        <div class="pkg-title">Operational Package — The System the Buyer Inherits</div>
+        <ul class="pkg-items">
+          <li>Cleaning &amp; Turnover SOP (Module 12 deliverable)</li>
+          <li>Maintenance &amp; Vendor SOP with complete vendor list and contact info</li>
+          <li>Guest Communication SOP — OwnerRez trigger message sequence documented</li>
+          <li>OwnerRez trigger messages: written copies of all automated messages</li>
+          <li>Kit automation sequences: written copies of all email flows</li>
+          <li>Emergency contacts: property-level contacts for utilities, municipality, vendors</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">06</div>
+        <div class="pkg-title">Market &amp; Competitive Context</div>
+        <ul class="pkg-items">
+          <li>AirDNA market data: market occupancy, ADR, supply growth for past 2 years</li>
+          <li>Regulatory outlook summary (from Module 11 research) — Green classification confirmed</li>
+          <li>Pending competitive supply: any new STR developments in the market</li>
+          <li>Seasonality pattern — which months drive the revenue, with data</li>
+          <li>Google Search Console keyword rankings for the direct booking site</li>
+          <li>GBP search appearance: how many monthly searches surface the property</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">07</div>
+        <div class="pkg-title">Network &amp; Relationship Package</div>
+        <ul class="pkg-items">
+          <li>Local operator referral network: names, businesses, relationship summary, referral volume estimate</li>
+          <li>Co-host or property manager contact and terms (if applicable)</li>
+          <li>Key vendor relationships: cleaner, maintenance, preferred local contacts</li>
+          <li>Airbnb Superhost status and history (even if non-transferable, documents operating standard)</li>
+          <li>Commitment to warm introductions: written offer to introduce new owner to referral partners</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Package Signals as Much as It Documents</div>
+      <p>A buyer who receives a complete, organized, pre-assembled exit package reaches a conclusion before they've read a single line: this operator runs a tight business. The package itself is a demonstration that the income is real, the systems are documented, and the transition is manageable. A buyer who has to request every document separately, wait days for each response, and reconcile inconsistencies across sources reaches a different conclusion — and prices the uncertainty into their offer.</p>
+      <p>The exit package is not assembled the week before listing. It is assembled the week you complete Module 14 and updated quarterly — the same way a compliance calendar is maintained. When the right buyer appears, the package ships within 48 hours. That responsiveness is itself a negotiating asset.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Write Your STR Performance Summary</span>
+      </div>
+      <p class="ai-prompt-instruction">The performance summary is Document 1 in the exit package — the narrative that sets the frame for everything the buyer will see in the financial data. It's 2 pages. Use this prompt to generate the first draft, then refine it with your actual numbers and your own voice. This document shapes the buyer's perception of the business before they open a spreadsheet.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">Write a 2-page performance summary narrative for my short-term rental business — the kind of document I would hand a serious buyer alongside my financials. This is not a brochure. It should read like an honest, professional summary of a business — what it is, how it performs, how it runs, and why it has been consistently profitable.
+
+THE PROPERTY:
+- Property address / description: [e.g., 3BR lakefront cabin, Seneca Lake, NY]
+- Year first listed on Airbnb: [year]
+- Number of bedrooms/bathrooms: [X/X]
+- Max guests: [X]
+- Direct booking site: [URL]
+
+FINANCIAL PERFORMANCE (trailing 12 months):
+- Gross revenue (OTA + direct combined): $[X]
+- Platform fees paid (Airbnb 15.5% + VRBO): $[X]
+- Net operator revenue (gross minus fees): $[X]
+- Cleaning revenue collected from guests: $[X]
+- Variable costs (cleaning, supplies, maintenance, laundry): $[X]
+- Fixed costs (insurance, PMS, PriceLabs, smart lock sub, noise monitor): $[X/year]
+- Net Operating Income (NOI): $[X]
+- Occupancy rate: [X%]
+- ADR: $[X]
+- RevPAR: $[X]
+- Direct booking percentage: [X%]
+
+OPERATIONAL HIGHLIGHTS:
+- Average review score (Airbnb): [X.X stars]
+- Total reviews (Airbnb): [X reviews]
+- Superhost / Guest Favorite status: [yes / no]
+- Automation level: [fully automated guest communication / partially / manual]
+- PMS used: [OwnerRez]
+- Dynamic pricing: [PriceLabs — activated when?]
+- Email list size: [X guests captured via StayFi]
+
+OWNED ASSETS INCLUDED:
+- Direct booking domain: [domain name, year registered]
+- Email list: [X contacts]
+- Google Business Profile: [yes / no]
+- Social following: [Instagram X followers, etc. or none]
+- Brand: [property name, established year]
+
+WRITE:
+A 2-page document structured as:
+Section 1 — Business Overview (what this business is and how it was built, in 2–3 paragraphs)
+Section 2 — Performance Record (key financial metrics framed in terms of what they mean to a buyer — NOI, cap rate implication, RevPAR vs. market, trajectory)
+Section 3 — Systems & Operations (what runs automatically, what the buyer is actually acquiring beyond the real estate)
+Section 4 — Guest Asset & Brand Value (the email list, the domain, the review record as a going concern)
+
+Tone: professional, specific, honest. No marketing language. No projections or forward-looking claims. Only what is documented and verifiable.</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>All seven documents are assembled in a shared folder, reviewed for accuracy, and ready to present.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Performance summary written — 2 pages, narrative and data, reviewed for accuracy</li>
+        <li><span class="cp-box"></span>Financial package assembled — OwnerRez exports, platform statements, NOI calculation, tax returns</li>
+        <li><span class="cp-box"></span>Regulatory package assembled — permit, HOA clearance, tax registration history</li>
+        <li><span class="cp-box"></span>System and asset package assembled — domain, email list summary, GBP data, OwnerRez summary</li>
+        <li><span class="cp-box"></span>Operational package assembled — all four SOPs in final form, vendor list complete</li>
+        <li><span class="cp-box"></span>Market context package assembled — AirDNA data, regulatory outlook, keyword rankings</li>
+        <li><span class="cp-box"></span>Network package assembled — referral partner list, relationship history, warm introduction offer</li>
+        <li><span class="cp-box"></span>All seven documents in a single shared folder — organized, named consistently, accessible within 48 hours of a buyer request</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The Private Sale Playbook — How to Find Your Best Buyer Before You List</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Execute a private pre-market launch to your highest-quality buyer pool — past guests, local operator partners, and STR investor networks — before engaging a real estate broker. Understand when a broker adds value and what to look for in one. Know how to sequence the 1031 exchange so it doesn't constrain the negotiation.
+    </div>
+
+    <p>The standard real estate listing process is designed for sellers who don't have a buyer pool. List on the MLS, wait for inbound interest, pay 5–6% commission to the broker who brought the buyer. For most sellers, this process makes sense — they have no way to reach qualified buyers on their own.</p>
+
+    <p>You do. Your past-guest email list is a group of people who have already experienced your property, fell in love with it, and paid to stay there. Your local operator referral network includes business owners who see your revenue, understand your market, and may be actively looking to acquire in your area. Your direct booking site has years of organic traffic from people who were already searching for properties exactly like yours. This is a private buyer pool that no real estate agent can access on your behalf — only you can reach it.</p>
+
+    <h3>The Private Pre-Launch Sequence</h3>
+
+    <div class="playbook">
+      <div class="pb-step">
+        <div class="pb-when">90 Days Before Target List Date</div>
+        <div class="pb-content">
+          <div class="pb-title">Assemble the Exit Package and Set the Target Price</div>
+          <div class="pb-detail">Complete all seven exit package documents. Run the NOI calculation and establish your income-based target price. Get a comp-based estimate from a local agent (without listing) to understand the floor. Your negotiating range is between the comp floor and the income ceiling. Identify whether you will pursue a 1031 exchange — the decision affects your urgency and your timeline for accepting an offer. Identify a Qualified Intermediary if 1031 is in play. <strong>The most common mistake at this stage:</strong> setting a price before assembling the package. The package reveals the income picture; the income picture sets the price. Do them in order.</div>
+        </div>
+      </div>
+      <div class="pb-step">
+        <div class="pb-when">60 Days Before Target List Date</div>
+        <div class="pb-content">
+          <div class="pb-title">Approach Local Operator Network — The Highest-Value Buyer Pool</div>
+          <div class="pb-detail">Before emailing past guests, approach the local operators in your referral network individually and privately. These are business owners who already understand your market, your revenue profile, and — if they've been referring guests to you — the quality of your operation. A personal conversation: <em>"We're considering selling [property name] privately before any public listing. Given your knowledge of the market and our relationship, I wanted to offer you the first look."</em> Attach the performance summary (not the full package — the summary). If they have serious interest, the full package follows. <strong>The adjacent operator is the most likely buyer to close at your income-based price</strong> without a broker in the middle.</div>
+        </div>
+      </div>
+      <div class="pb-step">
+        <div class="pb-when">45 Days Before Target List Date</div>
+        <div class="pb-content">
+          <div class="pb-title">Send the Past-Guest Pre-Launch Email</div>
+          <div class="pb-detail">Email your full past-guest Kit list. Subject line: <em>"A personal note from [your name] about [property name]."</em> The email should feel like a letter from a friend, not a listing announcement. Tell the story honestly: you've loved hosting there, the time has come to think about passing it to someone who'll love it as much as you do, you're offering current and past guests the first opportunity to purchase privately before any public listing. Include the asking price or an invitation to discuss. Link to the performance summary PDF. Give a 30-day window before you proceed to public listing. <strong>Past guests convert to buyers at a higher rate than cold inquiries</strong> — they already have an emotional relationship with the property and the asking price is a known quantity relative to what they've already spent to be there.</div>
+        </div>
+      </div>
+      <div class="pb-step">
+        <div class="pb-when">30 Days Before Target List Date</div>
+        <div class="pb-content">
+          <div class="pb-title">Reach the STR Investor Community</div>
+          <div class="pb-detail">If no buyer has emerged from the operator network or past guest outreach, the next pool is STR investors. Active STR investor communities exist in every major market — BiggerPockets STR forum, Facebook groups by market, local real estate investment associations, and the VRMA (Vacation Rental Management Association) network. Post a summary of the property with NOI data and a performance snapshot. Do not post the full address publicly — respond to serious inquiries with the full exit package. <strong>A 1031 buyer in this pool is your best-case scenario</strong> — they have a replacement property timeline that creates urgency to close, and they fully understand income-based valuation. The fact that you have the exit package assembled and can move immediately is a genuine advantage for them.</div>
+        </div>
+      </div>
+      <div class="pb-step">
+        <div class="pb-when">List Date — If No Private Buyer</div>
+        <div class="pb-content">
+          <div class="pb-title">Engage a Broker — With the Right Criteria</div>
+          <div class="pb-detail">If the private launch does not produce a buyer, engage a broker — but with your terms established. You have the exit package, the NOI calculation, and the income-based value argument. The broker's job is distribution, not pricing. Look for: experience with income-producing vacation rental properties specifically (not just lake houses generally), comfort presenting an income-based value argument to buyers and appraisers, and willingness to market to STR investor buyers in addition to retail buyers. <strong>Commission is negotiable when you bring the buyer pool.</strong> A broker who inherits your full exit package, your past-guest outreach history, and your operator network contacts is doing less origination work than one starting cold. Price the commission accordingly. A flat fee or reduced percentage is standard in this context — 3–4% rather than 5–6%.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property and Relationship</div>
+      <h4>Write Your Private Sale Pre-Launch Email to Past Guests</h4>
+      <div class="ai-prompt-box">Help me write a private sale pre-launch email to my past STR guests. This is a personal, genuine email — not a listing announcement. It should feel like a letter from the host they stayed with, not a real estate marketing piece.
+
+Property details:
+- Property name: [NAME — e.g., "The Lake House at Seneca" or "Cedar Point Cabin"]
+- Location: [CITY, STATE]
+- What makes this property special in one sentence: [YOUR PERSONAL DESCRIPTION]
+- Years you've operated it: [NUMBER]
+- Asking price or approach: [SPECIFIC PRICE / "Priced based on documented income — happy to share the financials with serious buyers" / etc.]
+- What you want the new owner to do with it: [e.g., "continue operating it as an STR," "use it as a family property," "open to either"]
+- Why you're selling (honest, brief): [YOUR ACTUAL REASON — retirement, moving markets, deploying capital, etc.]
+- What's included: [SUMMARY — direct booking site, email list, OwnerRez system, local partner relationships, the works]
+- Private window before public listing: [NUMBER of days — e.g., 30 days]
+- How to respond: [email / phone / both]
+
+Write the email in these sections:
+1. OPENING: A personal, first-person note about what this property has meant — specific, not generic. The guest reading it has stayed there. They know if you're being genuine.
+2. THE NEWS: Honest, brief explanation of the decision to sell. No real estate language. No "exciting opportunity."
+3. THE OFFER: What they'd be buying. What transfers. Why this is a different asset than a property they'd find on Zillow. Keep it factual, not promotional.
+4. THE ASK: Simple. Reply to this email. Happy to send the full performance summary to anyone who wants to explore.
+5. CLOSING: Personal. You've shared a relationship with these people — the house remembers all of them. Close like someone who means it.
+
+Total length: 350–450 words. No bullet lists. Prose only. No real estate jargon. No urgency pressure tactics.</div>
+      <p class="ai-prompt-note"><strong>Read it as if you are a past guest receiving it.</strong> If any sentence sounds like a listing description, rewrite it. The email's power comes entirely from its authenticity — a past guest can detect the difference between a host who means it and a seller who is going through motions. If it doesn't sound like you, it won't convert. Edit it until it does.</p>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">The Math on Going Private First</div>
+      <p>A property with a $1,000,000 income-based value that sells through a traditional broker at 5.5% commission produces net proceeds of $945,000. The same sale through a private transaction with no broker produces $1,000,000 — a $55,000 difference before considering that the private buyer (an adjacent operator or past guest) may be willing to pay closer to the income-based ceiling while a retail buyer through MLS anchors to comps.</p>
+      <p>A private sale that takes 30 extra days to find the buyer but saves the commission and achieves $50,000 more on price produces a $105,000 better outcome than listing immediately. The 30 days is not wasted — it is the most valuable month in the transaction. The exit package assembled in Lesson 3 is what makes those 30 days productive rather than chaotic.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 14 Complete — Course Complete</div>
+      <h3>You are prepared to exit at full value, on your timeline, to the right buyer.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Income-based valuation calculated — you know your number and the argument for it</li>
+        <li><span class="cp-box"></span>Transferability inventory complete — every asset documented, transfer status confirmed</li>
+        <li><span class="cp-box"></span>Business + real estate split understood — CPA and attorney identified for transaction structuring</li>
+        <li><span class="cp-box"></span>1031 exchange decision made — Qualified Intermediary identified if applicable</li>
+        <li><span class="cp-box"></span>All seven exit package documents assembled and stored in an accessible folder</li>
+        <li><span class="cp-box"></span>Private sale pre-launch sequence understood — local operator outreach, past-guest email, investor community, broker engagement criteria</li>
+        <li><span class="cp-box"></span>Pre-launch email drafted and ready — to be sent when the decision is made, not scrambled together at that point</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine — Full Circle</div>
+    <h3>Every Module in This Course Was Also Building Your Exit</h3>
+    <p>You took this course to earn more from your property. You did. But look at what you also built: a documented income stream that a sophisticated buyer can underwrite, a transferable system that produces that income without depending on your personal involvement, a compliance record that eliminates regulatory uncertainty at due diligence, a past-guest email list that is simultaneously your re-booking channel and your private buyer pool, and a direct booking percentage that translates — dollar for dollar, multiplied by 15–17 — into exit value that comps cannot see.</p>
+    <p><strong>The direct booking machine was always a business.</strong> Not just a strategy for saving commission. A business with assets, systems, recurring revenue, and a documented operating history. The exit is not the end of the SpokeBnB story — it is the proof that the story was worth telling.</p>
+    <ul>
+      <li><strong>Module 06 (Direct Booking Site)</strong> — built the domain and the content infrastructure that transfers to the new owner as a durable, ranking asset.</li>
+      <li><strong>Module 07 (Email Marketing)</strong> — built the list that is simultaneously your re-booking channel, your off-season revenue tool, and the private buyer pool for the exit.</li>
+      <li><strong>Module 08 (Content &amp; SEO)</strong> — built the organic search presence that generates bookings independent of OTA platforms and conveys with the domain at sale.</li>
+      <li><strong>Module 09 (Reviews)</strong> — built the review velocity and score that demonstrate operating quality to every buyer who reviews the Airbnb and VRBO profile during due diligence.</li>
+      <li><strong>Module 11 (Regulations)</strong> — built the compliance documentation that is Document 03 in the exit package, the one that eliminates the buyer's most fundamental uncertainty.</li>
+      <li><strong>Module 12 (Scaling)</strong> — built the SOPs that are Document 05 in the exit package, the ones that tell the buyer the operation does not depend on the seller.</li>
+      <li><strong>Module 13 (Local Guide)</strong> — built the referral network that is the warm introduction offer in Document 07, and the local operators who are the first private buyers approached.</li>
+    </ul>
+    <p>Every module was building the exit. Module 14 is the moment you recognize that — and use it.</p>
+  </section>
+
+  <div class="course-complete">
+    <div class="cc-label">SpokeBnB — Course Complete</div>
+    <h2>You built a direct booking machine.<br>Now you know how to run it, scale it, and sell it.</h2>
+    <p>The Hub-and-Spoke model was never just about saving the 15.5% Airbnb takes. It was about building something that belongs to you entirely — a guest relationship, a channel, a system, a brand — and having the documentation to prove it when the time comes to pass it on. That's what you built. What you do with it next is yours.</p>
+  </div>
+
+  <div class="listing-callout">
+    <div class="lc-left">
+      <div class="lc-eyebrow">SpokeBnB Graduate Network</div>
+      <div class="lc-heading">Thinking about selling? Send us your performance summary before you list publicly.</div>
+      <p class="lc-body">We work with buyers who are specifically looking for documented, system-run STR properties — and depending on the market and numbers, <strong>we may be buyers ourselves.</strong> SpokeBnB graduates sell differently than the average STR seller. You have the package. You have the NOI. You have the direct booking infrastructure. That's what our buyer network is looking for. Send us Document 01 from your exit package and we'll take a look within 48 hours.</p>
+    </div>
+    <div class="lc-right">
+      <a class="lc-cta" href="mailto:hello@spokebnb.com?subject=Listing%20Submission%20—%20Performance%20Summary&body=Hi%2C%0A%0AI%20completed%20the%20SpokeBnB%20course%20and%20I'm%20considering%20selling%20my%20property.%20I've%20attached%20my%20performance%20summary%20for%20your%20review.%0A%0AProperty%3A%0ALocation%3A%0AAsking%20price%20range%3A%0A%0AThanks">Submit Your Listing →</a>
+      <div class="lc-sub">Email your performance summary.<br>We respond within 48 hours.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 14: Exit &nbsp;·&nbsp; Course Complete
+</footer>

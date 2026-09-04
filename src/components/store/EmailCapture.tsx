@@ -5,12 +5,23 @@ import { useState } from 'react'
 export default function EmailCapture() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) {
+    if (!email) return
+    setLoading(true)
+    try {
+      await fetch('/api/course/capture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+    } catch {
+      // Deliver the success state regardless — the user gave their email
+    } finally {
+      setLoading(false)
       setSubmitted(true)
-      // TODO: Connect to email provider (ConvertKit, Mailchimp, etc.)
     }
   }
 
@@ -30,7 +41,7 @@ export default function EmailCapture() {
 
       <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <span className="text-[var(--sf-gold)] text-sm font-semibold tracking-widest uppercase">
-          Free Resource
+          Free Tool
         </span>
         <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-white mt-4 mb-4">
           Get the Revenue Per Night
@@ -38,9 +49,8 @@ export default function EmailCapture() {
           <span className="sf-gold-gradient">Calculator — Free</span>
         </h2>
         <p className="text-white/50 mb-8 max-w-lg mx-auto">
-          The same spreadsheet our students use to calculate their baseline, set
-          targets, and track improvement across all 8 demand channels. Drop your
-          email and it&apos;s yours.
+          The same calculator we use on our own properties. Enter your market, bedroom count, and current rate —
+          it outputs your revenue range, occupancy target, and nightly rate opportunity.
         </p>
 
         {submitted ? (
@@ -50,7 +60,7 @@ export default function EmailCapture() {
             </svg>
             <p className="text-white font-semibold">Check your inbox.</p>
             <p className="text-white/50 text-sm mt-1">
-              The Revenue Per Night Calculator is on its way.
+              We sent the calculator link to {email}.
             </p>
           </div>
         ) : (
@@ -65,15 +75,16 @@ export default function EmailCapture() {
             />
             <button
               type="submit"
-              className="bg-[var(--sf-gold)] text-white px-6 py-3.5 rounded-xl text-sm font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-lg whitespace-nowrap"
+              disabled={loading}
+              className="bg-[var(--sf-gold)] text-white px-6 py-3.5 rounded-xl text-sm font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-lg whitespace-nowrap disabled:opacity-60"
             >
-              Send Me the Calculator
+              {loading ? 'Sending...' : 'Send Me the Calculator'}
             </button>
           </form>
         )}
 
         <p className="text-white/20 text-xs mt-4">
-          No spam. Unsubscribe anytime. We respect your inbox like we respect your revenue.
+          No spam. Unsubscribe anytime.
         </p>
       </div>
     </section>

@@ -1,0 +1,668 @@
+<title>Module 13 — Acquisition at Scale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --gold-bg: rgba(212,160,23,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 40px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .tip { background: var(--tip-bg); border-left-color: #16a34a; }
+  .tip .callout-label { color: #16a34a; }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .math { background: var(--math-bg); border-left-color: #0284c7; }
+  .math .callout-label { color: #0284c7; }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .warn { background: var(--warn-bg); border-left-color: #ca8a04; }
+  .warn .callout-label { color: #ca8a04; }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Tier diagram */
+  .tier-stack { margin: 28px 0; display: flex; flex-direction: column; gap: 3px; }
+  .tier-row { display: grid; grid-template-columns: 80px 1fr; gap: 0; border-radius: 10px; overflow: hidden; }
+  .tier-label-col { display: flex; align-items: center; justify-content: center; padding: 14px 10px; font-size: 11px; font-weight: 700; color: #fff; text-align: center; letter-spacing: 0.08em; text-transform: uppercase; writing-mode: initial; }
+  .tier-row.t1 .tier-label-col { background: #1e3a8a; }
+  .tier-row.t2 .tier-label-col { background: #1e5252; }
+  .tier-row.t3 .tier-label-col { background: #713f12; }
+  .tier-row.t4 .tier-label-col { background: var(--navy); border: 2px solid var(--gold); border-right: none; }
+  .tier-content-col { padding: 14px 18px; }
+  .tier-row.t1 .tier-content-col { background: #eff6ff; }
+  .tier-row.t2 .tier-content-col { background: #f0fdfa; }
+  .tier-row.t3 .tier-content-col { background: #fff7ed; }
+  .tier-row.t4 .tier-content-col { background: var(--gold-bg); border: 2px solid var(--gold); border-left: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .tier-row.t1 .tier-content-col { background: #1e3a8a22; }
+    :root:not([data-theme="light"]) .tier-row.t2 .tier-content-col { background: #1e525222; }
+    :root:not([data-theme="light"]) .tier-row.t3 .tier-content-col { background: #713f1222; }
+    :root:not([data-theme="light"]) .tier-row.t4 .tier-content-col { background: rgba(212,160,23,0.1); }
+  }
+  :root[data-theme="dark"] .tier-row.t1 .tier-content-col { background: #1e3a8a22; }
+  :root[data-theme="dark"] .tier-row.t2 .tier-content-col { background: #1e525222; }
+  :root[data-theme="dark"] .tier-row.t3 .tier-content-col { background: #713f1222; }
+  :root[data-theme="dark"] .tier-row.t4 .tier-content-col { background: rgba(212,160,23,0.1); }
+  .tier-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .tier-row.t4 .tier-title { color: var(--gold); }
+  .tier-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+  /* Partner target grid */
+  .partner-targets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+  .pt-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 16px; }
+  .pt-icon { font-size: 22px; margin-bottom: 8px; }
+  .pt-category { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .pt-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .pt-why { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+  /* Outreach card */
+  .outreach-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin: 20px 0; }
+  .outreach-step { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .outreach-step:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-num { width: 28px; height: 28px; min-width: 28px; background: var(--navy); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .step-detail { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* 90-day sprint */
+  .sprint-timeline { margin: 24px 0; }
+  .sprint-phase { margin-bottom: 24px; }
+  .sprint-phase-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .phase-badge { background: var(--navy); color: var(--gold); border-radius: 999px; padding: 4px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+  .phase-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .sprint-tasks { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .sprint-task { display: flex; align-items: flex-start; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .task-check { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.4); border-radius: 4px; margin-top: 1px; }
+  .task-text { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .task-text strong { color: var(--text); }
+
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  @media (max-width: 640px) {
+    .partner-targets { grid-template-columns: 1fr 1fr; }
+    .tier-row { grid-template-columns: 60px 1fr; }
+    .tier-label-col { font-size: 9px; }
+  }
+  @media (max-width: 420px) {
+    .partner-targets { grid-template-columns: 1fr; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 13</div>
+    <h1>Acquisition at Scale, Portfolio Growth & Exit</h1>
+    <p class="subtitle">The fourth tier of the Hub-and-Spoke system: destination editorial, local operator partnerships, and the referral network that sends pre-sold guests who already know your property before they arrive</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 3: Scale</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>4–6 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 12 — Sponsors & Brand Partnerships</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 14 — Build It for Others</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 11: Experiences</span>
+    <span class="arrow">→</span>
+    <span>Module 12: Sponsors</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 13: Acquisition at Scale</span>
+    <span class="arrow">→</span>
+    <span>Module 14: Service Track</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — Destination Authority</a>
+    <a href="#lesson-2">02 — Referral Network</a>
+    <a href="#lesson-3">03 — Editorial Platform</a>
+    <a href="#lesson-4">04 — 90-Day Sprint</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🗺️</div>
+    <div>
+      <div class="label">Module 13 Deliverable</div>
+      <p>A published "Best of [Your Market]" destination guide on your direct booking site — specific, locally sourced, and featuring real operators you have personally contacted. A list of 5–10 local operators who have been featured in your guide and are aware of your property. An updated digital guidebook that links to the published guide and deepens the editorial relationship with guests. A 90-day sprint plan in active execution, with Week 1 outreach complete.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>Destination Authority — Why Being Known for the Place Beats Being Known for the Property</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand the positioning shift from property host to destination authority — what it unlocks, how it compounds differently than OTA-level optimization, and how it extends the Hub-and-Spoke system into a tier that OTAs structurally cannot enter.
+    </div>
+
+    <p>Every improvement you made in Modules 01 through 10 made your property more competitive within the OTA marketplace. Better photos rank better. Better reviews rank better. Better pricing captures more calendar. All of it is real, all of it matters — and all of it operates within a space that Airbnb controls. The search algorithm, the review ranking, the visibility — Airbnb owns those levers and adjusts them according to its own interests.</p>
+
+    <p>Module 13 operates above that layer. Destination authority is not a ranking within Airbnb's system. It is a position in a guest's mind that exists before they open the Airbnb app. A guest who discovers your destination through your editorial content, learns about the area from your guide, and sees your property mentioned by three local operators they trust does not go to Airbnb to find a place to stay. They go to your direct booking site, because you are the source.</p>
+
+    <h3>The Four-Tier Hub-and-Spoke System — Complete View</h3>
+
+    <div class="tier-stack">
+      <div class="tier-row t1">
+        <div class="tier-label-col">Tier 1</div>
+        <div class="tier-content-col">
+          <div class="tier-title">OTA Demand Sources — Airbnb, VRBO, Google Vacation Rentals</div>
+          <div class="tier-desc">Reach guests searching for accommodations in your area. You compete on photos, reviews, pricing, and availability. High volume, low margin (15.5% host fee), no guest relationship ownership. You cannot email, message, or contact these guests outside the platform.</div>
+        </div>
+      </div>
+      <div class="tier-row t2">
+        <div class="tier-label-col">Tier 2</div>
+        <div class="tier-content-col">
+          <div class="tier-title">Capture Layer — StayFi, Digital Guidebook, OwnerRez Messages</div>
+          <div class="tier-desc">Converts OTA guests into owned relationships during the stay. StayFi captures the email address. The guidebook delivers local value. Trigger messages build the relationship and seed the review request. The guest leaves your property as a contact, not an anonymous booking record.</div>
+        </div>
+      </div>
+      <div class="tier-row t3">
+        <div class="tier-label-col">Tier 3</div>
+        <div class="tier-content-col">
+          <div class="tier-title">Owned Channels — Direct Booking Site, Email List, Google Presence</div>
+          <div class="tier-desc">Converts past guests into future direct bookings. The direct booking site eliminates the OTA commission. The email list lets you fill off-peak dates and launch new properties. The GBP and content presence drive organic traffic from guests planning their first trip. You own all three channels entirely.</div>
+        </div>
+      </div>
+      <div class="tier-row t4">
+        <div class="tier-label-col">Tier 4</div>
+        <div class="tier-content-col">
+          <div class="tier-title">Destination Authority — Editorial Platform, Local Operator Network, Referral System</div>
+          <div class="tier-desc">Creates demand above the OTA level. Guests discover the destination through your content, learn about local operators you've featured, and arrive pre-sold on your market and your property. Referrals from local operators you've cultivated arrive without any platform involvement. This tier compounds — content written today generates bookings 18 months from now.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>The Compounding Logic — Why Destination Authority Grows Differently</h3>
+    <p>OTA optimization improvements — a better photo set, a tighter listing description, a higher review score — produce immediate gains that plateau. Once you've hit 4.9 reviews and optimized photos, there is no more juice to squeeze from that lever. You are competing at the ceiling.</p>
+
+    <p>Editorial content and local authority compound over time rather than plateauing. A well-written destination guide published today will rank higher in six months than it does today, higher in 18 months than at six months, and continues generating organic traffic for years with minimal maintenance. A local operator relationship that began with a content feature in Month 1 produces referrals through Month 36 — without any additional effort after the relationship is established.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The TheLakeInsider Model — Applied to Your Market &nbsp;·&nbsp; <em style="font-style:italic;font-weight:400;letter-spacing:0;text-transform:none;font-size:10px;">Disclosure: TheLakeInsider is the course instructor's own editorial platform, used here as a live case study.</em></div>
+      <p>TheLakeInsider is an editorial platform built on exactly this principle: authoritative destination content at the lake level generates audience trust, which creates distribution for operators who advertise, affiliate, or are featured within it. Individual hosts don't need to build a 50-lake network to apply this model. They need to build a destination guide for their specific market — a 1,000-word "Best of [Your Market]" piece with 8–10 real local operator features — and let that piece do what editorial content does: rank, compound, and distribute.</p>
+      <p>If your market is a lake region, getting your property featured on TheLakeInsider (or a comparable editorial platform already covering your destination) is the fastest path to the Tier 4 audience — because the platform already has the editorial authority and the audience. Building your own is the path for markets where no such platform exists, or where deeper local specificity serves your guest better than a regional publication.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You understand the positioning shift and have identified your destination authority opportunity.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>The four-tier Hub-and-Spoke system is understood — you can explain how each tier feeds the next</li>
+        <li><span class="cp-box"></span>Your current tier position assessed: Tier 3 fully built, or gaps in Tiers 2–3 to address first</li>
+        <li><span class="cp-box"></span>Existing editorial platforms in your market identified — is there a TheLakeInsider equivalent covering your destination already?</li>
+        <li><span class="cp-box"></span>Destination authority goal defined: build your own guide, get featured on an existing platform, or both</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>The Local Operator Referral Network — Distribution That No OTA Can Buy</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build a network of 5–10 local operators in complementary categories who refer guests to your property — using a give-first approach that creates genuine value for them before asking for anything in return.
+    </div>
+
+    <p>Module 10 covered upsell partnerships — local operators who pay a commission when your guests use their services. Module 13's referral network is a different relationship. These operators don't pay you, and you don't pay them. The exchange is simpler: you give them a feature in your editorial content and your guidebook, and they give their customers a recommendation when accommodation comes up in conversation.</p>
+
+    <p>This is how word-of-mouth marketing actually works in local markets. A winery that mentions your lake house to guests who are looking for where to stay is not doing it because you asked them to. They're doing it because you featured them honestly in your content, you sent them guests through your guidebook recommendations, and you treated the relationship as a genuine business friendship rather than a marketing transaction. The recommendation is natural because the relationship is natural.</p>
+
+    <h3>Who to Target — Six Partner Categories</h3>
+    <p>Look for operators in categories that are <strong>complementary but not competitive</strong> — businesses that serve the same guest demographic without overlapping with STR accommodations.</p>
+
+    <div class="partner-targets">
+      <div class="pt-card">
+        <div class="pt-icon">🍷</div>
+        <div class="pt-category">Beverage</div>
+        <div class="pt-title">Wineries, Breweries, Distilleries</div>
+        <div class="pt-why">High guest overlap with STR demographics. Guests who visit local wineries are typically the same guests who book a weekend lake house. Staff frequently get asked "where should we stay?" and have referral conversations naturally.</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">🛶</div>
+        <div class="pt-category">Outdoor</div>
+        <div class="pt-title">Guides, Outfitters, Rental Services</div>
+        <div class="pt-why">Kayak rentals, fishing guides, hiking tour operators, bike rentals — outdoor operators often get accommodation questions from guests who are planning the activity first and lodging second. A fly fishing guide who recommends your property on Tuesday drives your Saturday booking.</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">🍽️</div>
+        <div class="pt-category">Dining</div>
+        <div class="pt-title">Independent Restaurants, Farm Stands, Food Experiences</div>
+        <div class="pt-why">Restaurant staff interact with visitors at the point of highest openness — during a meal. A server who says "if you're looking to extend the weekend, there's a great lake house" is delivering a warm referral in the most receptive context possible.</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">🏺</div>
+        <div class="pt-category">Arts & Local</div>
+        <div class="pt-title">Galleries, Studios, Markets, Local Events</div>
+        <div class="pt-why">Creative spaces attract the same cultural traveler who books boutique STRs. Galleries and studios are often delighted to be featured — they have small marketing budgets and a genuine editorial feature is more valuable to them than paid advertising.</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">🏥</div>
+        <div class="pt-category">Wellness</div>
+        <div class="pt-title">Spas, Yoga Studios, Float Centers</div>
+        <div class="pt-why">Wellness guests often book a "retreat" weekend — the spa is the anchor, accommodation is the complement. A spa that recommends your property as a retreat-friendly lodging option is sending guests who are already in a "splurge on the experience" mindset.</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">🎣</div>
+        <div class="pt-category">Specialty</div>
+        <div class="pt-title">Local Tour Operators, Destination-Specific Experiences</div>
+        <div class="pt-why">Wine tours, agritourism, sunset cruises, cooking classes — any operator who produces a multi-hour experience has guests who arrive from out of area and need lodging. Feature them in your content; they'll include your property in their "where to stay" recommendations.</div>
+      </div>
+    </div>
+
+    <h3>The Give-First Outreach — How to Start the Relationship</h3>
+    <p>The outreach sequence has four steps. The entire sequence takes 8–10 weeks and requires no pitch, no negotiation, and no awkward ask — because the ask only comes after the relationship has produced genuine value.</p>
+
+    <div class="outreach-card">
+      <div class="outreach-step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Visit and experience the business yourself</div>
+          <div class="step-detail">You cannot write a genuine feature about a winery you've never visited or a guide service you've never used. Go. Bring your family, bring guests, or go solo. Pay full price. Pay attention to the specific details that make it memorable — the owner's name, the thing they do that no one else does, the detail guests always notice. These specifics are what make a feature credible and what make the operator proud to share it.</div>
+        </div>
+      </div>
+      <div class="outreach-step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Write the feature — genuine and specific, not promotional</div>
+          <div class="step-detail">The feature belongs in your destination guide. It should be 100–200 words, written from your personal experience. Name the specific thing you loved. Don't use adjectives that mean nothing ("amazing," "incredible," "must-visit") — use the actual detail ("the owner pairs each flight with a note about the specific block where the grapes were grown — we spent 45 minutes there and learned more about the Finger Lakes than from any guide"). Specificity is what makes a feature worth sharing and worth trusting.</div>
+        </div>
+      </div>
+      <div class="outreach-step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Notify the operator before or at publish — no ask attached</div>
+          <div class="step-detail">Send a personal message: "I just published our local guide for guests staying in [market] — I featured [business name] because [specific reason from your visit]. Here's the link. Happy to send it your way if you'd like to share it with your customers." No ask. No trade implied. Just a genuine heads-up that they've been featured. Most operators share the feature on their own social media within 24 hours. That's the first organic distribution.</div>
+        </div>
+      </div>
+      <div class="outreach-step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">After 2–4 weeks, have the referral conversation</div>
+          <div class="step-detail">Follow up with a casual message or stop by in person: "I've gotten a lot of great feedback on the guide — guests really love [business name]. If any of your customers ask about where to stay, I'd love it if you'd mention [your property]. I send all of my guests your way and I'm happy to return the favor." By this point the feature has been live for a month, you've already sent them guests through your guidebook, and the conversation is between two people who have already exchanged value — not a cold ask.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Don't Build a Transactional Network</div>
+      <p>The outreach described above works because it is genuine. A feature written to get a referral — without personal experience, full of generic praise, clearly produced as a marketing exchange — is detectable by the operator and by the guests who read it. Guests trust specific, experiential writing. They distrust lists of adjectives. The same is true of the operators you approach: a business owner who receives a feature they didn't ask for, written with obvious personal familiarity, responds differently than one who receives what reads like an SEO placeholder. The relationship has to be real to produce real results.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Operator Visit</div>
+      <h4>Write a Genuine Local Operator Feature for Your Destination Guide</h4>
+      <div class="ai-prompt-box">Help me write a genuine, specific feature about a local business for inclusion in my STR destination guide. I want this to read like a personal recommendation from a trusted local, not a marketing write-up.
+
+Business name: [NAME]
+Type of business: [WINERY / GUIDE SERVICE / RESTAURANT / etc.]
+Location: [CITY, STATE]
+My personal visit details:
+— When I visited: [DATE / SEASON]
+— Who I was with: [ALONE / PARTNER / FAMILY / etc.]
+— The specific thing that stood out: [THE ACTUAL DETAIL YOU REMEMBER — owner's name, something they said, a moment, a taste, a view]
+— What they do that no one else does: [SPECIFIC, NOT GENERIC]
+— Who I would recommend it to among my guests: [e.g., "couples looking for a quiet afternoon, wine enthusiasts who want to skip the tourist-heavy tasting rooms, guests staying more than 2 nights who want a slower experience"]
+— Any caveat a guest should know: [e.g., "closed Monday/Tuesday, reservations recommended in peak season, cash only for tastings"]
+
+Write a 150–200 word feature in a warm, first-person editorial voice. Use the specific details I gave you. Do not use the words "amazing," "incredible," "must-visit," "hidden gem," or "best-kept secret." Avoid generic destination-guide language. Write from my genuine experience. The feature should feel like it was written by someone who actually spent time there, because it was.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Read it out loud. If any sentence could appear in a generic travel article about a business you've never visited, rewrite it with the real detail. The AI starts with your specifics but may drift toward templated language — catch it. Then send the feature to the operator before publishing and ask if any factual detail is wrong (hours, name spelling, program offerings). This step builds goodwill and accuracy at the same time.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>You have visited at least 3 local operators and have genuine personal experience to feature each one.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Target list built — 5–10 local operators in complementary categories, no accommodations competitors</li>
+        <li><span class="cp-box"></span>At least 3 operators visited personally — personal notes taken on each</li>
+        <li><span class="cp-box"></span>Features drafted for each visited operator — specific, experiential, no generic language</li>
+        <li><span class="cp-box"></span>Notification sent to each featured operator — no ask attached, just the link</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The Editorial Platform — Building Your "Best of [Market]" Destination Guide</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build and publish a destination guide that earns organic search traffic, gives local operators a reason to share your site, and creates a guest experience advantage that begins before check-in. Connect the guide to your digital guidebook, your email list, and your direct booking site.
+    </div>
+
+    <p>The Module 08 hub piece targeted the primary lodging keyword for your market — "lake houses in the Finger Lakes," "cabin rentals in the Smokies." The editorial guide in Module 13 targets a different but overlapping audience: people who are planning a trip to your destination and researching things to do, restaurants, and local experiences. This audience may not have decided yet whether to book an STR — they're in the destination research phase, not the lodging booking phase.</p>
+
+    <p>The editorial guide captures them before they've made that decision. Someone searching "best wineries in the Finger Lakes" who finds your guest-experience guide is now on your site. They read about the wineries. They read about the outdoor activities. They scroll to the bottom and see: "When you're ready to book, our lake house is available for direct booking." The booking intent was generated by the editorial content. The conversion happens without Airbnb in the middle.</p>
+
+    <h3>What the Guide Contains</h3>
+    <p>The destination guide is a structured, opinionated, locally specific reference. It is not a generic listicle. It is not keyword stuffing. It is what an expert local would write for a trusted friend visiting the area for the first time.</p>
+
+    <ul>
+      <li><strong>An honest introduction — why this destination, in this season, for this kind of traveler.</strong> State who this guide is for. A guide for "couples looking for a wine-country weekend" is more useful and more trustworthy than a guide for everyone. Being specific about the audience is what makes the guide feel like it was written by a person, not a content farm.</li>
+      <li><strong>4–6 categories with 2–4 operators per category.</strong> Dining, outdoor activities, local beverages, specialty experiences — whatever categories fit your market. Each operator gets a genuine feature from Lesson 2's process. Avoid top-10 list formatting — it reads as generated. Write categories with context instead.</li>
+      <li><strong>Seasonal notes.</strong> What's best in summer vs. fall vs. winter vs. shoulder season. This serves the guest and serves the SEO — seasonal content targets guests planning 60–90 days out, which is your highest-value booking window.</li>
+      <li><strong>The insider note — something that isn't obvious.</strong> The parking lot everyone misses. The menu item that's not on the public menu. The trail that's better at sunrise. The thing a local would tell you that a travel website never would. This is the most shared section of any destination guide — because it's genuinely useful in a way the rest of the internet isn't.</li>
+      <li><strong>A clear, low-friction call to action.</strong> Not "book now." Something softer: "If you'd like to stay in the area, our [property type] is available for direct booking — and our guests get access to the extended insider version of this guide during their stay." This moves the reader from editorial audience to booking prospect without a hard sell.</li>
+    </ul>
+
+    <h3>Connecting the Guide to Your Full System</h3>
+
+    <ul>
+      <li><strong>Direct booking site:</strong> The guide lives on the same domain as your direct booking site. Every page visit is a potential booking conversion. The internal link from the guide to the booking page is short — one click from reading about a winery to seeing available dates.</li>
+      <li><strong>Digital guidebook:</strong> The digital guidebook (accessible during the stay) is the extended, private version of the editorial guide. The public guide shows guests what your area offers. The guidebook deepens it with the specific tips, driving directions, and reservation advice guests need when they're actually there. The two documents should feel like they came from the same person — because they did.</li>
+      <li><strong>Email list:</strong> The guide is the basis for a seasonal email to past guests. A "What's new in [market] this fall" email that links to your updated guide is genuinely useful to past guests and keeps your property top-of-mind for a return trip. This is the alternative to the generic promotional email — a value-first content email that happens to mention your direct booking site at the end.</li>
+      <li><strong>Local operators:</strong> Every operator featured in the guide has a reason to link to it, share it on social media, and mention it to their customers. Each share is a backlink and a distribution event — and the operator's social audience is already in your target market.</li>
+    </ul>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Market and Season</div>
+      <h4>Build Your "Best of [Market]" Seasonal Destination Guide</h4>
+      <div class="ai-prompt-box">Help me write a destination guide for guests staying at my STR. I want this to read as a genuine local editorial — not a generic travel list. It will live on my direct booking site and serve as the content foundation for my local marketing strategy.
+
+My market: [CITY / REGION / LAKE / DESTINATION NAME]
+State: [STATE]
+Best season for this guide: [SPRING / SUMMER / FALL / WINTER / YEAR-ROUND]
+My property type: [LAKE HOUSE / CABIN / COTTAGE / etc.]
+Target guest profile: [e.g., "couples from [nearby city] looking for a wine country weekend," "families with kids wanting a lake vacation," "outdoor enthusiasts planning a hiking and kayaking trip"]
+
+Local operators I have personally visited and want to feature:
+[LIST EACH: business name, category, and the specific thing that made it memorable]
+
+What's happening seasonally in this market: [FESTIVALS, HARVEST SEASON, FALL FOLIAGE, WATER TEMPS, ETC.]
+
+One insider note — something that isn't obvious: [THE THING A LOCAL WOULD KNOW]
+
+Write a destination guide with this structure:
+1. INTRODUCTION (150 words): Who this guide is for. Why this destination in this season. Written in first person, specific to the market.
+2. FOUR CATEGORIES (300 words each): Each featuring 2–3 of the operators I listed. Each operator gets a 75–100 word feature using the specific details I've provided. Categories should match my market naturally — don't force a category that doesn't fit.
+3. SEASONAL NOTES (150 words): What's best right now. What to expect. What to book in advance.
+4. THE INSIDER NOTE (100 words): The non-obvious tip.
+5. CALL TO ACTION (50 words): Soft, low-friction. Invite them to book direct. Mention the extended guest guidebook they'll receive.
+
+Total target: 1,200–1,500 words. Use formatting that works well on a web page: clear headings, short paragraphs, no bullet lists inside operator features (prose only). Do not use the words "quaint," "charming," "picturesque," "breathtaking," "hidden gem," or "must-visit." Write as if you're sending this to a trusted friend who asked for your honest recommendations.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Replace any AI-generated language about operators you haven't personally visited with your own notes, or remove that operator entirely. The only operators in the published guide should be ones you can personally vouch for. A guest who takes your recommendation and has a bad experience loses trust in your property too. The editorial standard and the guest experience standard are the same thing.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>The destination guide is published, connected to the system, and in the hands of featured operators.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Guide published on the direct booking site — all operators personally visited and specifically featured</li>
+        <li><span class="cp-box"></span>Digital guidebook updated — public guide and private guidebook feel like they came from the same voice</li>
+        <li><span class="cp-box"></span>Guide link shared with every featured operator — personalized message, no ask attached</li>
+        <li><span class="cp-box"></span>Kit email drafted — seasonal value-first email linking to the guide, scheduled for off-peak send</li>
+        <li><span class="cp-box"></span>Internal link from guide to direct booking page confirmed — one click from editorial to booking</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The 90-Day Local Authority Sprint — A Week-by-Week Execution Plan</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Execute the 90-day sprint that builds destination authority from zero: first operator visits, first features written, guide published, referral conversations initiated, and the ongoing cadence that keeps the system compounding after the sprint ends.
+    </div>
+
+    <p>Module 13's destination authority layer is not a one-time project. It is an ongoing system — but like every system in this course, it has a build phase and a maintenance phase. The 90-day sprint is the build phase. By Day 90, the guide is live, the referral relationships are active, and the system is producing organic bookings without further build investment. After that, the maintenance effort is 2–3 hours per month.</p>
+
+    <div class="sprint-timeline">
+
+      <div class="sprint-phase">
+        <div class="sprint-phase-header">
+          <div class="phase-badge">Weeks 1–2</div>
+          <div class="phase-title">Research, Visit, and Draft</div>
+        </div>
+        <ul class="sprint-tasks">
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Build the target list.</strong> Identify 8–10 local operators across the six partner categories. Prioritize businesses that have been operating for at least 2 years, have a positive online reputation, and serve your target guest profile. Exclude accommodations competitors and businesses with poor reviews.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Schedule visits for at least 5 of the 10.</strong> Spread them across categories — at least one beverage, one outdoor, one dining. If you're not local, consolidate into a 2-day market research trip. Budget: cover your own expenses, tip generously. This is a business investment.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Take notes immediately after each visit.</strong> The specific detail fades fast. Write it down before you leave the parking lot: the owner's first name, the thing they said, the sensory detail you'd tell a friend. These notes are the raw material for Lesson 2's features.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Draft the operator features.</strong> Use the AI prompt from Lesson 2 for each visited operator. Edit for accuracy and genuine voice. Have the operators' contact information ready for the notification step.</div></li>
+        </ul>
+      </div>
+
+      <div class="sprint-phase">
+        <div class="sprint-phase-header">
+          <div class="phase-badge">Weeks 3–4</div>
+          <div class="phase-title">Write, Publish, and Notify</div>
+        </div>
+        <ul class="sprint-tasks">
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Write the full destination guide.</strong> Use the AI prompt from Lesson 3, filling in your specific operator notes and local knowledge. Edit until every sentence reflects personal experience. Remove or replace any language that feels generic.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Publish the guide on your direct booking site.</strong> Confirm the internal link to the booking page is present and working. Set the page title and meta description to target a destination research keyword ("things to do in [market]" or "local guide to [market]").</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Notify every featured operator.</strong> Personal message — email or Instagram DM — with the specific link to the section where they're featured. No ask. Just the feature. Track who responds and who shares the content organically.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Update the digital guidebook.</strong> Add a section linking to the public guide and deepen the operator features for guests with the private insider notes (the reservations line, the owner's name, the menu item not on the public menu). The guidebook is where trust is built during the stay.</div></li>
+        </ul>
+      </div>
+
+      <div class="sprint-phase">
+        <div class="sprint-phase-header">
+          <div class="phase-badge">Month 2</div>
+          <div class="phase-title">Deepen and Distribute</div>
+        </div>
+        <ul class="sprint-tasks">
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Write one deeper category piece.</strong> Pick the category most relevant to your guest profile (for a wine-country lake house, write "The Complete Finger Lakes Winery Guide for First-Time Visitors"). Feature 4–5 operators. Target a more specific search keyword. Publish on the same domain.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Send the value-first email to your Kit list.</strong> Subject line: "[Market] in [Season] — what's worth doing right now." Link to the published guide. Include a personal note about something you discovered during your research visits. Close with one soft reference to direct booking availability.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Engage the operators on social.</strong> Follow each featured operator on Instagram. Comment genuinely on their content. Share their posts occasionally when the content is relevant to your guests. This is not automated activity — it is real relationship maintenance, and operators notice who is consistently showing up for them.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Approach existing editorial platforms in your market.</strong> If TheLakeInsider, a tourism board, or a local publication covers your destination, reach out to introduce yourself and your guide. Propose a collaboration, a content contribution, or a simple exchange of links. Platforms like TheLakeInsider are actively looking for operators with authentic local knowledge to feature.</div></li>
+        </ul>
+      </div>
+
+      <div class="sprint-phase">
+        <div class="sprint-phase-header">
+          <div class="phase-badge">Month 3</div>
+          <div class="phase-title">Activate Referrals and Establish the Cadence</div>
+        </div>
+        <ul class="sprint-tasks">
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Have the referral conversation with each featured operator.</strong> In person if possible, by message if not. Keep it simple: "I've been sending guests your way through the guide and the digital guidebook — if any of your customers ask about where to stay, I'd love a mention. Happy to return the favor." By now, two months have passed since the feature published and you've demonstrably sent them guests.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Track inbound referrals in OwnerRez notes.</strong> When a guest mentions they heard about your property from a local business, log it in OwnerRez as a tag or property note. At 90 days, you'll have data on which operator is sending the most referrals — the one to deepen the relationship with first.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Establish the ongoing cadence.</strong> Two to three hours per month: update one section of the guide seasonally, reply to operators' social content, send one value-first email per quarter to the Kit list. The sprint builds the system. The cadence keeps it compounding.</div></li>
+          <li class="sprint-task"><div class="task-check"></div><div class="task-text"><strong>Review the 90-day result.</strong> Count: new operators featured, operator social shares generated, organic search impressions on the guide (Google Search Console), referral bookings tracked, and email list growth from guests who discovered the property through the guide. These numbers tell you where the leverage is in Month 4 and beyond.</div></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">The Compounding Timeline — What Day 90 Sets in Motion</div>
+      <p>The 90-day sprint plants seeds that produce bookings at different horizons:</p>
+      <ul>
+        <li><strong>Weeks 1–4 (immediate):</strong> Operator social shares from the feature notification generate traffic to your site within days of publication. Some of that traffic converts immediately. The guide is live and the first organic impressions start accumulating.</li>
+        <li><strong>Month 2–3 (near-term):</strong> Referral conversations activate. The first operator-referred bookings arrive. The Kit email generates a handful of direct bookings from past guests who were already warm but needed a reason to reach out.</li>
+        <li><strong>Month 4–6 (compounding):</strong> Google starts surfacing the guide for destination research keywords. Operators who were hesitant at first have now seen you send them guests consistently and start referring actively. The deeper category piece starts ranking for more specific searches.</li>
+        <li><strong>Month 12–18 (flywheel):</strong> The guide generates bookings consistently without additional effort. Referral relationships are mature and automatic. The Kit list has grown by every guest who discovered the property through the guide. The system requires only the 2–3 hour monthly maintenance cadence to keep running.</li>
+      </ul>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 13 Complete When:</div>
+      <h3>The destination authority layer is live and the 90-day sprint is in active execution.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>5–10 local operators visited personally — genuine notes from each visit documented</li>
+        <li><span class="cp-box"></span>Destination guide published — specific features for each operator, seasonal notes, insider tip, soft CTA to direct booking</li>
+        <li><span class="cp-box"></span>All featured operators notified — personal message sent, no ask attached</li>
+        <li><span class="cp-box"></span>Digital guidebook updated — extended private versions of operator features included</li>
+        <li><span class="cp-box"></span>Kit list email sent — seasonal value-first content, link to guide, soft booking mention</li>
+        <li><span class="cp-box"></span>Referral conversation had with at least 3 operators — by Month 3</li>
+        <li><span class="cp-box"></span>Ongoing cadence established — 2–3 hours/month for guide updates, social engagement, and operator relationship maintenance</li>
+        <li><span class="cp-box"></span>Proceed to Module 14 — Exit: how the full SpokeBnB system positions your property for maximum value at sale, and what the right exit looks like when you've built a direct booking machine instead of just a listing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Machine Captures Demand. The Guide Creates It.</h3>
+    <p>Every module through Module 12 built infrastructure to capture guests who were already searching — guests who opened Airbnb, typed in your destination, and found your listing. The direct booking machine then converted those OTA guests into owned relationships and future direct bookings. This is the machine working as designed.</p>
+    <p>Module 13 operates above the machine. <strong>The destination guide creates guests who were not yet searching</strong> — travelers who are in the destination research phase, exploring what to do in a place they're considering. They find your guide, they discover the destination through your editorial lens, and by the time they're ready to book, they already know the best winery, the best hiking trail, the best fishing guide — all of which you told them about. And they know there's a property in that destination that comes with the person who wrote the guide.</p>
+    <p>That is not a competitive position Airbnb can replicate. Airbnb is a marketplace. You are a destination authority. The marketplace connects supply to existing demand. The authority creates demand that didn't exist before the content appeared.</p>
+    <ul>
+      <li><strong>The guide feeds the email list (Module 07)</strong> — new visitors to the guide who aren't past guests discover the property and opt in through the site. Every new email subscriber is a potential future direct booking.</li>
+      <li><strong>The guide extends the content strategy (Module 08)</strong> — destination research content targets the pre-booking phase that the lodging hub piece doesn't reach. The two pieces work together: the hub captures lodging-intent searches, the guide captures destination-research searches.</li>
+      <li><strong>The referral network creates offline distribution</strong> — the operator network sends guests through a channel that no analytics dashboard will capture, no Airbnb algorithm controls, and no competitor can purchase. It is the most durable distribution channel in the system.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 13: Local Guide Integration &nbsp;·&nbsp; Next: Module 14 — Exit
+</footer>

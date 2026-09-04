@@ -1,0 +1,870 @@
+<title>Module 04 — Revenue Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --template-bg: #fafaf7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --template-bg: #122232;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e; --gold: #D4A017;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --template-bg: #122232;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 48px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  h4 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+  a { color: var(--gold); }
+
+  .steps { counter-reset: step; margin: 20px 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .step-num { counter-increment: step; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: var(--navy); color: var(--gold); border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 6px; font-size: 14px; }
+  .step-content p:last-child { margin-bottom: 0; }
+  .step-content ul { font-size: 14px; margin-top: 6px; }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  .compare-wrap { overflow-x: auto; margin: 24px 0; }
+  .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  /* Revenue triangle */
+  .triangle-visual { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin: 24px 0; }
+  .tri-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 18px; text-align: center; position: relative; }
+  .tri-card.primary { border-color: var(--gold); border-width: 2px; }
+  .tri-card .tri-icon { font-size: 26px; margin-bottom: 8px; }
+  .tri-card .tri-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .tri-card .tri-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .tri-card .tri-formula { font-size: 11px; color: var(--gold); font-weight: 600; background: var(--navy); padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+  .tri-card p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; text-align: left; }
+
+  /* PriceLabs settings */
+  .setting-grid { display: grid; gap: 14px; margin: 20px 0; }
+  .setting-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; }
+  .setting-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .setting-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .setting-action { background: var(--navy); color: var(--gold); border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 700; white-space: nowrap; text-align: center; min-width: 120px; }
+
+  /* Season calendar */
+  .season-row { display: grid; grid-template-columns: 90px 1fr; gap: 16px; margin-bottom: 12px; align-items: start; }
+  .season-label { background: var(--navy); color: var(--gold); border-radius: 8px; padding: 6px 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+  .season-label.peak { background: var(--gold); color: var(--navy); }
+  .season-label.shoulder { background: var(--navy-mid); color: rgba(255,255,255,0.85); }
+  .season-label.off { background: var(--card); color: var(--muted); border: 1px solid var(--border); }
+  .season-content { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+  .season-months { font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .season-content p { font-size: 13.5px; margin-bottom: 0; }
+
+  /* Comparison scenario */
+  .scenario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+  .scenario-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .scenario-card.loser { border-left: 3px solid var(--mistake-border); }
+  .scenario-card.winner { border-left: 3px solid var(--tip-border); border-color: var(--tip-border); }
+  .scenario-card .s-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px; }
+  .scenario-card.loser .s-tag { color: var(--mistake-border); }
+  .scenario-card.winner .s-tag { color: var(--tip-border); }
+  .scenario-card .s-metric { display: flex; justify-content: space-between; font-size: 13.5px; padding: 7px 0; border-bottom: 1px solid var(--border); color: var(--muted); }
+  .scenario-card .s-metric:last-child { border-bottom: none; }
+  .scenario-card .s-metric .val { font-weight: 700; color: var(--text); }
+  .scenario-card .s-total { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--gold); display: flex; justify-content: space-between; color: var(--text); }
+
+  /* VRBO steps */
+  .channel-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  .channel-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .channel-card .c-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .channel-card .c-row { display: flex; gap: 10px; font-size: 13px; color: var(--muted); padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .channel-card .c-row:last-child { border-bottom: none; }
+  .channel-card .c-row strong { color: var(--text); min-width: 80px; flex-shrink: 0; }
+
+  /* Template */
+  .template-box { background: var(--template-bg); border: 1px dashed var(--gold); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+  .template-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .template-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .field .line { border-bottom: 1px solid var(--border); min-height: 22px; font-size: 12px; color: var(--muted); font-style: italic; padding-bottom: 2px; }
+
+  /* Case study */
+  .case-study { background: var(--navy); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .case-study-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .case-study h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 12px; }
+  .case-study p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 10px; }
+  .case-study p:last-child { margin-bottom: 0; }
+  .case-study strong { color: rgba(255,255,255,0.9); }
+  .case-study ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; }
+  .case-study li { margin-bottom: 6px; }
+
+  /* Checkpoint */
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .machine-feed .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .machine-feed .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .triangle-visual { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .channel-compare { grid-template-columns: 1fr; }
+    .setting-card { grid-template-columns: 1fr; }
+    .setting-action { min-width: auto; text-align: left; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 04</div>
+    <h1>Revenue Engine — Pricing That Responds to Demand</h1>
+    <p class="subtitle">Activate PriceLabs, add your second booking channel, understand the metrics that actually measure revenue performance, and build a seasonal pricing calendar that reflects how your specific market actually earns</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 1: Optimize</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>4 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>4–6 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 03 — Launch</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 05 — Operations</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 01: Acquisition</span>
+    <span class="arrow">→</span>
+    <span>Module 02: Tech Stack</span>
+    <span class="arrow">→</span>
+    <span>Module 03: Launch</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 04: Revenue</span>
+    <span class="arrow">→</span>
+    <span>Module 05: Operations</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Revenue Triangle</a>
+    <a href="#lesson-2">02 — PriceLabs Activation</a>
+    <a href="#lesson-3">03 — Multi-Channel Strategy</a>
+    <a href="#lesson-4">04 — The Annual Revenue Calendar</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">📈</div>
+    <div>
+      <div class="label">Module 04 Deliverable</div>
+      <p>PriceLabs is configured and live — base price set, minimum and maximum prices established, gap-fill rules active. A second booking channel (VRBO) is published with a synced calendar. Your annual revenue calendar is built with seasonal pricing strategy documented, peak dates protected, and a 90-day projection aligned against Module 01's original revenue target.</p>
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-top:0">
+    <div class="callout-label">⚠ Prerequisites — Do Not Enter Module 04 Until These Are True</div>
+    <p>Module 04 picks up where Module 03's 60-Day Performance Review ended. If you have not yet completed that review, complete it first. <strong>Do not activate PriceLabs on a listing with fewer than 10 reviews</strong> — dynamic pricing on an under-reviewed listing optimizes for revenue at a price point the listing cannot convert at competitive occupancy. The result is lower RevPAR than if you had continued manual pricing. Wait for the trigger.</p>
+    <ul>
+      <li>10+ Airbnb reviews confirmed (not 8, not 9)</li>
+      <li>Overall rating 4.8 stars or above</li>
+      <li>No unresolved guest complaint or open Airbnb case in the past 30 days</li>
+      <li>60-Day Performance Review completed and documented</li>
+    </ul>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 1 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Revenue Triangle — ADR, Occupancy, and the Metric That Actually Matters</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand the three STR revenue metrics, how they interact, and why RevPAR — not occupancy rate — is the correct measure of a listing's revenue performance.
+    </div>
+
+    <p>Most new operators measure their performance by occupancy rate. This is the wrong metric to optimize for. An operator who prices to fill every night achieves high occupancy and low revenue. An operator who prices correctly achieves lower occupancy and higher revenue. The metric that captures both simultaneously is RevPAR — and until you understand why, you will optimize the wrong thing.</p>
+
+    <div class="triangle-visual">
+      <div class="tri-card">
+        <div class="tri-icon">💰</div>
+        <div class="tri-label">Metric 01</div>
+        <div class="tri-name">ADR</div>
+        <div class="tri-formula">Revenue ÷ Nights Booked</div>
+        <p>The average amount you earned per night that was actually booked. <strong>What it tells you:</strong> whether your pricing captures the market's willingness to pay. <strong>What it misses:</strong> how often nights were available but went unbooked.</p>
+      </div>
+      <div class="tri-card">
+        <div class="tri-icon">📅</div>
+        <div class="tri-label">Metric 02</div>
+        <div class="tri-name">Occupancy Rate</div>
+        <div class="tri-formula">Nights Booked ÷ Nights Available</div>
+        <p>The percentage of available nights that were booked. <strong>What it tells you:</strong> how well your listing converts availability into reservations. <strong>What it misses:</strong> whether you priced correctly for those bookings.</p>
+      </div>
+      <div class="tri-card primary">
+        <div class="tri-icon">⚡</div>
+        <div class="tri-label">Metric 03 — The True Measure</div>
+        <div class="tri-name">RevPAR</div>
+        <div class="tri-formula">ADR × Occupancy Rate</div>
+        <p>Revenue Per Available Room (or night). The single number that reflects both your pricing and your booking rate simultaneously. <strong>This is the metric you optimize.</strong> Two operators with identical properties can have identical RevPAR through entirely different ADR/occupancy combinations.</p>
+      </div>
+    </div>
+
+    <h3>The Occupancy Trap — Why Filling Every Night Is Usually Wrong</h3>
+    <p>Consider two operators with the same property in the same market over the same 30-day period:</p>
+
+    <div class="scenario-grid">
+      <div class="scenario-card loser">
+        <div class="s-tag">⚠ Operator A — The Occupancy Chaser</div>
+        <div class="s-metric"><span>Average Nightly Rate</span><span class="val">$180</span></div>
+        <div class="s-metric"><span>Nights Available</span><span class="val">30</span></div>
+        <div class="s-metric"><span>Nights Booked</span><span class="val">28</span></div>
+        <div class="s-metric"><span>Occupancy Rate</span><span class="val">93%</span></div>
+        <div class="s-metric"><span>Gross Revenue</span><span class="val">$5,040</span></div>
+        <div class="s-metric"><span>Cleaning Costs (28 turns × $175)</span><span class="val">($4,900)</span></div>
+        <div class="s-total"><span>RevPAR</span><span>$168</span></div>
+      </div>
+      <div class="scenario-card winner">
+        <div class="s-tag">✓ Operator B — RevPAR Focused</div>
+        <div class="s-metric"><span>Average Nightly Rate</span><span class="val">$260</span></div>
+        <div class="s-metric"><span>Nights Available</span><span class="val">30</span></div>
+        <div class="s-metric"><span>Nights Booked</span><span class="val">19</span></div>
+        <div class="s-metric"><span>Occupancy Rate</span><span class="val">63%</span></div>
+        <div class="s-metric"><span>Gross Revenue</span><span class="val">$4,940</span></div>
+        <div class="s-metric"><span>Cleaning Costs (19 turns × $175)</span><span class="val">($3,325)</span></div>
+        <div class="s-total"><span>RevPAR</span><span>$164</span></div>
+      </div>
+    </div>
+
+    <p>Similar RevPAR — but Operator B has 9 more nights off during the month. Fewer cleans, less cleaner wear on the property, more time for maintenance, more selective guest screening. The same gross revenue with materially better operating economics and property condition. <strong>High occupancy is not a goal. It is a byproduct of correct pricing that happens to be below market clearance.</strong></p>
+
+    <div class="callout math">
+      <div class="callout-label">📊 The RevPAR Ceiling — Setting Your Performance Target</div>
+      <p>In Module 01, you projected annual gross revenue using your comp set's average ADR and occupancy rate. That projection was your underwriting target. Now that you have real data from your 60-day launch period, you can set a RevPAR benchmark.</p>
+      <p><strong>Step 1:</strong> Calculate your actual 60-day RevPAR (actual gross revenue ÷ 60 nights available).</p>
+      <p><strong>Step 2:</strong> Find your comp set's average RevPAR in AirDNA's Market Dashboard — this is the benchmark you're measuring against.</p>
+      <p><strong>Step 3:</strong> Your target for Month 3 through Month 12: achieve RevPAR at or above your comp set's average. Your target for Year 2: achieve RevPAR in the top quartile of your comp set. PriceLabs, correctly configured, should get you there — it has access to the same market data and dynamically adjusts your rates to capture the market's willingness to pay in each specific date window.</p>
+    </div>
+
+    <h3>Why Cleaning Cost Per Revenue Dollar Is the Hidden Margin Killer</h3>
+    <p>The scenario above introduced something that most STR revenue discussions omit: the relationship between booking volume and cleaning cost. Every booking triggers a turn. Every turn costs money — the cleaner, the supplies restocked to par. On a 1-night booking at $150, a $175 cleaning fee barely covers the turn cost, leaving the nightly rate as your only margin source. On a 4-night booking at $150/night ($600 total), the same $175 cleaning cost represents 29% of revenue versus 116% on the 1-night booking.</p>
+
+    <p>This is why minimum stay settings are a revenue management tool, not just a convenience preference. As you transition into dynamic pricing, you will use PriceLabs' minimum stay rules — not Airbnb's base minimum stay setting — to set night-specific floors. Saturday nights might require a 3-night minimum because the cleaning cost relative to a single-night booking doesn't pencil. A mid-week Monday–Thursday window might drop to 2 nights to encourage gap-fill bookings that would otherwise go vacant.</p>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You can calculate your current RevPAR, compare it to your comp set's average, and articulate why occupancy rate alone is the wrong optimization target.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>60-day RevPAR calculated from your actual data (total revenue ÷ 60)</li>
+        <li><span class="cp-box"></span>Comp set average RevPAR pulled from AirDNA Market Dashboard</li>
+        <li><span class="cp-box"></span>Gap identified: are you above, at, or below comp set average?</li>
+        <li><span class="cp-box"></span>Cleaning cost per revenue dollar calculated for your average booking length</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>PriceLabs Activation — Configuration That Actually Matters</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Activate PriceLabs correctly — understanding that out-of-the-box settings are a starting point, not a finished system. Configure the six settings that determine whether dynamic pricing makes you more money or inadvertently prices you out of the market.
+    </div>
+
+    <p>PriceLabs is sophisticated enough to need calibration and simple enough to miscalibrate by leaving the wrong defaults in place. The operators who activate PriceLabs and immediately see improved RevPAR are the ones who configure it correctly on day one. The operators who activate it and then wonder why occupancy dropped are the ones who left the base price too high, set a minimum price that prevents market-clearing on slow nights, or activated it without understanding how it interacts with their Airbnb listing's existing manual pricing.</p>
+
+    <h3>How PriceLabs Works — The Mental Model</h3>
+    <p>PriceLabs is a market intelligence layer placed on top of your listing's pricing. You set a base price — the rate around which the algorithm adjusts. PriceLabs then pulls real-time supply and demand data from your specific market and adjusts your nightly rate up or down from that base depending on demand signals: local events, weekday vs. weekend patterns, how far in advance the booking is happening, how many competing listings are available on that date, and seasonal demand curves.</p>
+
+    <p>PriceLabs does not know what a fair price for your property is. <strong>You tell it the base — the algorithm adjusts from there.</strong> A base price that is 30% above your actual market position will produce dynamic rates that are consistently above market, resulting in lower occupancy than your comp set. A base price that is at or slightly below market position produces dynamic rates that respond accurately to demand, resulting in premium capture on high-demand dates and competitive occupancy on low-demand dates.</p>
+
+    <h3>Step-by-Step: Activating PriceLabs</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Connect your Airbnb listing to PriceLabs.</strong> Log into pricelabs.co → Dashboard → Add New Listing. Select Airbnb from the channel list. PriceLabs connects via API — it will request Airbnb authentication. Authorize the connection. Your listing will appear in the PriceLabs dashboard within minutes. If you also have OwnerRez, connect PriceLabs through OwnerRez's channel manager rather than directly to Airbnb — this ensures pricing updates route through your PMS and keep your calendar in sync across channels.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Set your Base Price accurately.</strong> Navigate to your listing in PriceLabs → Base Price. <strong>Use your actual achieved ADR from the launch period as a starting point</strong> — not what you wish you earned, not your comp set's average, your actual number. If your achieved ADR was $220/night, set your base price at $210–220. PriceLabs will push rates above this base on high-demand dates and below it on low-demand dates. A base set too high suppresses bookings on slow dates. A base set correctly means the algorithm's downward adjustments on slow nights still produce bookings rather than vacancies.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Set your Minimum Price — the floor that protects your margin.</strong> The minimum price is the rate below which PriceLabs will never push your nightly rate, regardless of demand signals. Calculate it: your cleaning fee + your per-night fixed operating cost (mortgage interest, insurance, utilities ÷ 30) + $30 buffer. This is the number below which booking a night costs you money in variable terms. <strong>Never set it to zero and never set it so high that slow weeknights go perpetually unbooked.</strong> In most markets: minimum price should be 40–55% of your base price.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Set your Maximum Price — but don't cap yourself artificially.</strong> The maximum price prevents PriceLabs from raising your rates above a ceiling on extreme demand dates. Setting it too low means you miss revenue on the highest-demand nights of your year (holiday weekends, local events, high-season peak). Set your maximum at 3–4× your base price as a starting point. Review after your first peak season. If demand data shows bookings happening at your maximum price weeks out, your ceiling may still be too low.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>The Six Settings That Determine Your Results</h3>
+
+    <div class="setting-grid">
+      <div class="setting-card">
+        <div>
+          <div class="setting-name">Gap-Fill Discounts</div>
+          <div class="setting-desc">When a 1–2 night gap exists between two bookings on your calendar, those nights are almost impossible to fill at full price — most guests don't want a 1-night midweek stay. PriceLabs can automatically discount these gap nights (typically 15–25%) to fill them rather than leaving them vacant. Enable this. A gap night booked at a discount generates more margin than a gap night left empty.</div>
+        </div>
+        <div class="setting-action">Enable — set 15–20% gap discount</div>
+      </div>
+      <div class="setting-card">
+        <div>
+          <div class="setting-name">Last-Minute Discounts</div>
+          <div class="setting-desc">If a date is 3–5 days out and unbooked, the market for that date is thinning rapidly. A last-minute discount (5–15%) converts a night that was heading toward vacancy into revenue. Configure the trigger (how many days before arrival) and discount percentage. Note: some operators disable last-minute discounts during peak season — high demand dates don't need discounting to fill. Use the Seasonal Customizations feature to turn this off for your peak months.</div>
+        </div>
+        <div class="setting-action">Enable — 10–15%, 4 days out</div>
+      </div>
+      <div class="setting-card">
+        <div>
+          <div class="setting-name">Far-Out Booking Discounts</div>
+          <div class="setting-desc">Some operators discount bookings made 60–90+ days in advance to lock in revenue certainty on dates that are risky (shoulder season, slow market periods). This is a tradeoff: you accept a lower rate in exchange for guaranteed occupancy. Useful for slow season and shoulder months. Disable it for peak dates — far-out peak bookings will fill at full price without a discount. Start with a 5% far-out discount for bookings 90+ days ahead on non-peak dates and evaluate after 90 days.</div>
+        </div>
+        <div class="setting-action">5% for 90+ days, non-peak only</div>
+      </div>
+      <div class="setting-card">
+        <div>
+          <div class="setting-name">Day-of-Week Pricing Rules</div>
+          <div class="setting-desc">Most vacation markets have a strong Friday–Saturday premium. In the Finger Lakes, Friday and Saturday nights often command 30–50% premiums over weeknight rates in the same week. PriceLabs' base algorithm captures much of this, but you can add manual day-of-week multipliers to ensure Friday and Saturday rates reflect the actual demand differential in your specific market. Check your AirDNA Market Dashboard for your market's day-of-week demand curve before setting these.</div>
+        </div>
+        <div class="setting-action">Review market data first, then set</div>
+      </div>
+      <div class="setting-card">
+        <div>
+          <div class="setting-name">Minimum Night Rules by Date</div>
+          <div class="setting-desc">Set minimum stay rules within PriceLabs rather than relying solely on Airbnb's base setting. This allows you to set different minimums for different date windows: peak weekends might require 3 nights, a mid-week gap might allow 1 night for gap-fill purposes, off-season might go to 2 nights. PriceLabs' rules override Airbnb's base minimum on the dates where they apply. This is more powerful than a single minimum stay setting applied across the entire calendar.</div>
+        </div>
+        <div class="setting-action">Peak: 3 nights. Off-peak: 2 nights</div>
+      </div>
+      <div class="setting-card">
+        <div>
+          <div class="setting-name">Orphan Day Management</div>
+          <div class="setting-desc">An orphan day is a single unbooked night between two reservations. At a 2-night minimum, this night will never book under the standard minimum stay rule. PriceLabs has an orphan day setting that temporarily waives the minimum stay for these single nights (usually with an automatic discount) so they can be filled. Enable this — vacant nights between bookings are pure lost revenue if your nightly rate exceeds your variable cost, which it should.</div>
+        </div>
+        <div class="setting-action">Enable with 10–15% orphan discount</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The Market Dashboard — Your Ongoing Reference Point</div>
+      <p>PriceLabs includes a Market Dashboard (separate from the listing configuration) that shows average rates and occupancy for properties in your comp set radius. Check this dashboard monthly — not to second-guess the algorithm, but to verify that your base price and the resulting dynamic rates are positioned where you intend relative to the market. If PriceLabs is consistently pricing you 20% above every comp-set property, your base price is too high. If you're consistently filling at rates below the comp-set median, your base price may be too low. The dashboard gives you the data to calibrate.</p>
+    </div>
+
+    <div class="callout mistake">
+      <div class="callout-label">⚠ The Three Mistakes Operators Make When Activating PriceLabs</div>
+      <ul>
+        <li><strong>Setting the base price to what you want to earn, not what the market supports.</strong> PriceLabs adjusts relative to your base. A base that is above market clearance produces consistently above-market rates on every date. High occupancy goals become impossible at above-market rates.</li>
+        <li><strong>Leaving the maximum price at PriceLabs' default.</strong> PriceLabs' default maximum is conservative. In high-demand markets, peak dates may clear at 4–5× base price. An artificially low ceiling leaves peak-night revenue on the table permanently.</li>
+        <li><strong>Activating PriceLabs and never looking at the calendar again.</strong> PriceLabs handles the daily optimization automatically, but it doesn't know about things it can't see: a local festival you know about, a competing property that just closed for renovation, a slow period you want to incentivize with a hosted experience. Check the PriceLabs calendar weekly. Override rates manually when you have information the algorithm doesn't.</li>
+      </ul>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — PriceLabs Base Price & Minimum Price Calculator</span>
+      </div>
+      <p class="ai-prompt-instruction">Use this after completing your 60-day launch period. Fill in your actual numbers — not estimates. This gives you the data-driven base price and minimum price to enter into PriceLabs on Day 1 of activation.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">I'm setting up PriceLabs for my short-term rental and need help calculating the correct base price and minimum price before I activate. Help me avoid the most common setup mistake: pricing by gut instead of by data.
+
+MY PROPERTY DATA:
+- Property location: [City, State]
+- Bedrooms: [X] | Bathrooms: [X] | Max guests: [X]
+- Property type: [cabin / lake house / condo / house]
+
+MY 60-DAY LAUNCH PERIOD PERFORMANCE:
+- Total revenue collected (net of Airbnb fees): $[X]
+- Total nights booked: [X]
+- Total nights available: 60
+- My launch-period ADR (total revenue ÷ nights booked): $[X]
+- My 60-day occupancy rate (nights booked ÷ 60): [X%]
+
+MY COMP SET (from AirDNA):
+- Market average ADR: $[X]
+- Market average occupancy: [X%]
+- Market RevPAR: $[X]
+- My current RevPAR vs. market (above / at / below): [X]
+
+MY VARIABLE COSTS PER BOOKING:
+- Cleaner cost per turn: $[X]
+- Supplies restocked per turn (consumables, linens replacement amortized): $[X]
+- Laundry (if self-laundering): $[X]
+- Platform fee (Airbnb takes ~3% of nightly rate from host): [calculated]
+- Any other per-booking cost: $[X]
+
+MY MINIMUM STAY: [X nights]
+
+CALCULATE AND PROVIDE:
+1. My recommended PriceLabs base price — should be at or slightly below market ADR to allow the algorithm to push above on high-demand dates and stay competitive on low-demand dates
+2. My true minimum price — cleaning cost + variable cost per night for my minimum stay + $30 buffer (below this I lose money on the night)
+3. A suggested maximum price ceiling — based on my market's peak date patterns
+4. Whether my 60-day RevPAR suggests I should price at market, above, or below when first activating PriceLabs
+5. The one PriceLabs setting I should revisit after 30 days of dynamic pricing data</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>PriceLabs is connected to your listing, base price is set from actual data, minimum and maximum prices are configured, and all six optimization settings are active.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>PriceLabs connected to Airbnb (directly or through OwnerRez)</li>
+        <li><span class="cp-box"></span>Base price set to your actual launch-period ADR (not aspirational)</li>
+        <li><span class="cp-box"></span>Minimum price calculated and set (cleaning cost + fixed per-night cost + $30 buffer)</li>
+        <li><span class="cp-box"></span>Maximum price set at 3–4× base — reviewed against market premium data</li>
+        <li><span class="cp-box"></span>Gap-fill and orphan-day discounts enabled</li>
+        <li><span class="cp-box"></span>Last-minute discounts configured with a peak-season disable rule</li>
+        <li><span class="cp-box"></span>Minimum night rules by date window set — peak vs. off-peak</li>
+        <li><span class="cp-box"></span>PriceLabs Market Dashboard reviewed — your listing position vs. comp set confirmed as intended</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>Multi-Channel Strategy — Adding VRBO Without Breaking Airbnb</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand when and why to add VRBO as a second booking channel, how VRBO differs from Airbnb in platform dynamics and guest profile, and how to configure your PMS to prevent double-bookings across channels.
+    </div>
+
+    <p>Module 00 introduced the Hub-and-Spoke model: your property is the hub, your booking channels are the spokes. A listing on Airbnb alone is a single-spoke operation. When that spoke has problems — a platform policy change, an algorithm adjustment, a dispute that suspends your listing temporarily — your revenue goes to zero. Multi-channel distribution is how you remove single-point-of-failure risk from your business while simultaneously increasing your listing's exposure to a wider guest pool.</p>
+
+    <p>The sequence matters. Airbnb first, always. Build social proof, calibrate your operations, and understand your guest profile on a single channel before you multiply complexity. Adding VRBO before you have your operations systematized results in double-bookings, inconsistent guest experiences, and reviews that damage your emerging reputation on both platforms. <strong>Add VRBO when you have 10+ Airbnb reviews, a working PMS, and a cleaner who has completed at least 10 successful turns.</strong></p>
+
+    <h3>Airbnb vs. VRBO — Different Platforms, Different Guests</h3>
+
+    <div class="channel-compare">
+      <div class="channel-card">
+        <div class="c-name">🏠 Airbnb</div>
+        <div class="c-row"><strong>Guest profile</strong>Younger average age, solo travelers, couples, smaller groups, urban travelers, first-time STR guests</div>
+        <div class="c-row"><strong>Trip length</strong>2–4 nights average in leisure markets. Shorter stays than VRBO.</div>
+        <div class="c-row"><strong>Booking window</strong>Often shorter — 15–45 days in advance for leisure, last-minute urban</div>
+        <div class="c-row"><strong>Fee model</strong>~3% host fee (split-fee model) or ~14–16% host-only. Guest service fee 6–12%.</div>
+        <div class="c-row"><strong>Review system</strong>Both parties review simultaneously; reviews drive algorithm ranking strongly</div>
+        <div class="c-row"><strong>Instant Book</strong>Yes — standard expectation in most markets</div>
+        <div class="c-row"><strong>Algorithm</strong>Heavily driven by review quality, recency, response rate, conversion rate</div>
+      </div>
+      <div class="channel-card">
+        <div class="c-name">🏖 VRBO</div>
+        <div class="c-row"><strong>Guest profile</strong>Older average age, families with children, larger groups, repeat VR renters, longer-trip planners</div>
+        <div class="c-row"><strong>Trip length</strong>4–7+ nights average. Families often book a full week in peak season.</div>
+        <div class="c-row"><strong>Booking window</strong>Often longer — families plan 60–120 days out, especially for peak season</div>
+        <div class="c-row"><strong>Fee model</strong>Annual subscription ($499/yr) or 8% per-booking. No guest service fee on subscription. Guests see the full price up front.</div>
+        <div class="c-row"><strong>Review system</strong>Less algorithm-dependent than Airbnb. Reviews matter for trust, not primarily for search ranking.</div>
+        <div class="c-row"><strong>Instant Book</strong>Available but less expected. Request-to-book (you approve each reservation) is common and accepted.</div>
+        <div class="c-row"><strong>Algorithm</strong>Listing quality, property type, amenities, and listing completeness drive visibility more than review recency</div>
+      </div>
+    </div>
+
+    <h3>The Strategic Fit for Your Property</h3>
+    <p>VRBO's guest profile — families, longer stays, advance bookers — is particularly well-matched for multi-bedroom vacation properties with kitchen facilities, outdoor space, and recreational amenities. A 3-bedroom lake house on VRBO is competing for guests who are specifically looking for that property type. A studio apartment is a weaker VRBO fit.</p>
+
+    <p>If your property is 2+ bedrooms, has a kitchen, and is in a leisure market, VRBO should be your second channel. The families and groups who book on VRBO often don't search Airbnb — you are not reaching them without VRBO. That is revenue sitting on a platform you haven't accessed yet.</p>
+
+    <h3>Setting Up VRBO — Step by Step</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Create your VRBO account at vrbo.com.</strong> Navigate to List Your Property. Select your property type and enter the property address. VRBO will walk you through a setup wizard: property details, amenities, photos, description, rules, and pricing. You already have all of this from your Airbnb listing — pull directly from your Airbnb listing copy and adapt for VRBO's field structure.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Choose your fee model before you complete setup.</strong> Annual subscription ($499/year flat, no per-booking fee, no guest service fee shown to guests) vs. per-booking fee (8% of rental amount, no upfront cost). The break-even: if you expect to generate more than $6,250 in VRBO annual revenue ($499 ÷ 0.08), the subscription model is more profitable. For a property with a meaningful VRBO booking rate, subscription is almost always the better choice after the first year. In Year 1, per-booking may make sense to validate the channel before committing to the annual fee.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Connect VRBO to your PMS before you accept a single booking.</strong> In OwnerRez: Channels → VRBO → Connect. OwnerRez will sync your calendar bidirectionally — a booking on Airbnb blocks the same dates on VRBO, and vice versa. <strong>Do not operate VRBO and Airbnb simultaneously without a PMS calendar sync.</strong> Manual calendar management between two OTAs results in double-bookings. A double-booking — two guests confirmed for the same dates — is an operational emergency that damages both listings and creates Airbnb/VRBO penalties. The PMS is the single source of truth for your calendar. Configure this before you set your VRBO listing live.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Set your VRBO pricing strategy.</strong> VRBO guests see the total trip cost (no hidden service fees on the subscription model) — this changes the pricing psychology relative to Airbnb. Your VRBO nightly rate can be set slightly higher than Airbnb because the guest isn't paying an additional 10–12% guest service fee on top. If your Airbnb effective price (nightly rate + guest service fee) is $310/night all-in, your VRBO rate can be set at $285–295/night (all-in, because there's no separate guest service fee) and still appear price-competitive. PriceLabs can manage VRBO pricing alongside Airbnb if connected through OwnerRez.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Configure your VRBO listing settings for the platform's guest profile.</strong> VRBO guests tend to book longer stays, plan further out, and travel in groups. Adjust: minimum stay to 3 nights (VRBO's guest profile supports longer minimums; a 2-night minimum often attracts the wrong booking type on VRBO). Weekly and monthly discounts (VRBO prominently features these — a 10% weekly discount displayed on the listing increases conversion for the family booking a full week). Pet policy (VRBO skews toward family travel, and families often have pets — if you accept pets on Airbnb, accept them on VRBO).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <p><strong>Publish the VRBO listing.</strong> VRBO reviews listings before making them searchable. Allow 24–48 hours for review. Once approved, your listing is live on VRBO and your OwnerRez calendar sync is managing conflicts. Review the VRBO listing as a guest would — check that photos, descriptions, and amenities all display correctly in VRBO's format (it differs from Airbnb's display structure in several places).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Import Your Airbnb Reviews to VRBO — Do This Immediately</div>
+      <p>VRBO allows you to import reviews from other platforms at the time of listing setup. If you have 10+ Airbnb reviews, import them. A new VRBO listing with no reviews competes poorly against established VRBO listings. A new VRBO listing with 10+ imported reviews from Airbnb immediately has social proof. Go to vrbo.com/l/review-import after your listing is created and follow the import process. Verify the imported reviews display correctly on your listing page. This is a one-time action — do it before your VRBO listing generates its first booking.</p>
+    </div>
+
+    <h3>Building Toward the Highest-Value Spoke</h3>
+    <h3>Niche Listing Platforms — Pet-Friendly Distribution</h3>
+    <p>If your property allows pets, you are leaving a meaningful segment of demand unaddressed by listing only on Airbnb and VRBO. Pet-owning travelers have fewer options than non-pet travelers — they search specifically for pet-friendly properties, and they are willing to pay a premium for a property that genuinely welcomes their animals (rather than a reluctant "pets allowed" checkbox buried in the amenities).</p>
+    <p>The pet-friendly platforms below do not replace Airbnb or VRBO — they supplement them by reaching travelers who start their search on pet-specific platforms before they even open Airbnb.</p>
+    <ul>
+      <li><strong>BringFido (bringfido.com):</strong> The largest pet travel directory. Free to list for short-term rentals. Travelers search by destination and filter to pet-friendly properties. High-intent audience — guests who find you here are specifically planning a pet-inclusive trip.</li>
+      <li><strong>GoPetFriendly (gopetfriendly.com):</strong> Trip planning platform with strong blog and editorial authority. Property listings plus content distribution. Free to list; premium placement available.</li>
+      <li><strong>TripWithMyPet (tripwithmypet.com):</strong> Pet travel directory with lodging search. One of the oldest pet-travel platforms. Free listing; traffic skews to road-trip vacation segments.</li>
+      <li><strong>DogFriendly (dogfriendly.com):</strong> U.K.-origin platform with growing U.S. presence. Good for beach and lakefront markets. Free to list.</li>
+      <li><strong>Petswelcome (petswelcome.com):</strong> Veteran pet-travel directory. Older audience, steady traffic. Free to list for short-term rentals.</li>
+      <li><strong>Instagram hashtag communities:</strong> #dogfriendlytravel, #traveldogstagram, #vacationwithdog, and destination-specific tags (#[yourmarket]dogfriendly) are organic discovery channels. A single well-captioned photo of a guest's dog at your property — with your permission and a tag — can generate multiple inquiries. Encourage this as part of your pet welcome experience.</li>
+    </ul>
+    <div class="callout tip">
+      <div class="callout-label">✓ The Pet-Friendly Revenue Premium</div>
+      <p>Pet-friendly STRs command a 10–20% premium per night in markets with strong outdoor recreation demand. More importantly: the pet-friendly traveler niche has significantly lower competition on niche platforms. Listing on BringFido costs nothing and takes 15 minutes. In markets where 30% of travelers have pets, the question isn't whether to list — it's why you haven't yet.</p>
+    </div>
+
+    <p>Module 06 (Direct Booking) is where the economic architecture of your business permanently changes. Airbnb and VRBO fill your calendar — the direct booking channel is where you stop paying a 15.5% host fee on every booking, start owning guest relationships instead of renting them, and build the asset that compounds every year. These are not comparable moves. Adding VRBO adds a distribution channel. Building the direct booking channel builds the business underneath the business.</p>
+    <p>The timing: begin building the direct booking channel after 6 months of stable Airbnb + VRBO operation — when your StayFi list is growing, your automated message sequence is running, and your 4.9+ star rating is established. The OTA channels you built in this module have two purposes: <strong>filling dates</strong> and <strong>generating the past guests who become direct booking leads.</strong> Module 06 covers the full build. For now, get both OTA channels working correctly — that is how you load the pipeline.</p>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>VRBO listing is live, OwnerRez calendar sync is confirmed bidirectional, and Airbnb reviews are imported to VRBO.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>VRBO account created and fee model selected (subscription vs. per-booking)</li>
+        <li><span class="cp-box"></span>OwnerRez → VRBO channel connection configured and tested — make a dummy block on Airbnb, confirm it blocks on VRBO</li>
+        <li><span class="cp-box"></span>VRBO listing photos, description, amenities, and house rules complete</li>
+        <li><span class="cp-box"></span>VRBO pricing set — nightly rate adjusted for no guest service fee</li>
+        <li><span class="cp-box"></span>Weekly and monthly discount configured in VRBO</li>
+        <li><span class="cp-box"></span>Airbnb reviews imported to VRBO</li>
+        <li><span class="cp-box"></span>VRBO listing reviewed from a guest device — all information displaying correctly</li>
+        <li><span class="cp-box"></span>VRBO listing approved and live in search</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>The Annual Revenue Calendar — Seasons, Strategy, and the 90-Day Projection</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Build your property's annual revenue calendar — identifying peak, shoulder, and off-season windows, setting the pricing strategy for each, and producing a 90-day forward projection that you compare against your Module 01 underwriting target.
+    </div>
+
+    <p>Most STR operators manage their revenue reactively — they look at what PriceLabs sets, accept it, and check occupancy at the end of the month. The operators who consistently outperform their comp set manage revenue proactively: they know what their market's demand calendar looks like 6 months in advance, they protect peak dates before anyone else's algorithm captures them, they sell their slow dates early to avoid vacancy, and they make deliberate off-season decisions instead of letting the calendar drift.</p>
+
+    <p>This lesson builds the annual calendar framework that transforms revenue management from reactive to strategic.</p>
+
+    <h3>The Finger Lakes Annual Demand Calendar — A Market-Specific Example</h3>
+    <p>Every market has its own demand curve. The framework below uses the Finger Lakes as the instructor example — adapt the specific months and events for your market using your AirDNA data.</p>
+
+    <div style="margin: 24px 0">
+      <div class="season-row">
+        <div class="season-label peak">PEAK</div>
+        <div class="season-content">
+          <div class="season-months">Memorial Day Weekend → Labor Day Weekend (late May – early September)</div>
+          <p><strong>Strategy: Protect, Premium, Minimum Stay.</strong> Set your maximum price and enforce your peak minimum stay (3 nights). Do not discount these dates. Do not open 1-night or 2-night minimums. The algorithm should be pulling rates to your ceiling on summer weekends. If it isn't, your base price or maximum price is set wrong. Peak weekends in the Finger Lakes — July 4th, mid-August weekends during harvest season — command 2–3× off-season rates. Verify your PriceLabs calendar is not discounting these dates for any reason (last-minute, far-out, or gap discounts should be disabled for peak windows).</p>
+          <p>Key peak dates: July 4th weekend, Watkins Glen US Grand Prix weekend (typically September), Wine & Harvest Festival (Watkins Glen, October).</p>
+        </div>
+      </div>
+      <div class="season-row">
+        <div class="season-label shoulder">SHOULDER</div>
+        <div class="season-content">
+          <div class="season-months">Foliage Season (October – mid-November) &amp; Spring (April – Memorial Day)</div>
+          <p><strong>Strategy: Earn the Visit, Market the Experience.</strong> Shoulder season bookings require a reason to come. The fall foliage window in the Finger Lakes (typically mid-October) is strong — color peaks drive significant inbound weekend demand and ADRs approach peak-season levels. Spring is more variable: lower demand than fall but capturable with the right framing (wine trail, early hiking, peaceful off-season pricing). Shoulder pricing: 70–85% of peak. Minimum stay: 2 nights. Enable far-out discounts for advance spring bookings (guests who plan early spring getaways book far in advance and are price-sensitive).</p>
+          <p>Shoulder content opportunity: email your past guest list (Module 07) before shoulder season opens with early access pricing. Past guests who had a good experience are the easiest shoulder-season bookings you'll generate.</p>
+        </div>
+      </div>
+      <div class="season-row">
+        <div class="season-label off">OFF-SEASON</div>
+        <div class="season-content">
+          <div class="season-months">December – March (excluding holiday windows)</div>
+          <p><strong>Strategy: Make a Decision, Then Stick to It.</strong> Off-season in cold-weather markets is a deliberate choice, not a drift. You have two viable options — but you need to pick one and commit. Straddling both produces the worst outcome of each.</p>
+          <p><strong>Option 1 — Open at off-season rates (60–70% of shoulder):</strong> Viable if your property has winter amenities (fireplace, hot tub, snowshoe access, proximity to ski) and your variable cost per booking is low enough that discounted-rate bookings generate positive net revenue. December (Christmas/New Year's) and Valentine's Day weekend are strong off-season revenue windows even in cold markets. Fill those and accept vacancy elsewhere.</p>
+          <p><strong>Option 2 — Planned closure (January–February):</strong> Block the calendar for 6–8 weeks. Use the window for deferred maintenance (hot tub service, deep property refresh, any renovation), personal use, and preparation for the coming peak season. This option trades off-season revenue for property condition and operator sanity — it is often the correct choice for operators whose off-season discounted revenue doesn't materially change annual RevPAR but whose property conditions degrade significantly from year-round operation.</p>
+        </div>
+      </div>
+      <div class="season-row">
+        <div class="season-label peak">HOLIDAY</div>
+        <div class="season-content">
+          <div class="season-months">Thanksgiving Weekend, Christmas–New Year's Week</div>
+          <p><strong>Strategy: Price Like Peak, Require 4-Night Minimum.</strong> Holiday windows are the highest-demand dates outside summer peak in most leisure markets. Families want to go somewhere for Thanksgiving and Christmas. If your property sleeps 6–10 and has a full kitchen, you are the product families want for a holiday stay. Set your holiday dates to peak pricing and a 4-night minimum (Thanksgiving: Wednesday–Sunday, Christmas: December 23–27 or December 27–January 1). Lock these windows early — families planning a holiday trip book 60–90 days in advance.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Local Events — Your Advance Intelligence Advantage</h3>
+    <p>PriceLabs picks up local event demand signals from its aggregated booking data, but it is lagging — the algorithm reflects what happened in prior years, not what was just announced for next month. You are local. You know your market's event calendar. Use that knowledge.</p>
+
+    <ul>
+      <li><strong>Find your market's annual event calendar.</strong> Every county tourism bureau publishes one. Watkins Glen has theirs online. Identify the 3–5 highest-traffic weekends in your market each year.</li>
+      <li><strong>Manually override PriceLabs pricing on event dates.</strong> If a major event is announced for a date when PriceLabs has set your rate at $220, override it manually to $320–350. You have information the algorithm doesn't yet have. Use it.</li>
+      <li><strong>Set event-date minimum stays.</strong> In PriceLabs: add a date customization for the event weekend requiring a 3-night minimum. A guest who books one night of a major event weekend is almost always a guest who will complain about noise, parking, and traffic — and then leave a review about it. The 3-night minimum filters for guests who actually want to be in the area for the full event experience.</li>
+    </ul>
+
+    <h3>The 90-Day Forward Projection — Connecting Back to Module 01</h3>
+    <p>In Module 01, you built a 12-month revenue projection using your comp set's data. That projection was your underwriting basis — the number that justified the investment in the property. Now that you have real data and are operating with PriceLabs, it's time to build the forward projection from your actual current performance.</p>
+
+    <div class="template-box">
+      <div class="template-label">90-Day Forward Revenue Projection</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:16px">Complete this at the start of each quarter. Compare the projection against your Module 01 annual target on a prorated basis.</div>
+      <div class="field-row">
+        <div class="field"><label>Projection Period</label><div class="line">___/___/___ through ___/___/___</div></div>
+        <div class="field"><label>Season(s) in Period</label><div class="line">&nbsp;</div></div>
+        <div class="field"><label>Module 01 Annual Target</label><div class="line">$___ /year</div></div>
+        <div class="field"><label>90-Day Pro-Rated Target</label><div class="line">$___ (annual ÷ 4)</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Already Booked Revenue</label><div class="line">$___ (confirmed reservations)</div></div>
+        <div class="field"><label>Projected Remaining Revenue</label><div class="line">$___ (unbooked nights × projected rate)</div></div>
+        <div class="field"><label>Total 90-Day Projection</label><div class="line">$___</div></div>
+        <div class="field"><label>vs. Target</label><div class="line">+$___ / -$___ / on target</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Peak Dates Protected</label><div class="line">List: ____________________</div></div>
+        <div class="field"><label>Slowest Upcoming Period</label><div class="line">Dates: ___ Strategy: ___</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="grid-column:1/-1"><label>One Action to Improve This Period's Revenue</label><div class="line">&nbsp;</div></div>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study-label">Instructor Perspective</div>
+      <h3>Revenue Management Is the Discipline That Separates Operators</h3>
+      <p>The property is the asset. The listing is how guests find it. But revenue management — understanding your market's demand curve, pricing dynamically to capture it, protecting your highest-value dates, and making deliberate decisions about your lowest-demand windows — is the ongoing practice that determines whether the asset performs at 80% of its potential or 120% of what you projected.</p>
+      <p>Most operators don't build the annual calendar. Most operators don't override PriceLabs for local events. Most operators don't track RevPAR against their comp set. These are exactly the reasons that operators who do these things outperform those who don't — not by a little, but by 20–40% RevPAR differences in the same market.</p>
+      <p>The 90-day projection exercise is the most important discipline to establish now. <strong>Run it every quarter, on the first day of the quarter, without exception.</strong> The habit of proactive planning — knowing what your revenue looks like three months ahead and having a specific action to improve it — is the mindset shift that distinguishes operators who get better every year from operators who plateau.</p>
+      <p>One more thing: when you look at the annual calendar and see a slow stretch — February in the Finger Lakes, say — resist the instinct to discount aggressively and chase occupancy. Ask instead: <em>what could I offer this property for in February that makes February a destination rather than a consolation prize?</em> The answer to that question is the beginning of Module 05 (Operations) and Module 11 (Experiences & Upsells).</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Module 04</div>
+      <h4>Build your pricing strategy and seasonal rate structure</h4>
+      <div class="ai-prompt-box">I need a complete pricing strategy for my short-term rental. Here is my property and market context:
+
+Property:
+- Type + features: [3-bed lakehouse / cabin with hot tub / beachfront studio / etc.]
+- Market: [city, region, or destination]
+- Max occupancy: [number of guests]
+- Current Airbnb base rate (if set): $___/night
+
+Market data (from AirDNA, Airbnb's own rate tips, or comparable listings):
+- High season dates: [e.g., June–August, holiday weekends]
+- Shoulder season dates: [e.g., May, September–October]
+- Off-peak dates: [e.g., November–March, weekdays]
+- Comp set median ADR (high season): $___
+- Comp set median ADR (off-peak): $___
+- My target occupancy rate: ___%
+
+Current pricing setup:
+- Am I using dynamic pricing? [Yes — PriceLabs / Wheelhouse / Pricelabs / No — manual]
+- Current weekend premium (if any): [% or $]
+- Current minimum stay: [e.g., 2 nights all year / 3 nights on weekends]
+
+Build me:
+1. A seasonal rate structure — base rate, weekend rate, holiday rate, off-peak rate — with specific dollar amounts
+2. A minimum stay strategy by season — when to require 3+ nights vs. allow 1-night gaps
+3. A PriceLabs configuration recommendation — which base price to set, minimum price floor, maximum price ceiling, and the 3 most important custom rules for my market
+4. A last-minute pricing rule — how to handle nights within 14 days of check-in to fill gaps without training guests to wait for discounts
+5. My break-even nightly rate calculation — the floor below which I should never go regardless of demand</div>
+      <p class="ai-prompt-note"><strong>The minimum price floor is the most important setting in PriceLabs.</strong> Most operators set it too low, which trains the algorithm to discount heavily during slow periods and trains guests to watch for last-minute deals. Set your floor at break-even rate plus 15% — you'd rather leave a night empty than fill it at a loss. Every dollar below your floor is a dollar you pay to host someone.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 04 Complete When:</div>
+      <h3>PriceLabs is live and configured, VRBO is active with calendar sync, your annual demand calendar is documented with a strategy for each season, and your first 90-day forward projection is built and reviewed against your Module 01 underwriting target.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>PriceLabs active — base price, min/max, gap fill, orphan day, last-minute, and far-out settings all configured</li>
+        <li><span class="cp-box"></span>VRBO listing live — calendar synced through OwnerRez, Airbnb reviews imported</li>
+        <li><span class="cp-box"></span>Annual demand calendar documented: peak dates named, shoulder season strategy written, off-season decision made (open vs. close)</li>
+        <li><span class="cp-box"></span>Local event calendar pulled — top 3–5 high-demand event weekends identified and manually overridden in PriceLabs</li>
+        <li><span class="cp-box"></span>90-Day Forward Projection completed — confirmed bookings + projected unbooked revenue vs. Module 01 target</li>
+        <li><span class="cp-box"></span>Quarterly projection review date set on calendar — first day of next quarter</li>
+        <li><span class="cp-box"></span>Proceed to Module 05 — Operations: building the guest experience system that protects your review base as booking volume grows</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<section class="machine-feed">
+  <div class="mf-label">Direct Booking Machine</div>
+  <h3>Every Filled Night Is a Lead. Optimize Accordingly.</h3>
+  <p>RevPAR optimization is the revenue objective in this module. The direct booking machine adds a second lens to that optimization: <strong>every filled night, regardless of channel, generates one more past-guest email capture through StayFi.</strong> The rate at which you fill nights is also the rate at which your direct booking pipeline grows.</p>
+  <p>A property running 75% occupancy across 260 available nights generates approximately 195 stays per year. 195 stays = 195 potential email captures. After 3 years of operation, you may have 500+ past-guest contacts. That list is a marketing asset that generates direct booking revenue every time you run a campaign — at zero incremental cost per contact.</p>
+  <ul>
+    <li><strong>VRBO as a lead source</strong> — VRBO guests (longer stays, family groups, further advance booking windows) are among the highest-value past-guest leads in the pipeline. Families who found a perfect property tend to rebook the same week annually. They are especially responsive to a direct booking pre-sale offer for the following year's dates.</li>
+    <li><strong>The channel hierarchy</strong> — Airbnb and VRBO fill the calendar while the direct booking machine builds. Direct booking is not "channel 3" in a sequence of equals. It is the economic destination. The OTA channels are the acquisition layer that creates the leads the direct booking machine converts.</li>
+  </ul>
+  <p>By Year 3, with a growing direct booking channel, the revenue calendar shifts: <strong>peak nights go to direct booking first</strong> (zero platform fee, maximum margin), OTA channels fill remaining inventory. The annual revenue calendar you built in this module is the roadmap to that outcome.</p>
+</section>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 04: Revenue &nbsp;·&nbsp; Next: Module 05 — Operations
+</footer>

@@ -1,0 +1,1134 @@
+<title>Module 12 — Sponsors & Brand Partnerships</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #09263A; --navy-mid: #0d3550;
+    --gold: #D4A017; --cream: #F7F3EA;
+    --text: #1a2f3f; --muted: #4a6070;
+    --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+    --mistake-bg: #fff7ed; --mistake-border: #f97316;
+    --math-bg: #f0f9ff; --math-border: #0284c7;
+    --tip-bg: #f0fdf4; --tip-border: #16a34a;
+    --warn-bg: #fefce8; --warn-border: #ca8a04;
+    --danger-bg: #fff1f2; --danger-border: #dc2626;
+    --gold-bg: rgba(212,160,23,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #163d57; --navy-mid: #1e4f6e;
+      --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+      --bg: #0f1f2d; --card: #162737;
+      --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+      --danger-bg: #2d0a0a; --gold-bg: rgba(212,160,23,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #163d57; --navy-mid: #1e4f6e;
+    --text: #e4ddd0; --muted: #8ba8bc; --border: rgba(212,160,23,0.15);
+    --bg: #0f1f2d; --card: #162737;
+    --mistake-bg: #2d1a0a; --math-bg: #0a1f2d; --tip-bg: #0a2018; --warn-bg: #1a1800;
+    --danger-bg: #2d0a0a; --gold-bg: rgba(212,160,23,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15.5px; }
+
+  .mod-header { background: var(--navy); padding: 48px 32px 40px; border-bottom: 3px solid var(--gold); }
+  .mod-header-inner { max-width: 900px; margin: 0 auto; }
+  .mod-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .mod-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+  .mod-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .mod-header .subtitle { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 24px; }
+  .mod-meta { display: flex; flex-wrap: wrap; gap: 24px; }
+  .mod-meta-item { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .mod-meta-item strong { color: rgba(255,255,255,0.75); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+
+  .chain-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(212,160,23,0.15); padding: 10px 32px; }
+  .chain-bar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+  .chain-bar-inner span { color: rgba(255,255,255,0.65); }
+  .chain-bar-inner .arrow { color: var(--gold); }
+  .chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+  .lesson-nav { background: var(--navy-mid); overflow-x: auto; }
+  .lesson-nav-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 32px; }
+  .lesson-nav a { display: block; padding: 12px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.04em; transition: color 0.2s; }
+  .lesson-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .deliverable-banner { background: var(--gold); border-radius: 12px; padding: 20px 28px; margin: 40px 0 40px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-banner .icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-banner .label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+  .deliverable-banner p { color: var(--navy); font-size: 14px; font-weight: 500; line-height: 1.5; margin: 0; }
+
+  .lesson { margin-bottom: 72px; }
+  .lesson-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+  .lesson-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 10px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .lesson-title-wrap .lesson-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .lesson-title-wrap h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson-title-wrap h2 { color: #e4ddd0; } }
+  :root[data-theme="dark"] .lesson-title-wrap h2 { color: #e4ddd0; }
+
+  .objective { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted); }
+  .objective strong { color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  p { color: var(--muted); margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  ul, ol { padding-left: 24px; color: var(--muted); margin-bottom: 16px; }
+  li { margin-bottom: 6px; line-height: 1.6; }
+  li strong { color: var(--text); }
+
+  .callout { border-radius: 10px; padding: 18px 20px; margin: 24px 0; border-left-width: 4px; border-left-style: solid; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout ul { font-size: 14px; padding-left: 20px; }
+  .callout li { margin-bottom: 5px; }
+  .mistake { background: var(--mistake-bg); border-left-color: var(--mistake-border); }
+  .mistake .callout-label { color: var(--mistake-border); }
+  .mistake p, .mistake li { color: #7c2d12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mistake p, :root:not([data-theme="light"]) .mistake li { color: #fdba74; } }
+  :root[data-theme="dark"] .mistake p, :root[data-theme="dark"] .mistake li { color: #fdba74; }
+  .math { background: var(--math-bg); border-left-color: var(--math-border); }
+  .math .callout-label { color: var(--math-border); }
+  .math p, .math li { color: #0c4a6e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .math p, :root:not([data-theme="light"]) .math li { color: #7dd3fc; } }
+  :root[data-theme="dark"] .math p, :root[data-theme="dark"] .math li { color: #7dd3fc; }
+  .tip { background: var(--tip-bg); border-left-color: var(--tip-border); }
+  .tip .callout-label { color: var(--tip-border); }
+  .tip p, .tip li { color: #14532d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip p, :root:not([data-theme="light"]) .tip li { color: #86efac; } }
+  :root[data-theme="dark"] .tip p, :root[data-theme="dark"] .tip li { color: #86efac; }
+  .warn { background: var(--warn-bg); border-left-color: var(--warn-border); }
+  .warn .callout-label { color: var(--warn-border); }
+  .warn p, .warn li { color: #713f12; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .warn p, :root:not([data-theme="light"]) .warn li { color: #fde68a; } }
+  :root[data-theme="dark"] .warn p, :root[data-theme="dark"] .warn li { color: #fde68a; }
+
+  /* Audit grid */
+  .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .audit-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 16px; position: relative; }
+  .audit-card.ready { border-color: #16a34a; }
+  .audit-card.caution { border-color: #ca8a04; }
+  .audit-card.not-ready { border-color: #dc2626; }
+  .audit-metric { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .audit-target { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .audit-why { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+  .audit-status { position: absolute; top: 14px; right: 14px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; }
+  .audit-card.ready .audit-status { background: #dcfce7; color: #15803d; }
+  .audit-card.caution .audit-status { background: #fef9c3; color: #92400e; }
+  .audit-card.not-ready .audit-status { background: #fee2e2; color: #dc2626; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .audit-card.ready .audit-status { background: rgba(22,163,74,0.2); color: #86efac; }
+    :root:not([data-theme="light"]) .audit-card.caution .audit-status { background: rgba(202,138,4,0.2); color: #fde68a; }
+    :root:not([data-theme="light"]) .audit-card.not-ready .audit-status { background: rgba(220,38,38,0.2); color: #fca5a5; }
+  }
+  :root[data-theme="dark"] .audit-card.ready .audit-status { background: rgba(22,163,74,0.2); color: #86efac; }
+  :root[data-theme="dark"] .audit-card.caution .audit-status { background: rgba(202,138,4,0.2); color: #fde68a; }
+  :root[data-theme="dark"] .audit-card.not-ready .audit-status { background: rgba(220,38,38,0.2); color: #fca5a5; }
+
+  /* Scale path comparison */
+  .scale-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .scale-path { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .scale-path-header { padding: 16px 20px 14px; }
+  .scale-path.same .scale-path-header { background: var(--navy); }
+  .scale-path.new .scale-path-header { background: #1a2f3f; }
+  .scale-path-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .scale-path-title { font-size: 1rem; font-weight: 700; color: #fff; }
+  .scale-path-body { padding: 16px 20px; }
+  .scale-path-section { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin: 14px 0 6px; }
+  .scale-path-body ul { padding-left: 18px; margin: 0; }
+  .scale-path-body li { font-size: 13px; color: var(--muted); margin-bottom: 5px; line-height: 1.55; }
+  .scale-path-body li strong { color: var(--text); }
+
+  /* Labor stack */
+  .labor-stack { margin: 24px 0; }
+  .labor-tier { display: grid; grid-template-columns: 90px 1fr auto; align-items: start; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .labor-tier:last-child { border-bottom: none; }
+  .labor-priority { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; text-align: center; white-space: nowrap; }
+  .labor-priority.critical { background: #fee2e2; color: #dc2626; }
+  .labor-priority.high { background: var(--warn-bg); color: #92400e; }
+  .labor-priority.medium { background: var(--math-bg); color: #0c4a6e; }
+  .labor-priority.low { background: var(--tip-bg); color: #15803d; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .labor-priority.critical { background: rgba(220,38,38,0.2); color: #fca5a5; }
+    :root:not([data-theme="light"]) .labor-priority.high { background: rgba(202,138,4,0.2); color: #fde68a; }
+    :root:not([data-theme="light"]) .labor-priority.medium { background: rgba(2,132,199,0.2); color: #7dd3fc; }
+    :root:not([data-theme="light"]) .labor-priority.low { background: rgba(22,163,74,0.2); color: #86efac; }
+  }
+  :root[data-theme="dark"] .labor-priority.critical { background: rgba(220,38,38,0.2); color: #fca5a5; }
+  :root[data-theme="dark"] .labor-priority.high { background: rgba(202,138,4,0.2); color: #fde68a; }
+  :root[data-theme="dark"] .labor-priority.medium { background: rgba(2,132,199,0.2); color: #7dd3fc; }
+  :root[data-theme="dark"] .labor-priority.low { background: rgba(22,163,74,0.2); color: #86efac; }
+  .labor-role { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .labor-detail { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .labor-cost { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; text-align: right; }
+  .labor-cost span { display: block; font-size: 11px; font-weight: 400; color: var(--muted); }
+
+  /* SOP cards */
+  .sop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+  .sop-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px; }
+  .sop-icon { font-size: 22px; margin-bottom: 10px; }
+  .sop-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .sop-items { list-style: none; padding: 0; margin: 0; }
+  .sop-items li { font-size: 13px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+  .sop-items li:last-child { border-bottom: none; }
+  .sop-items li::before { content: '□'; color: var(--gold); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Math / revenue */
+  .rev-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 20px 0; display: block; overflow-x: auto; }
+  .rev-table thead tr { background: var(--navy); }
+  .rev-table thead th { padding: 10px 14px; text-align: left; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .rev-table tbody tr { border-bottom: 1px solid var(--border); }
+  .rev-table tbody tr:last-child { border-bottom: none; }
+  .rev-table tbody tr.highlight { background: var(--gold-bg); }
+  .rev-table td { padding: 11px 14px; vertical-align: top; color: var(--muted); }
+  .rev-table td:first-child { font-weight: 600; color: var(--text); }
+  .rev-table td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  .rev-table td.pos { color: #16a34a; font-weight: 700; }
+  .rev-table td.total { font-weight: 700; color: var(--text); }
+
+  /* AI Prompt blocks */
+  .ai-prompt { background: #1a0533; border: 2px solid #7c3aed; border-radius: 14px; padding: 24px 28px; margin: 32px 0; }
+  .ai-prompt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ai-prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,0.3); }
+  .ai-prompt h4 { font-size: 14px; font-weight: 700; color: #e9d5ff; margin-bottom: 12px; margin-top: 0; }
+  .ai-prompt-box { background: #0a0117; border: 1px solid rgba(124,58,237,0.35); border-radius: 8px; padding: 16px 18px; font-family: 'Menlo', 'Consolas', monospace; font-size: 12.5px; color: #c4b5fd; line-height: 1.8; white-space: pre-wrap; margin-bottom: 14px; overflow-x: auto; }
+  .ai-prompt-note { font-size: 12.5px; color: rgba(167,139,250,0.75); line-height: 1.65; border-top: 1px solid rgba(124,58,237,0.2); padding-top: 12px; margin: 0; }
+  .ai-prompt-note strong { color: #a78bfa; }
+
+  /* Machine feed */
+  .machine-feed { background: var(--navy); border: 2px solid var(--gold); border-radius: 14px; padding: 28px 32px; margin: 48px 0 80px; }
+  .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+  .machine-feed h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; margin-bottom: 14px; }
+  .machine-feed p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .machine-feed p:last-child { margin-bottom: 0; }
+  .machine-feed p strong { color: rgba(255,255,255,0.9); }
+  .machine-feed ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-top: 10px; }
+  .machine-feed li { margin-bottom: 8px; line-height: 1.6; }
+  .machine-feed li strong { color: var(--gold); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 64px 0; }
+  .checkpoint { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-top: 48px; }
+  .checkpoint-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .checkpoint h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 16px; }
+  .checkpoint-items { list-style: none; padding: 0; }
+  .checkpoint-items li { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); font-size: 14px; }
+  .checkpoint-items li:last-child { border-bottom: none; }
+  .cp-box { width: 18px; height: 18px; min-width: 18px; border: 2px solid rgba(212,160,23,0.5); border-radius: 4px; margin-top: 2px; }
+
+  .mod-footer { background: var(--navy); padding: 20px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 80px; }
+
+  @media (max-width: 640px) {
+    .audit-grid { grid-template-columns: 1fr; }
+    .scale-paths { grid-template-columns: 1fr; }
+    .sop-grid { grid-template-columns: 1fr; }
+    .labor-tier { grid-template-columns: 1fr; gap: 8px; }
+    .labor-cost { text-align: left; }
+  }
+</style>
+
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 12</div>
+    <h1>Sponsors & Brand Partnerships</h1>
+    <p class="subtitle">Your property is a media platform — 200+ nights per year of branded impressions among high-income travelers. This module teaches you how to make brands pay to be there</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase</strong>Phase 2: Own</div>
+      <div class="mod-meta-item"><strong>Lessons</strong>3 Lessons</div>
+      <div class="mod-meta-item"><strong>Time to Complete</strong>3–5 Hours</div>
+      <div class="mod-meta-item"><strong>Previous</strong>Module 11 — Curated Experiences</div>
+      <div class="mod-meta-item"><strong>Next</strong>Module 13 — Acquisition at Scale</div>
+    </div>
+  </div>
+</header>
+
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 10: Creator Network</span>
+    <span class="arrow">→</span>
+    <span>Module 11: Experiences</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 12: Sponsors</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 12: Scaling</span>
+    <span class="arrow">→</span>
+    <span>Module 13: Local Guide Integration</span>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <a href="#lesson-1">01 — The Brand Partnership Landscape</a>
+    <a href="#lesson-2">02 — Identify & Pitch Sponsors</a>
+    <a href="#lesson-3">03 — Structure Deals & Deliver Value</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="deliverable-banner">
+    <div class="icon">🤝</div>
+    <div>
+      <div class="label">Module Deliverable</div>
+      <p>A sponsor prospect list of 10–15 local and regional brands. A property media kit ready to send. Your first pitch email drafted. One product-placement deal closed — a brand is sending you product to feature during stays. The framework to track impressions and prove value so deals renew.</p>
+    </div>
+  </div>
+
+  <!-- ─── LESSON 1 ─── -->
+  <section class="lesson" id="lesson-1">
+    <div class="lesson-header">
+      <div class="lesson-num">01</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1</div>
+        <h2>The Brand Partnership Landscape for STR</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Understand why brands want placement in STR properties, identify the five partner categories that work at every property size, and determine whether your property has reached the threshold where this channel is worth activating.</div>
+
+    <p>The most common mistake at this stage is using energy from Property 1's success to acquire Property 2 before Property 1 is fully optimized. A property at 60% of its revenue potential with a second property on the way is two properties at 60%. A property at 90% of its revenue potential with a second property in acquisition is one property funding the second.</p>
+
+    <p>A $90,000/year property at 60% efficiency is earning $54,000. That's a detail for Module 13. This module is about a revenue layer that runs alongside your existing operations — brand partnerships that turn the hospitality you're already providing into a paid placement channel.</p> A $90,000/year property at 60% efficiency is earning $54,000. At 90% efficiency, it earns $81,000. That $27,000 gap — achievable with systems already built in this course — is roughly the annual carry cost on a $400,000 second property. Closing the gap on Property 1 often creates the cash flow that makes Property 2 possible without additional out-of-pocket capital.</p>
+
+    <h3>Why Brands Want STR Placement — The Media Platform Argument</h3>
+    <p>Your average STR property hosts 160–230 nights per year. Each stay involves 2–3 guests who are, by definition, a self-selected demographic: people who travel, who value hospitality-grade experiences, who make deliberate spending decisions. That is a valuable audience. The question brand partnership is asking is: can a brand pay to be associated with the experience you're already delivering?</p>
+
+    <p>Hotels have been selling this for decades — branded bath products, co-branded amenity kits, sponsored concierge recommendations. STR hosts can access the same logic at the individual property level. The difference is not scale — it's specificity. A regional wine brand would rather be in 8 Finger Lakes vacation rentals than in a generic hotel chain. Your guests are their target customer, staying in their market, self-selecting the experience.</p>
+
+    <h3>The Five Brand Categories for STR Partnerships</h3>
+    <p>Not every brand is a fit. The ones that work share a common trait: their product improves the guest experience, so the placement doesn't feel like advertising. It feels like thoughtful hosting.</p>
+
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="partner-icon">🍷</div>
+        <div class="partner-type">Welcome Amenity Brands</div>
+        <p>Regional wine, artisan spirits, specialty coffee, local chocolatiers. These brands want their product in guests' hands during a memorable moment. They're willing to send product in exchange for guidebook features, social mentions, and creator content.</p>
+        <div class="partner-rate">Entry level: product-for-placement</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🕯️</div>
+        <div class="partner-type">In-Stay Lifestyle Brands</div>
+        <p>Premium candles, bath products, specialty linens, personal care. Brands like these want their product photographed in editorial-quality settings. Your property is a studio. Their goal is content and social association.</p>
+        <div class="partner-rate">Entry level: product comp + content</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🚣</div>
+        <div class="partner-type">Outdoor & Adventure Brands</div>
+        <p>Kayaks, paddleboards, bicycles, camping gear, fishing equipment. Brands with durable goods want their product in use — photographed on your lake or trail. Often willing to loan equipment long-term for ongoing content rights.</p>
+        <div class="partner-rate">Mid level: product loan + content deal</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">📺</div>
+        <div class="partner-type">Home Technology Brands</div>
+        <p>Sonos, smart displays, EV chargers, air quality monitors. Tech brands that want lifestyle placement in aspirational properties — especially relevant if your guests skew toward tech-forward demographics.</p>
+        <div class="partner-rate">Mid level: product comp + social + listing mention</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon">🗺️</div>
+        <div class="partner-type">Local Experience Operators</div>
+        <p>Wineries, spas, boat tours, cooking classes, guided hikes. These partners don't send product — they offer comped experiences in exchange for guidebook placement and referral codes. You recommend them, they track your code, you earn commissions.</p>
+        <div class="partner-rate">Revenue share: $10–50 per referred booking</div>
+      </div>
+    </div>
+
+    <h3>The Readiness Threshold — When to Activate This Channel</h3>
+    <div class="callout math">
+      <div class="callout-label">📊 When Brand Partnerships Make Sense</div>
+      <p>A brand won't send product to a property with no social presence and 40 total nights booked. The minimum signal brands care about:</p>
+      <ul>
+        <li><strong>Annual stays:</strong> 80+ bookings/year (roughly 120–160 occupied nights). Below this, your reach is too limited for product brands to care.</li>
+        <li><strong>Social presence:</strong> An active property account with 300+ followers and consistent posting. Brands will check. A dead account reads as a dead channel.</li>
+        <li><strong>A creator stay on record:</strong> Even one piece of quality creator content signals that your property is worth associating with. Brands vet partners the same way you vet creators.</li>
+        <li><strong>Guidebook in place:</strong> Brands that want guidebook placement need to see the guidebook exists and is actively delivered to guests.</li>
+      </ul>
+      <p>If you haven't reached this threshold yet: run Modules 07–11 first. The brand partnership channel is the most valuable when you have assets to offer — reach, content, and a system for delivering value.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 1</div>
+      <h4>Identify your brand partnership categories</h4>
+      <div class="ai-prompt-box">I have an STR property: [property type] in [market]. My typical guests are [describe: couples, families, remote workers, adventure travelers, etc.]. The property features [list 3-5 distinguishing features — lake access, mountain views, hot tub, chef's kitchen, EV charger, etc.].
+
+Based on this profile, help me:
+1. Rank the 3 brand categories from the five STR partner types (welcome amenity, lifestyle, outdoor/adventure, home tech, local experience) that are the strongest fit for my property and guest profile — explain why each one makes sense
+2. Suggest 3 specific brands or brand types within my top category (local or regional first, national second)
+3. Write one sentence explaining the "media platform argument" I can use when pitching: why my property is a valuable placement opportunity for a brand in my category</div>
+      <p class="ai-prompt-note"><strong>Use the top category and the media platform argument</strong> as the foundation of your pitch strategy in Lesson 2. Start with the category where the product-guest fit is most obvious — those deals close fastest and build the credibility to pitch harder categories later.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 2 ─── -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2</div>
+        <h2>Identify & Pitch Sponsors</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Build a qualified sponsor prospect list, develop your property media kit, and write a pitch email that leads with value — not a feature request. Close your first product-placement deal.</div>
+
+    <h3>Building Your Prospect List — Local First, Regional Second</h3>
+    <p>Start with brands whose products you already use at your property. The easiest pitch is authentic: "I use your wine for our welcome basket and guests consistently ask about it. I'd love to formalize that relationship." That's not a cold pitch — it's a referral conversation.</p>
+
+    <ul>
+      <li><strong>Walk your welcome sequence:</strong> What's in your welcome basket, your guidebook, your bathroom amenity basket? Every product there is a potential partner conversation.</li>
+      <li><strong>Walk your guidebook recommendations:</strong> Every local experience, restaurant, or activity you're already recommending is a potential commission partner — they're just not paying you yet.</li>
+      <li><strong>Search "best [product category] in [your market]":</strong> Regional winners in wine, spirits, coffee, outdoor gear, and personal care typically have small marketing budgets and huge interest in authentic placement among their target demographics.</li>
+      <li><strong>Look at what other STR hosts in your market feature:</strong> Check the guidebooks and welcome kits visible in Instagram posts tagged at nearby properties. Popular brands in your market have already decided they want STR presence.</li>
+    </ul>
+
+    <h3>Qualifying a Prospect — Three Criteria Before You Pitch</h3>
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Criterion 1: Product-guest fit</strong> — Would a guest who stays at your property actually want or use this product? If your guests are outdoor adventurers and you're pitching a luxury perfume brand, the fit isn't there. The pitch only works when the product would feel like thoughtful hosting, not advertising.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Criterion 2: Brand has marketing intent</strong> — Does the brand have an Instagram account they post to, a website with a "contact us" or "partnerships" email, any evidence they work with other hospitality or lifestyle accounts? If there's no marketing infrastructure, you're pitching someone who doesn't have a framework to say yes.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Criterion 3: Geographic alignment</strong> — Local and regional brands want to reach people in their market. A regional winery wants their bottle in the hands of every couple who visits wine country — that's you. A national brand wants lifestyle placement in aspirational properties — that's also you, at a different scale of relationship.</p></div>
+      </div>
+    </div>
+
+    <h3>Your Property Media Kit — What to Include</h3>
+    <p>A media kit for a sponsor is not the same as a creator media kit. Sponsors care about different metrics than creators. Build a one-page document (PDF) with:</p>
+    <ul>
+      <li><strong>Property overview:</strong> 3–4 sentences. What it is, where it is, what makes it distinctive. No adjectives — facts and differentiators only.</li>
+      <li><strong>Guest profile:</strong> Average household income bracket (if known from Airbnb Insights), average travel party size, primary origin markets (states driving your bookings). These are the demographics a brand's marketing team will evaluate.</li>
+      <li><strong>Annual reach numbers:</strong> Total occupied nights, estimated unique guests, social media follower count, creator content impressions generated in the past 12 months. Present this as a media buy, not a hospitality relationship.</li>
+      <li><strong>Placement opportunities:</strong> Be specific. "Welcome basket placement (seen by every guest on arrival)," "Guidebook feature (read by every guest on arrival and referenced throughout the stay)," "Social mention in post-stay content featuring your product," "Creator content rights (product photographed during influencer stays)."</li>
+      <li><strong>What you're asking for:</strong> Be explicit about whether you want product only, product + fee, or an experience/commission arrangement. Ambiguity here loses deals.</li>
+    </ul>
+
+    <h3>The Pitch Email — Structure That Gets Replies</h3>
+    <div class="pitch-box">
+      <div class="pitch-label">Sponsor Pitch Email Template</div>
+      <p><strong>Subject:</strong> STR partnership opportunity — <span class="pitch-placeholder">[Property Name]</span> in <span class="pitch-placeholder">[Market]</span></p>
+      <p>Hi <span class="pitch-placeholder">[Name / Marketing Team]</span>,</p>
+      <p>I host <span class="pitch-placeholder">[Property Name]</span>, a <span class="pitch-placeholder">[property type]</span> in <span class="pitch-placeholder">[market]</span> that hosts <span class="pitch-placeholder">[X]</span> guests per year — primarily <span class="pitch-placeholder">[guest demographic]</span> traveling from <span class="pitch-placeholder">[origin markets]</span>.</p>
+      <p>We currently use <span class="pitch-placeholder">[your product]</span> in our welcome experience, and it's become one of the items guests most frequently ask about or photograph. I'd love to explore formalizing that relationship.</p>
+      <p>What I'm proposing: <span class="pitch-placeholder">[specific placement — welcome basket feature, guidebook recommendation, creator content mentions]</span>. In exchange, I'd ask for <span class="pitch-placeholder">[product supply quarterly / a modest monthly budget / affiliate code arrangement]</span>.</p>
+      <p>I've put together a one-page property overview with reach numbers — happy to send it over. Would this be worth a 15-minute call?</p>
+      <p><span class="pitch-placeholder">[Your name]</span><br><span class="pitch-placeholder">[Property name and website]</span><br><span class="pitch-placeholder">[Instagram handle]</span></p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ Warm Outreach via Creator Network</div>
+      <p>If a creator who stayed at your property has a relationship with a brand you want to pitch, ask for an introduction. A message that opens with "We hosted [creator] here last spring and they suggested we reach out" is warm outreach, not cold. The creator's existing relationship becomes your credibility. This is one of the compounding benefits of the creator network you built in Module 10 — it doesn't just produce content, it produces relationships.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ When They Say No</div>
+      <p>Most first pitches get ignored, not refused. If you get a genuine no, ask one question before disengaging: "Is there a better time of year, or a different arrangement that would work for you?" Many brand marketing budgets reset quarterly or annually. A "no in Q3" is often a "yes in Q1" when budget is fresh. Keep a simple tracker: brand name, date pitched, outcome, and follow-up date. One follow-up six months later converts more deals than any first pitch.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 2</div>
+      <h4>Write your first sponsor pitch email</h4>
+      <div class="ai-prompt-box">I want to pitch a brand partnership to [brand name or brand type] for my STR property. Here are the details:
+
+Property: [type + market]
+Guest profile: [demographics, travel type, origin markets]
+Annual reach: [total nights hosted per year, social following, creator content impressions if any]
+Current relationship with this brand: [do I already use their product? have I featured them before?]
+What I want to offer: [welcome basket placement / guidebook feature / social mentions / creator content]
+What I want in return: [product shipment quarterly / small monthly fee / affiliate commission code]
+
+Write a pitch email under 200 words that:
+- Leads with the mutual value (their product + my guests = natural fit)
+- Gives my reach numbers as a media buy argument, not a hospitality request
+- Makes a specific ask (not "let's chat" — a specific proposed arrangement)
+- Ends with a low-commitment next step (a 15-minute call, not a full proposal)</div>
+      <p class="ai-prompt-note"><strong>Send this to 5–10 qualified prospects.</strong> A 20% reply rate is realistic for a well-personalized pitch to small and regional brands. Three replies will generate at least one closed deal within 30 days of your first outreach cycle. The goal is not a contract — it's product arriving at your door before your next guest stays.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ─── LESSON 3 ─── -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3</div>
+        <h2>Structuring Deals & Delivering Value</h2>
+      </div>
+    </div>
+
+    <div class="objective"><strong>Lesson Objective</strong>Understand the four deal structures available to STR hosts, build the tracking system that proves value to partners, and run the annual renewal conversation that builds a multi-brand sponsor portfolio.</div>
+
+    <h3>The Four Deal Structures — What Works at Each Stage</h3>
+
+    <div class="revenue-tiers">
+      <div class="tier-card">
+        <div class="tier-label">Structure 1</div>
+        <div class="tier-title">Product Only</div>
+        <p>Brand sends product (quarterly or per-stay). You feature it in the welcome experience, guidebook, and social. No cash changes hands. Most accessible starting point — easy for brands to approve without a budget discussion.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Your cost</span><span class="price">$0</span></div>
+          <div class="tier-example"><span>Your gain</span><span class="price">Product + content asset</span></div>
+          <div class="tier-example"><span>Brand's approval speed</span><span class="price">Fast</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Structure 2</div>
+        <div class="tier-title">Product + Monthly Fee</div>
+        <p>Brand sends product AND pays a monthly fee ($50–500/mo depending on your reach and exclusivity). Appropriate for properties with 500+ social followers and consistent creator content. Treat the fee as a marketing line item in the brand's budget — that's how their team will approve it.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Monthly fee range</span><span class="price">$50–$500</span></div>
+          <div class="tier-example"><span>Annual value at $200/mo</span><span class="price">$2,400</span></div>
+          <div class="tier-example"><span>Required social reach</span><span class="price">500+ followers</span></div>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Structure 3</div>
+        <div class="tier-title">Commission / Affiliate</div>
+        <p>Local experience operators (wineries, boat tours, spas) provide a referral code you share in your guidebook. You earn a commission on every booking your code generates — typically $10–50 per booking. No upfront cost, infinite scalability, naturally incentivized to promote well.</p>
+        <div class="tier-examples">
+          <div class="tier-example"><span>Commission per booking</span><span class="price">$10–50</span></div>
+          <div class="tier-example"><span>Conversion rate (guidebook)</span><span class="price">10–20%</span></div>
+          <div class="tier-example"><span>At 5 partners, 150 guests/yr</span><span class="price">$750–$3,750/yr</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Exclusivity — When It Helps and When It Doesn't</h3>
+    <p>An exclusivity clause makes your partnership more valuable to the brand — and more valuable to you, because you can charge more for it. "Official wine of [Property Name]" or "exclusively featuring [Brand] in-stay" is a premium placement that a brand might pay 2–3× more to secure.</p>
+    <ul>
+      <li><strong>When to offer exclusivity:</strong> When you have one clearly dominant brand in a category and you want to deepen the relationship. One wine brand, one coffee brand, one outdoor gear partner — exclusive per category, not across all categories.</li>
+      <li><strong>When to avoid exclusivity:</strong> When you're not sure a brand will perform. Start non-exclusive, give them one quarter, then upgrade to exclusive if they prove value by sending product consistently and their product resonates with guests.</li>
+      <li><strong>The exclusive pitch:</strong> "Right now the arrangement is non-exclusive. Based on how our guests have responded to your product, I'd like to make you our exclusive [category] partner going forward — in exchange for [X adjustment to product supply / fee]."</li>
+    </ul>
+
+    <h3>Proving Value — The Monthly Partner Report</h3>
+    <p>Most brands receive your product in a welcome basket and never hear from you again. The hosts who build lasting partnerships send a monthly value report. It doesn't need to be elaborate — it needs to be consistent:</p>
+
+    <div class="upsell-flow">
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Stays and impressions this month:</strong> Total occupied nights × average guests = total person-impressions of their product. "Your product was experienced by 47 guests this month across 22 stays."</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Content documentation:</strong> Any photo or reel featuring their product that was created during the month — by you, by guests, or by creators. Attach or link the content. This is the asset a brand's marketing team will circulate internally.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Referral code performance (if applicable):</strong> How many times your guidebook's referral code was used. Most experience partners track this and can give you the number — just ask.</p></div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div class="flow-content"><p><strong>Guest feedback (optional but powerful):</strong> A one-sentence note from a guest about their product — pulled from a review, a message, or StayFi survey. "A guest this month wrote: 'the wine on arrival was perfect.' Third-party guest validation lands differently than your own promotion of the product."</p></div>
+      </div>
+    </div>
+
+    <h3>The Annual Renewal Conversation</h3>
+    <p>Don't wait for a brand to reach out. Every November (or 11 months after signing), schedule the renewal conversation. Come with data:</p>
+    <ul>
+      <li><strong>Total stays in the partnership period</strong> — the full annual impression count</li>
+      <li><strong>Content produced</strong> — total pieces of content featuring their product</li>
+      <li><strong>Referral code revenue generated</strong> (if applicable)</li>
+      <li><strong>What's changing next year</strong> — your projected stay volume, any new creator relationships, any platform or audience growth</li>
+    </ul>
+
+    <div class="callout math">
+      <div class="callout-label">📊 Portfolio Math — What Five Partners Looks Like at Scale</div>
+      <p>Once you have the system running, the revenue compounds across multiple partnerships:</p>
+      <ul>
+        <li><strong>2 product-only partners</strong> (wine brand + candle brand): $0 cash + ~$1,200/yr in product value received</li>
+        <li><strong>1 product + fee partner</strong> (outdoor gear brand at $150/mo): $1,800/yr cash + ongoing product</li>
+        <li><strong>2 commission partners</strong> (local winery + spa at avg $25/booking, 15% conversion rate, 150 stays/yr): $1,125/yr in referral commissions</li>
+        <li><strong>Total portfolio value:</strong> $2,925/yr in cash + $1,200/yr in product + compounding content library</li>
+      </ul>
+      <p>This is not the most significant revenue line in the course. But it is the one that costs the least to maintain once set up and that builds brand equity — making your property more attractive to the next creator, the next guest, and eventually, the next brand at a higher rate.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Lesson 3</div>
+      <h4>Write your monthly partner value report</h4>
+      <div class="ai-prompt-box">Help me write a short monthly partner value report for my brand sponsor. Here are this month's numbers:
+
+Partner: [brand name and product category]
+Stays this month: [number of stays]
+Estimated guests: [total guests — stays × avg party size]
+Content created: [any photos/reels featuring the product — describe or count them]
+Referral code uses (if applicable): [number]
+Guest feedback (if any): [paste any guest quote mentioning the product]
+Deal structure reminder: [what you're delivering — welcome basket placement / guidebook / social mentions]
+
+Write a 3-paragraph report that:
+- Opens with the month's key numbers framed as a media buy value (impressions, reach)
+- Notes any content created and its approximate reach
+- Closes with one forward-looking sentence about next month's booking volume and an invitation to discuss the renewal when it comes up
+
+Keep it under 200 words. This should take me less than 5 minutes per partner per month to personalize and send.</div>
+      <p class="ai-prompt-note"><strong>Consistency is the differentiator.</strong> Most STR hosts who close a brand deal send one follow-up email and then go silent. A host who sends a value report every month looks like a media partner, not a favor. At renewal time, the brand with a data-rich partner is not shopping for a replacement — they're upgrading the deal.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 12 Complete When:</div>
+      <h3>Your first brand partner is confirmed and delivering product. Your tracking system is running.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Brand category identified: your top partner type based on property and guest profile</li>
+        <li><span class="cp-box"></span>Prospect list built: 10–15 qualified brands with contact email and deal type identified</li>
+        <li><span class="cp-box"></span>Property media kit created: guest profile, reach numbers, placement opportunities, and ask clearly stated</li>
+        <li><span class="cp-box"></span>Pitch emails sent to first 5 prospects using the value-led email framework</li>
+        <li><span class="cp-box"></span>First deal closed: a brand is sending product, or an experience partner has provided a referral code</li>
+        <li><span class="cp-box"></span>Monthly report template built: ready to send with this month's numbers in under 10 minutes</li>
+        <li><span class="cp-box"></span>Proceed to Module 13 — Acquisition at Scale: how to grow the portfolio, evaluate new markets, and build the team that runs the system without you</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>Brand Partnerships Are a Moat, Not Just a Revenue Line</h3>
+    <p>A competitor can match your nightly rate. They can copy your listing description. They can build a similar direct booking site. What they cannot replicate is your two-year relationship with a regional winery whose wine greets every guest at check-in, whose bottles appear in creator reels, whose referral code earns you commissions, and whose marketing team sends your property newsletter to their own subscriber list as a recommended destination.</p>
+    <p>Every brand partnership deepens the differentiation between your property and the undifferentiated rental down the road. Guests who arrive at a property where the wine was curated, the gear was intentional, and the local recommendations come with insider access don't book the other property. They re-book you. They refer you. They write the review that converts the next guest.</p>
+    <ul>
+      <li><strong>Creator network (Module 10)</strong> — creates content that attracts brand partners and introduces you to their audiences</li>
+      <li><strong>Curated experiences (Module 11)</strong> — your local experience recommendations become commission partners in Module 12</li>
+      <li><strong>Email system (Module 07)</strong> — your Kit sequence is where brand product references compound: a mention in the pre-arrival email, in the mid-stay check-in, and in the post-stay survey all drive awareness and conversion</li>
+      <li><strong>Guidebook (Module 05)</strong> — the primary delivery channel for brand partner recommendations — every guest reads it, every guest gets the referral code</li>
+    </ul>
+    <p>Module 13 scales this system: a second property inherits every brand relationship, every creator contact, every referral code. Your portfolio value compounds nonlinearly because your infrastructure does.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 12: Sponsors & Brand Partnerships &nbsp;·&nbsp; Next: Module 13 — Acquisition at Scale
+</footer>
+
+    <div class="audit-grid">
+      <div class="audit-card caution">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Occupancy Rate</div>
+        <div class="audit-target">65–80% annual average</div>
+        <div class="audit-why">Below 65% signals pricing too high for market demand or a listing presentation problem. Above 80% year-round typically signals pricing too low — money being left on the table on peak weekends. The sweet spot is 65–80% with deliberate high pricing on peak dates.</div>
+      </div>
+      <div class="audit-card caution">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Direct Booking Rate</div>
+        <div class="audit-target">&gt; 15% of total nights</div>
+        <div class="audit-why">Direct bookings at 15%+ mean the machine is working. At this rate, the revenue improvement on a $75K gross property exceeds $3,000/year after accounting for the OTA savings. Below 10% means the direct booking infrastructure (Module 06) or the capture layer (StayFi / Kit) needs attention before scaling.</div>
+      </div>
+      <div class="audit-card ready">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Review Score</div>
+        <div class="audit-target">4.8+ Airbnb, 4.7+ overall</div>
+        <div class="audit-why">Below 4.8 on Airbnb affects search visibility and conversion. A second property starts from zero reviews — it needs Property 1's operational playbook to be proven at 4.8+ before it gets applied to a new property. A 4.7 average means there's a guest experience gap that will follow you to Property 2.</div>
+      </div>
+      <div class="audit-card caution">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Past-Guest Email List</div>
+        <div class="audit-target">&gt; 50 verified contacts</div>
+        <div class="audit-why">The email list is the first asset that scales to a second property immediately. A guest who stayed at Property 1 is a warm prospect for Property 2 in the same or a nearby market. 50 contacts is a minimum — the list grows fastest with StayFi running at the property (Module 07).</div>
+      </div>
+      <div class="audit-card not-ready">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Upsell Revenue</div>
+        <div class="audit-target">&gt; $500/year ancillary</div>
+        <div class="audit-why">If the upsell system (Module 10) is active and generating less than $500 in annual ancillary revenue, the offer mix or delivery mechanism needs refinement before replicating it on Property 2. The OwnerRez Extras setup and the pre-arrival email sequence should be tested to conversion before they become the template.</div>
+      </div>
+      <div class="audit-card caution">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Content Ranking</div>
+        <div class="audit-target">1+ keyword in top 20</div>
+        <div class="audit-why">The content and GBP work from Module 08 compounds over time. If you're not ranking in the top 20 for at least one target keyword after 90+ days of content, the hub piece or GBP needs additional attention before you build content for a second property in a new market. A ranking in top 20 confirms the strategy is working.</div>
+      </div>
+      <div class="audit-card ready">
+        <div class="audit-status">Target</div>
+        <div class="audit-metric">Operational Hours/Week</div>
+        <div class="audit-target">&lt; 5 hrs/week at steady state</div>
+        <div class="audit-why">If you're personally spending more than 5 hours per week managing the property, the systems aren't running autonomously yet. Scaling adds properties before the first property is running on systems means linear labor growth — the opposite of what the Hub-and-Spoke model is designed to create.</div>
+      </div>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">The First Property Funds the Second</div>
+      <p>The math on optimizing Property 1 before acquiring Property 2:</p>
+      <table class="rev-table">
+        <thead>
+          <tr><th>Scenario</th><th class="num">Property 1 Revenue</th><th class="num">Incremental Gain</th><th class="num">Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Status quo — no optimization</td><td class="num">$54,000</td><td class="num">—</td><td>60% of potential, typical operator</td></tr>
+          <tr><td>Dynamic pricing fully tuned</td><td class="num">$60,000</td><td class="num pos">+ $6,000</td><td>Better peak pricing, shorter minimum stays in shoulder season</td></tr>
+          <tr><td>Direct booking at 15%</td><td class="num">$62,000</td><td class="num pos">+ $2,000</td><td>Commission saved on 15% of bookings</td></tr>
+          <tr><td>Upsells active</td><td class="num">$63,500</td><td class="num pos">+ $1,500</td><td>Conservative ancillary estimate</td></tr>
+          <tr class="highlight"><td class="total">Fully optimized Property 1</td><td class="num total">$81,000</td><td class="num pos">+ $27,000/yr</td><td>Covers the carry on a $400K Property 2</td></tr>
+        </tbody>
+      </table>
+      <p>This is a simplified model — your numbers will vary. The point is directional: the optimization gap is almost always larger than operators estimate, and closing it is almost always faster than acquiring a second property.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Run Your Property Optimization Audit</h4>
+      <div class="ai-prompt-box">I want to run a complete revenue optimization audit on my STR before deciding whether to acquire a second property. Help me identify the gaps and prioritize actions.
+
+My current property metrics:
+- Property type: [CABIN / COTTAGE / LAKE HOUSE / etc.]
+- Market: [CITY, STATE]
+- Annual gross revenue: [$XX,XXX]
+- Estimated revenue potential (AirDNA or similar): [$XX,XXX]
+- Current occupancy rate: [XX%]
+- Average daily rate: [$XXX]
+- Direct booking % of total nights: [XX%]
+- Airbnb review score: [X.X out of 5]
+- Total Airbnb reviews: [XX]
+- Past-guest email list size: [XX contacts]
+- Annual upsell / ancillary revenue: [$X,XXX or "none yet"]
+- Time I personally spend per week managing: [X hours]
+- Content ranking: [ranking for any keyword / "not yet measured"]
+
+Modules I've completed that are actively running:
+[LIST MODULES FROM THE SPOKEBNB COURSE: e.g., "Module 06 direct booking site live, Module 07 StayFi + Kit connected, Module 08 one hub post published, Module 09 review request sequence active, Module 10 OwnerRez Extras configured for early check-in"]
+
+Based on these metrics, do three things:
+
+1. GAP ANALYSIS
+Identify the gaps between my current metrics and the SpokeBnB optimization targets. For each gap, estimate the annual revenue impact of closing it (conservative estimate).
+
+2. PRIORITIZED ACTION PLAN
+List the 3–5 highest-impact actions I should take on Property 1 before committing capital to Property 2, in priority order. For each action: what to do, why it's the highest priority, and how long it will take to implement.
+
+3. SCALING READINESS VERDICT
+Based on my current metrics, give me a direct assessment: am I ready to scale now, or should I spend another 60–90 days optimizing Property 1 first? If not ready, what is the specific metric or system that needs to be in place before scaling makes sense?</div>
+      <p class="ai-prompt-note"><strong>Be honest with the numbers.</strong> The audit is only useful if it reflects reality. Use your actual OwnerRez revenue reports, Airbnb host dashboard, and Kit contact count. A flattering self-assessment produces a plan built on a false floor.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 01 Complete When:</div>
+      <h3>You know your current property's performance ceiling and the specific gaps standing between you and it.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>All 7 audit metrics pulled from actual platform data — not estimates</li>
+        <li><span class="cp-box"></span>Revenue gap calculated: current earnings vs. optimization ceiling</li>
+        <li><span class="cp-box"></span>Top 3 highest-impact optimization actions identified and sequenced</li>
+        <li><span class="cp-box"></span>Scaling readiness verdict reached: ready now / 60-day optimization window / 90-day optimization window</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 2 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-2">
+    <div class="lesson-header">
+      <div class="lesson-num">02</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Multi-Property Systems — One Platform Stack, Multiple Properties</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Understand how OwnerRez, Kit, StayFi, and your direct booking site extend to a second property without duplicating infrastructure. Know which architecture decisions you make now that determine how well the system scales later.
+    </div>
+
+    <p>The infrastructure you built for Property 1 — OwnerRez, Kit, StayFi, the direct booking site — is not single-property infrastructure. Adding Property 2 means connecting a new spoke to the hub, not building a new hub. The labor cost of Property 2 should be a fraction of Property 1's setup, because the system is already running.</p>
+
+    <p>This only holds if the system architecture is intentional. A Kit account that wasn't tagged by property, a direct booking site that was designed for one property only, or an OwnerRez channel manager that wasn't configured to handle multiple properties all create friction when Property 2 arrives. The decisions below cost nothing to make correctly now and are expensive to undo later.</p>
+
+    <h3>OwnerRez — Multi-Property Architecture</h3>
+    <p>OwnerRez is built for multi-property operators. Adding a second property is a matter of configuring a new property in your existing account — the channel manager connections, the trigger messages, the tax settings, and the rate rules all travel with each property as separate configurations under the same account.</p>
+
+    <ul>
+      <li><strong>Trigger messages (guest communications):</strong> In OwnerRez, trigger messages are set up per-property. Your pre-arrival message, check-in instructions, mid-stay check-in, and review request sequence from Property 1 become the template — duplicated for Property 2 with property-specific fields updated. Build Property 1's trigger message sequence as a clean, field-driven template from the start so it copies cleanly.</li>
+      <li><strong>Tax settings:</strong> Each property has its own tax configuration, reflecting its own jurisdiction's TOT rate, county rate, and state rate. If Property 2 is in a different municipality, it gets a different tax configuration without affecting Property 1's settings.</li>
+      <li><strong>Rate rules and pricing:</strong> OwnerRez rate rules are per-property. PriceLabs or Wheelhouse integrations (dynamic pricing tools) connect at the property level, so Property 2 can be connected to the same dynamic pricing account with its own market data.</li>
+      <li><strong>Extras (upsells):</strong> OwnerRez Extras are configurable per-property. The early check-in, late checkout, and add-on packages from Property 1 are the template — replicate and adjust pricing for Property 2's market.</li>
+    </ul>
+
+    <h3>Kit — Tagging for Multi-Property Email Lists</h3>
+    <p>Your Kit account becomes more valuable with each property, because every guest from every property joins the same list. A past guest from Property 1 (a lake house in the Finger Lakes) is a qualified prospect for Property 2 (a cabin in the Catskills). The list is a cross-property asset.</p>
+
+    <p>The tagging architecture is what makes this work without creating confusion:</p>
+
+    <ul>
+      <li><strong>Tag by property at the StayFi level:</strong> StayFi allows you to create a separate WiFi network configuration per property. Each property's StayFi network passes a property-specific tag to Kit when a guest opts in. This means you can segment your list by which property a guest has stayed at — and send property-specific re-booking offers to the right guests.</li>
+      <li><strong>Tag by stay date:</strong> OwnerRez's Kit integration can pass stay date information as tags, allowing you to identify first-time guests vs. returning guests, recent guests vs. guests from 18+ months ago, and guests who stayed in peak season vs. shoulder season.</li>
+      <li><strong>Property-specific sequences vs. shared sequences:</strong> Some email sequences are property-specific (the welcome email with property-specific local tips, the pre-arrival email with property-specific check-in instructions). Others are shared across properties (the re-booking offer at Day 21, the annual "we're thinking of you" email in the off-season). Build the shared sequences to be property-agnostic from the start — they scale automatically.</li>
+    </ul>
+
+    <h3>Direct Booking Site — Hub vs. Spoke Architecture</h3>
+    <p>This is the most architecturally significant decision in scaling. You have two paths:</p>
+
+    <div class="scale-paths">
+      <div class="scale-path same">
+        <div class="scale-path-header">
+          <div class="scale-path-label">Option A</div>
+          <div class="scale-path-title">Multi-Property Hub Site</div>
+        </div>
+        <div class="scale-path-body">
+          <div class="scale-path-section">How it works</div>
+          <ul>
+            <li>One domain presents multiple properties (e.g., fingerlakesgetaways.com with Property 1 and Property 2 listed)</li>
+            <li>One OwnerRez booking widget with property selection</li>
+            <li>One GBP, one content hub, one email sender domain</li>
+          </ul>
+          <div class="scale-path-section">Best when</div>
+          <ul>
+            <li>Properties are in the same geographic market or region</li>
+            <li>Your brand is the destination brand, not the individual-property brand</li>
+            <li>You plan to add 3+ properties — a hub site scales better than managing 5 separate domains</li>
+          </ul>
+          <div class="scale-path-section">Trade-off</div>
+          <ul>
+            <li>Each property gets slightly less dedicated SEO focus; the domain authority is shared across the region, not concentrated on a single address</li>
+          </ul>
+        </div>
+      </div>
+      <div class="scale-path new">
+        <div class="scale-path-header">
+          <div class="scale-path-label">Option B</div>
+          <div class="scale-path-title">Separate Domain per Property</div>
+        </div>
+        <div class="scale-path-body">
+          <div class="scale-path-section">How it works</div>
+          <ul>
+            <li>Each property has its own domain (e.g., lakehouseonseneca.com and catskillsretreat.com)</li>
+            <li>Separate OwnerRez booking widget per site</li>
+            <li>Separate GBP per property (Google allows one GBP per physical location)</li>
+          </ul>
+          <div class="scale-path-section">Best when</div>
+          <ul>
+            <li>Properties are in different markets with different target audiences</li>
+            <li>Each property has a distinct brand identity (a luxury lake house and a rustic cabin are different products)</li>
+            <li>You have 2–3 properties — manageable at this scale</li>
+          </ul>
+          <div class="scale-path-section">Trade-off</div>
+          <ul>
+            <li>Each domain requires its own content strategy and SEO effort; more domains = more ongoing work</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">✓ The SpokeBnB Native Architecture</div>
+      <p>The Hub-and-Spoke model from the beginning of this course maps directly to this decision. The hub is the destination brand — the broader geographic market. Each spoke is a property within that market. A hub site at the destination level (the Finger Lakes, the Smokies, the Outer Banks) with individual property pages is the SpokeBnB architecture applied to your direct booking stack. It scales better than separate domains, concentrates SEO authority, and positions you as a destination operator rather than a single-property host. Module 13 covers how to extend this to Local Guide partnerships and TheLakeInsider-style editorial platforms.</p>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-header">
+        <span class="ai-prompt-icon">◆</span>
+        <span class="ai-prompt-label">AI PROMPT — Document Your System Architecture for Property 2</span>
+      </div>
+      <p class="ai-prompt-instruction">Before you add a second property, you need to know exactly what you're replicating. Use this prompt to audit your current stack for portability and identify what needs to change before Property 2 is operational.</p>
+      <div class="ai-prompt-code">
+        <span class="ai-prompt-var">I'm preparing to add a second short-term rental property to my current system. Help me audit my existing stack for multi-property readiness and identify exactly what needs to change.
+
+CURRENT PROPERTY 1:
+- Property name: [e.g., "The Lakeview Cabin"]
+- Location: [City, State]
+- Direct booking site URL: [URL]
+- Time in operation: [X months/years]
+- Monthly reservations: approximately [X]
+- Review count: [X]
+
+MY CURRENT STACK (list each tool and how it's configured):
+- PMS: [OwnerRez / other] — calendar sync: [Airbnb, VRBO, direct — yes/no for each]
+- Dynamic pricing: [PriceLabs / manual / other]
+- Guest communication: [OwnerRez triggers / Hospitable / other] — how many automated messages?
+- Email capture: [StayFi / other] — list size: [X]
+- Email marketing: [Kit / Mailchimp / none]
+- Direct booking site: [OwnerRez hosted / custom / none]
+- Smart lock: [brand] — access code method: [auto-generated / manual]
+- Noise monitoring: [brand / none]
+- Cleaning management: [Turno / manual scheduling]
+
+PROPERTY 2 TARGET:
+- Location: [City, State — same market or different?]
+- Property type: [same as P1 / different — describe]
+- Expected launch date: [month/year]
+
+EVALUATE AND REPORT:
+1. Which of my current OwnerRez templates are hard-coded to Property 1 (address, property name, specific instructions) vs. field-driven and portable?
+2. Does my Kit tagging architecture need to change to segment P1 vs. P2 guests — and what's the simplest tag structure?
+3. Hub site or separate domain for P2 — given my market situation, which architecture makes more sense and why?
+4. Which tool in my stack will require the most setup time when adding P2, and what's the setup sequence?
+5. What's the one thing I should document about P1 right now, while I still know it instinctively, before P2 complexity makes me forget it?</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 02 Complete When:</div>
+      <h3>Your system architecture is documented and ready to receive a second property.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>OwnerRez trigger messages for Property 1 are clean, field-driven templates — not hard-coded to a specific address or property name</li>
+        <li><span class="cp-box"></span>Kit tagging architecture documented — how guests from each property will be tagged, and which sequences are property-specific vs. shared</li>
+        <li><span class="cp-box"></span>Direct booking site architecture decided — hub site or separate domain per property, with the rationale written down</li>
+        <li><span class="cp-box"></span>StayFi multi-property configuration understood — ready to add Property 2 network when the property is operational</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 3 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-3">
+    <div class="lesson-header">
+      <div class="lesson-num">03</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The Second Property Decision — Same Market or New Market</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Make a deliberate, data-driven decision about whether your second property should be in your existing market or a new one — using a structured comparison of the regulatory, operational, and revenue leverage factors on each side.
+    </div>
+
+    <p>Most operators pick their second market the same way they picked their first: by feel, by opportunity, or by where they want to vacation. This is how operators end up with two properties in two markets they don't understand deeply, each requiring full build-out of the local knowledge, vendor relationships, and content strategy that already exists for Property 1's market.</p>
+
+    <p>The same-market vs. new-market decision deserves the same rigor as the Module 11 market entry checklist. The considerations are different — this is not just a regulatory question but an operational leverage question. The right answer depends on your specific situation, not on a general rule.</p>
+
+    <h3>The Same-Market Case — Concentrated Leverage</h3>
+    <p>When you add a second property in the same market as Property 1, every asset built for Property 1 becomes more valuable:</p>
+    <ul>
+      <li><strong>Regulatory clarity already exists.</strong> You know the permit requirements, the tax stack, the HOA landscape for this market. Property 2 in the same market requires a property-level compliance check, not a market-level regulatory build-out from scratch.</li>
+      <li><strong>Your email list already knows this destination.</strong> A guest who stayed at your Finger Lakes property and loved it is a warm prospect for your second Finger Lakes property — with a specific offer: "If our lake house was booked when you wanted to visit, we now have a second property available. Same quality, different view." That offer converts well.</li>
+      <li><strong>Your content and GBP already target this market.</strong> The hub piece from Module 08 that targets "best lake houses in the Finger Lakes" now promotes two properties with one piece of content. The GBP profile and reviews apply to Properties 1 and 2 under the same destination brand.</li>
+      <li><strong>Your local vendor relationships scale.</strong> The same cleaner, the same maintenance vendor, the same local guide partnerships from Module 13 serve both properties. You've already negotiated rates and built trust with these people.</li>
+      <li><strong>The second property gets reviews faster.</strong> Your past-guest list is already in the market. A soft launch email to past guests ("We've opened a second property — book direct for our founding guest rate") generates first-week bookings and first reviews without waiting for OTA search traction.</li>
+    </ul>
+
+    <h3>The New-Market Case — Diversification</h3>
+    <p>Adding a second property in a new market is the right call when:</p>
+    <ul>
+      <li><strong>Your existing market is saturated or approaching regulatory risk.</strong> If the Finger Lakes STR market has tightened significantly, or if your research shows pending restrictions, a second market in a different regulatory environment is genuine diversification.</li>
+      <li><strong>A specific opportunity has appeared that doesn't exist in your current market.</strong> A property at a price point, location, or amenity level not available in your market — and you've done the Module 11 research and confirmed it's Green.</li>
+      <li><strong>You're building a portfolio for long-term income diversification rather than maximum short-term leverage.</strong> Two properties in different markets means two different guest demographics, two different seasonality patterns, and two different regulatory environments — a genuinely diversified income base.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ The Real Cost of a New Market</div>
+      <p>A second property in a new market requires the operator to rebuild from zero everything that already exists for Property 1: market regulatory research (Module 11 checklist), a new market's pricing data and seasonality patterns (Module 03), new local vendor relationships, a new content strategy targeting new market keywords (Module 08), a new GBP profile, and potentially a new domain or new property page on the direct booking site. The operational setup cost for Property 2 in a new market is close to the operational setup cost for Property 1. In a same market, it is roughly 30–40% of Property 1's setup cost.</p>
+      <p>This doesn't mean new markets are wrong. It means the new market decision should be made because the diversification is worth the cost, not because the opportunity looked attractive before the cost was calculated.</p>
+    </div>
+
+    <h3>The Acquisition Criteria Framework — What Makes a Good Property 2</h3>
+    <p>Regardless of same-market or new-market, a second property evaluated through the SpokeBnB lens looks for:</p>
+    <ul>
+      <li><strong>Direct booking potential:</strong> Is this a destination-driven property (guests are visiting the area, not just the property) or an amenity-driven property (guests are coming specifically for the hot tub, the lake access, the proximity to a ski resort)? Destination-driven properties build direct booking channels faster because the content and GBP work targets a destination keyword, not just the property.</li>
+      <li><strong>Regulatory Green classification:</strong> Run the Module 11 market entry checklist. A Yellow market may still be viable but requires a shorter investment horizon and a stronger emphasis on direct booking infrastructure as a hedge.</li>
+      <li><strong>Upsell and experience partnership opportunity:</strong> Does the area have the kind of local operators (guides, chefs, activity providers) who form the Module 10 partnerships? A market with no local experience infrastructure produces lower ancillary revenue.</li>
+      <li><strong>Content and SEO leverage:</strong> Does the market have a search-traffic base for STR-related keywords? A market with 100 monthly searches for "vacation rentals in [market]" builds an organic booking channel more slowly than a market with 1,000. AirDNA and SEMrush both provide market-level search volume data.</li>
+    </ul>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Lesson 03 Complete When:</div>
+      <h3>You have a written decision with documented rationale: same market or new market, and why.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Same-market analysis complete — existing market's current regulatory status, capacity, and opportunity assessed</li>
+        <li><span class="cp-box"></span>New-market alternative identified if applicable — Module 11 checklist run on the prospective market</li>
+        <li><span class="cp-box"></span>Acquisition criteria framework applied to any specific property under consideration</li>
+        <li><span class="cp-box"></span>Decision written down — not "we're thinking about it" but "Property 2 will be in [market] because [specific criteria]"</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LESSON 4 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="lesson" id="lesson-4">
+    <div class="lesson-header">
+      <div class="lesson-num">04</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Building the Team — Moving from Owner-Operator to Operator</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Learning Objective</strong>
+      Map the complete labor stack of a scaled STR operation, understand the cost and leverage of each hire, and build the SOPs that allow someone else to run your property to your standard without you present.
+    </div>
+
+    <p>A single-property STR run by its owner can operate with informal systems — a mental checklist, a text thread with the cleaner, a vendor's cell number saved in your phone. A two-property STR run by an owner who also has a full-time job, a family, or additional investment activities cannot. The transition from informal operations to documented systems is not a sign that the business has gotten more complicated. It is the sign that it has become a real business.</p>
+
+    <p>The goal of this lesson is not to hire everyone on the labor stack immediately. It is to map the full stack so you know what you're eventually building toward, and to identify the highest-leverage hire for your current stage.</p>
+
+    <h3>The STR Labor Stack — Priority and Cost</h3>
+
+    <div class="labor-stack">
+      <div class="labor-tier">
+        <div class="labor-priority critical">Critical</div>
+        <div>
+          <div class="labor-role">Cleaner / Turnover Team</div>
+          <div class="labor-detail">The most operationally critical hire. A reliable, consistent cleaner who follows your standard is what makes a 5-star review score possible at scale. This is not a commodity vendor relationship — it is a business partnership. The cleaner sees every guest departure, knows when something is broken, and is often the last line of defense before a negative review. Invest in training, tip well, and communicate the standard in writing (your cleaning SOP).</div>
+        </div>
+        <div class="labor-cost">$80–180/turn<span>Per turnover, property-size dependent</span></div>
+      </div>
+      <div class="labor-tier">
+        <div class="labor-priority high">High</div>
+        <div>
+          <div class="labor-role">Maintenance Vendor</div>
+          <div class="labor-detail">A trusted handyman or maintenance vendor on retainer for your market is the second most operationally important relationship. Guest issues that require a physical fix — a broken lock, a malfunctioning appliance, a plumbing issue — need a same-day or next-day response. A known vendor who prioritizes your calls is worth more than a cheaper vendor who can't get there until next week. Build this relationship before you need it urgently.</div>
+        </div>
+        <div class="labor-cost">$75–150/hr<span>Or monthly retainer</span></div>
+      </div>
+      <div class="labor-tier">
+        <div class="labor-priority high">High</div>
+        <div>
+          <div class="labor-role">OwnerRez Automated Messaging</div>
+          <div class="labor-detail">Not a person — a system. OwnerRez's trigger message automation handles pre-arrival instructions, check-in confirmation, mid-stay check-in, and the review request sequence automatically. At scale, this is not optional: manually sending these messages across 2–5 properties is 10–20 messages per booking, across dozens of bookings per month. Automating this is the single highest-leverage operational decision before adding a second property. Configure it for Property 1, confirm it works correctly, then replicate it for Property 2.</div>
+        </div>
+        <div class="labor-cost">Included in OwnerRez<span>No additional hire required</span></div>
+      </div>
+      <div class="labor-tier">
+        <div class="labor-priority medium">Medium</div>
+        <div>
+          <div class="labor-role">Co-Host</div>
+          <div class="labor-detail">A co-host handles on-the-ground guest issues: responding to a lockout, coordinating with the cleaner, performing property checks between bookings. Typically sourced locally — a neighbor, a trusted contact, or a local professional co-host found through Airbnb's co-host program. The co-host model is the right first management hire when you've added a second property and need a local presence you don't have personally. The SpokeBnB system's automated guest messaging significantly reduces the volume of issues that require co-host intervention.</div>
+        </div>
+        <div class="labor-cost">10–20% of revenue<span>Or flat monthly rate</span></div>
+      </div>
+      <div class="labor-tier">
+        <div class="labor-priority low">Later</div>
+        <div>
+          <div class="labor-role">Full Property Manager</div>
+          <div class="labor-detail">A property management company handles everything — cleaning coordination, maintenance, guest communications, listing management. The cost is 20–40% of gross revenue. The SpokeBnB direct booking premium partially offsets this cost: a property earning $26.50 more per direct booking night (from the Module 06 math) can absorb more management cost than a 100% OTA property at the same listed rate. The property management model makes sense when you've scaled beyond the point where the co-host model is sufficient — typically 3+ properties in a market.</div>
+        </div>
+        <div class="labor-cost">20–40% of gross<span>Full management</span></div>
+      </div>
+    </div>
+
+    <h3>Standard Operating Procedures — What Allows the Team to Run Without You</h3>
+    <p>An SOP is not a bureaucratic document. It is the written version of how you do something when you're doing it well — captured before you hand it off, so the person who receives it can do it the same way you would. Four SOPs make the difference between a scalable operation and one that depends on you being available.</p>
+
+    <div class="sop-grid">
+      <div class="sop-card">
+        <div class="sop-icon">🧹</div>
+        <div class="sop-title">Cleaning & Turnover SOP</div>
+        <ul class="sop-items">
+          <li>Room-by-room cleaning sequence</li>
+          <li>Linen change and staging standard (with photos)</li>
+          <li>Restocking checklist: toiletries, paper goods, coffee, welcome items</li>
+          <li>Damage inspection — what to photograph and report</li>
+          <li>Final walkthrough checklist before marking ready</li>
+          <li>Emergency supply location (extra linens, light bulbs, batteries)</li>
+        </ul>
+      </div>
+      <div class="sop-card">
+        <div class="sop-icon">🔍</div>
+        <div class="sop-title">Pre-Checkout Inspection SOP</div>
+        <ul class="sop-items">
+          <li>High-wear item check: HVAC filters, smoke detectors, CO detectors</li>
+          <li>Appliance function test: hot tub temp, fire pit ignition, smart locks</li>
+          <li>Exterior inspection: patio furniture, outdoor items staged correctly</li>
+          <li>Guest supply levels: where below-threshold restocking is needed</li>
+          <li>Damage documentation process: photos, OwnerRez claim notes</li>
+        </ul>
+      </div>
+      <div class="sop-card">
+        <div class="sop-icon">🔧</div>
+        <div class="sop-title">Maintenance & Vendor SOP</div>
+        <ul class="sop-items">
+          <li>Vendor list with phone, specialty, and response time expectation</li>
+          <li>Issue classification: what to fix immediately vs. schedule vs. defer</li>
+          <li>Guest-impact issues: who calls the guest if a fix takes longer than expected</li>
+          <li>Utility shutoff locations: water main, electrical panel, gas shutoff</li>
+          <li>Spare key and lock code protocol for vendor access</li>
+        </ul>
+      </div>
+      <div class="sop-card">
+        <div class="sop-icon">💬</div>
+        <div class="sop-title">Guest Communication SOP</div>
+        <ul class="sop-items">
+          <li>OwnerRez trigger message sequence — what fires automatically vs. what requires a human response</li>
+          <li>Response time standard: all guest messages within X hours</li>
+          <li>Escalation path: co-host → owner for issues beyond co-host authority</li>
+          <li>Common issue scripts: early check-in requests, lost keys, noise complaints</li>
+          <li>Review request: OwnerRez automated vs. personal follow-up threshold</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">AI Prompt — Customize to Your Property</div>
+      <h4>Build Your Cleaning & Turnover SOP</h4>
+      <div class="ai-prompt-box">Help me write a complete cleaning and turnover SOP for my short-term rental property. I want a document I can hand to a new cleaner and have them execute our standard without me being present.
+
+Property details:
+- Type: [CABIN / LAKE HOUSE / COTTAGE / etc.]
+- Bedrooms: [NUMBER]
+- Bathrooms: [NUMBER]
+- Outdoor amenities: [HOT TUB / FIRE PIT / BOAT DOCK / GRILL / etc.]
+- Special features that require attention: [e.g., "wood-burning fireplace — ashes must be removed," "kayaks must be stored in the shed," "welcome basket on the kitchen island for every arrival"]
+- Cleaning products we provide vs. cleaner brings: [specify]
+- Restocking items I want maintained at all times: [e.g., toilet paper (minimum 4 rolls/bathroom), paper towels, dish soap, coffee + filters, etc.]
+- Our aesthetic/staging standard: [e.g., "coastal minimal — no clutter visible on any surface; towels rolled and standing, not folded flat; throw pillows arranged symmetrically"]
+- Guest check-out time: [TIME]
+- Next guest check-in time: [TIME]
+- Turnover window: [NUMBER hours available between check-out and check-in]
+
+Write a complete SOP in checklist format, room by room, that:
+1. Opens with timing — what to do first, what can happen in parallel, what must happen last
+2. Covers every room in logical sequence with specific, checkable tasks
+3. Includes a restocking checklist with specific quantities
+4. Includes the staging standard — what it looks like when it's right (specific, not vague)
+5. Includes a final walkthrough checklist before marking the property ready
+6. Ends with: what to photograph and text me if you find a problem
+
+Format as a printed checklist the cleaner can carry through the property.</div>
+      <p class="ai-prompt-note"><strong>After generating:</strong> Walk through the property with the SOP in hand on your next turnover. Mark any step that doesn't match your actual practice. The goal is a document that reflects how you actually do it, not an idealized version. Give the finalized document to your cleaner and do one supervised turnover together before leaving them to run it independently.</p>
+    </div>
+
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 12 Complete When:</div>
+      <h3>You have a documented team map, your critical SOPs written, and the system ready to receive a second property.</h3>
+      <ul class="checkpoint-items">
+        <li><span class="cp-box"></span>Labor stack mapped — current roles filled, gaps identified, and hire sequence prioritized</li>
+        <li><span class="cp-box"></span>Cleaning & Turnover SOP written and tested with current cleaner</li>
+        <li><span class="cp-box"></span>Maintenance & Vendor SOP written — vendor list complete with contact info and specialties</li>
+        <li><span class="cp-box"></span>OwnerRez trigger messages reviewed and confirmed as field-driven templates (not hard-coded)</li>
+        <li><span class="cp-box"></span>Kit tagging architecture documented and tested — Property 1 guests correctly tagged</li>
+        <li><span class="cp-box"></span>Property 2 market decision written: same market or new market, with documented rationale</li>
+        <li><span class="cp-box"></span>Proceed to Module 13 — Local Guide Integration: how the Hub-and-Spoke model extends to destination editorial platforms and high-value local partnerships that no OTA can replicate.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="machine-feed">
+    <div class="mf-label">Direct Booking Machine</div>
+    <h3>The Machine Scales Nonlinearly — Property 2 Inherits Property 1's Infrastructure</h3>
+    <p>A traditional OTA-dependent operator adding a second property starts from zero: new listing, no reviews, no ranking, competing against established listings in a new market. The SpokeBnB operator adding Property 2 in the same market starts with an email list of past guests, a domain with existing SEO authority, a GBP with existing reviews, and a Kit automation that can send a direct offer to past guests within 24 hours of Property 2 going live.</p>
+    <p><strong>Property 2's first booking window</strong> looks different for the two operators. The OTA-dependent operator waits weeks for their first review and months for search traction. The SpokeBnB operator emails 150 past guests with a founding-rate offer, gets 10–15 direct bookings in the first two weeks, and Property 2 has its first 10 reviews before it would have even ranked on Airbnb as a new listing.</p>
+    <ul>
+      <li><strong>Email list (Module 07)</strong> — a soft launch offer to past guests converts at 8–12% (the same re-booking rate as the Day-21 offer). 150 past guests × 10% = 15 advance bookings before the listing goes live.</li>
+      <li><strong>Direct booking site (Module 06)</strong> — if you've built a hub site (the SpokeBnB architecture), Property 2 is a new page on an existing domain, inheriting domain authority immediately.</li>
+      <li><strong>Content and GBP (Module 08)</strong> — one hub piece targeting the destination now drives traffic to two properties. The GBP review count grows across both properties' booking volume. Content leverage compounds with each property added.</li>
+      <li><strong>Reviews (Module 09)</strong> — the review request sequence from Property 1 is the template for Property 2. Property 2's review velocity starts at the same systematic rate as Property 1's. No learning curve on the process.</li>
+    </ul>
+    <p>Module 13 extends this further: Local Guide partnerships and destination editorial networks (the TheLakeInsider model) are the next layer of the machine — distribution channels that operate above the property level and generate demand that no individual OTA listing can access.</p>
+  </section>
+
+</main>
+
+<footer class="mod-footer">
+  SpokeBnB &nbsp;·&nbsp; Module 12: Scaling &nbsp;·&nbsp; Next: Module 13 — Local Guide Integration
+</footer>

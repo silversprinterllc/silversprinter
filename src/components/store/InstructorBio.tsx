@@ -35,7 +35,7 @@ export default function InstructorBio() {
 
             <div className="space-y-4 text-[var(--sf-navy)]/60 leading-relaxed">
               <p>
-                RevenuePerNight was developed from the inside — by operators who manage
+                SpokeBnB was developed from the inside — by operators who manage
                 real short-term rental portfolios, optimize real revenue, and close real
                 property deals every month.
               </p>
@@ -47,9 +47,14 @@ export default function InstructorBio() {
               </p>
               <p>
                 Every module, template, and tool recommendation comes from hundreds of
-                optimized listings, thousands of guest interactions, and millions in
-                managed rental revenue. This isn&apos;t theory from a YouTube channel.
-                It&apos;s the system we run.
+                optimized listings, thousands of guest interactions, and managed rental
+                revenue across multiple markets. This isn&apos;t theory from a YouTube channel.
+              </p>
+              <p className="border-l-2 border-[var(--sf-gold)] pl-4 italic">
+                I&apos;m rebuilding Lakeside Landing&apos;s direct booking system right now — in the same
+                market, facing the same 15.5% Airbnb fees you&apos;re facing. Every module in this
+                course maps to a step I&apos;m implementing on my own property. You&apos;re not learning
+                theory. You&apos;re watching a real rebuild, documented in real time.
               </p>
             </div>
 

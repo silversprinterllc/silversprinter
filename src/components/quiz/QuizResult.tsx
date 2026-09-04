@@ -14,7 +14,7 @@ interface Props {
   onRestart: () => void
 }
 
-const BRAND = '{{BRAND_NAME}}'
+const BRAND = 'SpokeBnB'
 
 function substituteBrand(text: string): string {
   return text.replace(/\{\{BRAND_NAME\}\}/g, BRAND)

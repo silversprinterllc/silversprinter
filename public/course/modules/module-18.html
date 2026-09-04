@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 18: Guest Damage Protection — SpokeBnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (light) ─────────────────────────────────── */
+:root {
+  --navy: #09263A; --navy-mid: #0d3550;
+  --gold: #D4A017; --cream: #F7F3EA;
+  --text: #1a2f3f; --muted: #4a6070;
+  --border: rgba(9,38,58,0.1); --bg: #F7F3EA; --card: #ffffff;
+  --mistake-bg: #fff7ed; --mistake-border: #f97316;
+  --math-bg: #f0f9ff; --math-border: #0284c7;
+  --tip-bg: #f0fdf4; --tip-border: #16a34a;
+  --warn-bg: #fefce8; --warn-border: #ca8a04;
+  --danger-bg: #fff1f2; --danger-border: #dc2626;
+  --gold-bg: rgba(212,160,23,0.06);
+  --table-head-bg: var(--navy);
+  --table-head-text: #fff;
+  --table-row-alt: rgba(9,38,58,0.03);
+}
+
+/* ── Dark mode (system) ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #091d2a; --card: #0d2738;
+    --text: #e8e0d0; --muted: #8ba0b0;
+    --border: rgba(255,255,255,0.08);
+    --cream: #091d2a;
+    --mistake-bg: #2a1200; --math-bg: #001624;
+    --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+    --gold-bg: rgba(212,160,23,0.1);
+    --table-head-bg: #0a1a26;
+    --table-row-alt: rgba(255,255,255,0.03);
+  }
+}
+/* ── Dark mode (explicit toggle) ───────────────────────────── */
+:root[data-theme="dark"] {
+  --bg: #091d2a; --card: #0d2738;
+  --text: #e8e0d0; --muted: #8ba0b0;
+  --border: rgba(255,255,255,0.08);
+  --cream: #091d2a;
+  --mistake-bg: #2a1200; --math-bg: #001624;
+  --tip-bg: #001a0a; --warn-bg: #1a1400; --danger-bg: #1a0006;
+  --gold-bg: rgba(212,160,23,0.1);
+  --table-head-bg: #0a1a26;
+  --table-row-alt: rgba(255,255,255,0.03);
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+img { max-width: 100%; }
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 20px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.05rem; margin-bottom: 8px; }
+p { margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
+strong { font-weight: 600; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Dark mode toggle ───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── Chain bar ──────────────────────────────────────────────── */
+.chain-bar {
+  background: var(--navy-mid);
+  padding: 10px 0;
+  overflow-x: auto;
+}
+.chain-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.chain-bar-inner .arrow { color: var(--gold); opacity: 0.6; }
+.chain-bar-inner .active { color: var(--gold); font-weight: 700; }
+
+/* ── Module header ──────────────────────────────────────────── */
+.mod-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0 56px;
+}
+.mod-header-inner { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+.mod-tag {
+  display: inline-block;
+  background: rgba(212,160,23,0.18);
+  color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(212,160,23,0.3);
+}
+.mod-header h1 { color: #fff; margin-bottom: 16px; }
+.mod-header .subtitle {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 700px;
+}
+.mod-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mod-meta-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500;
+}
+.mod-meta-item strong { color: #fff; }
+
+/* ── Deliverable banner ─────────────────────────────────────── */
+.deliverable-banner {
+  background: var(--gold-bg);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 40px 0 24px;
+}
+.deliverable-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.deliverable-banner h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 10px;
+}
+.deliverable-banner ul { margin: 0; }
+.deliverable-banner li { font-size: 14px; color: var(--muted); }
+
+/* ── Disclaimer ─────────────────────────────────────────────── */
+.disclaimer {
+  background: var(--card);
+  border-top: 3px solid #6b7280;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 0 0 32px;
+}
+.disclaimer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #6b7280;
+  margin-bottom: 8px;
+}
+.disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── Main content ───────────────────────────────────────────── */
+.content { padding: 48px 0 80px; }
+
+/* ── Lesson section ─────────────────────────────────────────── */
+.lesson { margin-bottom: 80px; }
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.lesson-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+}
+.lesson-title-wrap { flex: 1; }
+.lesson-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.lesson-title-wrap h2 { margin-bottom: 0; }
+.objective {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px; color: var(--muted);
+}
+.objective strong { color: var(--text); }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.callout p { font-size: 14.5px; line-height: 1.65; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul { font-size: 14.5px; }
+.callout.tip    { background: var(--tip-bg);     border-color: var(--tip-border); }
+.callout.tip    .callout-label { color: #16a34a; }
+.callout.math   { background: var(--math-bg);    border-color: var(--math-border); }
+.callout.math   .callout-label { color: #0284c7; }
+.callout.warn   { background: var(--warn-bg);    border-color: var(--warn-border); }
+.callout.warn   .callout-label { color: #ca8a04; }
+.callout.mistake { background: var(--mistake-bg); border-color: var(--mistake-border); }
+.callout.mistake .callout-label { color: #f97316; }
+.callout.danger { background: var(--danger-bg);  border-color: var(--danger-border); }
+.callout.danger .callout-label { color: #dc2626; }
+
+/* ── Protection layer cards ─────────────────────────────────── */
+.layer-stack { display: flex; flex-direction: column; gap: 16px; margin: 28px 0; }
+.layer-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.layer-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: var(--gold);
+}
+.layer-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 6px;
+}
+.layer-card h4 {
+  font-size: 15px; font-weight: 700; color: var(--navy);
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .layer-card h4 { color: #e8e0d0; }
+}
+:root[data-theme="dark"] .layer-card h4 { color: #e8e0d0; }
+.layer-card p { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+.layer-card ul { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+
+/* ── Deposit comparison cards ───────────────────────────────── */
+.deposit-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin: 24px 0;
+}
+@media (max-width: 580px) { .deposit-grid { grid-template-columns: 1fr; } }
+.deposit-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+.deposit-card-title {
+  font-size: 14px; font-weight: 700; color: var(--text);
+  margin-bottom: 4px; font-family: 'Inter', sans-serif;
+}
+.deposit-card-type {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 14px;
+}
+.deposit-card ul { font-size: 13.5px; color: var(--muted); margin-bottom: 0; }
+
+/* ── Photo checklist ────────────────────────────────────────── */
+.photo-section { margin: 24px 0; }
+.photo-section-title {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--navy);
+  background: rgba(9,38,58,0.06);
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .photo-section-title {
+    color: #e8e0d0;
+    background: rgba(255,255,255,0.06);
+  }
+}
+:root[data-theme="dark"] .photo-section-title {
+  color: #e8e0d0;
+  background: rgba(255,255,255,0.06);
+}
+.photo-section ul { font-size: 14px; color: var(--muted); }
+
+/* ── Claim steps ────────────────────────────────────────────── */
+.claim-steps { list-style: none; padding: 0; margin: 20px 0; }
+.claim-steps li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.claim-steps li:last-child { border-bottom: none; }
+.claim-step-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  margin-top: 2px;
+}
+.claim-step-body { flex: 1; }
+.claim-step-body strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 3px; }
+.claim-step-body p { font-size: 13.5px; color: var(--muted); margin: 0; }
+
+/* ── Hierarchy callout ──────────────────────────────────────── */
+.hierarchy {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.hierarchy-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 12px;
+}
+.hierarchy-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--text);
+}
+.hierarchy-item:last-child { border-bottom: none; }
+.hierarchy-arrow { color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* ── Coverage table ─────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 32px 0; border-radius: 10px; border: 1px solid var(--border); }
+.coverage-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px;
+}
+.coverage-table thead tr { background: var(--table-head-bg); }
+.coverage-table thead th {
+  color: var(--table-head-text);
+  padding: 12px 14px;
+  text-align: left; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.coverage-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+.coverage-table tbody tr:nth-child(even) td { background: var(--table-row-alt); }
+.coverage-table tbody tr:last-child td { border-bottom: none; }
+.td-yes  { color: #16a34a; font-weight: 600; }
+.td-no   { color: #dc2626; font-weight: 600; }
+.td-ltd  { color: #ca8a04; font-weight: 600; }
+
+/* ── AI Prompt block ────────────────────────────────────────── */
+.ai-prompt {
+  background: #1a0533;
+  border: 2px solid #7c3aed;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.ai-prompt-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #a78bfa;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ai-prompt-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(124,58,237,0.3);
+}
+.ai-prompt h4 {
+  font-size: 14px; font-weight: 700; color: #e9d5ff;
+  margin-bottom: 12px; margin-top: 0;
+  font-family: 'Inter', sans-serif;
+}
+.ai-prompt-box {
+  background: #0a0117;
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12.5px; color: #c4b5fd;
+  line-height: 1.8; white-space: pre-wrap;
+  margin-bottom: 14px; overflow-x: auto;
+}
+.ai-prompt-note {
+  font-size: 12.5px; color: rgba(167,139,250,0.75);
+  line-height: 1.65;
+  border-top: 1px solid rgba(124,58,237,0.2);
+  padding-top: 12px; margin: 0;
+}
+
+/* ── Machine feed ───────────────────────────────────────────── */
+.machine-feed {
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 48px 0 80px;
+}
+.mf-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mf-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,160,23,0.3); }
+.machine-feed h3 {
+  font-size: 1.25rem; color: #fff;
+  margin-bottom: 16px;
+}
+.machine-feed p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.75; }
+.machine-feed p + p { margin-top: 12px; }
+
+/* ── Checkpoint ─────────────────────────────────────────────── */
+.checkpoint {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 48px;
+}
+.checkpoint-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.checkpoint h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: #fff; margin-bottom: 16px;
+}
+.checkpoint-items { list-style: none; padding: 0; }
+.checkpoint-items li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75); font-size: 14px;
+}
+.checkpoint-items li:last-child { border-bottom: none; }
+.cp-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid rgba(212,160,23,0.5);
+  border-radius: 4px; margin-top: 2px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.lesson-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 64px 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12.5px;
+}
+footer span { color: var(--gold); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lesson-header { flex-direction: column; gap: 12px; }
+  .mod-meta { flex-direction: column; }
+  .chain-bar-inner { font-size: 11px; gap: 7px; }
+  .ai-prompt { padding: 18px 16px; }
+  .ai-prompt-box { font-size: 11.5px; }
+  .machine-feed { padding: 22px 20px; }
+  .checkpoint { padding: 22px 20px; }
+  .deposit-grid { grid-template-columns: 1fr; }
+  .coverage-table { font-size: 12px; }
+  .coverage-table thead th,
+  .coverage-table tbody td { padding: 9px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button class="theme-toggle" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme');if(!t){r.setAttribute('data-theme','dark');}else if(t==='dark'){r.setAttribute('data-theme','light');}else{r.removeAttribute('data-theme');}})()">
+  Toggle Dark
+</button>
+
+<!-- Chain bar -->
+<div class="chain-bar">
+  <div class="chain-bar-inner">
+    <span>Module 16: Tax Strategy</span>
+    <span class="arrow">→</span>
+    <span>Module 17: Mid-Term Rentals</span>
+    <span class="arrow">→</span>
+    <span class="active">Module 18: Damage Protection</span>
+  </div>
+</div>
+
+<!-- Module header -->
+<header class="mod-header">
+  <div class="mod-header-inner">
+    <div class="mod-tag">Module 18 — Supplementary</div>
+    <h1>Guest Damage Protection — The Documentation Protocol, Claim Filing Sequence, and Third-Party Coverage Products</h1>
+    <p class="subtitle">Security deposit vs. damage waiver, Superhog and Safely, the pre-arrival and post-departure photo protocol that makes claims succeed, the 72-hour window most operators miss, and how to file claims against AirCover, VRBO, and your own policy in the right order</p>
+    <div class="mod-meta">
+      <div class="mod-meta-item"><strong>Phase:</strong>&nbsp;Supplementary</div>
+      <div class="mod-meta-item"><strong>Lessons:</strong>&nbsp;4</div>
+      <div class="mod-meta-item"><strong>Time:</strong>&nbsp;2–3 Hours</div>
+      <div class="mod-meta-item"><strong>Prerequisites:</strong>&nbsp;Module 05 (Operations), Module 15 (Insurance) recommended</div>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="content">
+<div class="container">
+
+  <!-- Deliverable banner -->
+  <div class="deliverable-banner">
+    <div class="deliverable-label">Module Deliverables</div>
+    <h3>By the end of this module you will have:</h3>
+    <ul>
+      <li>A decision made on security deposit vs. damage waiver — implemented in OwnerRez for each booking channel</li>
+      <li>A pre-arrival and post-departure photo checklist specific to your property, ready for your cleaner or co-host to use</li>
+      <li>A claim filing sequence documented — what you do in the 72 hours after discovering damage, in the right order</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-label">Educational Content — Not Insurance or Legal Advice</div>
+    <p>This module is provided for educational purposes only. SpokeBnB and its instructors are not licensed insurance agents, brokers, or attorneys. Nothing in this module constitutes insurance advice, legal advice, or a recommendation to purchase any specific product. Platform policies, coverage products, and claim procedures change — verify current terms directly with each platform or provider before acting. For coverage decisions, consult a licensed insurance professional.</p>
+  </div>
+
+  <!-- ─── LESSON 1 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">1</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 1 of 4</div>
+        <h2>The Three-Layer Protection Stack — What Each Layer Covers and Where It Ends</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand the platform, third-party, and own-insurance layers of damage protection — what each covers, in what order to use them, and where each layer's coverage ends.
+    </div>
+
+    <p>Most operators think about damage protection as "AirCover will handle it." AirCover is one layer — and it is the thinnest layer in the stack. Understanding what each layer covers, in what order to use it, and where each layer's coverage ends is the difference between recovering $400 on a $3,000 damage claim and recovering $2,800.</p>
+
+    <div class="layer-stack">
+
+      <!-- Layer 1 -->
+      <div class="layer-card">
+        <div class="layer-badge">Layer 1</div>
+        <h4>Platform Protection — AirCover and VRBO Damage Protection</h4>
+        <p><strong>AirCover (Airbnb bookings only).</strong> Up to $3M in property damage and $1M in liability — these are headline numbers. The practical limits are lower. AirCover covers damage to the property and its contents caused by guests during an Airbnb booking. It excludes normal wear and tear, damage not reported within 72 hours of checkout, and damage where the host cannot provide documentation. It does not apply to VRBO bookings or direct bookings.</p>
+        <p style="margin-top:10px"><strong>VRBO Damage Protection.</strong> VRBO offers two options: (1) a security deposit collected through OwnerRez, held and released by you after inspection, or (2) VRBO's own damage protection product (Generali) purchased by the guest at booking. If the guest buys the VRBO damage product, claims go through Generali — not a guest-to-guest resolution. VRBO does not have an AirCover equivalent for host liability. Liability coverage for VRBO bookings comes from your STR-specific insurance policy.</p>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="layer-card">
+        <div class="layer-badge">Layer 2</div>
+        <h4>Third-Party Damage Products — Superhog, Safely, OwnerRez Damage Protection</h4>
+        <p>Per-booking products — charged to the guest or purchased by the host — that provide damage coverage for the gaps platform protection doesn't fill: direct bookings, VRBO bookings, and damage the platform denies.</p>
+        <ul style="margin-top:10px">
+          <li><strong>Superhog ($7–12/booking):</strong> Guest-screening and damage protection hybrid. Guests complete identity verification before the booking is confirmed. Superhog then provides damage coverage up to $5,000–$10,000 (plan-dependent). Available through OwnerRez integration. Particularly useful for direct bookings where AirCover doesn't apply.</li>
+          <li><strong>Safely ($7–9/booking):</strong> Per-booking damage and liability protection. Integrates with OwnerRez. Provides coverage for damage not covered by AirCover or VRBO damage products.</li>
+          <li><strong>OwnerRez Damage Protection:</strong> OwnerRez's own damage protection option, added to any booking type as a non-refundable damage waiver collected at booking.</li>
+        </ul>
+        <p style="margin-top:10px">Use third-party damage products for all direct bookings, for high-value properties where AirCover limits are inadequate, and as a backstop for VRBO bookings where the Generali product is not in place.</p>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="layer-card">
+        <div class="layer-badge">Layer 3</div>
+        <h4>Your STR Insurance Policy — The Final Backstop</h4>
+        <p>For damage exceeding platform and third-party coverage, or damage those layers deny, your STR insurance policy (Module 15) is the backstop — Proper Insurance, Steadily, Foremost, or equivalent. Claims against your own insurance should be a last resort, not a first call, because your deductible applies, claims may affect your premium, and platform and third-party products exist specifically so small-to-medium damage claims don't touch your general policy.</p>
+      </div>
+
+    </div>
+
+    <h3>The Claim Hierarchy in Practice</h3>
+
+    <div class="hierarchy">
+      <div class="hierarchy-label">Damage Threshold → Filing Path</div>
+      <div class="hierarchy-item">
+        <span class="hierarchy-arrow">→</span>
+        <span><strong>Under $1,000 on an Airbnb booking:</strong> AirCover Resolution Center only</span>
+      </div>
+      <div class="hierarchy-item">
+        <span class="hierarchy-arrow">→</span>
+        <span><strong>$1,000–$5,000 on any booking:</strong> AirCover (if Airbnb) or Superhog/Safely, then file with own insurer if denied</span>
+      </div>
+      <div class="hierarchy-item">
+        <span class="hierarchy-arrow">→</span>
+        <span><strong>Above $5,000:</strong> File with platform, third-party product, AND notify your own insurer within the claim window — do not wait for the platform to resolve before notifying your policy</span>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-label">The 72-Hour Rule — The Clock Starts at Checkout</div>
+      <p>Airbnb's AirCover requires all damage reports to be submitted within 72 hours of checkout. This is not negotiable and is not extended for weekends, holidays, or travel. An operator who discovers damage on Tuesday from a Sunday checkout may have already missed the window.</p>
+      <p style="margin-top:10px">Check the property within 24 hours of every checkout. Train your cleaner to photograph and report damage before cleaning begins. The 72-hour window is the most commonly missed deadline in STR damage claims — and the one you cannot appeal once it passes.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 2 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">2</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 2 of 4</div>
+        <h2>Security Deposit vs. Damage Waiver — The Decision and How to Set It Up</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Understand the two models for collecting damage protection from guests, make the right choice for your property profile and booking channels, and configure the decision in OwnerRez.
+    </div>
+
+    <p>Two models exist for collecting damage protection from guests at booking. Each has a different psychological profile, a different claim surface, and different operational overhead. Choosing the wrong one for your property type or booking channel creates friction you don't need or gaps you didn't intend.</p>
+
+    <div class="deposit-grid">
+      <div class="deposit-card">
+        <div class="deposit-card-title">Security Deposit</div>
+        <div class="deposit-card-type">Refundable Hold</div>
+        <ul>
+          <li>You collect a set amount ($300–$500) from the guest at booking as a refundable deposit</li>
+          <li>OwnerRez holds the authorized amount and releases it after post-departure inspection — or retains it if damage is found</li>
+          <li><strong>Advantages:</strong> psychological ownership (guests treat it as their money being returned); larger amounts can be held for higher-risk bookings</li>
+          <li><strong>Disadvantages:</strong> friction at booking for large deposits; requires a release workflow; guests sometimes dispute damage deductions aggressively</li>
+          <li><strong>Best for:</strong> higher-end properties, high-ADR bookings, direct bookings and VRBO bookings without Generali</li>
+        </ul>
+      </div>
+      <div class="deposit-card">
+        <div class="deposit-card-title">Damage Waiver</div>
+        <div class="deposit-card-type">Non-Refundable Fee</div>
+        <ul>
+          <li>You collect a flat fee ($49–$99) from every guest, non-refundable, in exchange for coverage up to a stated limit (e.g., $1,500)</li>
+          <li>The "collision damage waiver" model — the guest pays a small fee and is covered against accidental damage up to the limit</li>
+          <li>OwnerRez supports damage waivers natively on any booking type</li>
+          <li><strong>Advantages:</strong> no friction at checkout (guests see it as a service fee, not a deposit hold); simpler workflow; less dispute surface</li>
+          <li><strong>Disadvantages:</strong> doesn't cover damage above the waiver limit without the guest's agreement; smaller ceiling than a full deposit at higher-value properties</li>
+          <li><strong>Best for:</strong> Airbnb bookings (AirCover provides primary coverage; waiver fills gaps)</li>
+        </ul>
+      </div>
+    </div>
+
+    <p><strong>Recommendation for most operators:</strong> Damage waiver for Airbnb bookings. Security deposit for direct bookings and higher-value VRBO bookings. The two models can coexist — OwnerRez allows different damage protection settings per booking channel and per property.</p>
+
+    <h3>OwnerRez Setup</h3>
+    <p>Navigate to Settings → Damage Protection in OwnerRez. Configure either a security deposit or damage waiver per property and booking channel. Airbnb-specific settings note: Airbnb handles its own deposit logic and AirCover coverage; OwnerRez coordinates the deposit workflow for VRBO and direct bookings. For Airbnb bookings, the damage waiver operates alongside AirCover — not in place of it.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">The High-ADR Exception</div>
+      <p>For properties with average booking values above $3,000 — high-ADR lake houses, cabin compounds, large group properties — a security deposit of $500–$1,000 is often worth the minor booking friction. The higher the booking value, the more your guests have self-selected as guests who can afford the property, and the larger the potential damage to protect against.</p>
+      <p style="margin-top:10px">Calibrate your deposit to 15–20% of your average booking value. A $4,000 average booking warrants a $600–$800 deposit. A $800 average booking warrants a $120–$160 deposit — or a damage waiver instead.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 3 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">3</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 3 of 4</div>
+        <h2>The Pre/Post Documentation Protocol — The Evidentiary Record That Makes Claims Pay</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Build the before-and-after photo protocol that converts damage events into recoverable claims — and systemize it so it runs every turn without you.
+    </div>
+
+    <p>No documentation — no claim paid. This is the rule that cannot be overstated. AirCover disputes come down to before-and-after evidence. The operator who can produce timestamped photos of every surface before a guest arrived and the same surfaces after they departed wins disputes. The operator who cannot document pre-existing condition loses them.</p>
+
+    <h3>Pre-Arrival Documentation Checklist</h3>
+    <p>Complete before every guest arrival. These photos are the baseline record that proves damage was not pre-existing.</p>
+
+    <div class="photo-section">
+      <div class="photo-section-title">Exterior</div>
+      <ul>
+        <li>Front entrance and door — no scratches, knob intact</li>
+        <li>Driveway and parking area — no existing damage</li>
+        <li>Deck or patio — photograph furniture count and condition</li>
+        <li>Grill — clean, lid intact, knobs intact</li>
+        <li>Hot tub — cover intact, jets operating, water level normal</li>
+        <li>Dock and waterfront (if applicable) — kayaks, life rings, dock cleats</li>
+        <li>Exterior lighting — all fixtures intact</li>
+      </ul>
+    </div>
+
+    <div class="photo-section">
+      <div class="photo-section-title">Living Spaces</div>
+      <ul>
+        <li>All walls — no new holes or marks</li>
+        <li>All flooring — no new stains or damage</li>
+        <li>All furniture — sofas, chairs, no tears, stains, or structural issues</li>
+        <li>Dining table and chairs — photograph chair count and condition</li>
+        <li>All lamps and light fixtures</li>
+        <li>All electronics — TV, remotes on counter and working, speakers</li>
+      </ul>
+    </div>
+
+    <div class="photo-section">
+      <div class="photo-section-title">Kitchen</div>
+      <ul>
+        <li>All appliances operating — stove, oven, refrigerator, dishwasher, microwave</li>
+        <li>All cookware and utensils present — use a kitchen inventory list</li>
+        <li>Countertops — no burns or scratches</li>
+      </ul>
+    </div>
+
+    <div class="photo-section">
+      <div class="photo-section-title">Bathrooms (each)</div>
+      <ul>
+        <li>Toilet — intact, no damage</li>
+        <li>Vanity mirror — no cracks</li>
+        <li>Shower tile — no damage</li>
+        <li>Towel bars and hooks — intact</li>
+      </ul>
+    </div>
+
+    <div class="photo-section">
+      <div class="photo-section-title">Bedrooms (each)</div>
+      <ul>
+        <li>Mattresses — no stains (use white sheets so stains show)</li>
+        <li>Headboards — no damage</li>
+        <li>Closets — door operation</li>
+      </ul>
+    </div>
+
+    <div class="callout math">
+      <div class="callout-label">Photo Storage Protocol</div>
+      <p>Name each folder by reservation date and guest name — for example: <em>2026-07-04_Smith_Checkout</em>. Store in cloud (Google Photos, iCloud) immediately after shooting — timestamps are embedded in photo metadata and are the primary evidence in a disputed claim. Retain for at least 12 months.</p>
+    </div>
+
+    <h3>Post-Departure Documentation Walkthrough</h3>
+    <p>Walk the property before the cleaning team begins. The sequence matters — outdoor damage is the most commonly missed damage in a rush to clean the interior.</p>
+
+    <ol>
+      <li>Exterior first — outdoor furniture, grill, hot tub, dock, kayaks</li>
+      <li>Main living area — all surfaces and furniture before anything is moved</li>
+      <li>Kitchen — appliances, countertops, cookware</li>
+      <li>Each bedroom and bathroom</li>
+      <li>Final walkthrough of all walls, floors, and high-value items</li>
+    </ol>
+
+    <p>Photograph anything that has changed from the pre-arrival state. A mark you're unsure about — photograph it anyway. The cost of one extra photo is zero. The cost of not photographing a disputed mark is potentially the entire damage claim.</p>
+
+    <div class="callout tip">
+      <div class="callout-label">Build This Into Your Cleaner SOP</div>
+      <p>Your cleaner is the person who sees the property immediately post-departure, before anything is moved or cleaned. Add pre-departure documentation to their cleaning protocol — 15 minutes of photos before they begin. Compensate them $10–$15 extra for a thorough documentation walkthrough.</p>
+      <p style="margin-top:10px">One well-documented claim pays for years of that extra compensation. A cleaner who knows to photograph first and clean second is a business asset, not just a housekeeping resource. Include this in the Cleaning and Turnover SOP from Module 05.</p>
+    </div>
+
+  </section>
+
+  <hr class="lesson-divider">
+
+  <!-- ─── LESSON 4 ──────────────────────────────────────────── -->
+  <section class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-num">4</div>
+      <div class="lesson-title-wrap">
+        <div class="lesson-label">Lesson 4 of 4</div>
+        <h2>Filing a Damage Claim — Platform, Third-Party, and Insurance</h2>
+      </div>
+    </div>
+
+    <div class="objective">
+      <strong>Objective:</strong> Know the exact claim filing sequence for each layer of the protection stack — Airbnb AirCover, VRBO, Superhog/Safely, and your own STR insurance policy.
+    </div>
+
+    <p>The sequence matters. File in order — platform first, third-party second, own insurance last. Filing out of order does not disqualify a claim, but it wastes time and may create coordination problems if two payers cover overlapping damage.</p>
+
+    <h3>Airbnb AirCover Claim (72-Hour Clock)</h3>
+
+    <ol class="claim-steps">
+      <li>
+        <span class="claim-step-num">1</span>
+        <div class="claim-step-body">
+          <strong>Log in to Airbnb and navigate to the reservation in your hosting dashboard</strong>
+          <p>Find the specific reservation, not the general Resolution Center — the claim is tied to the booking record.</p>
+        </div>
+      </li>
+      <li>
+        <span class="claim-step-num">2</span>
+        <div class="claim-step-body">
+          <strong>Resolution Center → Request money from guest, or Submit for AirCover review</strong>
+          <p>For damage the guest acknowledges: request payment directly. For damage above what the guest will pay, or damage the guest disputes: submit for AirCover review.</p>
+        </div>
+      </li>
+      <li>
+        <span class="claim-step-num">3</span>
+        <div class="claim-step-body">
+          <strong>Upload all photos and submit an itemized damage list</strong>
+          <p>For each damaged item: name the item, describe the damage specifically, provide a dollar amount, and attach a supporting invoice, receipt, or market-equivalent quote. Vague descriptions ("damaged items — $500") are rejected. Itemized lists win ("1x ceramic lamp, broken at base — $125 replacement cost, Home Depot SKU #XXXXX").</p>
+        </div>
+      </li>
+      <li>
+        <span class="claim-step-num">4</span>
+        <div class="claim-step-body">
+          <strong>Submit — Airbnb reviews within 3–5 business days</strong>
+          <p>If the guest disputes, Airbnb mediates. Do not assume mediation means denial — it means review.</p>
+        </div>
+      </li>
+      <li>
+        <span class="claim-step-num">5</span>
+        <div class="claim-step-body">
+          <strong>If denied or partially denied: escalate</strong>
+          <p>Reply to the AirCover review email and request a second review with additional documentation. Request supervisor review if the escalation is dismissed. Airbnb's Resolution Center process is a negotiation, not a one-shot decision.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="table-wrap">
+      <table class="coverage-table">
+        <thead>
+          <tr>
+            <th>AirCover Claim Factor</th>
+            <th>Wins Claims</th>
+            <th>Kills Claims</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Photo documentation</td>
+            <td class="td-yes">Timestamped before/after photos, taken pre-clean</td>
+            <td class="td-no">No before photos; or photos taken after cleaning began</td>
+          </tr>
+          <tr>
+            <td>Filing timing</td>
+            <td class="td-yes">Filed within 24–48 hours of checkout</td>
+            <td class="td-no">Filed after the 72-hour window</td>
+          </tr>
+          <tr>
+            <td>Damage description</td>
+            <td class="td-yes">Itemized list with specific amounts and receipts/quotes</td>
+            <td class="td-no">Vague descriptions without dollar amounts or support</td>
+          </tr>
+          <tr>
+            <td>Item type</td>
+            <td class="td-yes">Property damage, broken fixtures, destroyed furnishings</td>
+            <td class="td-no">Normal wear and tear — Airbnb explicitly excludes these</td>
+          </tr>
+          <tr>
+            <td>Supporting evidence</td>
+            <td class="td-yes">Contractor invoices or identical-item replacement quotes</td>
+            <td class="td-no">No receipts; no quotes; estimated amounts only</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>VRBO Damage Claim</h3>
+    <p>If the guest purchased VRBO's Generali damage protection: the claim is filed through Generali's own claims portal, not through the VRBO resolution center. Generali has separate documentation requirements and timelines — read your policy for the exact window (typically 14–30 days of checkout).</p>
+    <p>If you collected a security deposit through OwnerRez: file a damage claim in OwnerRez → Bookings → Damage. Submit your documentation package. If the guest disputes the charge, it goes to VRBO mediation.</p>
+
+    <h3>Superhog and Safely Claims</h3>
+    <p>File through the respective platform's claim portal within their stated window (typically 5–14 days of checkout — read your specific policy). Upload the same documentation package as your AirCover claim: timestamped before/after photos, itemized damage list, replacement quotes. These are generally faster to resolve than AirCover because there is no guest-mediation loop — the claim is between you and the coverage provider, not you and the guest.</p>
+
+    <h3>Own STR Insurance Policy Claim</h3>
+    <p>Notify your insurer within 24–48 hours of discovering significant damage — even if you haven't resolved the platform claim yet. Some policies require timely notice regardless of other coverage. Your insurer will assign an adjuster. Provide the full documentation package: pre-arrival photos, post-departure photos, contractor estimate, and the platform's denial notice if applicable.</p>
+    <p>For large claims (above $10,000), consider a public adjuster who works on your behalf. Typical fee: 10–15% of the claim recovery. On a $25,000 claim, a $3,000 adjuster fee that secures full recovery is a sound trade.</p>
+
+    <h3>Writing the Guest Review After a Damage Claim</h3>
+    <p>Airbnb reviews are public. Be factual, not emotional. The review protects the next host from the same guest — it is a contribution to the host community, not a venting mechanism.</p>
+    <ul>
+      <li><strong>Acceptable:</strong> "Guest left the property with damage to [specific item]. Resolution required through AirCover."</li>
+      <li><strong>Avoid:</strong> Names, accusations, or language that could violate Airbnb community standards</li>
+    </ul>
+
+    <!-- AI Prompt -->
+    <div class="ai-prompt">
+      <div class="ai-prompt-label">Claude Prompt</div>
+      <h4>Build Your Pre/Post Stay Damage Documentation Checklist</h4>
+      <div class="ai-prompt-box">Help me create a complete, property-specific pre-arrival and post-departure damage documentation protocol that my cleaner or co-host can follow for every guest turn.
+
+My property:
+- Type: [LAKE HOUSE / CABIN / COTTAGE / etc.]
+- Bedrooms: [X]
+- Bathrooms: [X]
+- Special amenities: [HOT TUB / POOL / DOCK / KAYAKS / OUTDOOR KITCHEN / FIRE PIT / GRILL / etc.]
+- Highest-value single items (approximate replacement cost): [e.g., 'Smart TV $800, hot tub cover $400, outdoor sectional $2,200']
+- Who does the post-checkout inspection: [ME / CLEANER / CO-HOST]
+- My Airbnb average booking value: [$XXX]
+- Direct booking percentage: [X%]
+
+Create:
+
+1. COMPLETE PRE-ARRIVAL PHOTO CHECKLIST
+Room-by-room and amenity-by-amenity. Include specific callouts for high-damage-risk items in my property type. Format so a cleaner can check items off. Include photo naming convention.
+
+2. COMPLETE POST-DEPARTURE WALKTHROUGH SEQUENCE
+The sequence to use (outdoor before interior, etc.). What to look for in each area. Damage red flags specific to my amenity set. At what point to stop cleaning and start documenting.
+
+3. DAMAGE THRESHOLD GUIDE FOR MY ADR
+Using my average booking value as context: (1) What dollar threshold is 'handle it yourself, not worth claiming'; (2) What threshold is 'document and file AirCover'; (3) What threshold is 'file all layers including own insurance.' Specific dollar amounts, not vague guidance.
+
+4. 72-HOUR CLAIM CHECKLIST
+The exact actions in the 72 hours after discovering significant damage: who to notify, what to submit, in what order. Include the text for the initial AirCover report description field — give me a template I can customize.</div>
+      <p class="ai-prompt-note">Fill in every bracketed field before running this prompt. The more specific your inputs — especially amenity set and average booking value — the more useful the threshold guide will be. After running it, save the output as a standing SOP for your operation and share it with your cleaner or co-host. A documentation system that lives only in your memory breaks the first time you are unavailable at checkout.</p>
+    </div>
+
+    <!-- Module checkpoint -->
+    <div class="checkpoint">
+      <div class="checkpoint-label">Module 18 Checkpoint</div>
+      <h3>Before leaving this module, confirm the following:</h3>
+      <ul class="checkpoint-items">
+        <li>
+          <span class="cp-box"></span>
+          <span>I have decided on security deposit vs. damage waiver — and implemented the decision in OwnerRez for each booking channel</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have built the pre-arrival photo checklist specific to my property — my cleaner has a copy and knows to run it before every guest arrival</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have built the post-departure walkthrough sequence — my cleaner knows to photograph before cleaning, outdoor before interior</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I know my 72-hour AirCover window and have it noted next to my checkout calendar — not something I'll remember from memory alone</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I know the VRBO damage claim process for my VRBO bookings — whether my guests purchase the Generali product or I hold a security deposit</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have decided whether I use Superhog or Safely for direct bookings — or have a specific evaluation scheduled to make that decision</span>
+        </li>
+        <li>
+          <span class="cp-box"></span>
+          <span>I have a claim filing sequence documented — the exact order of actions and platforms in the 72 hours after discovering significant damage</span>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Machine feed -->
+  <div class="machine-feed">
+    <div class="mf-label">The Machine</div>
+    <h3>The Operators Who Win Claims Are the Ones Who Documented Before Anyone Was Looking</h3>
+    <p>The guest who damages your hot tub cover on a Saturday afternoon doesn't know you photographed it at 3pm Friday. The AirCover adjuster who reviews your claim Tuesday sees a pristine, timestamped Friday photo and a damaged Saturday photo. That's a settled claim.</p>
+    <p>The operator who didn't photograph before arrival — or who photographed after the cleaning team arrived — has a disputed claim, a frustrated adjuster, and a 40% chance of recovery.</p>
+    <p>The documentation protocol is not extra work. It is the system that converts damage events from financial losses into recoverable insurance claims. Build the system once. Run it every turn. Win the claims that pay for it.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <span>SpokeBnB</span> · Module 18: Damage Protection · Supplementary Module
+</footer>
+
+</body>
+</html>
