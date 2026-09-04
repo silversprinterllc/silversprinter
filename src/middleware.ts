@@ -7,13 +7,13 @@ const COOKIE_SECRET =
 
 const enc = new TextEncoder()
 
-function hexToBytes(hex: string): Uint8Array {
+function hexToBytes(hex: string): ArrayBuffer {
   const buf = new ArrayBuffer(hex.length / 2)
   const bytes = new Uint8Array(buf)
   for (let i = 0; i < hex.length; i += 2) {
     bytes[i / 2] = parseInt(hex.slice(i, i + 2), 16)
   }
-  return bytes
+  return buf
 }
 
 async function verifyCookie(raw: string): Promise<boolean> {
