@@ -38,7 +38,7 @@ export default function FamilyPage() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/book"
+              href="/insurance"
               className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b87a] transition-colors duration-200"
             >
               Reserve the Van <ArrowRight size={16} />
@@ -287,7 +287,7 @@ export default function FamilyPage() {
             before the dates you want are gone.
           </p>
           <Link
-            href="/book"
+            href="/insurance"
             className="inline-flex items-center justify-center gap-2 px-12 py-5 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b87a] transition-colors duration-200"
           >
             Check Availability <ArrowRight size={16} />

@@ -1,6 +1,13 @@
 export const dynamic = 'force-dynamic'
 
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'The Van — Sterling Route MAD Daycruiser D6',
+  description:
+    'A custom Midwestern Automotive Design Daycruiser D6. 10 passengers, private commode, 32" TV, WiFi, full galley. The finest self-drive van in South Florida.',
+}
 import { prisma } from '@/lib/prisma'
 import { Users, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'

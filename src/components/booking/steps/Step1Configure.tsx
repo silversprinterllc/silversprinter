@@ -3,14 +3,16 @@ import { useEffect, useState } from 'react'
 import { useWizard } from '../BookingWizard'
 import { VehicleCard } from '../VehicleCard'
 import { QuoteBar } from '../QuoteBar'
+import { AvailabilityCalendar } from '../AvailabilityCalendar'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import type { ServiceType } from '@prisma/client'
 
 const SERVICE_TYPES: { value: ServiceType; label: string }[] = [
-  { value: 'AIRPORT_TRANSFER', label: 'Airport Transfer' },
-  { value: 'HOURLY_CHARTER', label: 'Hourly Charter' },
+  { value: 'DAY_RENTAL', label: 'Day Rental' },
+  { value: 'MULTI_DAY_TOUR', label: 'Multi-Day Trip' },
   { value: 'EVENT', label: 'Event' },
+  { value: 'WEDDING', label: 'Wedding' },
   { value: 'CORPORATE', label: 'Corporate' },
 ]
 
@@ -81,25 +83,31 @@ export function Step1Configure() {
           label="Destination"
           value={state.destinationAddress}
           onChange={(e) => update({ destinationAddress: e.target.value })}
-          placeholder="MIA Airport Terminal J"
+          placeholder="Hotel, venue, or address"
         />
       </div>
 
-      {/* Date/time + passengers */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <Input
-          label="Pickup Date"
-          type="date"
-          value={state.pickupAt ? state.pickupAt.toISOString().split('T')[0] : ''}
-          onChange={(e) => {
-            const d = new Date(e.target.value)
-            if (!isNaN(d.getTime())) update({ pickupAt: d })
-          }}
-          min={new Date().toISOString().split('T')[0]}
-        />
+      {/* Availability Calendar */}
+      <div className="mb-8">
+        <p className="text-xs tracking-widest uppercase text-[#5f5850] mb-3">Select Pickup Date</p>
+        <div className="border border-[#433d38]/50 bg-[#1a1612] p-5">
+          <AvailabilityCalendar
+            vehicleId={state.vehicleId}
+            selectedDate={state.pickupAt ? state.pickupAt.toISOString().split('T')[0] : null}
+            onSelectDate={(dateStr) => {
+              const d = new Date(dateStr + 'T10:00:00')
+              update({ pickupAt: d })
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Time + passengers */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <Input
           label="Pickup Time"
           type="time"
+          value={state.pickupAt ? `${String(state.pickupAt.getHours()).padStart(2,'0')}:${String(state.pickupAt.getMinutes()).padStart(2,'0')}` : ''}
           onChange={(e) => {
             if (!state.pickupAt) return
             const [h, m] = e.target.value.split(':').map(Number)

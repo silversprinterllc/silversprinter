@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
+    void (await params)
     const { status } = await req.json()
 
     if (!['APPROVED', 'REJECTED'].includes(status)) {
@@ -16,12 +15,11 @@ export async function PATCH(
       )
     }
 
-    const review = await prisma.rentalReview.update({
-      where: { id },
-      data: { status },
-    })
-
-    return NextResponse.json({ review })
+    // Review moderation pending schema migration
+    return NextResponse.json(
+      { error: 'Review moderation temporarily unavailable.' },
+      { status: 503 }
+    )
   } catch (error: unknown) {
     console.error('Review moderate error:', error)
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })

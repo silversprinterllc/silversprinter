@@ -40,7 +40,7 @@ export default function GolfPage() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/book"
+              href="/insurance"
               className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b87a] transition-colors duration-200"
             >
               Reserve the Van <ArrowRight size={16} />
@@ -323,8 +323,8 @@ export default function GolfPage() {
               },
               {
                 step: '02',
-                title: 'Sign through Outdoorsy',
-                body: 'Rental agreement and insurance handled through Outdoorsy. Clean, straightforward, protected. Five minutes.',
+                title: 'Sign your rental agreement',
+                body: 'Rental agreement sent directly from Sterling Route. Insurance required through Bonzah or RentalCover — we\'ll show you exactly how. Clean, straightforward, protected. Five minutes.',
               },
               {
                 step: '03',
@@ -357,7 +357,7 @@ export default function GolfPage() {
             this is the part where you actually do it.
           </p>
           <Link
-            href="/book"
+            href="/insurance"
             className="inline-flex items-center justify-center gap-2 px-12 py-5 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-semibold hover:bg-[#d4b87a] transition-colors duration-200"
           >
             Check Availability <ArrowRight size={16} />

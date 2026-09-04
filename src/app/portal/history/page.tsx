@@ -9,16 +9,12 @@ export default async function HistoryPage() {
   const session = await getServerSession(authOptions)
   if (!session) return null
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let bookings: any[] = []
-  try {
-    bookings = await prisma.booking.findMany({
-      where: { userId: session.user.id, status: { in: ['COMPLETED', 'CANCELLED', 'NO_SHOW'] } },
-      include: { vehicle: true, chauffeur: true },
-      orderBy: { pickupAt: 'desc' },
-      take: 50,
-    })
-  } catch { /* DB not yet connected */ }
+  const bookings = await prisma.booking.findMany({
+    where: { userId: session.user.id, status: { in: ['COMPLETED', 'CANCELLED', 'NO_SHOW'] } },
+    include: { vehicle: true, chauffeur: true },
+    orderBy: { pickupAt: 'desc' },
+    take: 50,
+  })
 
   return (
     <div>

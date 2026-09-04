@@ -1,191 +1,165 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import {
-  Users,
-  Bath,
-  UtensilsCrossed,
-  Tv2,
-  BedDouble,
-  Wifi,
-  Refrigerator,
-  Microwave,
-  MonitorSmartphone,
-} from 'lucide-react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'The Van — MAD Daycruiser D6 | Sterling Route',
+  description: 'One vehicle. A Midwestern Automotive Design Daycruiser D6 luxury Sprinter conversion. 10 occupants, private commode, full galley, 32" TV, WiFi. Available by the day in Palm Beach County.',
+}
 
 const specs = [
-  { label: 'Vehicle', value: 'Mercedes-Benz Sprinter' },
-  { label: 'Passenger Capacity', value: '10 passengers' },
-  { label: 'Seating', value: '2 front captain chairs · 4 rear captain chairs · 2 benches' },
-  { label: 'Sleeping', value: 'Benches fold to full-size sleeping area (sleeps 2)' },
-  { label: 'Restroom', value: 'Private commode + sink' },
-  { label: 'Kitchen', value: 'Microwave + mini fridge' },
-  { label: 'Entertainment', value: '32" TV · Bluetooth · WiFi streaming' },
-  { label: 'Rental Platform', value: 'Outdoorsy (rental agreement & insurance included)' },
-  { label: 'Location', value: 'South Florida' },
-  { label: 'Drive Type', value: 'Self-drive rental' },
-]
-
-const features = [
   {
-    icon: Users,
-    title: '10 Passengers',
-    description: '2 captain chairs up front, 4 in the rear, plus 2 side-facing benches seating 2 each.',
+    category: 'Platform',
+    detail: 'Mercedes-Benz Sprinter — diesel, built to run.',
   },
   {
-    icon: Bath,
-    title: 'Private Restroom',
-    description: 'Onboard commode and sink — no unplanned stops on long hauls.',
+    category: 'Conversion',
+    detail: 'Midwestern Automotive Design Daycruiser D6 — custom luxury build.',
   },
   {
-    icon: Refrigerator,
-    title: 'Mini Fridge',
-    description: 'Keep drinks cold and food fresh for the whole trip.',
+    category: 'Capacity',
+    detail: '10 occupants maximum — driver + 9 passengers. 10 belts. Not one more.',
   },
   {
-    icon: Microwave,
-    title: 'Microwave',
-    description: 'Heat up meals without stopping at a restaurant.',
+    category: 'Seating',
+    detail: '1 front passenger seat, 4 captain chairs (main cabin), 2 fold-flat benches (rear).',
   },
   {
-    icon: Tv2,
-    title: '32" Television',
-    description: 'Big-screen entertainment for the whole group.',
+    category: 'Sleeping',
+    detail: 'Rear benches fold flat. Sleeps 2. Overnight runs, no hotel required.',
   },
   {
-    icon: Wifi,
-    title: 'WiFi Hotspot',
-    description: 'Stream content and stay connected on the road.',
+    category: 'Bathroom',
+    detail: 'Private commode and sink — self-contained with black water holding tank.',
   },
   {
-    icon: MonitorSmartphone,
-    title: 'Bluetooth Audio',
-    description: 'Connect your phone and control the playlist.',
+    category: 'Galley',
+    detail: 'Microwave, mini fridge, and cooler. Real food on real trips.',
   },
   {
-    icon: BedDouble,
-    title: 'Sleeps 2',
-    description: 'Benches fold flat into a full-size sleeping area for overnight trips.',
+    category: 'Entertainment',
+    detail: '32" TV, Bluetooth audio, WiFi streaming. All 10 seats.',
   },
   {
-    icon: UtensilsCrossed,
-    title: 'Road-Trip Ready',
-    description: 'Everything onboard so your crew stays comfortable for hundreds of miles.',
+    category: 'Charging',
+    detail: 'USB-C charging at every seat.',
+  },
+  {
+    category: 'Climate',
+    detail: 'Climate control throughout the cabin.',
+  },
+  {
+    category: 'Height',
+    detail: "9'6\" — plan bridge and garage clearance. Minimum 10'6\" required.",
+  },
+  {
+    category: 'Fuel',
+    detail: 'Diesel only. Return full. Non-compliance: fuel cost + $35.',
   },
 ]
 
-export default function TheVanPage() {
+export default function FleetPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#f0e6d0]">
+    <div className="bg-[#0a0a0a] text-[#f0e6d0]">
 
-      {/* ── Hero ── */}
-      <section className="relative h-[70vh] min-h-[480px] flex items-end overflow-hidden">
-        <Image
-          src="/gallery/DSC04726.JPG"
-          alt="Sterling Route Mercedes van — exterior"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
-        <div className="relative z-10 px-6 pb-16 max-w-4xl mx-auto w-full">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">The Van</p>
-          <h1 className="font-serif text-5xl md:text-7xl text-[#f0e6d0] leading-tight mb-4">
-            South Florida's<br />
-            <span className="text-[#c9a96e]">Mobile Suite</span>
-          </h1>
-          <p className="text-[#a09890] text-base max-w-xl">
-            One premium Mercedes Sprinter. 10 passengers. Everything you need for golf trips, game days, corporate outings, and family adventures.
-          </p>
-        </div>
-      </section>
-
-      {/* ── Stats Strip ── */}
-      <div className="border-y border-[#433d38]/50 bg-[#1a1612]/80 px-8 py-6">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[
-            { value: '10', label: 'Passengers' },
-            { value: 'Private', label: 'Commode + Sink' },
-            { value: 'WiFi', label: 'Streaming' },
-            { value: 'Sleeps', label: '2' },
-          ].map(({ value, label }) => (
-            <div key={label}>
-              <p className="font-serif text-2xl text-[#c9a96e]">{value}</p>
-              <p className="text-xs tracking-widest uppercase text-[#5f5850] mt-1">{label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Features Grid ── */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Amenities</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0]">
-              Everything inside
-            </h2>
-            <div className="w-16 h-px bg-[#c9a96e] mx-auto mt-5" />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map(({ icon: Icon, title, description }) => (
-              <div
-                key={title}
-                className="border border-[#433d38]/50 bg-[#1a1612] p-8 flex flex-col gap-4 hover:border-[#c9a96e]/40 transition-colors duration-300"
-              >
-                <Icon size={28} className="text-[#c9a96e]" strokeWidth={1.5} />
-                <h3 className="font-serif text-xl text-[#f0e6d0]">{title}</h3>
-                <p className="text-sm text-[#5f5850] leading-relaxed">{description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Specs Table ── */}
-      <section className="py-16 px-6 border-t border-[#433d38]/40 bg-[#0d0b09]">
+      {/* HERO */}
+      <section className="py-16 md:py-32 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-3">Specifications</p>
-            <h2 className="font-serif text-4xl text-[#f0e6d0]">The details</h2>
-          </div>
+          <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-8">The Vehicle</p>
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#f0e6d0] leading-tight mb-8">
+            MAD Daycruiser D6.<br />
+            <span className="text-[#c9a96e]">One van. The right one.</span>
+          </h1>
+          <p className="text-lg text-[#a09890] leading-relaxed max-w-2xl mb-6">
+            A Midwestern Automotive Design luxury Sprinter conversion — owned, maintained, and driven to the same standard as when the owner&apos;s own family is in the seats.
+          </p>
+          <p className="text-sm text-[#5f5850]">$900/day · Palm Beach County · 10 occupants maximum</p>
+        </div>
+      </section>
+
+      {/* THE MACHINE — FULL SPEC */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-12">Full Specification</p>
 
           <div className="divide-y divide-[#433d38]/40">
-            {specs.map(({ label, value }) => (
-              <div key={label} className="flex flex-col sm:flex-row py-4 gap-1 sm:gap-8">
-                <span className="text-xs tracking-[0.15em] uppercase text-[#5f5850] sm:w-48 flex-shrink-0">
-                  {label}
-                </span>
-                <span className="text-sm text-[#a09890]">{value}</span>
+            {specs.map((spec) => (
+              <div key={spec.category} className="grid grid-cols-1 sm:grid-cols-3 gap-2 py-5">
+                <p className="text-xs tracking-[0.2em] uppercase text-[#5f5850] sm:pt-0.5">{spec.category}</p>
+                <p className="text-sm text-[#a09890] sm:col-span-2 leading-relaxed">{spec.detail}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-24 px-6 border-t border-[#433d38]/40 text-center">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#c9a96e] mb-4">Ready to Go</p>
-          <h2 className="font-serif text-5xl text-[#f0e6d0] mb-6">Book the van</h2>
-          <div className="w-16 h-px bg-[#c9a96e] mx-auto mb-8" />
-          <p className="text-[#a09890] mb-10 leading-relaxed">
-            Rental agreement and insurance are handled through Outdoorsy — simple, fast, and protected.
+      {/* THE STANDARD */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">The Standard</p>
+          <h2 className="font-serif text-4xl text-[#f0e6d0] mb-8">Why It&apos;s Different</h2>
+          <div className="space-y-6 text-[#a09890] text-base leading-relaxed">
+            <p>
+              There is one van. No fleet, no rotation, no second unit covering while the first gets serviced. The vehicle you book is the MAD Daycruiser D6 — the same one the owner uses for his own family&apos;s travel.
+            </p>
+            <p>
+              That creates a different level of accountability. The van is cleaned between every rental the way you clean a vehicle before your family gets in it. It is fueled, checked, and configured before you arrive. Every rental.
+            </p>
+            <p>
+              The downside: when the van is booked, it is booked. There is no fallback. If the dates matter, book early. If you want guaranteed access before the calendar opens, apply for the Road Club.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* RATES SNAPSHOT */}
+      <section className="py-24 px-6 border-b border-[#c9a96e]/20">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#5f5850] mb-6">Rates</p>
+          <div className="divide-y divide-[#433d38]/40">
+            {[
+              { label: 'Standard daily rate', value: '$900/day' },
+              { label: 'Weekend rate (Fri–Sun)', value: '$995/day' },
+              { label: 'Premium dates (holidays, events)', value: '$1,095/day' },
+              { label: 'Included mileage', value: '150 miles/day' },
+              { label: 'Mileage overage', value: '$0.50/mile' },
+              { label: 'Security deposit', value: '$1,500 held at booking' },
+            ].map((row) => (
+              <div key={row.label} className="flex justify-between items-center py-4">
+                <span className="text-sm text-[#a09890]">{row.label}</span>
+                <span className="text-sm text-[#c9a96e] font-medium">{row.value}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6">
+            <Link href="/rates" className="text-xs text-[#c9a96e]/70 hover:text-[#c9a96e] transition-colors tracking-wide">
+              Full rate card and fee schedule →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-32 px-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="font-serif text-4xl md:text-5xl text-[#f0e6d0] mb-6 leading-tight">
+            The Van Is Ready.
+          </h2>
+          <p className="text-[#5f5850] text-base leading-relaxed mb-12 max-w-lg mx-auto">
+            Check availability for your dates. If you move more than a few times a year, ask about the Road Club.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/book"
-              className="inline-flex items-center justify-center px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#d4b87a] transition-colors duration-200"
+              href="/insurance"
+              className="inline-block bg-[#c9a96e] text-[#0a0a0a] font-sans text-sm tracking-[0.2em] uppercase font-medium px-12 py-4 hover:bg-[#d4b87a] transition-colors duration-200"
             >
               Check Availability
             </Link>
-            <a
-              href="#outdoorsy"
-              className="inline-flex items-center justify-center px-8 py-3 border border-[#c9a96e] text-[#c9a96e] font-sans text-sm tracking-widest uppercase font-medium hover:bg-[#c9a96e]/10 transition-colors duration-200"
+            <Link
+              href="/sterling-reserve"
+              className="inline-block border border-[#c9a96e]/50 text-[#c9a96e] font-sans text-sm tracking-[0.2em] uppercase px-12 py-4 hover:bg-[#c9a96e]/10 transition-colors duration-200"
             >
-              View on Outdoorsy
-            </a>
+              Road Club
+            </Link>
           </div>
         </div>
       </section>

@@ -40,10 +40,10 @@ export default function RentalTermsPage() {
     <div className="bg-[#0a0a0a] text-[#f0e6d0]">
 
       {/* PAGE HEADER */}
-      <div className="py-24 px-6 border-b border-[#c9a96e]/20">
+      <div className="py-16 md:py-24 px-4 md:px-6 border-b border-[#c9a96e]/20">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-6">Last Updated March 2026</p>
-          <h1 className="font-serif text-5xl md:text-6xl text-[#f0e6d0] mb-6">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#f0e6d0] mb-6">
             Rental Agreement &amp;<br />Terms of Use
           </h1>
           <p className="text-[#5f5850] text-base leading-relaxed max-w-xl">
@@ -55,7 +55,7 @@ export default function RentalTermsPage() {
       {/* Thin gold divider */}
       <div className="h-px bg-[#c9a96e]/20 max-w-3xl mx-auto" />
 
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 md:px-6">
 
         <Section number={1} title="Parties">
           <Para>
@@ -65,7 +65,7 @@ export default function RentalTermsPage() {
 
         <Section number={2} title="Vehicle">
           <Para>
-            The rented vehicle is a custom Mercedes-Benz Sprinter van (&ldquo;the Vehicle&rdquo;), configured for up to 10 passengers. The Vehicle is provided as-is for self-drive use only. No driver, chauffeur, or transportation service is provided or implied. Renter assumes full operational responsibility for the Vehicle during the rental period.
+            The rented vehicle is a custom Mercedes-Benz Sprinter van (&ldquo;the Vehicle&rdquo;), configured for up to 10 occupants (driver included). The Vehicle is provided as-is for self-drive use only. No driver, chauffeur, or transportation service is provided or implied. Renter assumes full operational responsibility for the Vehicle during the rental period.
           </Para>
         </Section>
 
@@ -75,16 +75,16 @@ export default function RentalTermsPage() {
           <Rule>Hold a valid U.S. driver&apos;s license</Rule>
           <Rule>Have no DUI, DWI, or reckless driving conviction within the past 7 years</Rule>
           <Rule>Have no more than 2 moving violations in the past 3 years</Rule>
-          <Rule>Provide valid insurance through Roamly (or approved equivalent) prior to departure</Rule>
+          <Rule>Provide valid insurance through Bonzah, RentalCover, or an approved equivalent prior to departure</Rule>
           <Rule>Pass identity verification at Company&apos;s discretion</Rule>
           <Para>
-            Any additional listed drivers must meet the same eligibility requirements. All drivers must be listed prior to departure. Adding unlisted drivers during the rental period constitutes a material breach of this agreement.
+            Any additional listed drivers must meet the same eligibility requirements. All drivers must be listed prior to departure. Adding unlisted drivers during the rental period constitutes a material breach of this agreement. Spouse or domestic partner may be added at no additional charge. All other additional drivers: $50 per driver, collected before departure. No driver additions after departure.
           </Para>
         </Section>
 
         <Section number={4} title="Insurance Requirement">
           <Para>
-            Insurance is the Renter&apos;s sole responsibility. The Company does not provide insurance coverage of any kind. Renter must obtain a valid rental vehicle insurance policy through Roamly (roamly.com) or a pre-approved equivalent providing a minimum of $1,000,000 in liability coverage before the rental commences.
+            Insurance is the Renter&apos;s sole responsibility. The Company does not provide insurance coverage of any kind. Renter must obtain a valid rental vehicle insurance policy through Bonzah (bonzah.com), RentalCover (rentalcover.com), or a pre-approved equivalent providing a minimum of $1,000,000 in liability coverage before the rental commences.
           </Para>
           <Para>
             Failure to present proof of insurance at pickup will result in cancellation of the rental. The deposit is non-refundable in this circumstance.
@@ -123,7 +123,7 @@ export default function RentalTermsPage() {
           <Rule>Off-road driving or unpaved surfaces beyond normal rural roads</Rule>
           <Rule>Racing, stunt driving, or any competitive event</Rule>
           <Rule>Transport of illegal substances or contraband</Rule>
-          <Rule>Transport of animals without prior written approval from Company</Rule>
+          <Rule>Transport of animals of any kind — NO PETS. Zero exceptions. Evidence of a pet found in or on the Vehicle upon return results in a mandatory $500 fee, charged to the card on file, in addition to any cleaning costs.</Rule>
           <Rule>Any use that violates applicable local, state, or federal law</Rule>
           <Rule>Travel outside the continental United States</Rule>
           <Para>
@@ -133,7 +133,7 @@ export default function RentalTermsPage() {
 
         <Section number={9} title="Smoking & Substances">
           <Para>
-            Smoking of any kind — including cigarettes, cigars, pipes, vaping devices, and cannabis — is strictly prohibited inside the Vehicle at all times. Violation results in a mandatory $350 deodorization and cleaning fee charged to the card on file, in addition to any cleaning costs. No exceptions.
+            Smoking of any kind — including cigarettes, cigars, pipes, vaping devices, and cannabis — is strictly prohibited inside the Vehicle at all times. Zero tolerance. Violation results in a mandatory $500 deodorization and cleaning fee charged to the card on file, in addition to any additional cleaning costs. No exceptions under any circumstances.
           </Para>
         </Section>
 
@@ -145,14 +145,15 @@ export default function RentalTermsPage() {
 
         <Section number={11} title="Security Deposit">
           <Para>
-            A security deposit of $500 is collected at the time of booking. The deposit is held and applied against any unpaid fees, damage charges, or policy violations incurred during the rental. The deposit (or remaining balance after charges) is released within 72 hours of a verified clean return. The security deposit is not a limitation on Renter&apos;s liability — Renter remains liable for all costs exceeding $500.
+            A security deposit of $1,500 is collected at the time of booking. The deposit is held and applied against any unpaid fees, damage charges, or policy violations incurred during the rental. The deposit (or remaining balance after charges) is released within 72 hours of a verified clean return. The security deposit is not a limitation on Renter&apos;s liability — Renter remains liable for all costs exceeding $1,500.
           </Para>
         </Section>
 
         <Section number={12} title="Payment Terms">
           <Para>
-            A deposit of 35% of the total rental cost is due at the time of booking. The remaining balance (65%) is due 24 hours before the scheduled departure date and will be charged automatically to the card on file. If the balance charge fails, Company reserves the right to cancel the reservation. The deposit is subject to the cancellation policy in Section 13.
+            A deposit of 35% of the total rental cost is due at the time of booking. The remaining balance (65%) is due 48 hours before the scheduled departure date and will be charged automatically to the card on file. If the balance charge fails, Company reserves the right to cancel the reservation. The deposit is subject to the cancellation policy in Section 13.
           </Para>
+          <Rule>Minimum advance booking notice: 72 hours for public bookings. Sterling Reserve Gold members: 24-hour minimum. Sterling Reserve Black members: same-day booking available subject to availability.</Rule>
         </Section>
 
         <Section number={13} title="Cancellation Policy">
@@ -174,7 +175,7 @@ export default function RentalTermsPage() {
             Renter is responsible for all damage to the Vehicle occurring during the rental period, regardless of fault. This includes but is not limited to: collision damage, interior damage, roof damage from clearance violations, mechanical damage from improper fuel, tire damage, and water damage.
           </Para>
           <Para>
-            Renter&apos;s insurance through Roamly is primary. Renter is responsible for the deductible. Damage exceeding the security deposit will be charged to the card on file. For damage exceeding card limits, Company reserves the right to pursue collection through all available legal means.
+            Renter&apos;s rental insurance is primary. Renter is responsible for the deductible. Damage exceeding the security deposit will be charged to the card on file. For damage exceeding card limits, Company reserves the right to pursue collection through all available legal means.
           </Para>
           <Para>
             Company is not liable for personal property lost, stolen, or damaged inside the Vehicle during the rental period.
@@ -208,7 +209,7 @@ export default function RentalTermsPage() {
 
         <Section number={18} title="Privacy & Identity Verification">
           <Para>
-            Company collects personal information for the purposes of completing the rental transaction and conducting identity and background verification. Company may use third-party verification services including Forewarn to confirm renter identity and safety. By completing a reservation, Renter consents to this verification. Company does not sell personal data to third parties.
+            Company collects personal information for the purposes of completing the rental transaction and conducting identity and background verification. Company may use third-party verification services to confirm renter identity and safety. By completing a reservation, Renter consents to this verification. Company does not sell personal data to third parties.
           </Para>
         </Section>
 
@@ -228,7 +229,7 @@ export default function RentalTermsPage() {
         <section className="py-16">
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/book"
+              href="/insurance"
               className="inline-block px-8 py-3 bg-[#c9a96e] text-[#0a0a0a] text-sm tracking-[0.15em] uppercase font-medium hover:bg-[#d4b87a] transition-colors"
             >
               Book the Van

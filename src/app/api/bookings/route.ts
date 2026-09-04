@@ -8,7 +8,7 @@ import { z } from 'zod'
 
 const createBookingSchema = z.object({
   vehicleId: z.string(),
-  serviceType: z.enum(['AIRPORT_TRANSFER', 'HOURLY_CHARTER', 'EVENT', 'WEDDING', 'CORPORATE', 'MULTI_DAY_TOUR']),
+  serviceType: z.enum(['DAY_RENTAL', 'HOURLY_CHARTER', 'EVENT', 'WEDDING', 'CORPORATE', 'MULTI_DAY_TOUR']),
   pickupAddress: z.string().min(1),
   pickupLat: z.number().optional(),
   pickupLng: z.number().optional(),

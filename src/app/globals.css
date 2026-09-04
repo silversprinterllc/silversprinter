@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@source "../../src";
+@source not "../../public";
+@source not "../../.claude";
+@source not "../../silversprinter";
+@source not "../../lakesidelandingflx-site";
+@source not "../../hoadley-components";
 
 @theme {
   /* Gold palette */

@@ -214,7 +214,9 @@
       "Bash(git -C \"C:\\\\Users\\\\User\\\\SilverSprinter\" status --short)",
       "Bash(powershell -Command \"Expand-Archive -Path 'SpokeBnB-Vector-Brand-Kit.zip' -DestinationPath 'SpokeBnB-Brand-Kit' -Force\")",
       "Bash(mkdir -p \"C:\\\\Users\\\\User\\\\SilverSprinter\\\\.claude\\\\worktrees\\\\dreamy-mcnulty\\\\public\\\\brand\" && cp \"C:\\\\Users\\\\User\\\\Downloads\\\\SpokeBnB-Brand-Kit\\\\SpokeBnB_Vector_Kit/\"*.svg \"C:\\\\Users\\\\User\\\\SilverSprinter\\\\.claude\\\\worktrees\\\\dreamy-mcnulty\\\\public\\\\brand/\" && ls \"C:\\\\Users\\\\User\\\\SilverSprinter\\\\.claude\\\\worktrees\\\\dreamy-mcnulty\\\\public\\\\brand/\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)"
     ]
   }
 }

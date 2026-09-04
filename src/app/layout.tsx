@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Sterling Route — South Florida\'s Premier Luxury Van',
-  description: 'One custom Mercedes Sprinter. 10 passengers. Golf trips, game days, corporate tours, and family adventures from Palm Beach County. Self-drive. Take the Sterling Route.',
+  title: 'SilverSprinter — Luxury Sprinter Van Charters',
+  description: 'Self-drive luxury Sprinter van rental in West Palm Beach. The MAD Daycruiser D6 — available by the day for events, road trips, corporate travel, and more.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

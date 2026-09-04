@@ -21,9 +21,9 @@ export async function calculateQuote(input: QuoteInput): Promise<QuoteResult> {
   let baseAmount = 0
 
   switch (input.serviceType as ServiceType) {
-    case 'AIRPORT_TRANSFER':
-      baseAmount = basePrice
-      lineItems.push({ label: 'Airport Transfer', amount: baseAmount })
+    case 'DAY_RENTAL':
+      baseAmount = dailyRate
+      lineItems.push({ label: 'Day Rental', amount: baseAmount })
       break
     case 'HOURLY_CHARTER': {
       const hours = Math.max(input.estimatedHours || 2, 2)

@@ -14,40 +14,32 @@ export async function POST(req: NextRequest) {
     }
 
     if (body.trim().length < 20) {
-      return NextResponse.json(
-        { error: 'Review must be at least 20 characters.' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Review must be at least 20 characters.' }, { status: 400 })
     }
 
-    // Find booking by review token
-    const booking = await prisma.rentalBooking.findUnique({
-      where: { reviewToken: token },
-      include: { review: { select: { id: true } } },
+    const booking = await prisma.booking.findUnique({
+      where: { bookingRef: token },
+      include: { review: true },
     })
 
     if (!booking) {
-      return NextResponse.json(
-        { error: 'Invalid or expired review link.' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Invalid review link.' }, { status: 404 })
+    }
+
+    if (booking.status !== 'COMPLETED') {
+      return NextResponse.json({ error: 'Reviews can only be submitted for completed trips.' }, { status: 400 })
     }
 
     if (booking.review) {
-      return NextResponse.json(
-        { error: 'A review has already been submitted for this booking.' },
-        { status: 409 }
-      )
+      return NextResponse.json({ error: 'A review has already been submitted for this booking.' }, { status: 409 })
     }
 
-    await prisma.rentalReview.create({
+    await prisma.review.create({
       data: {
         bookingId: booking.id,
-        renterName: renterName.trim(),
+        userId: booking.userId,
         rating,
-        body: body.trim(),
-        tripType: booking.tripType,
-        status: 'PENDING',
+        comment: body.trim(),
       },
     })
 

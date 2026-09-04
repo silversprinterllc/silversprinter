@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { z } from 'zod'
+import { isHoliday } from '@/lib/utils'
 
 const schema = z.object({
   vehicleId: z.string().min(1),
@@ -22,9 +23,10 @@ const schema = z.object({
 
 function getDayRate(dateStr: string): number {
   const d = new Date(dateStr + 'T12:00:00')
+  if (isHoliday(d)) return 1095
   const dow = d.getDay()
-  if (dow === 5 || dow === 6 || dow === 0) return 1095
-  return 795
+  if (dow === 5 || dow === 6 || dow === 0) return 995
+  return 900
 }
 
 function calcPricing(startDate: string, endDate: string) {
@@ -40,7 +42,7 @@ function calcPricing(startDate: string, endDate: string) {
   return { days, baseTotal }
 }
 
-const SERVICE_TYPES = ['AIRPORT_TRANSFER','HOURLY_CHARTER','EVENT','WEDDING','CORPORATE','MULTI_DAY_TOUR'] as const
+const SERVICE_TYPES = ['DAY_RENTAL','HOURLY_CHARTER','EVENT','WEDDING','CORPORATE','MULTI_DAY_TOUR'] as const
 type ServiceType = typeof SERVICE_TYPES[number]
 
 export async function POST(req: NextRequest) {
@@ -128,7 +130,7 @@ export async function POST(req: NextRequest) {
                 currency: 'usd',
                 product_data: {
                   name: `Sterling Route Deposit — ${input.tripType}`,
-                  description: `35% deposit for ${days}-day rental · ${input.startDate} → ${input.endDate}. Balance of $${balance.toFixed(0)} due 24 hours before departure.`,
+                  description: `35% deposit for ${days}-day rental · ${input.startDate} → ${input.endDate}. Balance of $${balance.toFixed(0)} due 48 hours before departure.`,
                 },
                 unit_amount: Math.round(deposit * 100),
               },

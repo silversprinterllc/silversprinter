@@ -99,8 +99,8 @@ export default function FAQPage() {
               answer: <p>Yes. The two rear benches fold flat and sleep 2 comfortably. Ideal for a golf trip where someone wants to stay over at the course rather than drive back.</p>,
             },
             {
-              question: 'What\'s the maximum passenger capacity?',
-              answer: <p>10 passengers. 2 captain chairs in the front cab, 4 captain chairs in the main cabin, and 2 fold-flat benches in the rear. Do not exceed 10.</p>,
+              question: 'What\'s the maximum occupant capacity?',
+              answer: <p>10 occupants total — that includes the driver. 1 driver seat, 1 front passenger seat, 4 captain chairs in the main cabin, and 2 fold-flat benches in the rear (2 seats each). Maximum 9 passengers plus the driver. Do not exceed 10 total.</p>,
             },
             {
               question: 'What amenities are inside?',
@@ -118,11 +118,15 @@ export default function FAQPage() {
           items={[
             {
               question: 'How far in advance can I book?',
-              answer: <p>Public customers book based on live availability — first come, first served. Reserve members get a 60-day window before public. Gold gets 90 days. Black has full calendar access with no restriction.</p>,
+              answer: <p>Public customers book based on live availability — first come, first served. Road Club members see the calendar 7 days before the public window opens and have priority access to peak dates via the round-robin system. Signature Week dates are locked at enrollment and are never subject to availability.</p>,
+            },
+            {
+              question: 'Is there a minimum advance booking notice?',
+              answer: <p>Yes. Public bookings require a minimum of 72 hours advance notice — same-day and next-day bookings are not available for public customers. Road Club members have a reduced minimum notice window of 24 hours and may request same-day booking subject to availability.</p>,
             },
             {
               question: 'What\'s the minimum rental period?',
-              answer: <p>One day (24 hours). There is no hourly rate.</p>,
+              answer: <p>One day (24 hours). Minimum charge $900. No half-days, no hourly rates.</p>,
             },
             {
               question: 'Can I extend my rental while on the road?',
@@ -133,11 +137,11 @@ export default function FAQPage() {
               answer: (
                 <ol className="space-y-2 list-none">
                   {[
-                    'Insurance — get coverage through Roamly before proceeding.',
+                    'Insurance — get coverage through Bonzah or RentalCover before proceeding.',
                     'Book online with dates, trip type, add-ons, and contact details.',
                     'Pay 35% deposit.',
                     'Receive rental agreement and insurance verification confirmation.',
-                    'Balance auto-charged 24 hours before departure.',
+                    'Balance auto-charged 48 hours before departure.',
                     'Pick up at confirmed Palm Beach County location.',
                     'Return clean, tanks dumped, fuel full.',
                   ].map((step, i) => (
@@ -165,57 +169,57 @@ export default function FAQPage() {
           items={[
             {
               question: 'Is insurance included in the rental?',
-              answer: <p>No. Insurance is the renter&apos;s responsibility and is required before any reservation is confirmed. We use Roamly for all Sterling Route rentals. Minimum $1,000,000 liability coverage required.</p>,
+              answer: <p>No. Insurance is the renter&apos;s responsibility and is required before any reservation is confirmed. We recommend Bonzah (bonzah.com) or RentalCover (rentalcover.com) for renter coverage. Both provide instant quotes by date range. Minimum $1,000,000 liability coverage required.</p>,
             },
             {
               question: 'Why do I have to get my own insurance?',
-              answer: <p>Because it protects you. A personal auto policy won&apos;t cover a rented vehicle of this class during a commercial rental period. Roamly issues policies specific to your trip dates and vehicle — it takes about 5 minutes and ensures you&apos;re covered for what&apos;s actually happening.</p>,
+              answer: <p>Because it protects you. A personal auto policy won&apos;t cover a rented vehicle of this class during a commercial rental period. Bonzah and RentalCover issue policies specific to your trip dates and vehicle — it takes about 5 minutes and ensures you&apos;re covered for what&apos;s actually happening.</p>,
             },
             {
               question: 'What if I already have RV or vehicle rental coverage?',
-              answer: <p>Contact us before booking. We&apos;ll verify your coverage meets minimum requirements. If it does, you may use it in place of a Roamly policy.</p>,
+              answer: <p>Contact us before booking. We&apos;ll verify your coverage meets minimum requirements. If it does, you may use it in place of Bonzah or RentalCover.</p>,
             },
             {
-              question: 'What does the $500 security deposit cover?',
-              answer: <p>Minor damage, cleaning fees, dump fees, mileage overage, or any other charges incurred during the rental. It is released within 72 hours of a clean return. Damage beyond $500 is billed to the card on file.</p>,
+              question: 'What does the $1,500 security deposit cover?',
+              answer: <p>Minor damage, cleaning fees, dump fees, mileage overage, or any other charges incurred during the rental. It is released within 72 hours of a clean return. Damage beyond $1,500 is billed to the card on file.</p>,
             },
           ]}
         />
 
         <FAQSection
-          title="Sterling Reserve Membership"
+          title="Sterling Road Club"
           items={[
             {
-              question: 'Do unused included days roll over?',
-              answer: <p>Yes. Unused included rental days accumulate month to month throughout the calendar year. They expire on December 31st of each calendar year. No extensions, no cash value, no credit.</p>,
+              question: 'What is the Sterling Road Club?',
+              answer: <p>A private annual membership — four charter seats, $22,500 per seat, paid in full at enrollment. Each seat includes one Signature Week (7 days, locked at enrollment) and 25 day-credits at $750/day. When the four seats are filled, the Club is closed to new members.</p>,
             },
             {
-              question: 'Can I share my membership with a friend or colleague?',
-              answer: <p>No. Membership is non-transferable. The named member must be the primary renter on every booking made under the membership. A guest may drive — but the member must be present and listed.</p>,
+              question: 'What is the Signature Week?',
+              answer: <p>Seven consecutive days you choose when you enroll. Those dates are locked on the calendar — no public booking, no other member, no exception can displace them. They are yours for the year. You can plan twelve months in advance knowing the van is already reserved.</p>,
             },
             {
-              question: 'Can I pause my membership?',
-              answer: <p>Not currently. Membership is month-to-month. You may cancel with 30 days written notice. If you rejoin later, your rate will be the current published rate — not your original founding rate.</p>,
+              question: 'How do day-credits work?',
+              answer: <p>25 day-credits are loaded to your account at enrollment. One credit equals one rental day. Book them in any configuration throughout the year — a single day, a long weekend, or back-to-back. Credits are drawn from your account when you confirm a booking. Unused credits expire December 31 with no cash value.</p>,
             },
             {
-              question: 'Can I upgrade or downgrade my tier?',
-              answer: <p>Yes. Upgrades take effect immediately (prorated for the current month). Downgrades take effect at the next billing cycle. No fee to change tiers.</p>,
+              question: 'How does round-robin work for peak dates?',
+              answer: <p>Holiday weekends and high-demand dates are allocated by rotating priority among the four members. Year one goes in enrollment order — first to join picks first. Year two reverses. It rotates annually. Your Signature Week is never subject to round-robin — those dates are always yours.</p>,
             },
             {
-              question: 'What is a "Founding Member" rate?',
-              answer: <p>Members who join during Year 1 (the first 12 months Sterling Reserve is offered) lock their monthly rate for life, as long as they maintain membership without a lapse of 60+ days. Founding rates do not increase when we raise prices for new members.</p>,
+              question: 'Can I share my seat with someone else?',
+              answer: <p>No. Seats are non-transferable. The named member must be the primary renter on every booking. A guest may drive — but the member must be present and listed on the rental agreement.</p>,
             },
             {
-              question: 'Do members still pay the dump fee and cleaning fee?',
-              answer: <p>Yes. Every renter at every tier is responsible for dumping the tanks and returning the van in clean condition. Membership does not waive these fees. There are no exceptions.</p>,
+              question: 'What is a founding member rate?',
+              answer: <p>Members who enroll during the founding period lock their seat price for life, provided the seat is renewed before expiration. A lapse of more than 60 days resets to current published pricing. Founding rates do not increase when we raise prices for new seats or new vans.</p>,
             },
             {
-              question: 'What is the Hoadley Group preferred client access (Black tier)?',
-              answer: <p>Black members gain access to the Hoadley Group professional network — which includes real estate brokerage, land acquisition, and custom construction services in South Florida. This means priority scheduling for property showings, site tours, and investor transportation coordination. It is a professional benefit, not a personal one.</p>,
+              question: 'Do Road Club members still pay operational fees?',
+              answer: <p>Yes. Tank dump and cleaning fees apply to every member on every rental — no exceptions. These are operational requirements, not courtesies. If you return the van dirty or with tanks undumped, you will be billed.</p>,
             },
             {
-              question: 'What does "first right of refusal on second van" mean?',
-              answer: <p>When Sterling Route adds a second vehicle to the fleet, Black members get the first opportunity to claim a membership slot before it opens to the public. No obligation — just the option.</p>,
+              question: 'What happens when a second van is added?',
+              answer: <p>Road Club members from the first van get first access to seats on the second van — before any public announcement. Founding members have the option to hold a seat at the rate they originally paid.</p>,
             },
           ]}
         />
@@ -229,15 +233,15 @@ export default function FAQPage() {
             },
             {
               question: 'What if I damage the van?',
-              answer: <p>Your Roamly insurance is primary. You are responsible for the deductible. Damage beyond your security deposit is billed to the card on file. Sterling Route reserves the right to terminate future bookings pending damage review.</p>,
+              answer: <p>Your rental insurance is primary. You are responsible for the deductible. Damage beyond your security deposit is billed to the card on file. Sterling Route reserves the right to terminate future bookings pending damage review.</p>,
             },
             {
               question: 'Can I bring a pet?',
-              answer: <p>Only with prior written approval. Unauthorized pets: $250 fee. Approved pets: you&apos;re responsible for any cleaning beyond normal.</p>,
+              answer: <p>No. There are no pets allowed under any circumstances. Zero exceptions. If evidence of a pet is found in or on the vehicle upon return, a mandatory $500 fee will be charged to the card on file, in addition to any cleaning costs.</p>,
             },
             {
               question: 'Can someone else drive?',
-              answer: <p>Yes, if approved in advance and listed before departure. Additional listed drivers must meet all eligibility requirements (25+, valid license, clean record). No adding drivers after departure.</p>,
+              answer: <p>Yes, if listed before departure. Additional listed drivers must meet all eligibility requirements (25+, valid license, clean record). No adding drivers after departure. Spouse or domestic partner: free. All other additional drivers: $50 per driver, collected before departure.</p>,
             },
             {
               question: 'What\'s the cancellation policy?',

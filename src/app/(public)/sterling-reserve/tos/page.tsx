@@ -66,28 +66,27 @@ export default function SterlingReserveTOSPage() {
 
         <Section number={2} title="Membership Tiers and Billing">
           <Para>
-            Sterling Reserve is offered in three tiers — Reserve, Gold, and Black — at the monthly rates published at the time of enrollment. Membership is month-to-month and auto-renews on the same calendar date each month until cancelled.
+            Sterling Reserve is offered in three tiers — Reserve, Gold, and Black — at the annual rates published at the time of enrollment. Membership is paid in full at enrollment. There is no monthly billing and no auto-renewal without the member&apos;s explicit confirmation.
           </Para>
-          <Rule>Billing occurs monthly on the enrollment date.</Rule>
-          <Rule>Failed payment initiates a 3-day cure period. If payment is not resolved within 3 days, membership is suspended and booking access is revoked.</Rule>
-          <Rule>Suspended memberships may be reinstated upon payment of all outstanding balances. Included days do not accumulate during a suspension period.</Rule>
-          <Rule>A lapse of 60 or more consecutive days (including suspension periods) resets the member to current published pricing. Founding member rate protection does not survive a lapse.</Rule>
+          <Rule>The full annual membership fee is due at enrollment. Payment must clear before day-credits are loaded and booking access is granted.</Rule>
+          <Rule>Membership runs for one calendar year from the date of enrollment.</Rule>
+          <Rule>Renewal pricing will be presented to the member before expiration. Founding member rate protection (see Section 5) applies to eligible members who renew before expiration.</Rule>
+          <Rule>A lapse of 60 or more days after expiration resets the member to current published pricing. Founding member rate protection does not survive a lapse.</Rule>
         </Section>
 
-        <Section number={3} title="Included Rental Days">
+        <Section number={3} title="Day-Credits">
           <Para>
-            Each billing cycle, the member&apos;s account is credited with a number of included rental days corresponding to their tier: 1 day (Reserve), 2 days (Gold), or 3 days (Black).
+            Upon receipt of full payment, the member&apos;s account is credited with a block of day-credits corresponding to their tier: 10 credits (Reserve), 20 credits (Gold), or 36 credits (Black). Credits are loaded immediately and available for booking upon enrollment.
           </Para>
-          <Rule>Included days roll forward each month and accumulate throughout the calendar year. They do not expire mid-year.</Rule>
-          <Rule>Included days expire on December 31st of each calendar year without cash value, credit, or extension.</Rule>
-          <Rule>Included days have no cash value. They cannot be sold, transferred, gifted, or applied to another member&apos;s account.</Rule>
-          <Rule>Included days are redeemable for one rental period per day, subject to standard rental terms. Mileage limits per included day are as specified by tier.</Rule>
-          <Rule>Included days may not be combined to extend a single rental beyond one day per day credited, unless explicitly approved in writing.</Rule>
+          <Rule>Day-credits expire on December 31st of the enrollment year without cash value, credit, or extension — except Black tier credits, which carry over to the following calendar year.</Rule>
+          <Rule>Day-credits have no cash value. They cannot be sold, transferred, gifted, redeemed for cash, or applied to another member&apos;s account.</Rule>
+          <Rule>One credit = one rental day. Credits may be used in any configuration throughout the year — a single day, a long weekend, or a consecutive multi-day rental.</Rule>
+          <Rule>Credits are drawn from the account at time of confirmed booking and are not reinstated in the event of member-initiated cancellation.</Rule>
         </Section>
 
         <Section number={4} title="Priority Booking Rights">
           <Para>
-            Priority calendar access is a core benefit of Sterling Reserve membership and is provided as described at the time of enrollment. Access windows are: 60 days in advance (Reserve), 90 days in advance (Gold), and full calendar access with no advance restriction (Black).
+            Priority calendar access is a core benefit of Sterling Reserve membership and is provided as described at the time of enrollment. Access windows are: 7 days before public opening (Reserve), 21 days before public opening (Gold), and first right of refusal 30 days out with full calendar visibility (Black).
           </Para>
           <Para>
             Sterling Route reserves the right to restrict calendar access during: (a) scheduled maintenance periods, (b) force majeure events, or (c) extraordinary circumstances requiring vehicle removal from service. Sterling Route will provide a minimum of 48 hours&apos; notice for planned restrictions. Emergency situations may result in shorter notice.
@@ -119,12 +118,12 @@ export default function SterlingReserveTOSPage() {
 
         <Section number={7} title="Cancellation of Membership">
           <Para>
-            Members may cancel Sterling Reserve membership at any time by providing 30 days&apos; written notice to hello@sterlingroute.com. Cancellation takes effect at the end of the 30-day notice period or the next billing cycle, whichever is later.
+            Annual membership fees are non-refundable. Sterling Reserve is structured as an upfront commitment — day-credits are loaded immediately upon payment and are available for use from day one.
           </Para>
-          <Rule>A prorated refund of the current month&apos;s membership fee will be issued only if cancellation notice is provided within the first 7 days of a billing cycle.</Rule>
-          <Rule>Cancellation notices received after day 7 of a billing cycle take effect at the end of the following billing period. No partial-month refunds will be issued for notices received after day 7.</Rule>
-          <Rule>Unused included rental days at the time of cancellation expire without value.</Rule>
-          <Rule>There is no cancellation fee. Members may re-enroll at any time, subject to then-current published pricing.</Rule>
+          <Rule>Members who wish to cancel before year-end will not receive a refund of any portion of the annual membership fee.</Rule>
+          <Rule>Unused day-credits at the time of cancellation expire without cash value or credit, except as provided for Black tier carryover.</Rule>
+          <Rule>Members may choose not to renew at year-end without penalty. Non-renewal requires no notice — membership simply expires.</Rule>
+          <Rule>Members who re-enroll after a lapse of 60 or more days are subject to then-current published pricing. Founding member rate protection does not survive a lapse.</Rule>
         </Section>
 
         <Section number={8} title="Termination by Sterling Route">
@@ -146,7 +145,7 @@ export default function SterlingReserveTOSPage() {
           </Para>
           <Rule>The black and grey tank dump fee applies to every renter, at every tier, on every rental. There are no exceptions and no member waivers.</Rule>
           <Rule>Cleaning fees apply if the vehicle is returned below expected standard. Membership does not include complimentary cleaning.</Rule>
-          <Rule>Insurance is required on every rental, regardless of membership tier. No reservation will be confirmed without valid Roamly (or approved equivalent) coverage.</Rule>
+          <Rule>Insurance is required on every rental, regardless of membership tier. No reservation will be confirmed without valid Bonzah, RentalCover, or approved equivalent coverage.</Rule>
           <Rule>Fuel must be returned full on every rental. Failure results in actual fuel cost plus $35 service charge.</Rule>
           <Rule>Mileage overage is billed at the per-mile rate applicable to the member&apos;s tier, based on post-return odometer reading.</Rule>
         </Section>
