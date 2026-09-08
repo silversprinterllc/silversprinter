@@ -154,9 +154,10 @@ export default function QuizResult({ score, answers, onRestart }: Props) {
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError(null)
     const trimmed = email.trim()
@@ -164,17 +165,31 @@ export default function QuizResult({ score, answers, onRestart }: Props) {
       setError('Please enter a valid email address.')
       return
     }
-    // Hook for future CRM/Kit integration
-    console.log('[SaturationQuiz] Report requested', {
-      email: trimmed,
-      name: name.trim() || undefined,
-      location: location.trim() || undefined,
-      score,
-      bucket: bucket.id,
-      answers,
-      timestamp: new Date().toISOString(),
-    })
-    setSubmitted(true)
+    setSending(true)
+    try {
+      const res = await fetch('/api/course/quiz-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: trimmed,
+          name: name.trim() || undefined,
+          location: location.trim() || undefined,
+          score,
+          bucketId: bucket.id,
+          bucketLabel: bucket.label,
+          bucketHeadline: bucket.headline,
+          bucketSummary: bucket.summary,
+          findings,
+          moves,
+        }),
+      })
+      if (!res.ok) throw new Error('Send failed')
+      setSubmitted(true)
+    } catch {
+      setError('Something went wrong. Please try again or email ben@spokebnb.com')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -332,9 +347,10 @@ export default function QuizResult({ score, answers, onRestart }: Props) {
 
               <button
                 type="submit"
-                className="w-full bg-[var(--sf-gold)] text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-xl hover:shadow-[var(--sf-gold)]/20 hover:-translate-y-0.5 active:scale-[0.98]"
+                disabled={sending}
+                className="w-full bg-[var(--sf-gold)] text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-[var(--sf-gold)]/90 transition-all hover:shadow-xl hover:shadow-[var(--sf-gold)]/20 hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send Me My Full Report
+                {sending ? 'Sending your report…' : 'Send Me My Full Report'}
                 <svg className="inline w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
