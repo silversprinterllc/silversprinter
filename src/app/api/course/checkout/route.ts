@@ -16,7 +16,7 @@ const PRODUCTS: Record<string, ProductConfig> = {
   system: {
     name: 'SpokeBnB — The System',
     price: 199700, // $1,997
-    description: 'Self-paced course: all 14 modules, 60+ templates, lifetime access. Teaches operators how to generate and direct demand to their owned booking destination.',
+    description: 'Self-paced course: all 15 modules, 60+ templates, lifetime access. Teaches operators how to generate and direct demand to their owned booking destination.',
     paymentPlan: {
       installments: 4,
       installmentAmount: 54900, // $549
@@ -27,6 +27,11 @@ const PRODUCTS: Record<string, ProductConfig> = {
     name: 'SpokeBnB — The Build',
     price: 549700, // $5,497
     description: 'Productized direct-booking website build. Responsive property site, booking path, PMS integration, SEO foundation, analytics, and launch QA — handed off and live.',
+  },
+  founding: {
+    name: 'SpokeBnB — Founding Member',
+    price: 99700, // $997
+    description: 'Founding Member pre-sale: all 15 modules, 60+ templates, lifetime access, and direct Slack access to Ben. 50% off — limited to 20 operators.',
   },
 }
 
@@ -39,7 +44,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid tier' }, { status: 400 })
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ||
+      (process.env.NODE_ENV === 'production'
+        ? (() => { throw new Error('NEXT_PUBLIC_APP_URL is required in production') })()
+        : 'http://localhost:3000')
     const isPlan = planType === 'plan' && !!product.paymentPlan
 
     const lineItemPrice = isPlan ? product.paymentPlan!.installmentAmount : product.price

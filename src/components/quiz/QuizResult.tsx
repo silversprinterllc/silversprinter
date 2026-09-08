@@ -351,7 +351,7 @@ export default function QuizResult({ score, answers, onRestart }: Props) {
       {/* Secondary & Tertiary CTAs */}
       <div className="max-w-2xl mx-auto grid sm:grid-cols-2 gap-3 mb-10">
         <a
-          href="#free-course"
+          href="/course#tools-free"
           className="inline-flex items-center justify-center border-2 border-[var(--sf-navy)]/20 text-[var(--sf-navy)] px-5 py-3.5 rounded-xl text-sm font-semibold hover:border-[var(--sf-navy)]/40 hover:bg-[var(--sf-navy)]/5 transition-all text-center"
         >
           {substituteBrand(bucket.secondaryCta)}
@@ -362,21 +362,6 @@ export default function QuizResult({ score, answers, onRestart }: Props) {
         >
           {substituteBrand(bucket.tertiaryCta)}
         </a>
-      </div>
-
-      {/* Social proof */}
-      <div className="max-w-3xl mx-auto">
-        <figure className="bg-[var(--sf-gold)]/5 border border-[var(--sf-gold)]/20 rounded-2xl p-6 sm:p-8">
-          <svg className="w-8 h-8 text-[var(--sf-gold)] mb-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
-          </svg>
-          <blockquote className="text-lg text-[var(--sf-navy)] leading-relaxed mb-4">
-            I scored 47 on this quiz. Eight months later I was at 81 and had grown revenue 41%. The diagnostic was the first time someone actually told me WHAT was broken.
-          </blockquote>
-          <figcaption className="text-sm text-[var(--sf-navy)]/60">
-            — Jana M., 4-unit lakefront operator
-          </figcaption>
-        </figure>
       </div>
 
       {/* Retake */}

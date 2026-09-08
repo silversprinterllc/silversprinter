@@ -20,7 +20,6 @@ const footerLinks = [
     heading: 'Company',
     links: [
       { label: 'About', href: '#instructor' },
-      { label: 'Barefoot Realty', href: '#' },
     ],
   },
   {

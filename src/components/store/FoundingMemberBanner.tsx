@@ -5,7 +5,7 @@ import { useState } from 'react'
 const SPOTS_REMAINING = 12
 
 const perks = [
-  'Full course access as modules launch (all 14 modules)',
+  'Full course access as modules launch (all 15 modules)',
   'Founding Member badge — permanent recognition',
   'Direct Slack access to Ben (not available at any other tier)',
   'Priority access for future Build launches & live cohorts',
