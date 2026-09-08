@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-type Category = 'All' | 'Pricing' | 'Distribution' | 'Direct Bookings' | 'Guest Experience' | 'Operations' | 'Data & Intel'
+type Category = 'All' | 'Acquisition' | 'Operations' | 'Distribution' | 'Direct Bookings' | 'Guest Experience' | 'Visibility'
 
 interface Tip {
   id: number
@@ -11,156 +11,151 @@ interface Tip {
   action: string
   time: string
   roi: string
-  spoke: string[] // maps to quiz spoke tags for future personalization
 }
 
 const TIPS: Tip[] = [
+  // ─── ACQUISITION ────────────────────────────────────────────────────────────
   {
     id: 1,
-    category: 'Pricing',
-    title: 'Gap-Night Pricing — Fill the Holes',
-    action: 'A 1–2 night gap between bookings earns $0 by default. In PriceLabs, enable "Gap Fill" under Customizations — set a 20–30% discount trigger for orphan nights. A filled gap at 75% ADR beats an empty gap at 0% every time. Setup takes 15 minutes. Check your calendar monthly to verify it\'s working.',
-    time: '15 min setup',
-    roi: 'Measurable in 30 days',
-    spoke: ['pricing'],
+    category: 'Acquisition',
+    title: 'The Pre-Tour Street View Walk',
+    action: 'Before you visit any property, open Google Street View and spend 20 minutes mapping the immediate surroundings: the 3 nearest neighbor structures and how close they are (noise complaint geography), where 6–8 guests actually park, and any nuisance source within 500 feet — a bar, a busy road, a commercial parking lot. Things that end up in 3-star reviews were always in the property\'s surroundings before you bought it. You can see most of them for free without leaving your desk.',
+    time: '20 min per property',
+    roi: 'Filters out properties that will never review well regardless of how well you operate them',
   },
   {
     id: 2,
-    category: 'Pricing',
-    title: 'The 72-Hour Last-Minute Rule',
-    action: 'Create a pricing rule in your dynamic tool: if a date is within 72 hours of arrival and still unbooked, price it 12–18% below your comp set. You\'re not giving away value — you\'re capturing demand that otherwise books your neighbor. This window has the highest booking intent and the lowest price sensitivity among last-minute travelers.',
-    time: '20 min setup',
-    roi: 'Fills dates that would otherwise go empty',
-    spoke: ['pricing'],
+    category: 'Acquisition',
+    title: 'The Soft Launch Protocol',
+    action: 'Your first 3–5 guest stays should be people you know — friends, family, colleagues — who will tell you exactly what broke, what confused them, and what they\'d have loved. Run these stays at cost. Ask for written feedback on the check-in experience, every appliance, the house manual, and the checkout instructions. One honest soft-launch guest who tells you the shower runs cold after 8 minutes is worth more than 10 strangers who leave it in a 3-star public review. Fix everything they find. Then list publicly.',
+    time: '2–3 weeks before public launch',
+    roi: 'Eliminates preventable 1–3 star reviews from your review history permanently',
   },
+
+  // ─── OPERATIONS ─────────────────────────────────────────────────────────────
   {
     id: 3,
-    category: 'Pricing',
-    title: 'Minimum Stay Segmentation by Season',
-    action: 'Three-tier minimum stay: 3-night minimum in peak season, 2-night in shoulder, 1-night allowed in deep off-season. Most hosts set one blanket minimum. Segmenting by season prevents peak weekends from being burned by Friday-only or Saturday-only bookings — the ones that block surrounding dates and kill your weekly revenue.',
-    time: '30 min setup',
-    roi: '12–18% ADR lift in peak season, reported by operators who implement it',
-    spoke: ['pricing'],
+    category: 'Operations',
+    title: 'The Neighbor Introduction',
+    action: 'Before your first guest ever checks in, knock on the doors of your 3 closest neighbors. Tell them: you\'re a professional host with noise monitoring equipment, a local contact available 24/7, and a house rules policy on quiet hours. Give them your cell directly. Neighbors who know you call you when something\'s off. Neighbors who don\'t know you call code enforcement. This 30-minute conversation costs nothing and protects your permit.',
+    time: '30 min, one time',
+    roi: 'Prevents neighbor complaints from becoming permit-level problems',
   },
   {
     id: 4,
-    category: 'Distribution',
-    title: 'Get on Google Vacation Rentals (Free)',
-    action: 'Your listing can appear directly in Google Search and Google Maps — no Airbnb, no commission — via Google Vacation Rentals. Connect through Lodgify, Hostaway, Guesty, or OwnerRez (takes 30 minutes). Guests who book through Google search convert directly. This is the distribution channel most hosts don\'t know exists.',
-    time: '30 min to connect',
-    roi: 'Zero-commission bookings from Google organic search',
-    spoke: ['distribution'],
+    category: 'Operations',
+    title: 'Noise Monitor Disclosure in House Rules',
+    action: 'You\'ve installed the noise monitor. Most hosts stop there. Add one sentence to your Airbnb house rules: "Property is equipped with exterior noise monitoring. Quiet hours begin at 10pm." A guest who knows you monitor noise doesn\'t throw the party. The disclosure is also an insurance audit trail — if you ever file a claim for an event, your house rules document that you proactively disclosed monitoring and set expectations. Deterrence and documentation in one sentence.',
+    time: '5 min',
+    roi: 'Behavioral deterrent at no cost; creates a clean insurance paper trail',
   },
   {
     id: 5,
-    category: 'Distribution',
-    title: 'Vrbo Premier Host — Claim What You Likely Already Qualify For',
-    action: 'Vrbo\'s algorithm gives Premier Hosts 3–5x more search visibility. Requirements: 4.3+ rating, sub-24hr response time, under 5% cancellation rate, and 5+ bookings or 3+ reviews. Most hosts who qualify have never claimed it. Check your Vrbo dashboard under "Premier Host" — if you\'re eligible and haven\'t opted in, you\'re invisible to a significant share of Vrbo demand.',
-    time: '10 min to check and claim',
-    roi: '3–5x search visibility increase on Vrbo',
-    spoke: ['distribution'],
+    category: 'Operations',
+    title: 'The Amenity Request Log',
+    action: 'Start a running note — a Google Sheet or Notion doc — tracking every amenity, appliance, or feature a guest requests in messaging or mentions in a review. After 20 stays, you have a prioritized improvement list built entirely from what your actual guests asked for. The hot tub, the bike rack, the second TV, the kayak — the requests tell you what they\'ll pay more for before you spend the money. Five minutes per review cycle. Compounding value over years.',
+    time: '5 min per review cycle',
+    roi: 'Prioritizes your improvement budget by actual guest demand, not guesswork',
   },
+
+  // ─── DISTRIBUTION ────────────────────────────────────────────────────────────
   {
     id: 6,
     category: 'Distribution',
     title: 'Furnished Finder for Off-Season Fill',
-    action: 'Travel nurses, remote workers, and relocating families book 30–90 day stays at flat monthly rates. A single 45-day mid-term booking at 60% of your nightly rate fills your slow season without Airbnb fees. List on Furnished Finder (free listing) in 20 minutes. Pro tip: set your MTR minimum at 28 nights to avoid the nightly-rate regulation trigger in most markets.',
-    time: '20 min to list',
-    roi: 'Single booking can replace 2–3 weeks of STR vacancy',
-    spoke: ['distribution'],
+    action: 'Travel nurses, remote workers, and relocating families book 30–90 day stays at flat monthly rates — and they don\'t care about peak weekends. A single 45-day mid-term booking at 60% of your nightly rate fills your slow season with zero OTA fees and one turnover instead of fifteen. List on Furnished Finder (free listing) in under 30 minutes. Set your minimum at 28 nights — most STR permit regulations apply only to stays under 30 days, so the 28-night floor puts mid-term guests in a different regulatory category.',
+    time: '30 min to list',
+    roi: 'One mid-term booking replaces 2–3 weeks of vacancy at zero OTA commission',
   },
+
+  // ─── DIRECT BOOKINGS ─────────────────────────────────────────────────────────
   {
     id: 7,
     category: 'Direct Bookings',
-    title: 'StayFi: Turn Your WiFi Into a Lead Capture Machine',
-    action: 'Replace your router password with a StayFi landing page ($15/month). Every guest who connects to WiFi sees your direct booking site and enters their email before getting access. Average operator captures 60–80% of guest emails — automatically. That list becomes your direct marketing channel. The payback period on one direct booking is typically under 30 days.',
-    time: '1 hour setup',
-    roi: 'Email list of every past guest — the asset most hosts never build',
-    spoke: ['direct-bookings', 'guest-capture'],
+    title: 'The Departure Card',
+    action: 'A business-card-sized insert left at checkout: your direct booking URL on one side, a QR code that links to it on the other, and one line — "Book direct next time. No platform fees. Same calendar." $12 buys 500 cards on Vistaprint. Design it in Canva in 20 minutes. Every guest who rebooks direct saves you 15%+ in OTA fees. The card sits in their wallet or in their phone camera roll. It\'s the cheapest recurring marketing spend in STR.',
+    time: '$12 + 30 min design',
+    roi: 'One repeat direct booking covers the cost of 500 cards',
   },
   {
     id: 8,
     category: 'Direct Bookings',
-    title: 'The Departure Card — $12 for Permanent Direct Booking Real Estate',
-    action: 'A business-card-sized insert left at checkout: your direct booking URL, a QR code that links to it, and one sentence — "Book direct next time. No platform fees. Same calendar." $12 buys 500 cards on Vistaprint. Every guest who rebooks direct saves you 15%+ in OTA fees. The card sits in their wallet or phone camera roll. This is the cheapest recurring marketing spend in STR.',
-    time: '1 hour to design and order',
-    roi: 'One repeat direct booking pays for 500 cards',
-    spoke: ['direct-bookings'],
+    title: 'Early Check-In / Late Checkout as On-Demand Revenue',
+    action: 'If the night before a booking is unbooked, offer early check-in at $75–100 via Stripe or your PMS. If the night after is unbooked, late checkout is the same. Most operators either give this away for free or just say no. Neither converts. Mention it in your booking confirmation: "Early check-in is available for $75 if the prior night is open." At 150 stays/year and 20% attachment, that\'s $2,250/year from calendar gaps that would have been empty anyway.',
+    time: '1 hour to build the flow',
+    roi: '$2,000–3,500/year in add-on revenue from existing guests, no new marketing needed',
   },
+
+  // ─── GUEST EXPERIENCE ────────────────────────────────────────────────────────
   {
     id: 9,
     category: 'Guest Experience',
-    title: 'The 48-Hour Review Window',
-    action: 'Send your review request 48 hours after checkout — not on departure day. On checkout day, guests are traveling, distracted, and the experience is already competing with their next thing. At 48 hours, the memory is still warm and they\'re settled. Conversion on review requests at 48 hours runs 2–3x higher than same-day requests. Script: "Hi [name], hope you made it home. If you have 2 minutes, an honest review helps travelers like you find us."',
-    time: 'Automate once in your PMS',
-    roi: '2–3x review conversion rate vs. day-of requests',
-    spoke: ['reviews', 'guest-experience'],
+    title: 'The Live Google Doc Welcome Guide',
+    action: 'A printed welcome book goes out of date the day a restaurant closes or a trail reopens. Replace it with a shared Google Doc link in your pre-arrival message. Update it once and every future guest gets the current version — no reprinting. Guests share it with friends planning trips to your area. It\'s searchable and linkable. Because it\'s a real URL, you can see how often it\'s opened. Build time: 2 hours. Maintenance: 15 minutes per month.',
+    time: '2 hours to build',
+    roi: 'Zero reprint cost; living asset that guests organically share',
   },
   {
     id: 10,
     category: 'Guest Experience',
-    title: 'The Pre-Arrival 3-Message Sequence',
-    action: 'Three automated messages: (1) Booking confirmation — house rules summary, check-in process overview. (2) 3 days before arrival — full check-in instructions, door code, parking, local recommendations. (3) Morning of arrival — door code reminder, WiFi password, your contact number. This sequence alone eliminates 80% of day-of guest questions and puts guests in a 5-star mindset before they\'ve seen your property.',
-    time: '1 hour to write and automate in your PMS',
-    roi: 'Measurable reduction in day-of messages; pre-conditions 5-star reviews',
-    spoke: ['automation', 'guest-experience'],
+    title: 'The Pet Policy 30-Day Test',
+    action: 'Most operators decide pet policy based on gut feel. Run a 30-day test instead: open your listing to pets at your standard cleaning fee plus a $75–100 pet fee. After 30 days, check: did pet bookings arrive, what was the property condition, and did net revenue improve? In outdoor, lake, and nature markets, the pet-friendly filter removes 25–40% of your competitive listings from search results. The data — not your preference — should make this call.',
+    time: '30-day test, 1 hour to set up',
+    roi: 'In the right market, adding pets can increase your bookable demand pool by 25–40%',
   },
+
+  // ─── VISIBILITY ──────────────────────────────────────────────────────────────
   {
     id: 11,
-    category: 'Operations',
-    title: 'Unique Expiring Door Codes Per Guest',
-    action: 'If you\'re reusing the same lockbox code for every guest, you have no way of knowing who has access to your property. OwnerRez, Hospitable, and Hostaway all auto-generate unique door codes per reservation that expire at checkout. Setup takes about an hour and is included in most PMS subscriptions. You get a clean audit trail and eliminate the liability of a former guest retaining access.',
-    time: '1 hour setup',
-    roi: 'Eliminates liability and key management entirely',
-    spoke: ['automation', 'operations'],
+    category: 'Visibility',
+    title: 'Read Your Airbnb Insights Dashboard',
+    action: 'Airbnb Insights shows three numbers most hosts never look at: impressions (how often you appeared in search), click-through rate (what percentage clicked), and listing saves (how many browsers hearted you). These three numbers tell you exactly where your problem is. High impressions + low clicks: your hero photo or title isn\'t stopping the scroll. High clicks + low saves: your gallery disappoints. High saves + low bookings: your price or calendar is the barrier. Know your problem before you change anything.',
+    time: '10 min/month',
+    roi: 'Tells you the right fix before you spend money on the wrong one',
   },
   {
     id: 12,
-    category: 'Operations',
-    title: 'Replace Your Welcome Book With a Live Google Doc',
-    action: 'Printed welcome books go out of date the day a restaurant closes or a trail reopens. Share a live Google Doc link in your pre-arrival message instead. You update it once, every future guest gets the current version. Guests share the doc with friends planning trips to your area. It\'s also searchable by Google. Time to create: 2 hours. Time to maintain: 15 minutes per month.',
-    time: '2 hours to create',
-    roi: 'Zero reprint costs; living marketing asset that guests share',
-    spoke: ['operations', 'guest-experience'],
+    category: 'Visibility',
+    title: 'Search Your Own Market as a Guest',
+    action: 'Once per year, open Airbnb as a guest and search your own market. Filter to your comp set by bedroom count and price. Sort by Guest Favorite. Click the top 5 listings and read their reviews word for word. Count what guests mention most — the specific amenity, the location advantage, the feeling they describe. Compare those features to yours. This one exercise — 45 minutes, free — tells you more about your competitive position than any analytics tool.',
+    time: '45 min/year',
+    roi: 'Reveals competitive positioning gaps that no dashboard surfaces',
   },
   {
     id: 13,
-    category: 'Data & Intel',
-    title: 'AirDNA Market Minder — Free Weekly Competitive Intelligence',
-    action: 'Sign up for AirDNA\'s free Market Minder email at airdna.co. Every week it tells you occupancy rate, ADR trend, and RevPAR movement in your specific market — before it shows up in your calendar. When market occupancy starts dropping, you price more aggressively before you feel the vacancy. When it\'s climbing, you hold rate instead of discounting. Two minutes to read. The information advantage over hosts who don\'t track this is compounding.',
-    time: '5 min to sign up',
-    roi: 'Market intelligence that drives better pricing decisions every week',
-    spoke: ['data', 'pricing'],
+    category: 'Visibility',
+    title: 'Quarterly Listing Title Test',
+    action: 'Your Airbnb title drives your click-through rate — and Insights shows you exactly what that rate is. Run a title test quarterly: change only one element (lead feature, location hook, or property type framing) and hold it for 30 days. Then compare click-through rate to the prior 30 days. Over four tests per year, you converge on the exact combination of words that converts your market\'s browsers. Most operators set a title on day one and never revisit it.',
+    time: '5 min per quarter',
+    roi: 'A 20% click-through improvement compounds across every search impression your listing gets',
   },
   {
     id: 14,
-    category: 'Data & Intel',
-    title: 'The 90-Day Comp Set Audit',
-    action: 'Identify 5 comparable properties in your market. Screenshot or note their calendar occupancy once per month for 90 days. At the end of 90 days you\'ll know who\'s consistently winning, who\'s discounting to fill, and what the actual price-to-occupancy relationship is in your submarket. Free. 20 minutes per month. This is the exercise that operators charging 30% above comp set ADR run every quarter.',
-    time: '20 min/month',
-    roi: 'Reveals the pricing and positioning gaps your competitors don\'t want you to see',
-    spoke: ['data', 'distribution'],
+    category: 'Visibility',
+    title: 'Host Profile as a Conversion Tool',
+    action: 'When two similar listings compete for the same guest, they read your host profile. A profile photo where you\'re smiling outdoors (not a corporate headshot), a bio that names your specific location and why you host there, and recent host reviews that mention your name convert hesitant guests. An outdated 3-year-old profile photo with no recent activity reads as absentee management. Update yours every 18 months. Takes 20 minutes. Most hosts skip it entirely.',
+    time: '20 min every 18 months',
+    roi: 'Converts hesitant guests comparing you against a similar-priced property',
   },
   {
     id: 15,
-    category: 'Guest Experience',
-    title: 'The Upsell at Booking Confirmation',
-    action: 'Send a Typeform (free) with 3 questions at booking confirmation: (1) Any special occasions we should know about? (2) Want early check-in or late checkout? (3) Interested in a pre-stocked fridge? Guests convert on upsells 3–4x more readily at booking confirmation than on arrival — they\'re still in the excitement window. Average upsell revenue runs $35–85 per booking for operators who implement this. Typeform connects to most email tools and takes 30 minutes to build.',
-    time: '30 min to build',
-    roi: '$35–85 average upsell revenue per booking',
-    spoke: ['guest-experience', 'revenue'],
+    category: 'Visibility',
+    title: 'Host-to-Host Intelligence in Your Market',
+    action: 'Most STR operators treat neighboring hosts as competition. The best ones treat them as their highest-quality market intelligence source. Find 3–5 other professional hosts in your area through local host Facebook groups, Airbnb community events, or cleaner referrals. Propose a quarterly coffee or call. What you get: handyman and cleaner referrals, advance notice of local events that book out your comps, honest pricing intel you can\'t get from any tool, and someone to call when a guest situation escalates.',
+    time: '1 coffee per quarter',
+    roi: 'Market intelligence, vendor referrals, and a support network that costs nothing',
   },
 ]
 
-const CATEGORIES: Category[] = ['All', 'Pricing', 'Distribution', 'Direct Bookings', 'Guest Experience', 'Operations', 'Data & Intel']
+const CATEGORIES: Category[] = ['All', 'Acquisition', 'Operations', 'Distribution', 'Direct Bookings', 'Guest Experience', 'Visibility']
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Pricing: '#10B981',
+  Acquisition: '#8B5CF6',
+  Operations: '#6B7280',
   Distribution: '#3B82F6',
   'Direct Bookings': '#8B5CF6',
   'Guest Experience': '#F59E0B',
-  Operations: '#6B7280',
-  'Data & Intel': '#D4A017',
+  Visibility: '#D4A017',
 }
 
 export default function QuickWinsSection() {
@@ -182,16 +177,16 @@ export default function QuickWinsSection() {
             15 Tactics That Move the Needle
           </h2>
           <p className="text-[var(--sf-navy)]/50 max-w-2xl mx-auto text-sm leading-relaxed">
-            Specific, implementable, and measurable. Each one is something a real operator can run this week —
-            not a concept, not a category. Free, no strings attached.
+            Specific, implementable, and measurable. Tactics most operators haven&apos;t tried —
+            not a replay of what every STR blog already covers.
           </p>
         </div>
 
         {/* Quiz CTA */}
         <div className="mb-10 bg-[var(--sf-navy)]/[0.03] border border-[var(--sf-navy)]/8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-[var(--sf-navy)]/60 text-center sm:text-left">
-            <span className="font-semibold text-[var(--sf-navy)]">Not sure which tips matter most for your property?</span>
-            {' '}Take the free saturation quiz — it scores your operation and surfaces your highest-leverage gaps.
+            <span className="font-semibold text-[var(--sf-navy)]">Not sure which tactics apply to your operation?</span>
+            {' '}The free saturation quiz scores your property across 8 dimensions and shows where your highest-leverage gaps are.
           </p>
           <a
             href="/course/quiz"
@@ -237,7 +232,6 @@ export default function QuickWinsSection() {
                   className="w-full text-left px-6 py-5 flex items-start gap-4 group"
                   aria-expanded={isOpen}
                 >
-                  {/* Number */}
                   <span
                     className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold mt-0.5"
                     style={{ background: `${color}15`, color }}
@@ -263,7 +257,6 @@ export default function QuickWinsSection() {
                     )}
                   </div>
 
-                  {/* Chevron */}
                   <svg
                     className={`shrink-0 w-4 h-4 text-[var(--sf-navy)]/30 mt-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -293,7 +286,7 @@ export default function QuickWinsSection() {
         {/* Bottom CTA */}
         <div className="mt-12 text-center">
           <p className="text-sm text-[var(--sf-navy)]/40 mb-4">
-            These are the tactics. The System shows you how they fit together.
+            These are tactics adjacent to the system. The system shows you how they fit together.
           </p>
           <a
             href="#pricing"
