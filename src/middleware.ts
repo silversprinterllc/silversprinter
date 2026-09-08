@@ -1,6 +1,5 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 
 const COOKIE_SECRET =
   process.env.COOKIE_SECRET ||
@@ -48,7 +47,7 @@ function isSterlingRoute(host: string): boolean {
 }
 
 export default withAuth(
-  async function middleware(req: NextRequest & { nextauth: { token: Record<string, unknown> | null } }) {
+  async function middleware(req) {
     const host = req.headers.get('host') || ''
     const { pathname } = req.nextUrl
 
@@ -73,7 +72,7 @@ export default withAuth(
     }
 
     // ── Sterling Route role checks ──────────────────────────────────────────
-    const token = req.nextauth?.token
+    const token = req.nextauth.token
 
     if (pathname.startsWith('/dispatcher')) {
       if (!token || !['DISPATCHER', 'SUPER_ADMIN'].includes(token.role as string)) {
