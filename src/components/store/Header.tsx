@@ -16,6 +16,7 @@ export default function Header() {
     { label: 'Program', href: '#program' },
     { label: 'Modules', href: '#modules' },
     { label: 'Free Tools', href: '#tools-free' },
+    { label: 'Quick Wins', href: '#quick-wins' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'FAQ', href: '#faq' },
   ]
