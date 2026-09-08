@@ -120,10 +120,10 @@ export default function RefundPolicyPage() {
                 <li>
                   Email{' '}
                   <a
-                    href="mailto:support@spokebnb.com"
+                    href="mailto:ben@spokebnb.com"
                     className="text-[var(--sf-gold)] hover:underline"
                   >
-                    support@spokebnb.com
+                    ben@spokebnb.com
                   </a>{' '}
                   with the subject line &quot;Refund Request.&quot;
                 </li>
@@ -242,10 +242,10 @@ export default function RefundPolicyPage() {
               <p className="mb-4">
                 If you have a concern with your purchase, please contact{' '}
                 <a
-                  href="mailto:support@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@spokebnb.com
+                  ben@spokebnb.com
                 </a>{' '}
                 first. We resolve legitimate issues quickly.
               </p>
@@ -282,10 +282,10 @@ export default function RefundPolicyPage() {
               <p>
                 All refund requests must go through{' '}
                 <a
-                  href="mailto:support@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 . We typically respond within 2 business days.
               </p>

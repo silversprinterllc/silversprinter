@@ -449,10 +449,10 @@ export default function TermsOfServicePage() {
               <p>
                 For legal notices or questions about these Terms, email{' '}
                 <a
-                  href="mailto:legal@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  legal@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 .
               </p>

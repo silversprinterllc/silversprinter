@@ -1,5 +1,6 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 const COOKIE_SECRET =
   process.env.COOKIE_SECRET ||
@@ -35,10 +36,44 @@ async function verifyCookie(raw: string): Promise<boolean> {
   }
 }
 
+// Explicit allow-list for Sterling Route. Every other host → SpokeBnB.
+const STERLING_ROUTE_HOSTS = new Set([
+  'sterlingroute.com',
+  'www.sterlingroute.com',
+])
+
+function isSterlingRoute(host: string): boolean {
+  if (host.startsWith('localhost') || host.startsWith('127.0.0.1')) return true
+  return STERLING_ROUTE_HOSTS.has(host)
+}
+
 export default withAuth(
-  async function middleware(req) {
+  async function middleware(req: NextRequest & { nextauth: { token: Record<string, unknown> | null } }) {
+    const host = req.headers.get('host') || ''
     const { pathname } = req.nextUrl
-    const token = req.nextauth.token
+
+    // ── Host-based routing ──────────────────────────────────────────────────
+    // Any domain NOT on the Sterling Route allow-list serves SpokeBnB.
+    // This covers spokebnb.com, www.spokebnb.com, all Vercel preview URLs, etc.
+    if (!isSterlingRoute(host)) {
+      if (!pathname.startsWith('/course') && !pathname.startsWith('/api/')) {
+        const url = req.nextUrl.clone()
+        url.pathname = '/course'
+        return NextResponse.redirect(url, 302)
+      }
+      // SpokeBnB paths — only course-module cookie gate applies
+      if (pathname.startsWith('/course/modules')) {
+        const raw = req.cookies.get('sbnb_access')?.value
+        const valid = raw ? await verifyCookie(raw) : false
+        if (!valid) {
+          return NextResponse.redirect(new URL('/course#pricing', req.url))
+        }
+      }
+      return NextResponse.next()
+    }
+
+    // ── Sterling Route role checks ──────────────────────────────────────────
+    const token = req.nextauth?.token
 
     if (pathname.startsWith('/dispatcher')) {
       if (!token || !['DISPATCHER', 'SUPER_ADMIN'].includes(token.role as string)) {
@@ -52,7 +87,6 @@ export default withAuth(
       }
     }
 
-    // Course modules: HMAC-verified purchase cookie — separate from next-auth
     if (pathname.startsWith('/course/modules')) {
       const raw = req.cookies.get('sbnb_access')?.value
       const valid = raw ? await verifyCookie(raw) : false
@@ -66,8 +100,13 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
+        const host = req.headers.get('host') || ''
+
+        // SpokeBnB hosts: all paths are open — inner middleware handles course routing
+        if (!isSterlingRoute(host)) return true
+
+        // Sterling Route: require session for protected paths
         const { pathname } = req.nextUrl
-        // These paths require a next-auth session
         if (
           pathname.startsWith('/portal') ||
           pathname.startsWith('/dispatcher') ||
@@ -76,7 +115,6 @@ export default withAuth(
         ) {
           return !!token
         }
-        // Course modules use purchase-cookie auth — let the inner middleware handle it
         return true
       },
     },
@@ -84,11 +122,9 @@ export default withAuth(
 )
 
 export const config = {
+  // Run on everything except Next.js internals and static assets.
+  // This ensures branch-preview URLs are caught too.
   matcher: [
-    '/portal/:path*',
-    '/dispatcher/:path*',
-    '/corporate/:path*',
-    '/course/deal-analysis/:path*',
-    '/course/modules/:path*',
+    '/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 }

@@ -179,10 +179,10 @@ export default function AffiliateDisclosurePage() {
                 This list is updated periodically. If you would like a current
                 list, email{' '}
                 <a
-                  href="mailto:support@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  support@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 .
               </p>
@@ -223,10 +223,10 @@ export default function AffiliateDisclosurePage() {
                 Questions about this disclosure, or a specific affiliate
                 relationship? Email{' '}
                 <a
-                  href="mailto:legal@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  legal@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 .
               </p>

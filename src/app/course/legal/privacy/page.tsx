@@ -273,10 +273,10 @@ export default function PrivacyPolicyPage() {
               <p className="mt-4">
                 To exercise any of these rights, email{' '}
                 <a
-                  href="mailto:privacy@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  privacy@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 . We will respond within the time required by applicable law
                 (typically 30&ndash;45 days). We may need to verify your identity
@@ -305,10 +305,10 @@ export default function PrivacyPolicyPage() {
                 advertising cookies constitute &quot;sharing&quot; under
                 California law, you may opt out by emailing{' '}
                 <a
-                  href="mailto:privacy@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  privacy@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 .
               </p>
@@ -356,10 +356,10 @@ export default function PrivacyPolicyPage() {
                 you believe a child has provided personal information to us,
                 please contact{' '}
                 <a
-                  href="mailto:privacy@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  privacy@spokebnb.com
+                  ben@spokebnb.com
                 </a>{' '}
                 and we will delete it promptly.
               </p>
@@ -397,10 +397,10 @@ export default function PrivacyPolicyPage() {
               <p>
                 For questions or privacy requests, email{' '}
                 <a
-                  href="mailto:privacy@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  privacy@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 . You may also contact us via the support address listed on the{' '}
                 <a
