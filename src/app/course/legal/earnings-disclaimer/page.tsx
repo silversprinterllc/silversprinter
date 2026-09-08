@@ -251,10 +251,10 @@ export default function EarningsDisclaimerPage() {
               <p>
                 Questions about this disclaimer? Email{' '}
                 <a
-                  href="mailto:legal@spokebnb.com"
+                  href="mailto:ben@spokebnb.com"
                   className="text-[var(--sf-gold)] hover:underline"
                 >
-                  legal@spokebnb.com
+                  ben@spokebnb.com
                 </a>
                 .
               </p>
