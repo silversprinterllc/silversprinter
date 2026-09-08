@@ -322,7 +322,7 @@ function Intro({ onStart }: { onStart: () => void }) {
         {/* Trust signals */}
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto text-center">
           {[
-            { value: '6,000+', label: 'STR hosts' },
+            { value: 'Free', label: 'No email required' },
             { value: '11', label: 'Questions' },
             { value: '60s', label: 'To complete' },
             { value: 'Free', label: 'No card required' },
@@ -346,7 +346,7 @@ function Calculating() {
         Calculating your saturation risk...
       </h2>
       <p className="text-[var(--sf-navy)]/60">
-        Scoring your answers across the 8 spokes. This takes a few seconds.
+        Scoring your answers. This takes a few seconds.
       </p>
     </div>
   )

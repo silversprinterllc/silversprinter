@@ -2,9 +2,12 @@ import { createHmac } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 
-const COOKIE_SECRET =
-  process.env.COOKIE_SECRET ||
+const COOKIE_SECRET = process.env.COOKIE_SECRET ||
   (process.env.NODE_ENV === 'development' ? 'dev-secret-do-not-use-in-prod' : '')
+
+if (process.env.NODE_ENV === 'production' && !process.env.COOKIE_SECRET) {
+  throw new Error('COOKIE_SECRET env var is required in production')
+}
 
 export function signCookieValue(tier: string, granted: number): string {
   const payload = `${tier}:${granted}`

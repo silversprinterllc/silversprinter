@@ -339,7 +339,7 @@ export default function PricingTiers() {
               </h3>
               <p className="text-sm text-[var(--sf-navy)]/50">
                 The System ($1,997) + The Build ($5,497) bundled at{' '}
-                <strong className="text-[var(--sf-navy)]">$6,997</strong>.
+                <strong className="text-[var(--sf-navy)]">$6,994</strong>.
                 Education and infrastructure, together — the full stack for operators who are serious about owning their distribution.
               </p>
             </div>

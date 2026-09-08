@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resend } from '@/lib/resend'
 
+function esc(s: unknown): string {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 const COURSE_FROM = process.env.COURSE_FROM_EMAIL || 'ben@spokebnb.com'
 const BEN_EMAIL = 'ben@spokebnb.com'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://spokebnb.com'
@@ -18,7 +22,7 @@ export async function POST(req: NextRequest) {
         from: `SpokeBnB <${COURSE_FROM}>`,
         to: BEN_EMAIL,
         subject: `New lead: ${email}`,
-        html: `<div style="font-family:system-ui,sans-serif;padding:20px;"><p>New email capture from the storefront:</p><p style="font-size:16px;font-weight:600;">${email}</p><p style="color:#888;font-size:13px;">Source: Revenue Per Night Calculator lead magnet</p></div>`,
+        html: `<div style="font-family:system-ui,sans-serif;padding:20px;"><p>New email capture from the storefront:</p><p style="font-size:16px;font-weight:600;">${esc(email)}</p><p style="color:#888;font-size:13px;">Source: Revenue Per Night Calculator lead magnet</p></div>`,
       })
       .catch((err) => console.error('[capture] admin email failed:', err))
 

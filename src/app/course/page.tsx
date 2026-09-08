@@ -12,6 +12,7 @@ import TestimonialsSection from '@/components/store/TestimonialsSection'
 import FAQ from '@/components/store/FAQ'
 import EmailCapture from '@/components/store/EmailCapture'
 import FreeToolsSection from '@/components/store/FreeToolsSection'
+import QuickWinsSection from '@/components/store/QuickWinsSection'
 import Footer from '@/components/store/Footer'
 
 export default function CoursePage() {
@@ -34,6 +35,9 @@ export default function CoursePage() {
 
       {/* 3.5 Quiz Promo — Saturation diagnostic lead magnet */}
       <QuizPromo />
+
+      {/* 3.7 Quick Wins — 15 free actionable STR tactics, proves credibility */}
+      <QuickWinsSection />
 
       {/* 4. Full Curriculum — 10 modules with expandable accordion */}
       <ModuleBreakdown />

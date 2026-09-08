@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resend } from '@/lib/resend'
 
+function esc(s: unknown): string {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 const TRACK_LABELS: Record<string, string> = {
   direct: 'Direct Booking System',
   automation: 'Automation Stack',
@@ -84,13 +88,13 @@ function buildAdminEmail(data: ReturnType<typeof buildApplicationData>) {
   ]
     .map(
       ([k, v]) =>
-        `<tr><td style="padding:7px 14px;font-size:12px;color:#777;border-bottom:1px solid #f0ede8;white-space:nowrap;">${k}</td><td style="padding:7px 14px;font-size:13px;border-bottom:1px solid #f0ede8;">${v}</td></tr>`
+        `<tr><td style="padding:7px 14px;font-size:12px;color:#777;border-bottom:1px solid #f0ede8;white-space:nowrap;">${esc(k)}</td><td style="padding:7px 14px;font-size:13px;border-bottom:1px solid #f0ede8;">${esc(v)}</td></tr>`
     )
     .join('')
 
   return `<!DOCTYPE html><html><body style="font-family:system-ui,sans-serif;background:#f5f5f5;padding:20px;">
   <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;">
-    <div style="background:#09263A;padding:16px 20px;"><p style="margin:0;font-size:13px;font-weight:700;color:#D4A017;">New DFY Application — ${applicant.name}</p></div>
+    <div style="background:#09263A;padding:16px 20px;"><p style="margin:0;font-size:13px;font-weight:700;color:#D4A017;">New DFY Application — ${esc(applicant.name)}</p></div>
     <table style="width:100%;border-collapse:collapse;">${rows}</table>
     <div style="padding:14px 20px;background:#f9f9f9;"><a href="mailto:${applicant.email}" style="background:#D4A017;color:#09263A;font-weight:700;padding:9px 20px;border-radius:6px;text-decoration:none;font-size:13px;">Reply to Applicant</a></div>
   </div></body></html>`
