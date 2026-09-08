@@ -12,6 +12,10 @@ const faqs = [
     a: 'The System is education — it teaches you how to generate and direct demand across 10 spokes, from distribution platforms and direct bookings to content, creators, and guest retention. The Build is infrastructure — we build your direct-booking website, connect it to your PMS, and hand it off ready to take bookings. You can buy one, the other, or both. They are independent.',
   },
   {
+    q: 'Does this course teach building a direct booking website?',
+    a: 'Yes. Module 07 — Direct Booking Engine — walks you through selecting a platform (OwnerRez or Lodgify), building your booking page, writing conversion copy, connecting to Google Vacation Rentals, and driving traffic to a site you own. What the course does not do is build the site for you. The Build ($5,497) is the done-for-you version: a custom site we design, build, and hand off. The System gives you the blueprint and the execution knowledge. The Build removes the execution entirely.',
+  },
+  {
     q: 'I only have one property. Is this too advanced for me?',
     a: 'No. The System is designed for 1–10 unit owners. You will build every system from scratch — direct booking website, pricing engine, guest retention, content strategy. The modules scale with you. The Build is available for single properties as well as portfolios.',
   },
